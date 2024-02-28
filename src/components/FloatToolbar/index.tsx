@@ -1,0 +1,143 @@
+/* eslint-disable new-cap */
+/*
+ * @Author: liangliang
+ * @Date: 2023-06-02 11:37:56
+ * @LastEditors: liuliangliang liuliangliang@sniffgroup.com
+ * @LastEditTime: 2023-11-23 17:57:35
+ * @Description: 悬浮右侧菜单
+ */
+import React, { useCallback, useEffect, useState } from 'react';
+import './index.scss';
+import { useAtom } from 'jotai';
+import { CDN_HOST } from '@/const/index';
+import { CustomerDetail } from '@/model';
+import { atomRequestCustomerDetail } from '@/App';
+const FloatToolbar = () => {
+    const [isExpand, setIsExpand] = useState(true);
+    const [msgCount, setMsgCount] = useState<number>(0);
+    const [useInfo] = useAtom(CustomerDetail);
+    const [customerDetail] = useAtom(atomRequestCustomerDetail);
+    // 初始化聊天弹窗
+    const initChannelIO = useCallback(() => {
+        window?.ChannelIO('boot', {
+            pluginKey: '9ef7076e-b606-45f8-bb06-ec8b98b5fc7f',
+            memberId: customerDetail?.customerId,
+            profile: {
+                systemName: customerDetail?.loginName,
+                systemEmail: customerDetail?.customerEmail,
+                templateName:
+                    customerDetail?.membership?.membershipTemplateName,
+                systemMemberId: customerDetail?.customerId,
+                name: customerDetail?.loginName,
+                email: customerDetail?.customerEmail
+            }
+        });
+        window?.ChannelIO('hideChannelButton');
+        window?.ChannelIO('onBadgeChanged', ((num: number) => {
+            setMsgCount(num);
+        }) as any);
+    }, [customerDetail]);
+    useEffect(() => {
+        setTimeout(() => {
+            initChannelIO();
+        }, 5000);
+    }, [initChannelIO]);
+
+    // 显示聊天弹窗
+    const showChannelIO = () => {
+        window?.ChannelIO('showMessenger');
+    };
+    return (
+        <aside className={`m-tool-bar ${isExpand ? 'tool-bar-show' : ''}`}>
+            <ul>
+                <li className="tool-bar-helpCenter">
+                    <a className={isExpand ? 'bg-white' : ''}>
+                        <img
+                            draggable="false"
+                            src={`${CDN_HOST}/BusinessMarket/icon/icon_help%402x.png`}
+                            alt=""
+                        />
+                        <span>{window._$m.t('帮助')}</span>
+                    </a>
+                </li>
+                <li className="tool-bar-service">
+                    <a
+                        className={isExpand ? 'bg-white' : ''}
+                        onClick={() => showChannelIO()}
+                    >
+                        <img
+                            referrerPolicy="no-referrer"
+                            draggable="false"
+                            src={`${CDN_HOST}/BusinessMarket/icon/icon_serve%402x.png`}
+                            alt=""
+                        />
+                        <span>{window._$m.t('客服')}</span>
+                        {msgCount ? (
+                            <div className="msg-count">{msgCount} </div>
+                        ) : null}
+                    </a>
+                </li>
+                {useInfo?.isKO && (
+                    <li className="tool-bar-line">
+                        <a
+                            target="_blank"
+                            className={isExpand ? 'bg-white' : ''}
+                            style={{
+                                textDecoration: 'none'
+                            }}
+                            href="https://pf.kakao.com/_uzWxoxj"
+                        >
+                            <img
+                                referrerPolicy="no-referrer"
+                                draggable="false"
+                                src={`${CDN_HOST}/BusinessMarket/icon/kakao_footer.png`}
+                                alt=""
+                            />
+                            <span>Kakao</span>
+                        </a>
+                    </li>
+                )}
+                {useInfo?.isJA && (
+                    <li className="tool-bar-line">
+                        <a
+                            target="_blank"
+                            className={isExpand ? 'bg-white' : ''}
+                            style={{
+                                textDecoration: 'none'
+                            }}
+                            href="https://line.me/R/ti/p/@962puoaf?oat_content=url"
+                        >
+                            <img
+                                referrerPolicy="no-referrer"
+                                draggable="false"
+                                src={`${CDN_HOST}/BusinessMarket/icon/line_logo@2x.png`}
+                                alt=""
+                            />
+                            <span>LINE</span>
+                        </a>
+                    </li>
+                )}
+                <li className="tool-bar-menu">
+                    {isExpand ? (
+                        <img
+                            className="tool-bar-icon-menu"
+                            draggable="false"
+                            src={`${CDN_HOST}/BusinessMarket/icon/icon_close%402x.png`}
+                            alt=""
+                            onClick={() => setIsExpand(false)}
+                        />
+                    ) : (
+                        <img
+                            className="tool-bar-icon-menu"
+                            draggable="false"
+                            src={`${CDN_HOST}/BusinessMarket/icon/icon_open%402x.png`}
+                            alt=""
+                            onClick={() => setIsExpand(true)}
+                        />
+                    )}
+                </li>
+            </ul>
+        </aside>
+    );
+};
+export default FloatToolbar;
