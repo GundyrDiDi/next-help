@@ -2,7 +2,6 @@
 import FloatToolbar from '@/components/FloatToolbar';
 import CKBHeader from './modules/CKBHeader';
 import './index.css';
-import CKBFooter from './modules/CKBFooter';
 import { CustomerDetail } from '@/model';
 import { useAtom } from 'jotai';
 import { useEffect } from 'react';
@@ -44,7 +43,6 @@ const CKBLayout: React.FC<CKBLayoutProps> = (props: CKBLayoutProps) => {
                     {children}
                 </div>
             </div>
-        <CKBFooter/>    
         </div>
     );
 };

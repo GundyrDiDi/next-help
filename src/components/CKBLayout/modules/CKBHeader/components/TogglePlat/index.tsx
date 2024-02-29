@@ -45,9 +45,7 @@ const TogglePlat = (props: TogglePlatProps) => {
                     expire: undefined
                 })
             );
-            // localStorage.setItem('_reload_page_', Math.random().toString().slice(2));
             const fistShopId = res.data?.customerShopList?.[0].customerShopId;
-            // window.localStorage.removeItem('production_route/curShop');
             window.localStorage.setItem(
                 'production_route/curShop',
                 JSON.stringify({

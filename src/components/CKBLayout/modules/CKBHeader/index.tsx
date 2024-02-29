@@ -405,11 +405,6 @@ const CKBHeader = () => {
                                 systemSource || ENUM_SYSTEM_SOURCE.D2C
                             }
                         />
-                        {/* <div className="toggle-plat flex justify-between items-center ml-[32px]" >
-                            <div className="border-r-[1px] w-[40px] leading-[12px] border-[color:--color-primary]" >B2B</div>
-                            <Divider className="toggle-plat-divider"/>
-                            <div className="w-[40px] leading-[12px] text-[color:--color-primary] font-[600]">D2C</div>
-                         </div> */}
                     </div>
                 </div>
             </div>

@@ -33,7 +33,6 @@ const reqRate = (
             }
         });
     } else {
-        // 接口变更 /settlement/exchangeRate/getLatestExchangeRate =》/settlement/exchangeRate/getOriginExchangeRate
         const code = stationCode ?? localStorage.getItem('stationCode');
         if (!code) return;
         request.settlement.exchangeRate.getOriginExchangeRate({

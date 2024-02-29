@@ -11,8 +11,10 @@ const writeLocal = atom(null, (_, set, update: string) => {
 
 const getLocal = () => local as unknown as string;
 
-export default {
+const out={
     langType,
     getLocal,
     writeLocal
 };
+
+export default  out;

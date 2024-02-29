@@ -14,6 +14,9 @@ import { CustomerDetail, Local } from '@/model';
 import { useAtom } from "jotai";
 import { ConfigProvider } from 'antd';
 import { ThemeConfig } from 'antd/lib/config-provider';
+import CKBFooter from "@/components/CKBFooter";
+import CKBHeader from "@/components/CKBLayout/modules/CKBHeader";
+import FloatToolbar from "@/components/FloatToolbar";
 
 
 const { langType } = Local;
@@ -133,14 +136,14 @@ const getThemeStyle = useCallback(() => {
       <script type="text/javascript" src="https://cdn.channel.io/plugin/ch-plugin-web.js" async></script>
       <body >
         <div id="J_B2B" className="App">
-        <LocalContext.Provider value={local}>
+              <LocalContext.Provider value={local}>
                 <ConfigProvider locale={locale} theme={getThemeStyle()}>
-                <CKBLayout>
-                  {children}
-               </CKBLayout>
+                  <CKBHeader/> 
+                  <FloatToolbar/>
+                    {children}
+                 <CKBFooter/>
                 </ConfigProvider>
                 </LocalContext.Provider>
-       
           </div>
         </body>
     </html>
