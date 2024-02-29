@@ -6,7 +6,6 @@
  * @Description: interceptors
  */
 import { message } from 'antd';
-import gray from '@sniff/gray/dist/index.esm';
 import { api, apiInstanceList } from '@/service';
 import { ENUM_SYSTEM_SOURCE } from '@/const/enum';
 import Code from '@/i18n/locales/code.json';
@@ -34,7 +33,6 @@ export interface User {
     auth: never[];
     token: string;
 }
-const graify = gray(serviceConfig.baseURL);
 export const getToken = () => {
     const tokenStr = window.localStorage.getItem('production_route/token');
     if (!tokenStr) return;
@@ -76,21 +74,21 @@ export const getUserInLocal = () => {
     }
 };
 
-const translateByRspCode = (msgCode: string) => {
-    /** 后端接口返回code,前端翻译 */
-    const stationCode =
-        localStorage.getItem('stationCode') || getCountryByNavigatorLang();
-    const stationCodeMapLocal =
-        {
-            [Site.JP]: Lang.ja_JP,
-            [Site.KR]: Lang.ko_KR,
-            [Site.UK]: Lang.en_GB
-        }[stationCode] || '';
+// const translateByRspCode = (msgCode: string) => {
+//     /** 后端接口返回code,前端翻译 */
+//     const stationCode =
+//         localStorage.getItem('stationCode') || getCountryByNavigatorLang();
+//     const stationCodeMapLocal =
+//         {
+//             [Site.JP]: Lang.ja_JP,
+//             [Site.KR]: Lang.ko_KR,
+//             [Site.UK]: Lang.en_GB
+//         }[stationCode] || '';
 
-    return (
-        Code[stationCodeMapLocal][msgCode] ?? Code[stationCodeMapLocal].noMatch
-    );
-};
+//     return (
+//         Code[stationCodeMapLocal][msgCode] ?? Code[stationCodeMapLocal].noMatch
+//     );
+// };
 
 apiInstanceList.forEach((item) => {
     // 请求拦截
@@ -115,7 +113,6 @@ apiInstanceList.forEach((item) => {
             config.params = {};
             config.headers['Content-Type'] = 'application/json';
         }
-        await graify(config);
         return config;
     });
     // https://test01-s.theckb.com/login
@@ -140,9 +137,9 @@ apiInstanceList.forEach((item) => {
             // }
             // message.error(String(response.data.msg));
 
-            const errorMsg = translateByRspCode(response.data.code);
-            message.error(errorMsg);
-            return Promise.reject(errorMsg);
+            // const errorMsg = translateByRspCode(response.data.code);
+            message.error(response.data.code);
+            return Promise.reject(response.data.code);
         },
         function (error) {
             message.error(String(error));

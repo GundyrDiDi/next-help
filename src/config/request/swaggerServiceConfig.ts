@@ -1,10 +1,4 @@
-/*
- * @Author: shiguang
- * @Date: 2023-04-27 14:06:40
- * @LastEditors: yusha
- * @LastEditTime: 2023-11-14 10:08:36
- * @Description: 配置 axios 相关信息
- */
+'use client'
 import qs from 'query-string';
 
 const getQueryEnv = () => {

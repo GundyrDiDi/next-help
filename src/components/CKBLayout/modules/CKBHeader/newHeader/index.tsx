@@ -1,17 +1,11 @@
-/*
- * @Author: shiguang
- * @Date: 2023-04-28 12:30:18
- * @LastEditors: yusha
- * @LastEditTime: 2023-07-27 20:02:58
- * @Description: CKBHeader
- */
+
 import { useEffect, useRef, useState } from 'react';
 import { Badge, Popover, Select, message } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
 import { Atom, useAtom } from 'jotai';
 import dayjs from 'dayjs';
 import classnames from 'classnames';
-import { atomRequestCustomerDetail } from '@/App';
+import { atomRequestCustomerDetail } from '@/components/CKBLayout/index';
 import IconHeadSculpture from '@/components/Icon/IconHeadSculpture';
 import { request } from '@/config/request';
 import { CustomerMembershipResDTO } from '@/service/customer';

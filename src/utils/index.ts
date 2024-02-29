@@ -10,7 +10,7 @@ import qs from 'qs';
 import { ENUM_PAGE, ENUM_SYSTEM_SOURCE, PageConfig } from '@/const/enum';
 import { MAP_SYSTEM_SOURCE } from '@/const/map';
 import { ROUTER_BASENAME } from '@/config/base';
-import { getRouter } from '@/App';
+// import { getRouter } from '@/App';
 import { GetKeyByMap, GetValueByMap } from './type';
 import { reqMemoGetCustomerDetails } from './memoRequest';
 
@@ -85,7 +85,7 @@ export const jumpPage = async <T extends ENUM_PAGE>(
         if (options.isNewPage === true) {
             return window.open(`/${ROUTER_BASENAME}${_path}`);
         }
-        getRouter().navigate(_path, { replace });
+        // getRouter().navigate(_path, { replace });
         return;
     }
     const pathPrefix =

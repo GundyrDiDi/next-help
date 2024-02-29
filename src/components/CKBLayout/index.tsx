@@ -3,11 +3,26 @@ import FloatToolbar from '@/components/FloatToolbar';
 import CKBHeader from './modules/CKBHeader';
 import './index.css';
 import CKBFooter from './modules/CKBFooter';
+import { CustomerDetail } from '@/model';
+import { useAtom } from 'jotai';
+import { useEffect } from 'react';
 export interface CKBLayoutProps {
     children?: React.ReactNode;
 }
+
+export const atomRequestCustomerDetail = CustomerDetail;
+
+
 const CKBLayout: React.FC<CKBLayoutProps> = (props: CKBLayoutProps) => {
     const { children,  } = props;
+    const [customerDetail, requestCustomerDetail] = useAtom(
+        atomRequestCustomerDetail
+    );
+
+    useEffect(() => {
+        requestCustomerDetail();
+    }, [requestCustomerDetail]);
+    
     return (
         <div className="bg-[#f8f8f8]">
             <CKBHeader />

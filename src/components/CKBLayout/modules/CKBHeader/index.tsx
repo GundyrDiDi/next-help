@@ -4,7 +4,7 @@ import { Badge, Button, Divider, Dropdown, Popover, message } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
 import { atom, useAtom } from 'jotai';
 import dayjs from 'dayjs';
-import { atomRequestCustomerDetail } from '@/App';
+import { atomRequestCustomerDetail } from '@/components/CKBLayout/index';
 import IconVIPLogo from '@/components/Icon/IconVIPLogo';
 import IconHeadSculpture from '@/components/Icon/IconHeadSculpture';
 import { request } from '@/config/request';
@@ -20,7 +20,6 @@ import { getShopId } from '@/config/request/interceptors';
 import { getFloatExchange, getExchange } from '@/config/request/price';
 import { Site, getCountryByNavigatorLang, siteMapAreaName } from '@/const';
 import { useRate } from '@/hooks/useRate';
-import { useTime } from '@/hooks/useTime';
 import KR_Flag from '@/assets/image/flag_KR_tab.png';
 import JP_Flag from '@/assets/image/flag_JP_tab.png';
 import UserDropDwon from './components/UserDropDwon';
@@ -28,8 +27,6 @@ import ShopList from './components/ShopList';
 import MembershipLevel from './components/MembershipCenter';
 import TogglePlat from './components/TogglePlat';
 import './index.scss';
-// eslint-disable-next-line no-duplicate-imports
-import styles from './index.scss';
 interface CustomerMembershipResDTO2 extends CustomerMembershipResDTO {
     templateLevel?: number;
 }
@@ -108,7 +105,7 @@ const CKBHeader = () => {
             ? Number(customerDetail?.utcTimeZone?.replace('UTC', ''))
             : 0 - new Date().getTimezoneOffset() / 60;
         const timer = timerRef.current.timer;
-        clearInterval(timer);
+        clearInterval(+timer);
         timerRef.current.timer = setInterval(() => {
             const date = dayjs(
                 `${formatTimeZone(dayjs(new Date()), z)}`
@@ -135,21 +132,6 @@ const CKBHeader = () => {
     useEffect(() => {
         getCurrentCartList();
     }, []);
-    // useEffect(() => {
-    //     if (!customerDetail?.utcTimeZone) return;
-    //     const timer = timerRef.current.timer;
-    //     timerRef.current.timer = setInterval(() => {
-    //         const date = dayjs(
-    //             `${formatTimeZone(dayjs(new Date()), zone)}`
-    //         ).format('YYYY/MM/DD HH:mm:ss');
-    //         console.log(date, zone);
-    //         setDate(date);
-    //     }, 1000);
-    //     return () => {
-    //         clearInterval(timer);
-    //     };
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [zone]);
     const getRate = (rate: number) => {
         if (!customerDetail?.isEN) {
             return Math.floor(rate * 100) / 100;
@@ -377,7 +359,7 @@ const CKBHeader = () => {
                                                 />
                                             )}
                                         </div>
-                                        <div className={styles.timer}>
+                                        <div>
                                             {`${timeRange} ${date}`}{' '}
                                         </div>
                                     </div>

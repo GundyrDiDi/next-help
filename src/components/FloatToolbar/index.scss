@@ -18,6 +18,10 @@
       right: 0;
       width: 50px;
       margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       span {
         display: block;
         margin-top: 4px;

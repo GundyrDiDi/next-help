@@ -1,17 +1,10 @@
-/* eslint-disable new-cap */
-/*
- * @Author: liangliang
- * @Date: 2023-06-02 11:37:56
- * @LastEditors: liuliangliang liuliangliang@sniffgroup.com
- * @LastEditTime: 2023-11-23 17:57:35
- * @Description: 悬浮右侧菜单
- */
+'use client'
 import React, { useCallback, useEffect, useState } from 'react';
 import './index.scss';
 import { useAtom } from 'jotai';
-import { CDN_HOST } from '@/const/index';
+import { CDN_HOST } from '@/const/staticURL/index';
 import { CustomerDetail } from '@/model';
-import { atomRequestCustomerDetail } from '@/App';
+import { atomRequestCustomerDetail } from '@/components/CKBLayout/index';
 const FloatToolbar = () => {
     const [isExpand, setIsExpand] = useState(true);
     const [msgCount, setMsgCount] = useState<number>(0);
@@ -53,9 +46,9 @@ const FloatToolbar = () => {
                 <li className="tool-bar-helpCenter">
                     <a className={isExpand ? 'bg-white' : ''}>
                         <img
-                            draggable="false"
                             src={`${CDN_HOST}/BusinessMarket/icon/icon_help%402x.png`}
-                            alt=""
+                            
+                            alt=''
                         />
                         <span>{window._$m.t('帮助')}</span>
                     </a>

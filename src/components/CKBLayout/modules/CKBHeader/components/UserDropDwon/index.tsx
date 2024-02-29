@@ -1,10 +1,4 @@
-/*
- * @Author: shiguang
- * @Date: 2023-05-17 19:30:14
- * @LastEditors: lihwang_wf@126.com
- * @LastEditTime: 2023-12-06 18:32:37
- * @Description: UserDropDwon
- */
+
 import { Popover } from 'antd';
 import React from 'react';
 import Cookie from 'js-cookie';
@@ -20,6 +14,8 @@ interface UserDropDwonProps {
     className?: string | undefined;
     customerDetail?: CustomerDetailRespDTO;
 }
+console.log(window,'window');
+
 const DROP_DWON_LIST = [
     [window._$m.t('登录账号管理'), ENUM_PAGE.SETUP_ACCOUNT],
     [window._$m.t('店铺采购管理'), ENUM_PAGE.SETUP_SHOP],

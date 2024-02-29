@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 4000",
+    "api": "npx @snifftest/api-gen config hu  && npx eslint ./src/service --fix",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -17,14 +18,17 @@
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.10",
     "jotai": "^2.6.5",
+    "js-cookie": "^3.0.5",
     "next": "14.1.0",
     "qs": "^6.11.2",
+    "query-string": "^9.0.0",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
-    "@snifftest/api-gen": "^1.0.9-beta.1",
+    "@snifftest/api-gen": "^1.0.9",
     "@types/node": "^20",
+    "@types/qs": "^6.9.12",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.4.17",
