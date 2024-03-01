@@ -9,13 +9,11 @@ export interface CKBLayoutProps {
     children?: React.ReactNode;
 }
 
-export const atomRequestCustomerDetail = CustomerDetail;
-
 
 const CKBLayout: React.FC<CKBLayoutProps> = (props: CKBLayoutProps) => {
     const { children,  } = props;
     const [customerDetail, requestCustomerDetail] = useAtom(
-        atomRequestCustomerDetail
+        CustomerDetail
     );
 
     useEffect(() => {

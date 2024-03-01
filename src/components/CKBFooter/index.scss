@@ -1,5 +1,7 @@
+$ft-color: var(--ftcolor);
 .Footer {
-  background-color: red;
+  width: 100%;
+  background-color: $ft-color;
   .main {
     height: 220px;
   }

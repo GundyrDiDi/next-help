@@ -13,7 +13,9 @@ import jp from '@/i18n/locales/ja_JP.json';
 import kr from './locales/ko_KR.json';
 import en from './locales/en_GB.json';
 
-/** */
+export const languages = ['zh','ja','ko','en']
+
+/** 语言 */
 export enum Local {
     ZH = 'zh',
     /** 日文 */
@@ -65,7 +67,6 @@ const getOldLocalLang = () => {
     );
 };
 export const getLang = () => {
-    // const langs = ['zh', 'ja', 'ko', 'en', 'ko', 'th']
     const queryLang = getQuerylang();
     if (queryLang) {
         localStorage.setItem('lang', queryLang);

@@ -49,7 +49,7 @@ export const getShopId = () => {
     }
 };
 
-/** B2B/D2C 切换 */
+/** B2B/D2C 主题切换 */
 export const togglePlat = (systemSource: number) => {
     const plat = systemSource === ENUM_SYSTEM_SOURCE.D2C ? 'D2C' : 'B2B';
     window.document.documentElement.setAttribute('theme', plat);

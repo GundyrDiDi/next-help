@@ -1,35 +1,32 @@
-'use client'
 import React, { useCallback, useEffect, useState } from 'react';
 import './index.scss';
 import { useAtom } from 'jotai';
 import { CDN_HOST } from '@/const/staticURL/index';
 import { CustomerDetail } from '@/model';
-import { atomRequestCustomerDetail } from '@/components/CKBLayout/index';
 const FloatToolbar = () => {
     const [isExpand, setIsExpand] = useState(true);
     const [msgCount, setMsgCount] = useState<number>(0);
     const [useInfo] = useAtom(CustomerDetail);
-    const [customerDetail] = useAtom(atomRequestCustomerDetail);
     // 初始化聊天弹窗
     const initChannelIO = useCallback(() => {
         window?.ChannelIO('boot', {
             pluginKey: '9ef7076e-b606-45f8-bb06-ec8b98b5fc7f',
-            memberId: customerDetail?.customerId,
+            memberId: useInfo?.customerId,
             profile: {
-                systemName: customerDetail?.loginName,
-                systemEmail: customerDetail?.customerEmail,
+                systemName: useInfo?.loginName,
+                systemEmail: useInfo?.customerEmail,
                 templateName:
-                    customerDetail?.membership?.membershipTemplateName,
-                systemMemberId: customerDetail?.customerId,
-                name: customerDetail?.loginName,
-                email: customerDetail?.customerEmail
+                    useInfo?.membership?.membershipTemplateName,
+                systemMemberId: useInfo?.customerId,
+                name: useInfo?.loginName,
+                email: useInfo?.customerEmail
             }
         });
         window?.ChannelIO('hideChannelButton');
         window?.ChannelIO('onBadgeChanged', ((num: number) => {
             setMsgCount(num);
         }) as any);
-    }, [customerDetail]);
+    }, [useInfo]);
     useEffect(() => {
         setTimeout(() => {
             initChannelIO();

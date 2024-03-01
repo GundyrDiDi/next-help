@@ -4,7 +4,7 @@ import { Badge, Button, Divider, Dropdown, Popover, message } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
 import { atom, useAtom } from 'jotai';
 import dayjs from 'dayjs';
-import { atomRequestCustomerDetail } from '@/components/CKBLayout/index';
+import { CustomerDetail } from '@/model';
 import IconVIPLogo from '@/components/Icon/IconVIPLogo';
 import IconHeadSculpture from '@/components/Icon/IconHeadSculpture';
 import { request } from '@/config/request';
@@ -79,7 +79,7 @@ const CKBHeader = () => {
         timer: null as unknown as NodeJS.Timer
     });
     const [date, setDate] = useState<string>();
-    const [customerDetail] = useAtom(atomRequestCustomerDetail);
+    const [customerDetail] = useAtom(CustomerDetail);
     const stationCode =
         customerDetail?.stationCode || getCountryByNavigatorLang();
     const [isShowShopList, setIsShowShopList] = useState(false);

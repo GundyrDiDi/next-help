@@ -1,30 +1,33 @@
 "use client"
-// import type { Metadata } from "next";
 import "./globals.css";
-import CKBLayout, { atomRequestCustomerDetail } from "@/components/CKBLayout";
-import { getLang, LocalContext } from '@/i18n/init';
+import { getLang, LocalContext ,Local} from '@/i18n/init';
 import '@/styles/theme/b2b-css-variable.scss';
 import '@/styles/theme/d2c-css-variable.scss';
 import { useCallback, useEffect, useState } from "react";
 import ja_JP from 'antd/locale/ja_JP';
 import ko_KR from 'antd/locale/ko_KR';
 import en_GB from 'antd/locale/en_GB';
+import zh_CN from 'antd/locale/zh_CN';
 import { Locale } from 'antd/lib/locale';
-import { CustomerDetail, Local } from '@/model';
+import { CustomerDetail, Local as LoacalLang } from '@/model';
 import { useAtom } from "jotai";
 import { ConfigProvider } from 'antd';
 import { ThemeConfig } from 'antd/lib/config-provider';
 import CKBFooter from "@/components/CKBFooter";
-import CKBHeader from "@/components/CKBLayout/modules/CKBHeader";
+import CKBHeader from "@/components/CKBHeader";
 import FloatToolbar from "@/components/FloatToolbar";
 
-
-const { langType } = Local;
+export const atomRequestCustomerDetail = CustomerDetail;
+const { langType } = LoacalLang;
 
 export default function RootLayout({
   children,
+  params:{lang}
 }: Readonly<{
   children: React.ReactNode;
+  params:{
+    lang: `${Local}`;
+  }
 }>) {
   const [locale, setLocale] = useState<Locale>();
   const [customerDetail, requestCustomerDetail] = useAtom(
@@ -38,16 +41,16 @@ useEffect(() => {
 }, [requestCustomerDetail]);
 
 useEffect(() => {
-  const lang = getLang();
-
   const locale = {
-      ja_JP,
-      ko_KR,
-      en_GB
-  }[lang];
+   [Local.JA]:ja_JP,
+   [Local.ZH]:zh_CN,
+   [Local.KO]:ko_KR,
+   [Local.EN]:en_GB,
+  }[lang]
   setLocale(locale);
-}, []);
+}, [lang]);
 
+// 通过系统来源获取主题色
 const getThemeStyle = useCallback(() => {
   let obj: ThemeConfig = {
       token: {

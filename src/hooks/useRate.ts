@@ -1,14 +1,16 @@
 import { useState, useEffect, useRef } from 'react';
 import { atom, useAtom } from 'jotai';
-import { atomRequestCustomerDetail } from '@/components/CKBLayout/index';
+import { CustomerDetail } from '@/model';
 import { siteMapMonetaryUnit, Site, countryCurrency } from '@/const';
 import { request } from '@/config/request';
 
 const reqRate = (
-    customerDetail,
-    setRate,
-    setFloatingRate,
-    setFloatExchangeRate
+    {
+        customerDetail,
+        setRate,
+        setFloatingRate,
+        setFloatExchangeRate
+    } :any
 ) => {
     const stationCode = customerDetail?.stationCode;
     const mainCustomerId = customerDetail?.mainCustomerId;
@@ -57,7 +59,7 @@ const reqRate = (
 };
 
 export const useRate = () => {
-    const [customerDetail] = useAtom(atomRequestCustomerDetail);
+    const [customerDetail] = useAtom(CustomerDetail);
 
     const rateInternitalRef = useRef<any>(null);
 
@@ -68,7 +70,7 @@ export const useRate = () => {
     /** 浮动汇率(我们配置的) */
     const [floatExchangeRate, setFloatExchangeRate] = useState<number>(1);
     useEffect(() => {
-        reqRate(customerDetail, setRate, setFloatingRate, setFloatExchangeRate);
+        reqRate({customerDetail, setRate, setFloatingRate, setFloatExchangeRate});
         rateInternitalRef.current = setInterval(
             () => {
                 reqRate(
