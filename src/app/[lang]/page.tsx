@@ -17,7 +17,7 @@ function Header({ title }:{title?: string}) {
 export default function HomePage() {
   return (
     <>
-      22222
+      
       </>
   );
 }

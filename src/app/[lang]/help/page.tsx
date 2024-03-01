@@ -5,5 +5,5 @@ export const metadata: Metadata = {
 }
 
 export default function Help(){
-return <div>help</div>
+  return <div>help</div>
 }
