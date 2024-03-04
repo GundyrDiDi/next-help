@@ -139,7 +139,7 @@ const CKBHeader = () => {
                                 fontSize: 12
                             }}
                         >
-                            {t('更简单 更透明')}
+                            {t('更简单，更透明')}
                         </span>
                     </div>
                     <div className="pl-10 flex items-center">

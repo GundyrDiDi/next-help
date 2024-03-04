@@ -26,9 +26,9 @@ const UserDropDwon: React.FC<UserDropDwonProps> = (props) => {
 const DROP_DWON_LIST = [
     [t('登录账号管理'), ENUM_PAGE.SETUP_ACCOUNT],
     [t('店铺采购管理'), ENUM_PAGE.SETUP_SHOP],
-    [t('我收藏的商品/店铺'), ENUM_PAGE.PRODUCT_COLLECT],
-    [t('我买过的商品/店铺'), ENUM_PAGE.PRODUCT_AFTER_PURCHASE],
-    [t('我看过的商品/店铺'), ENUM_PAGE.PRODUCT_FOOT_PRINT],
+    [t('我收藏的商品和店铺'), ENUM_PAGE.PRODUCT_COLLECT],
+    [t('我买过的商品和店铺'), ENUM_PAGE.PRODUCT_AFTER_PURCHASE],
+    [t('我看过的商品和店铺'), ENUM_PAGE.PRODUCT_FOOT_PRINT],
     [t('我的钱包'), ENUM_PAGE.FUND_STORE_FUND],
     [
         t('帮助'),
