@@ -1,20 +1,17 @@
 
-import { useEffect, useRef, useState } from 'react';
-import { Badge, Button, Divider, Dropdown, Popover, message } from 'antd';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { Badge,  Popover, message } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
-import { atom, useAtom } from 'jotai';
+import {  useAtom } from 'jotai';
 import dayjs from 'dayjs';
 import { CustomerDetail } from '@/model';
 import IconVIPLogo from '@/components/Icon/IconVIPLogo';
 import IconHeadSculpture from '@/components/Icon/IconHeadSculpture';
 import { request } from '@/config/request';
 import {
-    BizResponseInt,
-    CustomerDetailRespDTO,
     CustomerMembershipResDTO,
-    CustomerShopRespDTO
 } from '@/service/customer';
-import { jumpPage } from '@/utils';
+import { formatTimeZone, jumpPage } from '@/utils';
 import { ENUM_PAGE, ENUM_SYSTEM_SOURCE } from '@/const/enum';
 import { getShopId } from '@/config/request/interceptors';
 import { getFloatExchange, getExchange } from '@/config/request/price';
@@ -26,58 +23,27 @@ import UserDropDwon from './components/UserDropDwon';
 import ShopList from './components/ShopList';
 import MembershipLevel from './components/MembershipCenter';
 import TogglePlat from './components/TogglePlat';
+
 import './index.scss';
-interface CustomerMembershipResDTO2 extends CustomerMembershipResDTO {
-    templateLevel?: number;
-}
-interface MembershipTrialActivityComboReqDTOS {
-    createTime?: string;
-    freezeQuantity: number;
-    id: string;
-    lastQuantity: null;
-    leavedQuantity: number;
-    limitedQuantity: number;
-    limitedQuantityStatus: number;
-    membershipTemplatePriceId: string;
-    membershipTemplatePriceName: null;
-    membershipTrialActivityId: string;
-    price: number;
-    quantity: number;
-    status: number;
-    templateDesc: string;
-    trialDiscount: number;
-    updateTime: string;
-    usedQuantity: number;
-}
-interface NewMemberActivityDTOS {
-    membershipTrialActivityComboReqDTOS: MembershipTrialActivityComboReqDTOS[];
-    id?: string;
-}
-const myShopIcon = {
-    1: 'https://static-s.theckb.com/BusinessMarket/OEM/shopIcon_base.png',
-    4: 'https://static-s.theckb.com/BusinessMarket/OEM/shopIcon_amazon.png',
-    2: 'https://static-s.theckb.com/BusinessMarket/OEM/shopIcon_shopify.png',
-    0: 'https://static-s.theckb.com/BusinessMarket/OEM/shopIcon_ckb.png'
-};
+import { LocalContext, useTranslation } from '@/i18n/client';
+import { myShopIcon } from '@/const/staticURL';
+
+
+
 const menuCommonStyle =
     'flex items-center ml-[32px] hover:text-[color:--color-primary-light] cursor-pointer';
-function formatTimeZone(time: any, offset: any) {
-    // 创建一个Date对象 time时间 offset 时区  中国为  8
-    const d = new Date(time);
-    const localTime = d.getTime();
-    // 获得当地时间偏移的毫秒数
-    const localOffset = d.getTimezoneOffset() * 60000;
-    // utc即GMT时间
-    const utc = localTime + localOffset;
-    const wishTime = utc + 3600000 * offset;
-    return new Date(wishTime);
-}
+
+
 const CKBHeader = () => {
     const timerRef = useRef<{
         timer: NodeJS.Timer;
     }>({
         timer: null as unknown as NodeJS.Timer
     });
+    const lang=useContext(LocalContext)
+    const {t,i18n}=useTranslation(lang)
+
+
     const [date, setDate] = useState<string>();
     const [customerDetail] = useAtom(CustomerDetail);
     const stationCode =
@@ -113,6 +79,7 @@ const CKBHeader = () => {
             setDate(date);
         }, 1000);
     }, [customerDetail]);
+
     const { rate, floatingRate, getCountryCurrency, floatExchangeRate } =
         useRate();
     // 获取购物车数量
@@ -172,7 +139,7 @@ const CKBHeader = () => {
                                 fontSize: 12
                             }}
                         >
-                            {window._$m.t('更简单 更透明')}
+                            {t('更简单 更透明')}
                         </span>
                     </div>
                     <div className="pl-10 flex items-center">
@@ -192,7 +159,7 @@ const CKBHeader = () => {
                                             jumpPage(ENUM_PAGE.MY_PROMOTION);
                                         }}
                                     >
-                                        {window._$m.t('推广联盟')}
+                                        {t('推广联盟')}
                                     </div>
                                 </div>
                             </div>
@@ -200,6 +167,7 @@ const CKBHeader = () => {
                         <div className={menuCommonStyle}>
                             <div>
                                 <MembershipLevel
+                                    t={t}
                                     membership={membership}
                                     newMemberActivity={newMemberActivity}
                                 />
@@ -213,7 +181,7 @@ const CKBHeader = () => {
                                     jumpPage(ENUM_PAGE.WORKER_SPACE);
                                 }}
                             >
-                                {window._$m.t('工作台')}
+                                {t('工作台')}
                             </div>
                         </div>
                         <div className={menuCommonStyle}>
@@ -229,7 +197,7 @@ const CKBHeader = () => {
                                         jumpPage(ENUM_PAGE.SHOP_CART);
                                     }}
                                 >
-                                    <span>{window._$m.t('购物车')}</span>
+                                    <span>{t('购物车')}</span>
                                 </div>
                             </Badge>
                         </div>
@@ -254,6 +222,7 @@ const CKBHeader = () => {
                         </UserDropDwon>
                         <div className={menuCommonStyle}>
                             <ShopList
+                                t={t}
                                 isShowShopList={isShowShopList}
                                 setIsShowShopList={setIsShowShopList}
                             >
@@ -312,7 +281,7 @@ const CKBHeader = () => {
                                         jumpPage(ENUM_PAGE.INFORMATION);
                                     }}
                                 >
-                                    <span>{window._$m.t('消息')}</span>
+                                    <span>{t('消息')}</span>
                                 </div>
                             </Badge>
                         </div>
@@ -331,7 +300,7 @@ const CKBHeader = () => {
                                             style={{
                                                 padding: '0 8px 0 8px'
                                             }}
-                                        >{`${window._$m.t(
+                                        >{`${t(
                                             '三菱UFJ銀行TTSレート：'
                                         )}${getRate(rate ?? 0)}`}</div>
                                         <div
@@ -342,7 +311,7 @@ const CKBHeader = () => {
                                             }}
                                         >
                                             <span>
-                                                {`${window._$m.t(
+                                                {`${t(
                                                     'THE直行便の対応レート：'
                                                 )}${getRate(
                                                     floatingRate ?? 0

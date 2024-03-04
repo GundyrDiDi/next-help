@@ -1,6 +1,6 @@
 "use client"
 import "./globals.css";
-import { getLang, LocalContext ,Local} from '@/i18n/init';
+// import { getLang, LocalContext ,Local} from '@/i18n/init';
 import '@/styles/theme/b2b-css-variable.scss';
 import '@/styles/theme/d2c-css-variable.scss';
 import { useCallback, useEffect, useState } from "react";
@@ -16,6 +16,8 @@ import { ThemeConfig } from 'antd/lib/config-provider';
 import CKBFooter from "@/components/CKBFooter";
 import CKBHeader from "@/components/CKBHeader";
 import FloatToolbar from "@/components/FloatToolbar";
+import { Local } from "@/i18n/settings";
+import { LocalContext } from "@/i18n/client";
 
 export const atomRequestCustomerDetail = CustomerDetail;
 const { langType } = LoacalLang;
@@ -26,14 +28,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
   params:{
-    lang: `${Local}`;
+    lang: Local;
   }
 }>) {
   const [locale, setLocale] = useState<Locale>();
   const [customerDetail, requestCustomerDetail] = useAtom(
     atomRequestCustomerDetail
 );
-const [local] = useAtom(langType);
+// const [local] = useAtom(langType);
 const systemSource = customerDetail?.systemSource;
 
 useEffect(() => {
@@ -139,7 +141,7 @@ const getThemeStyle = useCallback(() => {
       <script type="text/javascript" src="https://cdn.channel.io/plugin/ch-plugin-web.js" async></script>
       <body >
         <div id="J_B2B" className="App">
-              <LocalContext.Provider value={local}>
+              <LocalContext.Provider value={lang}>
                 <ConfigProvider locale={locale} theme={getThemeStyle()}>
                   <CKBHeader/> 
                   <FloatToolbar/>

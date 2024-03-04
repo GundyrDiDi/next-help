@@ -1,10 +1,3 @@
-/*
- * @Author: shiguang
- * @Date: 2023-05-24 15:13:00
- * @LastEditors: liangliang
- * @LastEditTime: 2023-07-07 15:29:36
- * @Description: ShopList
- */
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useBoolean, useToggle } from 'ahooks';
 import { Button, Dropdown, Form, Input, Radio, Popover, message } from 'antd';
@@ -21,7 +14,7 @@ import './index.scss';
 import { request } from '@/config/request';
 import { togglePlat } from '@/config/request/interceptors';
 import { Site, getCountryByNavigatorLang } from '@/const';
-const myShopIcon = {
+const myShopIcon:{ [key: number]: string } = {
     1: 'https://static-s.theckb.com/BusinessMarket/OEM/shopIcon_base.png',
     4: 'https://static-s.theckb.com/BusinessMarket/OEM/shopIcon_amazon.png',
     2: 'https://static-s.theckb.com/BusinessMarket/OEM/shopIcon_shopify.png',
@@ -31,20 +24,18 @@ interface ShopListProps {
     children?: React.ReactNode;
     isShowShopList?: boolean;
     setIsShowShopList?: Dispatch<SetStateAction<boolean>>;
+    t: (key: string) => string;
 }
 const b2b = [
     'https://s.theckb.com/img/shopGuide1-b.23f952c0.jpg',
     'https://s.theckb.com/img/shopGuide2-b.ae442356.jpg'
 ];
-const d2c = [
-    // 'https://s.theckb.com/img/shopGuide1-c.fcca0b21.jpg',
-    // 'https://s.theckb.com/img/shopGuide2-c.6ddf4242.jpg',
-];
-const imgs = [...b2b, ...d2c];
+
+const imgs = [...b2b];
 const ShopList = ({
     children,
     isShowShopList,
-    setIsShowShopList
+    setIsShowShopList,t
 }: ShopListProps) => {
     const [isOpen, action] = useBoolean(false);
     const [isCreateShopTipOpen, createShopTipOpen] = useBoolean(false);
@@ -115,7 +106,7 @@ const ShopList = ({
                     }}
                     className="leading-[34px] px-[20px] hover:underline text-[color:--color-primary] hover:bg-[color:--color-white] text-center font-[500]"
                 >
-                    {window._$m.t('快速创建')}
+                    {t('快速创建')}
                 </div>
             )
         });
@@ -139,14 +130,14 @@ const ShopList = ({
                 source: 'b2b'
             },
             {
-                label: window._$m.t('其他'),
+                label: t('其他'),
                 value: 0
             }
         ];
         if (stationCode === Site.KR) {
             options = [
                 {
-                    label: window._$m.t('其他'),
+                    label: t('其他'),
                     value: 0
                 }
             ];
@@ -159,7 +150,7 @@ const ShopList = ({
                     source: 'd2c'
                 },
                 {
-                    label: window._$m.t('其他'),
+                    label: t('其他'),
                     value: 0
                 }
             ];
@@ -204,7 +195,7 @@ const ShopList = ({
                 ...formParams,
                 customerShopPlatform: shopPlatform
             });
-            message.success(window._$m.t('创建成功'));
+            message.success(t('创建成功'));
             getCustomerDetail();
             action.setFalse();
             createShopForm.resetFields();
@@ -253,7 +244,7 @@ const ShopList = ({
             >
                 <div className="my-[16px] mx-[6px]">
                     <div className="flex text-[#333] text-[16px] font-[500] clear-both mb-[20px] items-center">
-                        <span>{window._$m.t('创建店铺')}</span>
+                        <span>{t('创建店铺')}</span>
                         {customerDetail?.stationCode === Site.JP && (
                             <QuestionCircleFilled
                                 className="ml-[20px] mt-[-1px]"
@@ -274,17 +265,17 @@ const ShopList = ({
                         name="createShopForm"
                         onFinish={createShopSubmit}
                     >
-                        <Form.Item label={window._$m.t('开店平台')}>
+                        <Form.Item label={t('开店平台')}>
                             {shopOption()}
                         </Form.Item>
                         {shopPlatform === 0 ? (
                             <Form.Item
-                                label={window._$m.t('平台名')}
+                                label={t('平台名')}
                                 className="leading-[44px]"
                                 name="customerShopPlatName"
                             >
                                 <Input
-                                    placeholder={window._$m.t(
+                                    placeholder={t(
                                         '请输入店铺所在的平台名称（选填）'
                                     )}
                                     size="large"
@@ -293,42 +284,42 @@ const ShopList = ({
                             </Form.Item>
                         ) : null}
                         <Form.Item
-                            label={window._$m.t('店铺/品牌名')}
+                            label={t('店铺/品牌名')}
                             className="leading-[44px]"
                             rules={[
                                 {
                                     required: true,
-                                    message: window._$m.t('请输入店铺或品牌名')
+                                    message: t('请输入店铺或品牌名')
                                 }
                             ]}
                             name="customerShopName"
                         >
                             <Input
-                                placeholder={window._$m.t('请输入店铺或品牌名')}
+                                placeholder={t('请输入店铺或品牌名')}
                                 size="large"
                                 className="h-[44px]"
                             />
                         </Form.Item>
                         <Form.Item
-                            label={window._$m.t('店铺URL地址')}
+                            label={t('店铺URL地址')}
                             className="leading-[44px]"
                             name="customerShopUrl"
                         >
                             <Input
-                                placeholder={window._$m.t('请输入店铺访问链接')}
+                                placeholder={t('请输入店铺访问链接')}
                                 size="large"
                                 className="h-[44px]"
                             />
                         </Form.Item>
                         {shopPlatform === 2 ? (
                             <Form.Item
-                                label={window._$m.t('访问令牌')}
+                                label={t('访问令牌')}
                                 className="leading-[44px]"
                                 name="accessToken"
                                 tooltip="test02-s.theckb.com/d2c/help?tab=2&id=9"
                             >
                                 <Input
-                                    placeholder={window._$m.t(
+                                    placeholder={t(
                                         '请填写正确的访问令牌'
                                     )}
                                     size="large"
@@ -341,14 +332,14 @@ const ShopList = ({
                                 className="mr-[20px]"
                                 onClick={() => closeCreateShop()}
                             >
-                                {window._$m.t('取消')}
+                                {t('取消')}
                             </Button>
                             <Button
                                 type="primary"
                                 htmlType="submit"
                                 loading={loading}
                             >
-                                {window._$m.t('创建店铺')}
+                                {t('创建店铺')}
                             </Button>
                         </div>
                     </Form>

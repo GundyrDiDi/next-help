@@ -1,14 +1,6 @@
-/*
- * @Author: liangliang
- * @Date: 2023-07-07 13:28:06
- * @LastEditors: liangliang
- * @LastEditTime: 2023-07-08 19:31:33
- * @Description: B2B/D2C切换
- */
 import React from 'react';
 import './index.scss';
 import { request } from '@/config/request';
-// import { togglePlat } from '@/config/request/interceptors';
 import { ENUM_SYSTEM_SOURCE } from '@/const/enum';
 interface PlatDTO {
     label: string;

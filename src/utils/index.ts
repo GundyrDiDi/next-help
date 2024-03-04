@@ -13,6 +13,7 @@ import { ROUTER_BASENAME } from '@/config/base';
 // import { getRouter } from '@/App';
 import { GetKeyByMap, GetValueByMap } from './type';
 import { reqMemoGetCustomerDetails } from './memoRequest';
+import bwCookie from "js-cookie"
 
 export const getEnv = () => {
     let _env: 'local' | 'prod' | 'master' | 'test01' | 'test02' | 'test03' =
@@ -210,9 +211,12 @@ export interface LocalStorageData {
     };
 }
 
+/** 本地Cookie 存储信息 */
 export enum ENUM_LOCAL_STORAGE_KEY {
     /** 用户 token */
-    TOKEN = 'production_route/token'
+    TOKEN = 'production_route/token',
+    /** 用户 平台 */
+    PLAT='production_route/plat'
 }
 
 export const getSessionStorageByKey = <T>(key: string, defaultValue?: T) => {
@@ -229,3 +233,23 @@ export const getLocalStorageByKey = <K extends keyof LocalStorageData, T>(
 };
 
 const aa = getLocalStorageByKey(ENUM_LOCAL_STORAGE_KEY.TOKEN);
+
+
+/** 通过 cookie 获取登录信息 */
+export const getCookieToken=bwCookie.get(ENUM_LOCAL_STORAGE_KEY.TOKEN);
+
+/** 通过 cookie 获取登录信息 */
+export const getCookiePlat=bwCookie.get(ENUM_LOCAL_STORAGE_KEY.PLAT);
+
+
+export function formatTimeZone(time: any, offset: any) {
+    // 创建一个Date对象 time时间 offset 时区  中国为  8
+    const d = new Date(time);
+    const localTime = d.getTime();
+    // 获得当地时间偏移的毫秒数
+    const localOffset = d.getTimezoneOffset() * 60000;
+    // utc即GMT时间
+    const utc = localTime + localOffset;
+    const wishTime = utc + 3600000 * offset;
+    return new Date(wishTime);
+}

@@ -44,29 +44,24 @@ export interface CustomerMembershipResDTO2 extends CustomerMembershipResDTO {
 export interface MembershipProps {
     membership?: CustomerMembershipResDTO2;
     newMemberActivity?: NewMemberActivityDTOS;
+    t: (key: string) => string;
 }
 
 // 会员背景图片
-const vipLevelImg = {
+const vipLevelImg:{ [key: number]: string } = {
     1: 'https://static-s.theckb.com/BusinessMarket/OEM/home_tab_economy%402x.png',
     2: 'https://static-s.theckb.com/BusinessMarket/OEM/home_tab_standard%402x.png',
     3: 'https://s.theckb.com/img/home_tab_bussines@2x.bafef553.png',
     4: 'https://static-s.theckb.com/BusinessMarket/OEM/home_tab_first%402x.png'
 };
 
-// const vipIconTag = {
-//     1: 'https://static-s.theckb.com/BusinessMarket/OEM/icon_vip_economy.png',
-//     2: 'https://static-s.theckb.com/BusinessMarket/OEM/icon_vip_standard.png',
-//     3: 'https://static-s.theckb.com/BusinessMarket/OEM/icon_vip_bussiness.png',
-//     4: 'https://static-s.theckb.com/BusinessMarket/OEM/icon_vip_first.png'
-// };
 const membershipLevel = (props: MembershipProps) => {
-    const { membership, newMemberActivity } = props;
+    const { membership, newMemberActivity,t } = props;
     const membershipExplain = [
-        window._$m.t('能够在中国找到丰富的供应商'),
-        window._$m.t('按照日本质量标准进行检验（隶属于日本公司）'),
-        window._$m.t('最低国际运费保证，可运往23个国家/地区'),
-        window._$m.t('可靠的支持和即时的客户服务')
+        t('能够在中国找到丰富的供应商'),
+        t('按照日本质量标准进行检验（隶属于日本公司）'),
+        t('最低国际运费保证，可运往23个国家/地区'),
+        t('可靠的支持和即时的客户服务')
     ];
     // useRequest(request.settlement.)
     // 存在会员
@@ -76,7 +71,7 @@ const membershipLevel = (props: MembershipProps) => {
                 <div className="w-[300px] pt-[9px]">
                     <div className="flex">
                         <div className="w-[80px] text-center bg-[color:#1d1d1d] rounded-tl-[10px] rounded-br-[10px] text-[#e5bf88]">
-                            {window._$m.t('我的会员')}
+                            {t('我的会员')}
                         </div>
                     </div>
                     <div className="p-[16px]">
@@ -84,7 +79,7 @@ const membershipLevel = (props: MembershipProps) => {
                             {membership?.membershipTemplateName}
                         </div>
                         <div className="my-[8px] text-[color:rgba(255,255,255,.7)] text-[12px]">
-                            {window._$m.t('有效期：')}
+                            {t('有效期：')}
                             {membership?.expiresDate}
                         </div>
                         <div
@@ -93,7 +88,7 @@ const membershipLevel = (props: MembershipProps) => {
                                 jumpPage(ENUM_PAGE.VIP_LEVEL);
                             }}
                         >
-                            {window._$m.t('去续费')}
+                            {t('去续费')}
                         </div>
                     </div>
                 </div>
@@ -119,9 +114,9 @@ const membershipLevel = (props: MembershipProps) => {
                     ?.trialDiscount || 0;
             return (
                 <div className="absolute newMemberInfo">
-                    <span>{window._$m.t('首次入会')}</span>
+                    <span>{t('首次入会')}</span>
                     <div className="flex items-center">
-                        <span>{window._$m.t('首月')}</span>
+                        <span>{t('首月')}</span>
                         <div className="numBack flex items-center">
                             {trialDiscount === 0 ? <span>1</span> : null}
                             {trialDiscount ? (
@@ -131,7 +126,7 @@ const membershipLevel = (props: MembershipProps) => {
                                 <span className="symbol">％</span>
                             ) : null}
                         </div>
-                        <span>{window._$m.t('円')}</span>
+                        <span>{t('円')}</span>
                     </div>
                 </div>
             );
@@ -154,15 +149,15 @@ const membershipLevel = (props: MembershipProps) => {
                 <div className="w-[300px] pt-[9px] membershipExpire">
                     <div className="flex">
                         <div className="w-[80px] text-center bg-[color:#1d1d1d] rounded-tl-[10px] rounded-br-[10px] text-[#e5bf88]">
-                            {window._$m.t('我的会员')}
+                            {t('我的会员')}
                         </div>
                     </div>
                     <div className="content">
                         <div className="member-status">
-                            {window._$m.t('已失去会員')}
+                            {t('已失去会員')}
                         </div>
                         <div className="member-tips">
-                            {window._$m.t('入会优享超多服务')}
+                            {t('入会优享超多服务')}
                         </div>
                         <ul className="explain mt-[15px]">
                             {membershipExplain.map((item, index) => {
@@ -187,7 +182,7 @@ const membershipLevel = (props: MembershipProps) => {
                                     jumpPage(ENUM_PAGE.VIP_LEVEL);
                                 }}
                             >
-                                {window._$m.t('开通会员')}
+                                {t('开通会员')}
                             </Button>
                         </a>
                     </div>
@@ -231,7 +226,7 @@ const membershipLevel = (props: MembershipProps) => {
                     <div className="top-[-1px] relative pr-[2px]">
                         <IconVIPLogo />
                     </div>
-                    <span>{window._$m.t('会员中心')}</span>
+                    <span>{t('会员中心')}</span>
                 </div>
             </Popover>
         </div>

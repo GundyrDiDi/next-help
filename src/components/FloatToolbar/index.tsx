@@ -1,9 +1,14 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import './index.scss';
 import { useAtom } from 'jotai';
 import { CDN_HOST } from '@/const/staticURL/index';
 import { CustomerDetail } from '@/model';
+import { LocalContext, useTranslation } from '@/i18n/client';
 const FloatToolbar = () => {
+    const lang=useContext(LocalContext)
+    const {t,i18n}=useTranslation(lang)
+    console.log(t('帮助'),i18n);
+    
     const [isExpand, setIsExpand] = useState(true);
     const [msgCount, setMsgCount] = useState<number>(0);
     const [useInfo] = useAtom(CustomerDetail);
@@ -47,7 +52,7 @@ const FloatToolbar = () => {
                             
                             alt=''
                         />
-                        <span>{window._$m.t('帮助')}</span>
+                        <span>{t('帮助')}</span>
                     </a>
                 </li>
                 <li className="tool-bar-service">
@@ -61,7 +66,7 @@ const FloatToolbar = () => {
                             src={`${CDN_HOST}/BusinessMarket/icon/icon_serve%402x.png`}
                             alt=""
                         />
-                        <span>{window._$m.t('客服')}</span>
+                        <span>{t('客服')}</span>
                         {msgCount ? (
                             <div className="msg-count">{msgCount} </div>
                         ) : null}
@@ -131,3 +136,5 @@ const FloatToolbar = () => {
     );
 };
 export default FloatToolbar;
+
+

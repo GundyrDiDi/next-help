@@ -1,6 +1,6 @@
 
 import { Popover } from 'antd';
-import React from 'react';
+import React, { useContext } from 'react';
 import Cookie from 'js-cookie';
 import IconHeadSculpture from '@/components/Icon/IconHeadSculpture';
 import { ENUM_PAGE } from '@/const/enum';
@@ -9,6 +9,7 @@ import { CustomerDetailRespDTO } from '@/service/customer';
 // eslint-disable-next-line no-duplicate-imports
 import { TokenSignCookie } from '@/config';
 import styles from './index.scss';
+import { LocalContext, useTranslation } from '@/i18n/client';
 interface UserDropDwonProps {
     children?: React.ReactNode;
     className?: string | undefined;
@@ -16,15 +17,21 @@ interface UserDropDwonProps {
 }
 console.log(window,'window');
 
+// hover:text-[color:--color-primary-light]
+const UserDropDwon: React.FC<UserDropDwonProps> = (props) => {
+    const { children, className, customerDetail } = props;
+    const lang=useContext(LocalContext)
+    const {t,i18n}=useTranslation(lang)
+
 const DROP_DWON_LIST = [
-    [window._$m.t('登录账号管理'), ENUM_PAGE.SETUP_ACCOUNT],
-    [window._$m.t('店铺采购管理'), ENUM_PAGE.SETUP_SHOP],
-    [window._$m.t('我收藏的商品/店铺'), ENUM_PAGE.PRODUCT_COLLECT],
-    [window._$m.t('我买过的商品/店铺'), ENUM_PAGE.PRODUCT_AFTER_PURCHASE],
-    [window._$m.t('我看过的商品/店铺'), ENUM_PAGE.PRODUCT_FOOT_PRINT],
-    [window._$m.t('我的钱包'), ENUM_PAGE.FUND_STORE_FUND],
+    [t('登录账号管理'), ENUM_PAGE.SETUP_ACCOUNT],
+    [t('店铺采购管理'), ENUM_PAGE.SETUP_SHOP],
+    [t('我收藏的商品/店铺'), ENUM_PAGE.PRODUCT_COLLECT],
+    [t('我买过的商品/店铺'), ENUM_PAGE.PRODUCT_AFTER_PURCHASE],
+    [t('我看过的商品/店铺'), ENUM_PAGE.PRODUCT_FOOT_PRINT],
+    [t('我的钱包'), ENUM_PAGE.FUND_STORE_FUND],
     [
-        window._$m.t('帮助'),
+        t('帮助'),
         ENUM_PAGE.HELP,
         {
             tab: 1,
@@ -33,9 +40,6 @@ const DROP_DWON_LIST = [
     ]
 ] as const;
 
-// hover:text-[color:--color-primary-light]
-const UserDropDwon: React.FC<UserDropDwonProps> = (props) => {
-    const { children, className, customerDetail } = props;
     const content = (
         <div className="w-[300px] text-[color:--color-primary-text] py-[8px]">
             <div className="h-[60px] flex px-[16px] justify-between items-center">
@@ -47,7 +51,7 @@ const UserDropDwon: React.FC<UserDropDwonProps> = (props) => {
                         <div className="text-[16px] font-[600] hover:underline cursor-pointer hover:[color:--color-primary]">
                             <span className={styles.userName}>
                                 {customerDetail?.loginName}
-                                {window._$m.t('様')}
+                                {t('様')}
                             </span>
                         </div>
                         <div
@@ -61,7 +65,7 @@ const UserDropDwon: React.FC<UserDropDwonProps> = (props) => {
                     </div>
                 </div>
                 <div className="w-[104px] bg-[--color-bg-header] text-[--color-white] leading-[30px] px-[4px] text-[12px] rounded-[18px] cursor-pointer text-center">
-                    {window._$m.t('升级会员')}
+                    {t('升级会员')}
                 </div>
             </div>
             <ul>
@@ -75,9 +79,10 @@ const UserDropDwon: React.FC<UserDropDwonProps> = (props) => {
                                 });
                             }}
                             key={path}
-                            children={title}
                             className="hover:text-[color:--color-primary] hover:bg-[color:--color-primary-light-bg] cursor-pointer px-[16px] leading-[40px]"
-                        />
+                        >
+                            {title}
+                        </li>
                     );
                 })}
             </ul>
@@ -89,10 +94,11 @@ const UserDropDwon: React.FC<UserDropDwonProps> = (props) => {
                     });
                     window.localStorage.removeItem('production_route/token');
                     window.localStorage.removeItem('production_route/curShop');
-                    window.location.href = `${window.location.origin}/d2c/index/pure`;
+                    // TODO:跳转
+                    // window.location.href = `${window.location.origin}/d2c/index/pure`;
                 }}
             >
-                {window._$m.t('退出登录')}
+                {t('退出登录')}
             </p>
         </div>
     );

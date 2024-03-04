@@ -1,5 +1,5 @@
 import { atom, useAtom } from 'jotai';
-import { getLang } from '@/i18n/init';
+import { getLang } from '@/i18n/index';
 
 const langType = atom(getLang());
 
