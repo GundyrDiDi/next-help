@@ -7,7 +7,6 @@ import { LocalContext, useTranslation } from '@/i18n/client';
 const FloatToolbar = () => {
     const lang=useContext(LocalContext)
     const {t,i18n}=useTranslation(lang)
-    console.log(t('帮助'),i18n);
     
     const [isExpand, setIsExpand] = useState(true);
     const [msgCount, setMsgCount] = useState<number>(0);

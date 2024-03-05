@@ -1,11 +1,3 @@
-/*
- * @Author: shiguang
- * @Date: 2023-04-26 10:23:12
- * @LastEditors: shiguang
- * @LastEditTime: 2023-07-07 18:51:38
- * @Description: utils
- */
-
 import qs from 'qs';
 import { ENUM_PAGE, ENUM_SYSTEM_SOURCE, PageConfig } from '@/const/enum';
 import { MAP_SYSTEM_SOURCE } from '@/const/map';
@@ -14,19 +6,9 @@ import { ROUTER_BASENAME } from '@/config/base';
 import { GetKeyByMap, GetValueByMap } from './type';
 import { reqMemoGetCustomerDetails } from './memoRequest';
 import bwCookie from "js-cookie"
+import { PlatCookie, TokenSignCookie } from '@/config';
 
-export const getEnv = () => {
-    let _env: 'local' | 'prod' | 'master' | 'test01' | 'test02' | 'test03' =
-        'prod';
-    const [env, host] = window.location.host.split('-');
-    if (window.location.port) {
-        _env = 'local';
-    } else if (host) {
-        _env = env as typeof _env;
-    }
-    return _env as typeof _env;
-};
-type PageParams = PageConfig[keyof PageConfig];
+
 
 /**
  * 优先通过接口获取 当前是 D2C 还是 B2B
@@ -185,6 +167,7 @@ export const mapToOptionsByPickKeys = <
  * @returns value
  */
 export const getQueryStringValueByName = (name: string) => {
+     // Client-side-only 
     return new URLSearchParams(window.location.search).get(name);
 };
 
@@ -203,13 +186,15 @@ export const secureJSONParse = <T>(str: any, defaultValue?: T) => {
 
 export interface LocalStorageData {
     /** 用户 token */
-    'production_route/token'?: {
+    key?: {
         /** 过期时间?? */
         expire: number;
         /** 用户 token，在切换店铺的时候 token 不会变化 */
         val: string;
     };
 }
+
+
 
 /** 本地Cookie 存储信息 */
 export enum ENUM_LOCAL_STORAGE_KEY {
@@ -220,27 +205,30 @@ export enum ENUM_LOCAL_STORAGE_KEY {
 }
 
 export const getSessionStorageByKey = <T>(key: string, defaultValue?: T) => {
-    const jsonString = window.sessionStorage.getItem(key);
-    return secureJSONParse(jsonString, defaultValue);
+    if(typeof window !== 'undefined'){
+        const jsonString = window.sessionStorage.getItem(key);
+        return secureJSONParse(jsonString, defaultValue);
+    }
 };
 
 export const getLocalStorageByKey = <K extends keyof LocalStorageData, T>(
     key: string,
     defaultValue?: LocalStorageData[K]
 ) => {
-    const jsonString = window.localStorage.getItem(key);
-    return secureJSONParse(jsonString, defaultValue);
+    if(typeof window !== 'undefined'){
+        const jsonString = window.localStorage.getItem(key);
+        return secureJSONParse(jsonString, defaultValue);
+    }
+    return []
 };
 
-const aa = getLocalStorageByKey(ENUM_LOCAL_STORAGE_KEY.TOKEN);
 
 
 /** 通过 cookie 获取登录信息 */
-export const getCookieToken=bwCookie.get(ENUM_LOCAL_STORAGE_KEY.TOKEN);
+export const getCookieToken=bwCookie.get(TokenSignCookie);
 
 /** 通过 cookie 获取登录信息 */
-export const getCookiePlat=bwCookie.get(ENUM_LOCAL_STORAGE_KEY.PLAT);
-
+export const getCookiePlat=bwCookie.get(PlatCookie)||'d2c';
 
 export function formatTimeZone(time: any, offset: any) {
     // 创建一个Date对象 time时间 offset 时区  中国为  8
@@ -252,4 +240,12 @@ export function formatTimeZone(time: any, offset: any) {
     const utc = localTime + localOffset;
     const wishTime = utc + 3600000 * offset;
     return new Date(wishTime);
+}
+
+export const isB2B=()=>{
+    return getCookiePlat==='b2b'
+}
+
+export const isD2C=()=>{
+    return getCookiePlat==='d2c'
 }

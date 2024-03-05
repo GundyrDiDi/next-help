@@ -1,24 +1,18 @@
-
+"use client"
 import { useContext, useEffect, useRef, useState } from 'react';
 import { Badge,  Popover, message } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
 import {  useAtom } from 'jotai';
 import dayjs from 'dayjs';
 import { CustomerDetail } from '@/model';
-import IconVIPLogo from '@/components/Icon/IconVIPLogo';
 import IconHeadSculpture from '@/components/Icon/IconHeadSculpture';
 import { request } from '@/config/request';
-import {
-    CustomerMembershipResDTO,
-} from '@/service/customer';
-import { formatTimeZone, jumpPage } from '@/utils';
+
+import { formatTimeZone, getCookiePlat, isB2B, jumpPage } from '@/utils';
 import { ENUM_PAGE, ENUM_SYSTEM_SOURCE } from '@/const/enum';
 import { getShopId } from '@/config/request/interceptors';
-import { getFloatExchange, getExchange } from '@/config/request/price';
-import { Site, getCountryByNavigatorLang, siteMapAreaName } from '@/const';
+import { Site, siteMapAreaName } from '@/const';
 import { useRate } from '@/hooks/useRate';
-import KR_Flag from '@/assets/image/flag_KR_tab.png';
-import JP_Flag from '@/assets/image/flag_JP_tab.png';
 import UserDropDwon from './components/UserDropDwon';
 import ShopList from './components/ShopList';
 import MembershipLevel from './components/MembershipCenter';
@@ -43,34 +37,39 @@ const CKBHeader = () => {
     const lang=useContext(LocalContext)
     const {t,i18n}=useTranslation(lang)
 
-
     const [date, setDate] = useState<string>();
     const [customerDetail] = useAtom(CustomerDetail);
+    
     const stationCode =
-        customerDetail?.stationCode || getCountryByNavigatorLang();
+        customerDetail?.stationCode ||''
     const [isShowShopList, setIsShowShopList] = useState(false);
     const [messageNum, setMessageNum] = useState<number>();
     const [cartNum, setCartNum] = useState<number>();
-    const [newMemberActivity, setNewMemberActivity] = useState();
-    const [flagImage, setFlagImage] = useState<string>();
+    // const [newMemberActivity, setNewMemberActivity] = useState();
     const [site, setSite] = useState<string>();
-    const [rateValue, setRate] = useState<any>();
     const membership = customerDetail?.membership;
-    const systemSource = customerDetail?.systemSource;
+    const [userInfo]=useAtom(CustomerDetail);
+    console.log(getCookiePlat,'getCookiePlat');
+    
+    const systemSource = isB2B()?ENUM_SYSTEM_SOURCE.B2B:ENUM_SYSTEM_SOURCE.D2C;
     // 获取消息未读数量
     const getPrivateUnreadCount = async () => {
         const res = await request.customer.notify.getPrivateUnreadCount();
         setMessageNum(res.data);
     };
     useEffect(() => {
-        getPrivateUnreadCount();
-    }, []);
+        if(userInfo?.customerId){
+            getPrivateUnreadCount();
+            getCurrentCartList();
+        }
+    }, [userInfo?.customerId]);
     useEffect(() => {
+        const timer = timerRef.current.timer;
+       if(customerDetail?.customerId){
         setSite(customerDetail?.site);
         const z = customerDetail?.utcTimeZone
             ? Number(customerDetail?.utcTimeZone?.replace('UTC', ''))
             : 0 - new Date().getTimezoneOffset() / 60;
-        const timer = timerRef.current.timer;
         clearInterval(+timer);
         timerRef.current.timer = setInterval(() => {
             const date = dayjs(
@@ -78,10 +77,11 @@ const CKBHeader = () => {
             ).format('YYYY/MM/DD HH:mm:ss');
             setDate(date);
         }, 1000);
+       }
+        return ()=>clearInterval(+timer)
     }, [customerDetail]);
-
-    const { rate, floatingRate, getCountryCurrency, floatExchangeRate } =
-        useRate();
+    
+    const { rate, floatingRate, getCountryCurrency, floatExchangeRate } =useRate();
     // 获取购物车数量
     const getCurrentCartList = async () => {
         try {
@@ -96,9 +96,6 @@ const CKBHeader = () => {
             systemSource === ENUM_SYSTEM_SOURCE.D2C ? '/d2c/' : '/b2b/';
         window.location.replace(window.location.origin + plat + 'index/pure');
     };
-    useEffect(() => {
-        getCurrentCartList();
-    }, []);
     const getRate = (rate: number) => {
         if (!customerDetail?.isEN) {
             return Math.floor(rate * 100) / 100;
@@ -121,6 +118,8 @@ const CKBHeader = () => {
         // 英国站不展示
         return false;
     };
+    console.log('systemSource',systemSource);
+    
     return (
         <div className="CKBHeader">
             <div className="wrap of-hd">
@@ -169,7 +168,7 @@ const CKBHeader = () => {
                                 <MembershipLevel
                                     t={t}
                                     membership={membership}
-                                    newMemberActivity={newMemberActivity}
+                                    // newMemberActivity={newMemberActivity}
                                 />
                             </div>
                         </div>
@@ -371,7 +370,7 @@ const CKBHeader = () => {
                         </a>
                         <TogglePlat
                             systemSource={
-                                systemSource || ENUM_SYSTEM_SOURCE.D2C
+                                systemSource 
                             }
                         />
                     </div>

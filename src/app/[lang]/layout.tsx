@@ -18,9 +18,9 @@ import CKBHeader from "@/components/CKBHeader";
 import FloatToolbar from "@/components/FloatToolbar";
 import { Local } from "@/i18n/settings";
 import { LocalContext } from "@/i18n/client";
+import Providers from './providers'
+import { isB2B } from "@/utils";
 
-export const atomRequestCustomerDetail = CustomerDetail;
-const { langType } = LoacalLang;
 
 export default function RootLayout({
   children,
@@ -31,26 +31,21 @@ export default function RootLayout({
     lang: Local;
   }
 }>) {
-  const [locale, setLocale] = useState<Locale>();
-  const [customerDetail, requestCustomerDetail] = useAtom(
-    atomRequestCustomerDetail
-);
-// const [local] = useAtom(langType);
-const systemSource = customerDetail?.systemSource;
+  const [customerDetail, requestCustomerDetail] = useAtom(CustomerDetail);
+
+  const systemSource = customerDetail?.systemSource;
 
 useEffect(() => {
   requestCustomerDetail();
 }, [requestCustomerDetail]);
 
-useEffect(() => {
-  const locale = {
-   [Local.JA]:ja_JP,
-   [Local.ZH]:zh_CN,
-   [Local.KO]:ko_KR,
-   [Local.EN]:en_GB,
-  }[lang]
-  setLocale(locale);
-}, [lang]);
+const locale = {
+  [Local.JA]:ja_JP,
+  [Local.ZH]:zh_CN,
+  [Local.KO]:ko_KR,
+  [Local.EN]:en_GB,
+ }[lang];
+
 
 // 通过系统来源获取主题色
 const getThemeStyle = useCallback(() => {
@@ -137,19 +132,19 @@ const getThemeStyle = useCallback(() => {
 }, [systemSource]);
 
   return (
-    <html lang="en">
+    <html lang={lang} data-theme={isB2B()?'B2B':'D2C'}>
       <script type="text/javascript" src="https://cdn.channel.io/plugin/ch-plugin-web.js" async></script>
       <body >
-        <div id="J_B2B" className="App">
-              <LocalContext.Provider value={lang}>
-                <ConfigProvider locale={locale} theme={getThemeStyle()}>
-                  <CKBHeader/> 
-                  <FloatToolbar/>
-                    {children}
-                 <CKBFooter/>
-                </ConfigProvider>
-                </LocalContext.Provider>
-          </div>
+          <Providers>
+            <LocalContext.Provider value={lang}>
+                  <ConfigProvider locale={locale} theme={getThemeStyle()}>
+                    <CKBHeader/> 
+                    <FloatToolbar/>
+                      {children}
+                  <CKBFooter/>
+                  </ConfigProvider>
+                  </LocalContext.Provider>
+            </Providers>
         </body>
     </html>
   );

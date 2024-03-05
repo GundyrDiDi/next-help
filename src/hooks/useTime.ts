@@ -1,12 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
-import { atom, useAtom } from 'jotai';
+import { useState, useEffect } from 'react';
+import {  useAtom } from 'jotai';
 import dayjs from 'dayjs';
-import { atomRequestCustomerDetail } from '@/App';
-import { siteMapMonetaryUnit, Site, countryCurrency } from '@/const';
-import { getFloatExchange, getOriginExchangeRate } from '@/service/settlement';
+import { CustomerDetail } from '@/model';
 
 export const useTime = () => {
-    const [customerDetail] = useAtom(atomRequestCustomerDetail);
+    const [userInfo] = useAtom(CustomerDetail);
 
     /** 服务器差额时间 */
     const [customerUtcTimeZone, setCustomerUtcTimeZone] = useState<number>(9);
@@ -14,15 +12,15 @@ export const useTime = () => {
     useEffect(() => {
         // 目前服务器时间为+8东八区时间，根据用户所在地的时区加减时间
         const defaultZone = 8;
-        const zone = customerDetail?.utcTimeZone
-            ? Number(customerDetail?.utcTimeZone?.replace('UTC', ''))
+        const zone = userInfo?.utcTimeZone
+            ? Number(userInfo?.utcTimeZone?.replace('UTC', ''))
             : 0 - new Date().getTimezoneOffset() / 60;
         setCustomerUtcTimeZone(zone);
         const defferZone = zone - defaultZone;
-        if (customerDetail?.isEN) {
+        if (userInfo?.isEN) {
             setDefferTime(defferZone);
         }
-    }, [customerDetail]);
+    }, [userInfo]);
     const getStationTime = (time: any, format?: any) => {
         if (time && time !== '-') {
             return dayjs(time)

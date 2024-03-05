@@ -1,20 +1,11 @@
-/*
- * @Author: shiguang
- * @Date: 2023-04-28 11:51:00
- * @LastEditors: shiguang
- * @LastEditTime: 2023-08-02 10:53:55
- * @Description: interceptors
- */
 import { message } from 'antd';
 import { api, apiInstanceList } from '@/service';
 import { ENUM_SYSTEM_SOURCE } from '@/const/enum';
 import Code from '@/i18n/locales/code.json';
-import { Site, getCountryByNavigatorLang } from '@/const';
-import { Lang } from '@/i18n/init';
-import { serviceConfig } from './swaggerServiceConfig';
 import { InternalAxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie'
-
+import { PlatCookie } from '..';
+const domain =  '.theckb.com'
 // 用户信息
 export interface User {
     loginInfo: {
@@ -27,7 +18,7 @@ export interface User {
 }
 
 // 客户端获取 token
-export const getToken = () => {
+export const getToken = (config: InternalAxiosRequestConfig) => {
     const tokenStr = Cookies.get('production_route/token');
     if (!tokenStr) return;
     try {
@@ -50,9 +41,10 @@ export const getShopId = () => {
 };
 
 /** B2B/D2C 主题切换 */
-export const togglePlat = (systemSource: number) => {
+export const togglePlat = (systemSource: number=ENUM_SYSTEM_SOURCE.D2C) => {
     const plat = systemSource === ENUM_SYSTEM_SOURCE.D2C ? 'D2C' : 'B2B';
-    window.document.documentElement.setAttribute('theme', plat);
+    Cookies.set(PlatCookie,plat.toLocaleLowerCase(),{ path: '/', domain })
+    window.document.documentElement.setAttribute('data-theme', plat);
 };
 
 /**
@@ -69,21 +61,7 @@ export const getUserInLocal = () => {
     }
 };
 
-// const translateByRspCode = (msgCode: string) => {
-//     /** 后端接口返回code,前端翻译 */
-//     const stationCode =
-//         localStorage.getItem('stationCode') || getCountryByNavigatorLang();
-//     const stationCodeMapLocal =
-//         {
-//             [Site.JP]: Lang.ja_JP,
-//             [Site.KR]: Lang.ko_KR,
-//             [Site.UK]: Lang.en_GB
-//         }[stationCode] || '';
 
-//     return (
-//         Code[stationCodeMapLocal][msgCode] ?? Code[stationCodeMapLocal].noMatch
-//     );
-// };
 
 apiInstanceList.forEach((item) => {
     // 请求拦截

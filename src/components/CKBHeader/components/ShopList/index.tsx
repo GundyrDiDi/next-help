@@ -13,7 +13,9 @@ import {
 import './index.scss';
 import { request } from '@/config/request';
 import { togglePlat } from '@/config/request/interceptors';
-import { Site, getCountryByNavigatorLang } from '@/const';
+import { Site } from '@/const';
+import { useAtom } from 'jotai';
+import { CustomerDetail } from '@/model';
 const myShopIcon:{ [key: number]: string } = {
     1: 'https://static-s.theckb.com/BusinessMarket/OEM/shopIcon_base.png',
     4: 'https://static-s.theckb.com/BusinessMarket/OEM/shopIcon_amazon.png',
@@ -39,24 +41,20 @@ const ShopList = ({
 }: ShopListProps) => {
     const [isOpen, action] = useBoolean(false);
     const [isCreateShopTipOpen, createShopTipOpen] = useBoolean(false);
-    const [customerDetail, setCustomerDetail] =
-        useState<CustomerDetailRespDTO>();
+    const [userInfo,getCustomerDetail]=useAtom(CustomerDetail)
     const stationCode =
-        customerDetail?.stationCode || getCountryByNavigatorLang();
+    userInfo?.stationCode;
     const [customerShopList, setCustomerShopList] =
         useState<CustomerShopRespDTO>();
     const [shopPlatform, setShopPlatform] = useState(0);
     const [loading, setLoading] = useState<boolean>(false);
     const [createShopForm] = Form.useForm();
-    const getCustomerDetail = async () => {
-        const res =
-            await request.customer.getCustomerDetails.getCustomerDetails();
-        setCustomerDetail(res.data);
-        togglePlat(res.data?.systemSource as number);
-    };
+
     useEffect(() => {
-        getCustomerDetail();
-    }, []);
+        if(userInfo?.customerId){
+            togglePlat(userInfo?.systemSource as number);
+        }
+    }, [userInfo?.customerId, userInfo?.systemSource]);
     const shopListMenu = (customerDetail?: CustomerDetailRespDTO) => {
         const arr = customerDetail?.customerShopList?.map((item, index) => {
             return {
@@ -245,7 +243,7 @@ const ShopList = ({
                 <div className="my-[16px] mx-[6px]">
                     <div className="flex text-[#333] text-[16px] font-[500] clear-both mb-[20px] items-center">
                         <span>{t('创建店铺')}</span>
-                        {customerDetail?.stationCode === Site.JP && (
+                        {userInfo?.stationCode === Site.JP && (
                             <QuestionCircleFilled
                                 className="ml-[20px] mt-[-1px]"
                                 onClick={createShopTipOpen.setTrue}
@@ -364,8 +362,9 @@ const ShopList = ({
                         padding: '8px 0',
                         marginTop: 8
                     },
-                    items: shopListMenu(customerDetail)
+                    items: shopListMenu(userInfo)
                 }}
+                // eslint-disable-next-line react/no-children-prop
                 children={children}
                 destroyPopupOnHide
             />

@@ -1,8 +1,16 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Dispatch, SetStateAction } from 'react';
 import { atom, useAtom } from 'jotai';
 import { CustomerDetail } from '@/model';
 import { siteMapMonetaryUnit, Site, countryCurrency } from '@/const';
 import { request } from '@/config/request';
+import { CustomerDetailRespDTO } from '@/service/customer';
+
+interface Props {
+    customerDetail?: CustomerDetailRespDTO;
+    setRate:  Dispatch<SetStateAction<number | undefined>>
+    setFloatingRate: (val: number) => void;
+    setFloatExchangeRate: (val: number) => void;
+}
 
 const reqRate = (
     {
@@ -10,7 +18,7 @@ const reqRate = (
         setRate,
         setFloatingRate,
         setFloatExchangeRate
-    } :any
+    }:Props
 ) => {
     const stationCode = customerDetail?.stationCode;
     const mainCustomerId = customerDetail?.mainCustomerId;
@@ -18,7 +26,6 @@ const reqRate = (
       request.settlement.exchangeRate.cnyToJpyExchangeRateAfterConfigFloat({
             mainCustomerId
         }).then((res) => {
-            console.log('res', res);
             // 英国站 美元比人民币高,后端给的7.14  1￥=7.14$
             // 后端的汇率逻辑 7.14￥=1$   1￥=200韩元  1￥ = 20日元
             // 前端金额的计算统一是乘法 人民币*汇率得到对应国家的金额  所以英国要做除法
@@ -30,8 +37,8 @@ const reqRate = (
                 );
             } else {
                 setRate(res.data?.originalExchangeRate);
-                setFloatingRate(res.data?.exchangeRate);
-                setFloatExchangeRate(res.data?.floatExchangeRate);
+                setFloatingRate(Number(res.data?.exchangeRate));
+                setFloatExchangeRate(Number(res.data?.floatExchangeRate));
             }
         });
     } else {
@@ -74,10 +81,12 @@ export const useRate = () => {
         rateInternitalRef.current = setInterval(
             () => {
                 reqRate(
+                    {
                     customerDetail,
                     setRate,
                     setFloatingRate,
                     setFloatExchangeRate
+                    }
                 );
             },
             1000 * 60 * 30

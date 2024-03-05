@@ -1,11 +1,17 @@
+"use client"
 import React from 'react';
 import './index.scss';
 import { request } from '@/config/request';
 import { ENUM_SYSTEM_SOURCE } from '@/const/enum';
+import { useAtom } from 'jotai';
+import { atomCustomerDetail } from '@/model/CustomerDetail';
+import { togglePlat } from '@/config/request/interceptors';
+
 interface PlatDTO {
     label: string;
     path: string;
     name: string;
+    type:ENUM_SYSTEM_SOURCE;
 }
 const Plats = [
     {
@@ -26,34 +32,44 @@ interface TogglePlatProps {
 }
 const TogglePlat = (props: TogglePlatProps) => {
     const { systemSource } = props;
+    console.log(systemSource,'TogglePlatProps-systemSource');
+    
+    const [useInfo]=useAtom(atomCustomerDetail);
     /** B2B D2C切换 */
     const changePlat = async (item: PlatDTO) => {
-        const res = await request.customer.changeLogin.changeLogin();
-        if (res.data?.token) {
-            window.localStorage.setItem(
-                'production_route/token',
-                JSON.stringify({
-                    val: res.data?.token,
-                    expire: undefined
-                })
-            );
-            const fistShopId = res.data?.customerShopList?.[0].customerShopId;
-            window.localStorage.setItem(
-                'production_route/curShop',
-                JSON.stringify({
-                    val: fistShopId,
-                    expire: null
-                })
-            );
-            const plat =
-                res.data.customerRespDTO?.systemSource ===
-                ENUM_SYSTEM_SOURCE.D2C
-                    ? '/d2c/'
-                    : '/b2b/';
-            window.location.replace(
-                window.location.origin + plat + 'index/pure'
-            );
+        if(useInfo?.customerId){
+            const res = await request.customer.changeLogin.changeLogin();
+            if (res.data?.token) {
+                togglePlat(res.data?.customerRespDTO?.systemSource??ENUM_SYSTEM_SOURCE.D2C)
+                window.localStorage.setItem(
+                    'production_route/token',
+                    JSON.stringify({
+                        val: res.data?.token,
+                        expire: undefined
+                    })
+                );
+                const fistShopId = res.data?.customerShopList?.[0].customerShopId;
+                window.localStorage.setItem(
+                    'production_route/curShop',
+                    JSON.stringify({
+                        val: fistShopId,
+                        expire: null
+                    })
+                );
+                const plat =
+                    res.data.customerRespDTO?.systemSource ===
+                    ENUM_SYSTEM_SOURCE.D2C
+                        ? '/d2c/'
+                        : '/b2b/';
+                window.location.replace(
+                    window.location.origin + plat + 'index/pure'
+                );
+            }
+        }else{
+            togglePlat(item.type)
+            window.location.reload()
         }
+        
     };
     return (
         <div id="toggle-plat" className="ml-[30px]">
@@ -62,7 +78,7 @@ const TogglePlat = (props: TogglePlatProps) => {
                     <div
                         onClick={() => changePlat(item)}
                         className={
-                            systemSource === item.type
+                            +systemSource === item.type
                                 ? 'plat-btn active'
                                 : 'plat-btn'
                         }

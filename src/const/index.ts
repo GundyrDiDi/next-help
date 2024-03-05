@@ -211,26 +211,6 @@ countryCurrency.set(Site.JP, 'JPY');
 countryCurrency.set(Site.KR, 'KRW');
 countryCurrency.set(Site.UK, 'USD');
 
-/**
-* 未登录时，根据浏览器语言，返回用户所在站点
-* @returns Site
-*/
-const getCountryByNavigatorLang = (): Site => {
-  const lang = navigator.language;
-  for (let i = 0; i < countries.length; i++) {
-      const country = countries[i];
-      // 若浏览器语言在某个国家语言list中，则返回改国家对应的站点。没有则是其他国家(英国站)
-      if (country.navigatorLang.includes(lang)) {
-          const countryKey = country.key;
-          const site = countryMapSite.get(countryKey) as Site;
-          return site;
-      }
-      return Site.JP;
-  }
-
-  return Site.JP;
-};
-
 enum TermType {
   /** 利用规约 */
   utilize = 'utilize',
@@ -254,6 +234,5 @@ export {
   koreaStationCor2Country,
   ukStationCor2Country,
   siteMapAreaName,
-  getCountryByNavigatorLang,
   simpleSite
 };

@@ -15,7 +15,6 @@ interface UserDropDwonProps {
     className?: string | undefined;
     customerDetail?: CustomerDetailRespDTO;
 }
-console.log(window,'window');
 
 // hover:text-[color:--color-primary-light]
 const UserDropDwon: React.FC<UserDropDwonProps> = (props) => {
