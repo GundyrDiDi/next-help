@@ -1,11 +1,113 @@
 $ft-color: var(--ftcolor);
+$ft-color: var(--ftcolor);
+
 .Footer {
   width: 100%;
   background-color: $ft-color;
-  .main {
-    height: 220px;
+
+  .concat {
+    padding: 13px 0;
+
   }
-  .bottom {
+
+  .concat-d2c{
+    background-color: #576663;
+  }
+  .concat-b2b{
+    background-color: #446182;
+  }
+
+  a {
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+
+  .hover {
+    &:hover {
+      color: #FEFEFE;
+    }
+  }
+
+  &-main {
+    height: 220px;
+    padding-top: 24px;
+    display: flex;
+    justify-content: space-between;
+
+    .column {
+      color: #FEFEFE;
+      font-size: 14px;
+      flex: 1;
+
+      &:last-child {
+        flex: unset;
+      }
+
+
+      &-td {
+        margin-top: 30px;
+
+        &-row {
+          margin-bottom: 20px;
+        }
+      }
+    }
+  }
+
+  &-bottom {
     height: 60px;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+
+    .left {
+      display: flex;
+
+      &-logo {
+        margin-top: 6px;
+        margin-left: 6px;
+
+        img {
+          height: 36px;
+          margin-top: 8px
+        }
+      }
+
+      &-social {
+        margin-left: 7px;
+        margin-top: 14px;
+
+        img {
+          width: 34px;
+          height: 34px;
+          margin-right: 12px;
+        }
+      }
+    }
+
+    .right {
+      margin-top: 26px;
+
+      a {
+        display: inline-block;
+        vertical-align: middle;
+        color: $ft-color;
+        font-weight: bold;
+        font-size: 14px;
+        margin-right: 40px;
+
+        img {
+          width: 16px;
+          height: 13px;
+          margin-right: 3px;
+        }
+
+        &:hover {
+          color: $ft-color;
+        }
+      }
+    }
   }
 }

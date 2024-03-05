@@ -147,7 +147,7 @@ const getThemeStyle = useCallback(() => {
                     <CKBHeader plat={plat}/> 
                     <FloatToolbar/>
                       {children}
-                  <CKBFooter/>
+                  <CKBFooter lang={lang} plat={plat}/>
                   </ConfigProvider>
                   </LocalContext.Provider>
             </Providers>
