@@ -21,6 +21,7 @@ import TogglePlat from './components/TogglePlat';
 import './index.scss';
 import { LocalContext, useTranslation } from '@/i18n/client';
 import { myShopIcon } from '@/const/staticURL';
+import platAtom from '@/model/Plat';
 
 
 
@@ -28,7 +29,7 @@ const menuCommonStyle =
     'flex items-center ml-[32px] hover:text-[color:--color-primary-light] cursor-pointer';
 
 
-const CKBHeader = () => {
+const CKBHeader = ({plat}:{plat?:string}) => {
     const timerRef = useRef<{
         timer: NodeJS.Timer;
     }>({
@@ -49,9 +50,8 @@ const CKBHeader = () => {
     const [site, setSite] = useState<string>();
     const membership = customerDetail?.membership;
     const [userInfo]=useAtom(CustomerDetail);
-    console.log(getCookiePlat,'getCookiePlat');
-    
-    const systemSource = isB2B()?ENUM_SYSTEM_SOURCE.B2B:ENUM_SYSTEM_SOURCE.D2C;
+    // const [plat]=useAtom(platAtom)
+    const systemSource = plat==='d2c'?ENUM_SYSTEM_SOURCE.D2C:ENUM_SYSTEM_SOURCE.B2B;
     // 获取消息未读数量
     const getPrivateUnreadCount = async () => {
         const res = await request.customer.notify.getPrivateUnreadCount();
@@ -118,7 +118,7 @@ const CKBHeader = () => {
         // 英国站不展示
         return false;
     };
-    console.log('systemSource',systemSource);
+    console.log('systemSource',plat);
     
     return (
         <div className="CKBHeader">

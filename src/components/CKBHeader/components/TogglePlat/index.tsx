@@ -32,7 +32,6 @@ interface TogglePlatProps {
 }
 const TogglePlat = (props: TogglePlatProps) => {
     const { systemSource } = props;
-    console.log(systemSource,'TogglePlatProps-systemSource');
     
     const [useInfo]=useAtom(atomCustomerDetail);
     /** B2B D2C切换 */

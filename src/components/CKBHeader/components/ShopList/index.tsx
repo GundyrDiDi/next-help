@@ -211,11 +211,11 @@ const ShopList = ({
                 wrapClassName="p-0 m-0"
                 width={1200}
                 mask={false}
-                bodyStyle={{
+                styles={{body:{
                     padding: 0,
                     margin: 0,
                     marginBottom: -40
-                }}
+                }}}
                 footer={null}
             >
                 <div className="relative left-[-24px] top-[-20px] w-[1200px] rounded-[4px] h-[675px]">

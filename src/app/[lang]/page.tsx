@@ -2,6 +2,9 @@ import { useAtom } from 'jotai';
 import React, { useState } from 'react';
 import { Locale } from 'antd/lib/locale';
 import { Metadata } from 'next';
+import { cookies } from 'next/headers'
+import { PlatCookie } from '@/config';
+import platAtom from '@/model/Plat';
 
 export const metadata: Metadata = {
   title: "THE CKB",
@@ -17,7 +20,7 @@ function Header({ title }:{title?: string}) {
 export default function HomePage() {
   return (
     <>
-      
+    111
       </>
   );
 }

@@ -8,8 +8,7 @@ import ja_JP from 'antd/locale/ja_JP';
 import ko_KR from 'antd/locale/ko_KR';
 import en_GB from 'antd/locale/en_GB';
 import zh_CN from 'antd/locale/zh_CN';
-import { Locale } from 'antd/lib/locale';
-import { CustomerDetail, Local as LoacalLang } from '@/model';
+import { CustomerDetail} from '@/model';
 import { useAtom } from "jotai";
 import { ConfigProvider } from 'antd';
 import { ThemeConfig } from 'antd/lib/config-provider';
@@ -19,7 +18,9 @@ import FloatToolbar from "@/components/FloatToolbar";
 import { Local } from "@/i18n/settings";
 import { LocalContext } from "@/i18n/client";
 import Providers from './providers'
-import { isB2B } from "@/utils";
+import platAtom from "@/model/Plat";
+import { PlatCookie } from "@/config";
+import { getCookiePlat } from "@/utils";
 
 
 export default function RootLayout({
@@ -32,12 +33,15 @@ export default function RootLayout({
   }
 }>) {
   const [customerDetail, requestCustomerDetail] = useAtom(CustomerDetail);
+  const [plat,setPlat]=useAtom(platAtom)
 
   const systemSource = customerDetail?.systemSource;
 
 useEffect(() => {
   requestCustomerDetail();
-}, [requestCustomerDetail]);
+  console.log(getCookiePlat,'getCookiePlat1');
+  setPlat(getCookiePlat)
+}, [requestCustomerDetail, setPlat]);
 
 const locale = {
   [Local.JA]:ja_JP,
@@ -131,14 +135,16 @@ const getThemeStyle = useCallback(() => {
   return obj;
 }, [systemSource]);
 
+
+
   return (
-    <html lang={lang} data-theme={isB2B()?'B2B':'D2C'}>
+    <html lang={lang} data-theme={plat.toLocaleUpperCase()}>
       <script type="text/javascript" src="https://cdn.channel.io/plugin/ch-plugin-web.js" async></script>
       <body >
           <Providers>
             <LocalContext.Provider value={lang}>
                   <ConfigProvider locale={locale} theme={getThemeStyle()}>
-                    <CKBHeader/> 
+                    <CKBHeader plat={plat}/> 
                     <FloatToolbar/>
                       {children}
                   <CKBFooter/>
@@ -149,3 +155,4 @@ const getThemeStyle = useCallback(() => {
     </html>
   );
 }
+

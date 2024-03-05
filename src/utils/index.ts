@@ -225,10 +225,10 @@ export const getLocalStorageByKey = <K extends keyof LocalStorageData, T>(
 
 
 /** 通过 cookie 获取登录信息 */
-export const getCookieToken=bwCookie.get(TokenSignCookie);
+export const getCookieToken=bwCookie.get(TokenSignCookie)||bwCookie.get(encodeURIComponent(TokenSignCookie));
 
 /** 通过 cookie 获取登录信息 */
-export const getCookiePlat=bwCookie.get(PlatCookie)||'d2c';
+export const getCookiePlat=bwCookie.get(PlatCookie)||bwCookie.get(encodeURIComponent(PlatCookie))||'d2c';
 
 export function formatTimeZone(time: any, offset: any) {
     // 创建一个Date对象 time时间 offset 时区  中国为  8

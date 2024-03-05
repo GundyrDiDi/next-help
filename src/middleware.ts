@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { cookies } from 'next/headers'
 // import {  } from "";
 // import { languages } from '@/i18n/init'
+
 
 
 // export const config = {
@@ -9,6 +11,7 @@ import { NextRequest, NextResponse } from 'next/server'
 // }
 
 export function middleware(req:NextRequest) {
+  
   // if (
   //   !languages.some(loc => req.nextUrl.pathname.startsWith(`/${loc}`)) &&
   // ) {
