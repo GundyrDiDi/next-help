@@ -64,6 +64,9 @@ $ft-color: var(--ftcolor);
 
     .left {
       display: flex;
+      .left-social{
+        display: flex;
+      }
 
       &-logo {
         margin-top: 6px;

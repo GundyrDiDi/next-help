@@ -1,19 +1,19 @@
 import { atom, useAtom } from 'jotai';
 import { getLang } from '@/i18n/index';
+import { Local } from '@/i18n/settings';
 
-const langType = atom(getLang());
+const langType = atom<Local>(Local.EN);
 
-const local = atom((get) => get(langType));
+export const readLocal = atom((get) => get(langType));
 
-const writeLocal = atom(null, (_, set, update: string) => {
+const writeLocal = atom(null, (_, set, update: Local) => {
     set(langType, update);
 });
 
-const getLocal = () => local as unknown as string;
 
 const out={
     langType,
-    getLocal,
+    readLocal,
     writeLocal
 };
 

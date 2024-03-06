@@ -8,7 +8,7 @@ export interface  FooterData {
   }[];
 }
 
-export const jalist:FooterData[] = [
+export const jaList:FooterData[] = [
   {
     id: '1',
     title: '什么是THE CKB',
@@ -301,26 +301,43 @@ export const enList:FooterData[] = [
   }
 ]
 
+export interface imgLinks {
+  facebook: string;
+  twitter:string;
+  instagram?: string;
+  tiktok: string;
+  line?: string;
+  youtube:string;
+  kakao?:string;
+  company:string;
+}
 
-export const jaSite={
+
+export const jaSite:imgLinks={
   'facebook':'https://www.facebook.com/profile.php?id=100088353218048',
   'twitter':'https://twitter.com/Theckb_official',
   'instagram':'https://www.instagram.com/theckb_official/',
-  'tiktok':'https://www.tiktok.com/@the_ckb'
+  'tiktok':'https://www.tiktok.com/@the_ckb',
+  'line':'https://line.me/R/ti/p/@962puoaf?oat_content=url',
+  'youtube':'https://www.youtube.com/@theckb2011',
+  'company':'https://www.theckb.com/company/'
 }
 
-export const koSite={
+export const koSite:imgLinks={
   'facebook':'https://www.facebook.com/profile.php?id=100086914794478',
   'twitter':'https://twitter.com/k_theckb',
   'instagram':'https://www.instagram.com/korea_theckb/',
   'tiktok':'https://www.tiktok.com/@theckb_en?lang=en',
-  'kakao':'https://pf.kakao.com/_uzWxoxj'
-  
+  'kakao':'https://pf.kakao.com/_uzWxoxj',
+  'youtube':"https://youtube.com/@theckb_korea?si=Tx1acBa4UsUrFDtA",
+  'company':'https://www.theckbkorea.com/%ED%9A%8C%EC%82%AC-%EC%A0%95%EB%B3%B4'
 }
 
-export const enSite={
+export const enSite:imgLinks={
   'facebook':'https://www.facebook.com/profile.php?id=100090941351148',
   'twitter':'https://twitter.com/TheCKB_us',
   'instagram':'https://www.instagram.com/theckb_en/?img_index=5',
-  'tiktok':'https://www.tiktok.com/@theckb_en?lang=en'
+  'tiktok':'https://www.tiktok.com/@theckb_en?lang=en',
+  'youtube':'https://www.youtube.com/@theckb_en/videos',
+  'company':'https://www.theckbofficial.com/about-9'
 }

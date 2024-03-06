@@ -7,8 +7,8 @@ import { GetKeyByMap, GetValueByMap } from './type';
 import { reqMemoGetCustomerDetails } from './memoRequest';
 import bwCookie from "js-cookie"
 import { PlatCookie, TokenSignCookie } from '@/config';
-
-
+import { Local } from '@/i18n/settings';
+import {readLocal} from '@/model/Local'
 
 /**
  * 优先通过接口获取 当前是 D2C 还是 B2B
@@ -248,4 +248,9 @@ export const isB2B=()=>{
 
 export const isD2C=()=>{
     return getCookiePlat==='d2c'
+}
+/** 跳转外展链接 */
+export const gotoLink=(path:string)=>{
+   return `${process.env.THE_CKB_LINK}${readLocal}/${path}`
+
 }

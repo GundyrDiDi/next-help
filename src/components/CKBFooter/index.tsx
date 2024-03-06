@@ -1,8 +1,9 @@
 import { Local } from "@/i18n/settings";
 import "./index.scss";
-import { jalist, koList, enList, FooterData } from "./footerData";
+import { jaList, koList, enList, FooterData, imgLinks, jaSite, koSite, enSite } from "./footerData";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { gotoLink } from "@/utils";
 interface Props {
   plat?: string;
   lang: Local;
@@ -11,16 +12,21 @@ interface Props {
 const Footer = ({ plat, lang }: Props) => {
   // 链接列表
   const [aList, setAList] = useState<FooterData[]>();
+  const [logoLink, setLogoLink]=useState<imgLinks>()
   const { t, i18n } = useTranslation(lang);
   useEffect(() => {
     if (lang === Local.JA) {
-      setAList(jalist);
+      setAList(jaList);
+      setLogoLink(jaSite)
     } else if (lang === Local.KO) {
       setAList(koList);
+      setLogoLink(koSite)
     } else {
       setAList(enList);
+      setLogoLink(enSite)
     }
   }, [lang]);
+
 
   return (
     <div className="Footer">
@@ -59,6 +65,56 @@ const Footer = ({ plat, lang }: Props) => {
               alt=""
               />
           </div>
+          <div className="left-social">
+              {
+              logoLink?.facebook&& <a href={logoLink.facebook} target="_blank">
+                 <img referrerPolicy="no-referrer" src="https://static-s.theckb.com/BusinessMarket/Client/footer/fb.png" alt="facebook"/>
+              </a>
+              }
+               {
+                logoLink?.twitter&& <a href={logoLink.twitter} target="_blank">
+                 <img referrerPolicy="no-referrer" src="https://static-s.theckb.com/BusinessMarket/Client/footer/tw.png" alt="twitter"/>
+                </a>
+              }
+               {
+                logoLink?.instagram&& <a href={logoLink.instagram} target="_blank">
+                 <img referrerPolicy="no-referrer" src="https://static-s.theckb.com/BusinessMarket/Client/footer/ins.png" alt="instagram"/>
+                </a>
+              }
+               {
+                logoLink?.kakao&& <a href={logoLink.kakao} target="_blank">
+                 <img referrerPolicy="no-referrer" src="https://static-s.theckb.com/BusinessMarket/Client/footer/kakao_footer.png" alt="kakao"/>
+                </a>
+              }
+               {
+                logoLink?.line&& <a href={logoLink.line} target="_blank">
+                 <img referrerPolicy="no-referrer" src="https://static-s.theckb.com/BusinessMarket/Client/footer/line_logo@2x.png" alt="line"/>
+                </a>
+              }
+               {
+                logoLink?.tiktok&& <a href={logoLink.tiktok} target="_blank">
+                 <img referrerPolicy="no-referrer" src="https://static-s.theckb.com/BusinessMarket/Client/footer/TikTok.svg" alt="tiktok"/>
+                </a>
+              }
+              {
+                logoLink?.youtube&& <a href={logoLink.youtube} target="_blank">
+                 <img referrerPolicy="no-referrer" src="https://static-s.theckb.com/BusinessMarket/Client/footer/youtobe.svg" alt="youtube"/>
+                </a>
+              }
+          </div>
+        </div>
+        <div className="right">
+          {
+          lang!==Local.KO&&<>
+          <a href={lang===Local.JA?'https://www.theckb.com/' : 'https://www.theckbkorea.com/'} target="_blank">
+            <img referrerPolicy="no-referrer" src="https://static-s.theckb.com/BusinessMarket/Client/footer/home-d2c.png" alt="" />
+            { t('主站')}
+            </a>
+            <a href={logoLink?.company} target="_blank">{t('会社情報')}</a>
+          </>
+          }
+          <a href={gotoLink('agreement')}>{ t('使用条约')}</a>
+          <a href={gotoLink('policy')}>{ t('隐私权政策')}</a>
         </div>
       </div>
     </div>
