@@ -9,11 +9,11 @@ import Popover from 'antd/es/popover';
 import React, { useState } from 'react';
 import { Button } from 'antd';
 import { CustomerMembershipResDTO } from '@/service/customer';
-import { getToken, request } from '@/config/request/interceptors';
+import {  request } from '@/config/request/interceptors';
 import './index.scss';
 import IconVIPLogo from '@/components/Icon/IconVIPLogo';
 import { ENUM_PAGE } from '@/const/enum';
-import { jumpPage } from '@/utils';
+// import { jumpPage } from '@/utils';
 // import { useRequest } from 'ahooks';
 interface MembershipTrialActivityComboReqDTOS {
     createTime?: string;
@@ -85,7 +85,7 @@ const membershipLevel = (props: MembershipProps) => {
                         <div
                             className="cursor-pointer rounded-[18px] bg-[color:--color-white] text-center leading-[36px] font-[500] hover:text-[color:#735a3a] hover:b g-[color:#fef8f1]"
                             onClick={() => {
-                                jumpPage(ENUM_PAGE.VIP_LEVEL);
+                                // jumpPage(ENUM_PAGE.VIP_LEVEL);
                             }}
                         >
                             {t('去续费')}
@@ -179,7 +179,7 @@ const membershipLevel = (props: MembershipProps) => {
                             <Button
                                 className="btn"
                                 onClick={() => {
-                                    jumpPage(ENUM_PAGE.VIP_LEVEL);
+                                    // jumpPage(ENUM_PAGE.VIP_LEVEL);
                                 }}
                             >
                                 {t('开通会员')}

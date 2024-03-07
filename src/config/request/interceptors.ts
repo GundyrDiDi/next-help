@@ -4,7 +4,8 @@ import { ENUM_SYSTEM_SOURCE } from '@/const/enum';
 import Code from '@/i18n/locales/code.json';
 import { InternalAxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie'
-import { PlatCookie } from '..';
+import {  getCookieToken } from '@/utils/index';
+import { PlatCookie } from '@/config';
 const domain =  '.theckb.com'
 // 用户信息
 export interface User {
@@ -17,17 +18,17 @@ export interface User {
     token: string;
 }
 
-// 客户端获取 token
-export const getToken = (config: InternalAxiosRequestConfig) => {
-    const tokenStr = Cookies.get('production_route/token');
-    if (!tokenStr) return;
-    try {
-        const token = JSON.parse(tokenStr).val as User;
-        return token;
-    } catch (e) {
-        return undefined;
-    }
-};
+// // 客户端获取 token
+// export const getToken = (config: InternalAxiosRequestConfig) => {
+//     const tokenStr = TokenSignCookie
+//     if (!tokenStr) return;
+//     try {
+//         const token = JSON.parse().val as User;
+//         return token;
+//     } catch (e) {
+//         return undefined;
+//     }
+// };
 // 获取店铺id
 export const getShopId = () => {
     const shopStr = window.localStorage.getItem('production_route/curShop');
@@ -67,7 +68,7 @@ apiInstanceList.forEach((item) => {
     // 请求拦截
     item.instance.instance.interceptors.request.use(async function (config:InternalAxiosRequestConfig) {
         config.headers = config.headers ?? {};
-        const token = getToken(config);
+        const token = getCookieToken;
         const shopId = getShopId();
         if (token) {
             config.headers['X-Authtoken'] = token;

@@ -4,7 +4,7 @@ import React, { useContext } from 'react';
 import Cookie from 'js-cookie';
 import IconHeadSculpture from '@/components/Icon/IconHeadSculpture';
 import { ENUM_PAGE } from '@/const/enum';
-import { jumpPage } from '@/utils';
+// import { jumpPage } from '@/utils';
 import { CustomerDetailRespDTO } from '@/service/customer';
 // eslint-disable-next-line no-duplicate-imports
 import { TokenSignCookie } from '@/config';
@@ -72,10 +72,10 @@ const DROP_DWON_LIST = [
                     return (
                         <li
                             onClick={() => {
-                                jumpPage(path, {
-                                    query,
-                                    isOtherSystem: true
-                                });
+                                // jumpPage(path, {
+                                //     query,
+                                //     isOtherSystem: true
+                                // });
                             }}
                             key={path}
                             className="hover:text-[color:--color-primary] hover:bg-[color:--color-primary-light-bg] cursor-pointer px-[16px] leading-[40px]"

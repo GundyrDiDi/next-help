@@ -1,10 +1,4 @@
-/*
- * @Author: shiguang
- * @Date: 2023-05-19 17:05:44
- * @LastEditors: shiguang
- * @LastEditTime: 2023-05-19 17:13:27
- * @Description: 使用缓存请求 减少请求次数
- */
+
 import { request } from '@/config/request';
 
 export const memoAsync = <T extends (...p: any[]) => Promise<any>>(
@@ -31,8 +25,3 @@ export const memoAsync = <T extends (...p: any[]) => Promise<any>>(
     wrapAsyncFn.__getExpectExistPromiseValue = __getExpectExistPromiseValue;
     return wrapAsyncFn;
 };
-
-/** 获取用户列表详情 */
-export const reqMemoGetCustomerDetails = memoAsync(
-    request.customer.getCustomerDetails.getCustomerDetails
-);

@@ -1,14 +1,13 @@
-"use client"
 import { useContext, useEffect, useRef, useState } from 'react';
 import { Badge,  Popover, message } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
-import {  useAtom } from 'jotai';
+import {  useAtom, useStore } from 'jotai';
 import dayjs from 'dayjs';
-import { CustomerDetail } from '@/model';
+import {CustomerDetail} from '@/model';
 import IconHeadSculpture from '@/components/Icon/IconHeadSculpture';
 import { request } from '@/config/request';
 
-import { formatTimeZone, getCookiePlat, isB2B, jumpPage } from '@/utils';
+import { formatTimeZone, getCookiePlat, isB2B } from '@/utils';
 import { ENUM_PAGE, ENUM_SYSTEM_SOURCE } from '@/const/enum';
 import { getShopId } from '@/config/request/interceptors';
 import { Site, siteMapAreaName } from '@/const';
@@ -40,6 +39,7 @@ const CKBHeader = ({plat}:{plat?:string}) => {
 
     const [date, setDate] = useState<string>();
     const [customerDetail] = useAtom(CustomerDetail);
+    // console.log(customerDetail,'customerDetail');
     
     const stationCode =
         customerDetail?.stationCode ||''
@@ -118,8 +118,6 @@ const CKBHeader = ({plat}:{plat?:string}) => {
         // 英国站不展示
         return false;
     };
-    console.log('systemSource',plat);
-    
     return (
         <div className="CKBHeader">
             <div className="wrap of-hd">
@@ -155,7 +153,7 @@ const CKBHeader = ({plat}:{plat?:string}) => {
                                     <div
                                         className="ml-[2px]"
                                         onClick={() => {
-                                            jumpPage(ENUM_PAGE.MY_PROMOTION);
+                                            // jumpPage(ENUM_PAGE.MY_PROMOTION);
                                         }}
                                     >
                                         {t('推广联盟')}
@@ -177,7 +175,7 @@ const CKBHeader = ({plat}:{plat?:string}) => {
                             <div
                                 className="ml-[2px]"
                                 onClick={() => {
-                                    jumpPage(ENUM_PAGE.WORKER_SPACE);
+                                    // jumpPage(ENUM_PAGE.WORKER_SPACE);
                                 }}
                             >
                                 {t('工作台')}
@@ -193,7 +191,7 @@ const CKBHeader = ({plat}:{plat?:string}) => {
                                 <div
                                     className="hover:text-[color:--color-primary-light] mr-[16px] text-[--color-white]"
                                     onClick={() => {
-                                        jumpPage(ENUM_PAGE.SHOP_CART);
+                                        // jumpPage(ENUM_PAGE.SHOP_CART);
                                     }}
                                 >
                                     <span>{t('购物车')}</span>
@@ -277,7 +275,7 @@ const CKBHeader = ({plat}:{plat?:string}) => {
                                 <div
                                     className="hover:text-[color:--color-primary-light] mr-[16px] text-[--color-white]"
                                     onClick={() => {
-                                        jumpPage(ENUM_PAGE.INFORMATION);
+                                        // jumpPage(ENUM_PAGE.INFORMATION);
                                     }}
                                 >
                                     <span>{t('消息')}</span>

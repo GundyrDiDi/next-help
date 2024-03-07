@@ -24,10 +24,10 @@ const atomRequestCustomerDetail = atom(
             if(getCookieToken){
                 const response =
                 await request.customer.getCustomerDetails.getCustomerDetails();
-            localStorage.setItem(
-                'stationCode',
-                response.data?.stationCode as string
-            );
+            // localStorage.setItem(
+            //     'stationCode',
+            //     response.data?.stationCode as string
+            // );
             const res = {
                 ...response.data,
                 // site: getSite(response.data?.stationCode ?? ''),

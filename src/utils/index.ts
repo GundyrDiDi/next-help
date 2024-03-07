@@ -4,41 +4,13 @@ import { MAP_SYSTEM_SOURCE } from '@/const/map';
 import { ROUTER_BASENAME } from '@/config/base';
 // import { getRouter } from '@/App';
 import { GetKeyByMap, GetValueByMap } from './type';
-import { reqMemoGetCustomerDetails } from './memoRequest';
 import bwCookie from "js-cookie"
 import { PlatCookie, TokenSignCookie } from '@/config';
 import { Local } from '@/i18n/settings';
 import {readLocal} from '@/model/Local'
+import { CustomerDetail } from '@/model';
+import { atomCustomerDetail } from '@/model/CustomerDetail';
 
-/**
- * 优先通过接口获取 当前是 D2C 还是 B2B
- * 其次从 path 路径中获取
- */
-export const getCurSystemType = async () => {
-    const { pathname } = window.location;
-    // 如果 pathname 不存在 通过 localstr
-    const [err, tokenObj] = getLocalStorageByKey(ENUM_LOCAL_STORAGE_KEY.TOKEN);
-    if (!err && tokenObj?.val) {
-        const res = await reqMemoGetCustomerDetails();
-        if (res.data?.systemSource !== undefined) {
-            return res.data?.systemSource as ENUM_SYSTEM_SOURCE;
-        }
-        return ENUM_SYSTEM_SOURCE.D2C;
-    }
-    // 如果 pathname 存在通过 pathname 判断
-    if (pathname) {
-        if (pathname.startsWith('/d2c')) {
-            return ENUM_SYSTEM_SOURCE.D2C;
-        }
-        if (pathname.startsWith('/b2b')) {
-            return ENUM_SYSTEM_SOURCE.B2B;
-        }
-        // 意外逻辑走D2C
-        return ENUM_SYSTEM_SOURCE.D2C;
-    }
-    return ENUM_SYSTEM_SOURCE.D2C;
-};
-// getCurSystemType();
 
 interface JumpPageDefaultOptions {
     /** 其他系统 */
@@ -48,46 +20,7 @@ interface JumpPageDefaultOptions {
     /** navigate replace */
     replace?: boolean;
 }
-/**
- * 跳转页面
- */
-export const jumpPage = async <T extends ENUM_PAGE>(
-    path: T,
-    options: PageConfig[ENUM_PAGE] & JumpPageDefaultOptions = {}
-) => {
-    const islocalDev = Boolean(window.location.port);
-    const isCurProject = path.startsWith(`/${ROUTER_BASENAME}`);
-    const { replace = false } = options;
-    const locationOrigin = window.location.origin;
-    // 当前单页跳转
-    if (isCurProject) {
-        let _path = path.replace(`/${ROUTER_BASENAME}`, '');
-        if ('query' in options && options.query) {
-            _path = `${_path}?${qs.stringify(options.query)}`;
-        }
-        if (options.isNewPage === true) {
-            return window.open(`/${ROUTER_BASENAME}${_path}`);
-        }
-        // getRouter().navigate(_path, { replace });
-        return;
-    }
-    const pathPrefix =
-        MAP_SYSTEM_SOURCE.get(await getCurSystemType())?.pathPrefix ?? '';
-    let _path = `${pathPrefix ?? ''}${path}`;
-    if ('query' in options) {
-        _path = `${_path}?${qs.stringify(options.query)}`;
-    }
-    if (options.isNewPage) {
-        if (islocalDev) {
-            return window.open(_path);
-        }
-        return window.open(`${locationOrigin}${_path}`);
-    }
-    if (islocalDev) {
-        window.location.href = _path;
-    }
-    window.location.href = `${locationOrigin}${_path}`;
-};
+
 
 enum ENUM_PICK_MAP_TYPE {
     /** 选择 map 中部分 key 映射到 options */

@@ -16,7 +16,7 @@ import CKBFooter from "@/components/CKBFooter";
 import CKBHeader from "@/components/CKBHeader";
 import FloatToolbar from "@/components/FloatToolbar";
 import { Local } from "@/i18n/settings";
-import { LocalContext } from "@/i18n/client";
+import { LocalContext, runsOnServerSide } from "@/i18n/client";
 import Providers from './providers'
 import platAtom from "@/model/Plat";
 import { PlatCookie } from "@/config";
@@ -38,9 +38,10 @@ export default function RootLayout({
   const systemSource = customerDetail?.systemSource;
 
 useEffect(() => {
-  requestCustomerDetail();
-  console.log(getCookiePlat,'getCookiePlat1');
-  setPlat(getCookiePlat)
+  if(!runsOnServerSide){
+    requestCustomerDetail();
+    setPlat(getCookiePlat)
+  }
 }, [requestCustomerDetail, setPlat]);
 
 const locale = {
@@ -136,7 +137,6 @@ const getThemeStyle = useCallback(() => {
 }, [systemSource]);
 
 
-
   return (
     <html lang={lang} data-theme={plat.toLocaleUpperCase()}>
       <script type="text/javascript" src="https://cdn.channel.io/plugin/ch-plugin-web.js" async></script>
@@ -147,7 +147,7 @@ const getThemeStyle = useCallback(() => {
                     <CKBHeader plat={plat}/> 
                     <FloatToolbar/>
                       {children}
-                  <CKBFooter lang={lang} plat={plat}/>
+                  <CKBFooter lang={lang} plat={plat}/>·
                   </ConfigProvider>
                   </LocalContext.Provider>
             </Providers>
@@ -156,3 +156,7 @@ const getThemeStyle = useCallback(() => {
   );
 }
 
+export function getStaticPaths(){
+  console.log(1);
+  
+}
