@@ -6,6 +6,84 @@
   --color-white: #fff;
   --color-bg-header: #242526;
   --color-primary-text: #303133;
+  --width: 1200px;
+  --rscolor: #008060;
+  --fcolor: #2e4968;
+  --ffffcolor: #027aff;
+  --f5color: #3c5b7f;
+  --ltcolor: #1890ff;
+  --dcolor: #1b66ad;
+  --pcolor: #1c3e66;
+  --fscolor:#232323;  // focus-color 
+  --input-bg:#FCFDFF; // input-bg-color
+  --home-btn-active:#EBEDF0;  // home： guide-btn-active/hover
+  --df-ipt-color:#BABABA;    // login/signup: default-input-color
+  --shadow-color: #DBECF6;  // login/signup： default-shadow-color
+  --shadow-btn-color:#D0E1F5; // login/signup： default-btn-shadow-color
+  --light-bg-fcolor:#F2F8FF;
+  --light-bg-color:#FCFDFF;
+  --light-bg-color2:#EBF1F7;
+  --light-bg-color3:#F5FCFF;
+  --light-bg-color4:#E9F6FD;
+  --light-bg-color5: #F5F7FA;
+  --light-bg-color6: rgba(116, 175, 242, 0.1);
+  //
+  --signup-cancel-btn:#F9FBFF;  // signup-cancel-btn-hover-background
+  --signup-cancel-border:#EBF0FA;// signup-cancel-btn-hover-border
+
+
+  --rcolor: #d24239;
+  --rpcolor: #c70404;
+  --rdcolor: #980f0f;
+  --racolor: #f5222d;
+  --rrcolor: #d31212;
+  --brcolor: #7a5640;
+  --blcolor: #2faec2;
+  // 文章文字hover颜色
+  --hfccolor: #1c66ad;
   // footer底色
   --ftcolor: #516b88;
+  // OEM 输入框边距颜色
+  --fbcolor: #2177ad;
+  // OEM底色
+  --plcolor: #e5eff9;
+  // OEM按钮色
+  --gdlcolor: #2e4968;
+  --gdrcolor: #435870;
+  --pgcolor: rgba(0, 68, 114, 0.4);
+  --lgt-bg-btn: linear-gradient(
+    90deg,
+    var(--gdlcolor) 0%,
+    var(--gdrcolor) 100%
+  );
+  --ygcolor: #b7d061;
+  --dcolor-rgb: 27, 102, 173;
+  --fcolor-rgb: 46, 73, 104;
+  // 阴影rgb
+  --bscolor-tgb: 224, 239, 255;
+  // 链接颜色
+  --acolor: #1890ff;
+  --siderItem: linear-gradient(134deg, #ffffff 0%, #ffffff 5%, #f0f7ff 100%);
+  --listcolor: #d7dfe7;
+  // 工作台text按钮颜色
+  --wtcolor: #0066cc;
+  // 工作台text按钮hover颜色
+  --wthcolor: #2e4968;
+  //
+  --el-color-primary: #2e4968;
+  --el-color-primary-rgb: 46, 73, 104;
+  --el-color-primary-light-1: #435b77;
+  --el-color-primary-light-2: #586d86;
+  --el-color-primary-light-3: #6d8095;
+  --el-color-primary-light-4: #8292a4;
+  --el-color-primary-light-5: #97a4b4;
+  --el-color-primary-light-6: #abb6c3;
+  --el-color-primary-light-7: #c0c8d2;
+  --el-color-primary-light-8: #d5dbe1;
+  --el-color-primary-light-9: #eaedf0;
+  --el-color-primary-dark-2: #253a53;
+
+  --btn-normal: #2F4868;
+  --btn-hover: #496686;
+  --btn-active: #142E5A;
 }

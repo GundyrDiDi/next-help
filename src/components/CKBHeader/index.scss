@@ -1,3 +1,4 @@
+
 .CKBHeader{
   height: 32px;
   position: sticky;
@@ -15,8 +16,10 @@
     height: 100%;
   }
   .auto-width{
+    width: var(--max-width);
     padding: 0 20px 0 12px;
     height: 32px;
+    margin: 0 auto;
   }
   .cart-count .ant-badge-count{
     right: 5px;

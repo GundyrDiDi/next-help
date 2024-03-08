@@ -119,7 +119,7 @@ const CKBHeader = ({plat}:{plat?:string}) => {
         return false;
     };
     return (
-        <div className="CKBHeader">
+        <div className="CKBHeader viewport">
             <div className="wrap of-hd">
                 <div className="auto-width flex justify-between">
                     <div
@@ -127,17 +127,18 @@ const CKBHeader = ({plat}:{plat?:string}) => {
                         onClick={() => linkToPure()}
                     >
                         <img
-                            src="https://static-s.theckb.com/BusinessMarket/OEM/logo.svg"
+                        className='h-[12px]'
+                            src="https://static-jp.theckb.com/static-asset/client/homelogo_w.png"
                             alt=""
                         />
-                        <span
+                        {/* <span
                             style={{
                                 fontWeight: 600,
                                 fontSize: 12
                             }}
                         >
                             {t('更简单，更透明')}
-                        </span>
+                        </span> */}
                     </div>
                     <div className="pl-10 flex items-center">
                         {stationCode === Site.JP && (

@@ -38,6 +38,8 @@ export default function RootLayout({
   const systemSource = customerDetail?.systemSource;
 
 useEffect(() => {
+  console.log('runsOnServerSide',runsOnServerSide);
+  
   if(!runsOnServerSide){
     requestCustomerDetail();
     setPlat(getCookiePlat)

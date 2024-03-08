@@ -1,0 +1,15 @@
+// 日本站主字体
+@font-face {
+  font-family: 'NotoSans';
+  src: url('https://static-jp.theckb.com/static-asset/fonts/NotoSansJP-VariableFont_wght.min.woff2') format('woff2');
+}
+// 英国站主字体
+@font-face {
+  font-family: 'OpenSans';
+  src: url('../fonts/OpenSans-Regular.ttf') format('ttf');
+}
+// 英国站次字体
+@font-face {
+  font-family: 'Roboto';
+  src: url('../fonts/Roboto-Regular.ttf') format('ttf');
+}

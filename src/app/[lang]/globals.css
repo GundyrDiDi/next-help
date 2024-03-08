@@ -1,14 +1,15 @@
-@import "tailwindcss/base";
+/* @import "tailwindcss/base"; */
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+@import "normalize.css";
 
 :root {
   --max-width: 1200px;
-
-  
 }
-
-
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
 
 
 .viewport {

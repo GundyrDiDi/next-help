@@ -6,6 +6,7 @@ import { ENUM_SYSTEM_SOURCE } from '@/const/enum';
 import { useAtom } from 'jotai';
 import { atomCustomerDetail } from '@/model/CustomerDetail';
 import { togglePlat } from '@/config/request/interceptors';
+import { CustomerDetail } from '@/model';
 
 interface PlatDTO {
     label: string;
@@ -33,7 +34,7 @@ interface TogglePlatProps {
 const TogglePlat = (props: TogglePlatProps) => {
     const { systemSource } = props;
     
-    const [useInfo]=useAtom(atomCustomerDetail);
+    const [useInfo]=useAtom(CustomerDetail);
     /** B2B D2C切换 */
     const changePlat = async (item: PlatDTO) => {
         if(useInfo?.customerId){

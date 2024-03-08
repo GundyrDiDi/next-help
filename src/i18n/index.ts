@@ -4,20 +4,20 @@ import { initReactI18next } from 'react-i18next/initReactI18next'
 import { Local, getOptions } from './settings'
 
 /** 初始化翻译 */
-const initI18next = async (lng:Local, ns:string) => {
+const initI18next = async (lng:Local) => {
   const i18nInstance = createInstance()
   await i18nInstance
     .use(initReactI18next)
     .use(resourcesToBackend((language: any, namespace: any) => import(`@/i18n/locales/${language}.js`)))
-    .init(getOptions(lng, ns))
+    .init(getOptions(lng))
   return i18nInstance
 }
 
 /** hook使用翻译 */
-export async function useTranslation(lng:Local, ns:string, options = {keyPrefix:''}) {
-  const i18nextInstance = await initI18next(lng, ns)
+export async function serveTranslation(lng:Local) {
+  const i18nextInstance = await initI18next(lng)
   return {
-    t: i18nextInstance.getFixedT(lng, Array.isArray(ns) ? ns[0] : ns, options.keyPrefix),
+    t: i18nextInstance.getFixedT(lng),
     i18n: i18nextInstance
   }
 }

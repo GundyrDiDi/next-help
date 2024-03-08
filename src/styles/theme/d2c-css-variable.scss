@@ -6,6 +6,87 @@
   --color-white: #fff;
   --color-bg-header: #242526;
   --color-primary-text: #303133;
+  --width: 1200px;
+  --rscolor: #2E4968;
+  --fcolor: #008060;
+  --ffffcolor: #008060;
+  --f5color:#239175;
+  --ltcolor: #31c8a2;
+  --fbcolor: #21ad8a;
+  --pcolor: #4d7460;
+  --dcolor: #004c3f;
+  --fscolor:#232323;  // focus-color 
+  --input-bg:#F8FBFA; // input-bg-color
+  --home-btn-active:#E5F2EF;  // home： guide-btn-active/hover
+  --df-ipt-color:#BABABA;    // login/signup: default-input-color
+  //
+  --shadow-color: #D7EAE5;   // login/signup: default-shadow-color
+  --shadow-btn-color:#D1ECE5; // login/signup： default-btn-shadow-color
+  --light-bg-fcolor:#F1FAF7;
+  --light-bg-color:#FBFEFD;
+  --light-bg-color2:#F0F9F5;
+  --light-bg-color3:#FBFEFD;
+  --light-bg-color4:#F0F9F5;
+  --light-bg-color5: #EDF5EF;
+  --light-bg-color6: rgba(232, 255, 245, 0.25);
+  --signup-cancel-btn:#F3FAF9;  // signup-cancel-btn-hover-background
+  --signup-cancel-border:#EAF6F2;// signup-cancel-btn-hover-border
+  //
+  --rcolor: #d24239;
+  --rpcolor: #c70404;
+  --rdcolor: #980f0f;
+  --racolor: #f5222d;
+  --rrcolor: #d31212;
+  --brcolor: #7a5640;
+  --blcolor: #2faec2;
+  --plcolor: #e5f6f2;
+  --gdlcolor: #13b28a;
+  --gdrcolor: #0bb68d;
+  --pgcolor: rgba(21, 114, 0, 0.4);
+  // 文章文字hover颜色
+  --hfccolor: #008060;
   // footer底色
   --ftcolor: #637571;
+  --lgt-bg-btn: linear-gradient(
+    90deg,
+    var(--gdlcolor) 0%,
+    var(--gdrcolor) 100%
+    
+  );
+  --ygcolor: #b7d061;
+  --dcolor-rgb: 0, 76, 63;
+  --fcolor-rgb: 0, 128, 96;
+  // 阴影rgb
+  --bscolor-tgb:232, 250, 247;
+   // 链接颜色
+   --acolor: #1890FF;
+   --siderItem: linear-gradient(134deg, #FFFFFF 0%, #FFFFFF 5%, #E4FFF8 100%);
+   --listcolor: #D7E7DA;
+  // 工作台text按钮颜色
+  --wtcolor: #008060;
+  // 工作台text按钮hover颜色
+  --wthcolor: #004c3f;
+  --el-color-primary-light-3:var(--fbcolor); // 按钮悬停
+  --vip1: #6BB59F;
+  --vip1-light: #6BB59F;
+  --vip1-lighter: #91CAB9;
+  --vip1-lightest: #F2FDF9;
+  --vip2: #587DA6;
+  --vip2-light: #587DA6;
+  --vip2-lighter: #A5C1E1;
+  --vip2-lightest: #F3F9FF;
+  --vip3: #D4A96B;
+  --vip3-light: #D4A96B;
+  --vip3-lighter: #E7CD97;
+  --vip3-lightest: #FFF7F2;
+  --vip4: #DB9266;
+  --vip4-light: #DB9266;
+  --vip4-lighter: #E7AE8B;
+  --vip4-lightest: #FCF7F0;
+  // 特殊会员
+  --vip5: #CE9033;
+  --vip5-lightest: #FFFAF3;
+  --btn-normal: #008060;
+  --btn-hover: #1C9976;
+  --btn-active: #00735A; 
 }

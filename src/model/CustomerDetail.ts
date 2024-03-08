@@ -22,15 +22,9 @@ const atomRequestCustomerDetail = atom(
     async (_get, set) => {
         try {
             if(getCookieToken){
-                const response =
-                await request.customer.getCustomerDetails.getCustomerDetails();
-            // localStorage.setItem(
-            //     'stationCode',
-            //     response.data?.stationCode as string
-            // );
+                const response =await request.customer.getCustomerDetails.getCustomerDetails();
             const res = {
                 ...response.data,
-                // site: getSite(response.data?.stationCode ?? ''),
                 isJA: response.data?.stationCode === Site.JP,
                 isKO: response.data?.stationCode === Site.KR,
                 isEN: response.data?.stationCode === Site.UK
