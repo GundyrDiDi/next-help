@@ -1,6 +1,5 @@
 /** 语言 */
 export enum Local {
-  ZH = 'zh',
   /** 日文 */
   JA = 'ja',
   /** 韩文 */
@@ -11,8 +10,6 @@ export enum Local {
 
 /** */
 export enum Lang {
-  zh_CN = 'zh_CN',
-
   /** 日文 */
   ja_JP = 'ja_JP',
   /** 韩文 */
@@ -21,8 +18,9 @@ export enum Lang {
   en_GB = 'en_GB'
 }
 
+
 export const fallbackLng = Local.JA
-export const languages = [fallbackLng, Local.KO, Local.EN,Local.ZH]
+export const languages = [fallbackLng, Local.KO, Local.EN]
 export const defaultNS = 'translation'
 export const cookieName = 'i18nextLng'
 
@@ -42,3 +40,6 @@ export function getOptions (lng:Local = fallbackLng, ns:string = defaultNS) {
     },
   }
 }
+
+
+

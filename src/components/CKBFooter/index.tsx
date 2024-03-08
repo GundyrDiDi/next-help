@@ -12,7 +12,7 @@ import {
 } from "./footerData";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { gotoLink } from "@/utils";
+import { gotoLink } from "@/utils/router";
 interface Props {
   plat?: string;
   lang: Local;
@@ -74,7 +74,7 @@ const Footer = ({ plat, lang }: Props) => {
             <div className="company-info-content">
               <div className="compayn-info-item">
                 <div className="title">대표자</div>
-                <div className="text">WO YEBIAO</div>
+                <div className="text">WU YEBIAO</div>
               </div>
               <div className="compayn-info-item">
                 <div className="title">이메일 주소</div>

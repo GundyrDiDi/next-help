@@ -8,7 +8,7 @@ import ja_JP from 'antd/locale/ja_JP';
 import ko_KR from 'antd/locale/ko_KR';
 import en_GB from 'antd/locale/en_GB';
 import zh_CN from 'antd/locale/zh_CN';
-import { CustomerDetail} from '@/model';
+import { CustomerDetail, Lang} from '@/model';
 import { useAtom } from "jotai";
 import { ConfigProvider } from 'antd';
 import { ThemeConfig } from 'antd/lib/config-provider';
@@ -33,6 +33,8 @@ export default function RootLayout({
   }
 }>) {
   const [customerDetail, requestCustomerDetail] = useAtom(CustomerDetail);
+  const [curLang,setCurLang]=useAtom(Lang)
+  
   const [plat,setPlat]=useAtom(platAtom)
 
   const systemSource = customerDetail?.systemSource;
@@ -43,12 +45,12 @@ useEffect(() => {
   if(!runsOnServerSide){
     requestCustomerDetail();
     setPlat(getCookiePlat)
+    setCurLang(lang)
   }
-}, [requestCustomerDetail, setPlat]);
+}, [lang, requestCustomerDetail, setCurLang, setPlat]);
 
 const locale = {
   [Local.JA]:ja_JP,
-  [Local.ZH]:zh_CN,
   [Local.KO]:ko_KR,
   [Local.EN]:en_GB,
  }[lang];

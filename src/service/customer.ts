@@ -137,6 +137,16 @@ export interface AddFrogArticleReqDTO {
   frogArticleType?: number;
   /** @format int64 */
   frogArticleViewCount?: number;
+  /**
+   * 未登录限制；1.可查看全文；2.部分可查看；3.不可查看
+   * @format int32
+   */
+  noLoginRestriction?: number;
+  /**
+   * 未入会限制；1.可查看全文；2.部分可查看；3.不可查看
+   * @format int32
+   */
+  noMembershipRestriction?: number;
   stationCode?: string;
 }
 
@@ -1260,6 +1270,8 @@ export interface CustomerShopRespDTO {
   /** @format int32 */
   customerShopPlatform?: number;
   customerShopUrl?: string;
+  /** @format int32 */
+  customerShopUseOnTheWayStockFlag?: number;
   /** @format int64 */
   dealOrderCount?: number;
   /** @format int32 */
@@ -1524,6 +1536,30 @@ export interface EmailLoginReqDTO {
   verificationCode?: string;
 }
 
+/** FeedbackInfoReqDTO */
+export interface FeedbackInfoReqDTO {
+  companyName?: string;
+  email?: string;
+  message?: string;
+  phone?: string;
+  userName?: string;
+}
+
+/** FeedbackInfoRspDTO */
+export interface FeedbackInfoRspDTO {
+  companyName?: string;
+  /** @format date-time */
+  createTime?: string;
+  email?: string;
+  /** @format int64 */
+  id?: number;
+  message?: string;
+  phone?: string;
+  /** @format date-time */
+  updateTime?: string;
+  userName?: string;
+}
+
 /** FrogArticleArchiveSortRespDTO */
 export interface FrogArticleArchiveSortRespDTO {
   /** @format int32 */
@@ -1550,6 +1586,16 @@ export interface FrogArticleDetailRespDTO {
   frogArticleType?: number;
   /** @format int64 */
   frogArticleViewCount?: number;
+  /**
+   * 未登录限制；1.可查看全文；2.部分可查看；3.不可查看
+   * @format int32
+   */
+  noLoginRestriction?: number;
+  /**
+   * 未入会限制；1.可查看全文；2.部分可查看；3.不可查看
+   * @format int32
+   */
+  noMembershipRestriction?: number;
   stationCode?: string;
   /** @format int64 */
   viewNum?: number;
@@ -1580,6 +1626,16 @@ export interface FrogArticleRespDTO {
   frogArticleType?: number;
   /** @format int64 */
   frogArticleViewCount?: number;
+  /**
+   * 未登录限制；1.可查看全文；2.部分可查看；3.不可查看
+   * @format int32
+   */
+  noLoginRestriction?: number;
+  /**
+   * 未入会限制；1.可查看全文；2.部分可查看；3.不可查看
+   * @format int32
+   */
+  noMembershipRestriction?: number;
   stationCode?: string;
   /** @format int64 */
   viewNum?: number;
@@ -1988,6 +2044,16 @@ export interface HotFrogArticleRespDTO {
   frogArticleType?: number;
   /** @format int64 */
   frogArticleViewCount?: number;
+  /**
+   * 未登录限制；1.可查看全文；2.部分可查看；3.不可查看
+   * @format int32
+   */
+  noLoginRestriction?: number;
+  /**
+   * 未入会限制；1.可查看全文；2.部分可查看；3.不可查看
+   * @format int32
+   */
+  noMembershipRestriction?: number;
   /** @format int64 */
   viewNum?: number;
 }
@@ -2129,6 +2195,16 @@ export interface ManageFrogArticleRespDTO {
   frogArticleType?: string;
   /** @format int64 */
   frogArticleViewCount?: number;
+  /**
+   * 未登录限制；1.可查看全文；2.部分可查看；3.不可查看
+   * @format int32
+   */
+  noLoginRestriction?: number;
+  /**
+   * 未入会限制；1.可查看全文；2.部分可查看；3.不可查看
+   * @format int32
+   */
+  noMembershipRestriction?: number;
   stationCode?: string;
 }
 
@@ -3700,6 +3776,16 @@ export interface UpdateFrogArticleReqDTO {
   frogArticleType?: number;
   /** @format int64 */
   frogArticleViewCount?: number;
+  /**
+   * 未登录限制；1.可查看全文；2.部分可查看；3.不可查看
+   * @format int32
+   */
+  noLoginRestriction?: number;
+  /**
+   * 未入会限制；1.可查看全文；2.部分可查看；3.不可查看
+   * @format int32
+   */
+  noMembershipRestriction?: number;
   stationCode?: string;
 }
 
@@ -4338,6 +4424,14 @@ export interface BizResponseListDepartmentTreeRespDTO {
 export interface BizResponseListDingCompany {
   code?: string;
   data?: DingCompany[];
+  msg?: string;
+  success?: boolean;
+}
+
+/** BizResponse«List«FeedbackInfoRspDTO»» */
+export interface BizResponseListFeedbackInfoRspDTO {
+  code?: string;
+  data?: FeedbackInfoRspDTO[];
   msg?: string;
   success?: boolean;
 }
@@ -5558,7 +5652,7 @@ export class HttpClient<SecurityDataType = unknown> {
   constructor({ securityWorker, secure, format, ...axiosConfig }: ApiConfig<SecurityDataType> = {}) {
     this.instance = axios.create({
       ...axiosConfig,
-      baseURL: axiosConfig.baseURL || "//master-gateway.theckb.com/customer",
+      baseURL: axiosConfig.baseURL || "//master-gateway.theckb.com:443/customer",
     });
     this.secure = secure;
     this.format = format;
@@ -5650,7 +5744,7 @@ export class HttpClient<SecurityDataType = unknown> {
 /**
  * @title API文档
  * @version v1.0.0
- * @baseUrl //master-gateway.theckb.com/customer
+ * @baseUrl //master-gateway.theckb.com:443/customer
  * @contact 史尼芙 (https://www.taobaockb.com/)
  *
  * 史尼芙API文档
@@ -6723,6 +6817,38 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
   };
   base = {
+    /**
+     * No description
+     *
+     * @tags 官网接口
+     * @name FeedbackAddFeedbackInfo
+     * @summary 保存客户信息
+     * @request POST:/base/feedback/addFeedbackInfo
+     */
+    feedbackAddFeedbackInfo: (feedbackInfoReqDTO: FeedbackInfoReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseBoolean, any>({
+        path: `/base/feedback/addFeedbackInfo`,
+        method: "POST",
+        body: feedbackInfoReqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 官网接口
+     * @name FeedbackGetRegisterImage
+     * @summary 查询列表
+     * @request GET:/base/feedback/getRegisterImage
+     */
+    feedbackGetRegisterImage: (params: RequestParams = {}) =>
+      this.request<BizResponseListFeedbackInfoRspDTO, any>({
+        path: `/base/feedback/getRegisterImage`,
+        method: "GET",
+        ...params,
+      }),
+
     /**
      * No description
      *

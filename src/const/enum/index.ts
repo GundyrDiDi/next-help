@@ -158,4 +158,25 @@ export enum ENMU_PAYMENT_TYPE {
     INSTALLMENT_PAYMENT = 1
 }
 
+
+/** 未登录限制 */
+export enum NO_LOGIN_RESTRICTION_TYPE {
+    /** 可查看全文 */
+    CHECK_ALL=1,
+    /** 部分可查看 */
+    CHECK_PART=2,
+    /** 不可查看 */
+    CHECK_DISABLE=3
+}
+
+/** 未入会限制 */
+export enum NO_MEMBERSHIP_RESTRICTION_TYPE {
+    /** 可查看全文 */
+    CHECK_ALL=1,
+    /** 部分可查看 */
+    CHECK_PART=2,
+    /** 不可查看 */
+    CHECK_DISABLE=3
+}
+
 export {};

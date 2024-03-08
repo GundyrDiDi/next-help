@@ -809,6 +809,11 @@ export interface BatchPayReqDTO {
   platformOrderIds?: number[];
 }
 
+/** BatchPriorityReqDTO */
+export interface BatchPriorityReqDTO {
+  platformOrderNos?: string[];
+}
+
 /** BatchQueryStockReqDTO */
 export interface BatchQueryStockReqDTO {
   shopProductSkus?: string[];
@@ -1097,6 +1102,8 @@ export interface CartGroupItemDTO {
 /** CartItemDTO */
 export interface CartItemDTO {
   additionNameJpSummary?: string;
+  /** @format int32 */
+  batchNumber?: number;
   /** @format int32 */
   blackReasonCode?: number;
   /** @format int32 */
@@ -1711,6 +1718,7 @@ export interface CreateOrderReqDTO {
   /** @format int32 */
   systemSource?: number;
   unificationCustomerFullName?: string;
+  useOneTheWayInventory?: boolean;
   validBrand?: boolean;
   wareCode?: string;
   wareName?: string;
@@ -2126,6 +2134,10 @@ export interface CustomerPlatformOrderItemRespDTO {
    * @format int32
    */
   oemProductClassificationId?: number;
+  /** @format int32 */
+  onTheWayFreezeQuantity?: number;
+  /** @format int32 */
+  onTheWayFreezeQuantityChecked?: number;
   /** 商品状态: 1-待采购; 2-采购中; 3-已采购; 4-国内运输中; 5-已入库; 6-检品中; 7-已上架(已清算); 8-待发货; 9-已发货; 10-异常; 11-次品; 12-取消成功; 13-保留库存 */
   orderItemStatus?: string;
   /** 商品状态 */
@@ -2279,6 +2291,8 @@ export interface CustomerPlatformOrderRespDTO {
   customerOrderNo?: string;
   /** @format int32 */
   deliverStatus?: number;
+  /** @format int32 */
+  deliveryReviewFlag?: number;
   /** @format int64 */
   intShipConfigId?: number;
   interceptCancelTime?: string;
@@ -2314,6 +2328,8 @@ export interface CustomerPlatformOrderRespDTO {
   totalFreezeAmount?: number;
   /** @format int32 */
   untreatedNum?: number;
+  /** @format int32 */
+  useOneTheWayInventoryFlag?: number;
 }
 
 /** CustomerProductDetailsRespDTO */
@@ -2348,6 +2364,8 @@ export interface CustomerProductInfoRespDTO {
   apiShopProductTitle?: string;
   platformOrderNo?: string;
   platformType?: string;
+  /** 商品sku图 */
+  productSkuImg?: string;
 }
 
 /** CustomerReplenishPlanReqDTO */
@@ -2437,9 +2455,15 @@ export interface CustomerSearchPlatformOrderItemRespDTO {
   /** @format int32 */
   expressQuantity?: number;
   /** @format int32 */
+  freezeQuantity?: number;
+  /** @format int32 */
   hasDeliverQuantity?: number;
   /** @format int32 */
   hasPurchaeQuantity?: number;
+  /** @format int32 */
+  onTheWayFreezeQuantity?: number;
+  /** @format int32 */
+  onTheWayFreezeQuantityChecked?: number;
   orderItemStatus?: string;
   orderItemStatusList?: OrderItemStatusListDTO[];
   /** @format int32 */
@@ -2458,6 +2482,8 @@ export interface CustomerSearchPlatformOrderItemRespDTO {
   productTitleJp?: string;
   /** @format int32 */
   productType?: number;
+  /** @format int32 */
+  purchaseBadNum?: number;
   /** @format int32 */
   purchasingQuantity?: number;
   /** @format int32 */
@@ -3292,6 +3318,7 @@ export interface DeliveryCreateReqDTO {
    * @format int64
    */
   intShipConfigId?: number;
+  isHistory?: boolean;
   /** 是否直发海外仓(是:true 否:false d2c默认:false) */
   isOversea?: boolean;
   /**
@@ -3308,6 +3335,7 @@ export interface DeliveryCreateReqDTO {
   packingListUrl?: string;
   /** 直行便订单编号 */
   platformOrderNo?: string;
+  preDeliveryCreate?: boolean;
   /** @format int32 */
   preferFlag?: number;
   /**
@@ -3371,6 +3399,11 @@ export interface DeliveryDetailCreateDTO {
    */
   depotDeliveryNums?: number;
   /**
+   * 在途发货数
+   * @format int32
+   */
+  onTheWayFreezeQuantity?: number;
+  /**
    * 订单-采购发货数
    * @format int32
    */
@@ -3386,6 +3419,8 @@ export interface DeliveryDetailCreateDTO {
    * @format int32
    */
   splitFlag?: number;
+  /** 系统(d2c必传) */
+  systemOrderItemId?: string;
   transportAttr?: string;
   transportAttrCode?: string;
 }
@@ -3770,6 +3805,8 @@ export interface ExcelImportSubmitTaskReqDTO {
   stationCode?: string;
   /** @format int32 */
   taskType?: number;
+  /** 是否使用在途库存 */
+  useOnTheWayStock?: boolean;
 }
 
 /** ExportAbnormalOrderReqDTO */
@@ -4616,6 +4653,10 @@ export interface ManagePlatformOrderItemRespDTO {
   internationalLogisticsOrderNumber?: string;
   /** @format int32 */
   keepStockQuantity?: number;
+  /** @format int32 */
+  onTheWayFreezeQuantity?: number;
+  /** @format int32 */
+  onTheWayFreezeQuantityChecked?: number;
   orderItemStatus?: string;
   /** @format int32 */
   orderQuantity?: number;
@@ -4630,6 +4671,8 @@ export interface ManagePlatformOrderItemRespDTO {
   productMainImg?: string;
   productPropertiesName?: string;
   productSku?: string;
+  /** 商品sku图 */
+  productSkuImg?: string;
   productTitle?: string;
   /** @format int32 */
   productType?: number;
@@ -4853,6 +4896,8 @@ export interface MyInventoryRespDTO {
   amazonSurveyQuantity?: number;
   /** @format int32 */
   availableQuantity?: number;
+  /** @format int32 */
+  checkingNum?: number;
   combinationProductItemList?: CombinationProductItemRespDTO[];
   /** @format date-time */
   createTime?: string;
@@ -4866,6 +4911,10 @@ export interface MyInventoryRespDTO {
   customerShopId?: number;
   customerShopName?: string;
   /** @format int32 */
+  exceptionNum?: number;
+  /** @format int32 */
+  expressNum?: number;
+  /** @format int32 */
   freezeQuantity?: number;
   /** @format int32 */
   inStockQuantity?: number;
@@ -4874,6 +4923,12 @@ export interface MyInventoryRespDTO {
   /** @format int32 */
   lockQuantity?: number;
   monthlyStatisticsAgeRespDTO?: MonthlyStatisticsAgeRespDTO;
+  /** @format int32 */
+  onTheWayAvailableNum?: number;
+  /** @format int32 */
+  onTheWayOccupyNum?: number;
+  /** @format int32 */
+  onTheWayTotalNum?: number;
   orderProcess?: OrderProcessRespDTO;
   overseaProducSku?: string;
   paymentDetail?: string;
@@ -4895,6 +4950,12 @@ export interface MyInventoryRespDTO {
   productTitle?: string;
   /** @format int32 */
   productType?: number;
+  /** @format int32 */
+  purchasedNum?: number;
+  /** @format int32 */
+  purchasingNum?: number;
+  /** @format int32 */
+  putInStorageNum?: number;
   searchSourceOrderId?: string;
   searchSourceOrderNo?: string;
   /** @format int64 */
@@ -4915,6 +4976,8 @@ export interface MyInventoryRespDTO {
   updateTime?: string;
   /** @format int32 */
   uploadFlag?: number;
+  /** @format int32 */
+  waitPurchaseNum?: number;
 }
 
 /** NotifyItemChangeNumDTO */
@@ -5197,6 +5260,49 @@ export interface OemSupplierDTO {
   supplierId?: string;
   /** 供应商名称 */
   supplierName?: string;
+}
+
+/** OnTheWayStockQueryReqDTO */
+export interface OnTheWayStockQueryReqDTO {
+  /** @format int64 */
+  customerShopId?: number;
+  /** @format int32 */
+  pageNum?: number;
+  /** @format int32 */
+  pageSize?: number;
+  productSkus?: string[];
+  shopProductSkus?: string[];
+}
+
+/** OnTheWayStockQueryResoDTO */
+export interface OnTheWayStockQueryResoDTO {
+  /**
+   * 在途可用数
+   * @format int64
+   */
+  onTheWayAvailableNum?: number;
+  /**
+   * 在途被占用数
+   * @format int64
+   */
+  onTheWayOccupyNum?: number;
+  /**
+   * 在途库存总数
+   * @format int64
+   */
+  onTheWayTotalNum?: number;
+  /** 详情URL */
+  productDetailUrl?: string;
+  /** 主图 */
+  productMainImg?: string;
+  /** 属性名称 */
+  productPropertiesName?: string;
+  /** 平台商品SKU */
+  productSku?: string;
+  /** 商品名称 */
+  productTitle?: string;
+  /** 平台商品SKU */
+  shopProductSku?: string;
 }
 
 /** OperateLogVO */
@@ -11223,6 +11329,14 @@ export interface BizResponsePageResultDeliveryReviewOrderPage {
   success?: boolean;
 }
 
+/** BizResponse«PageResult«OnTheWayStockQueryResoDTO»» */
+export interface BizResponsePageResultOnTheWayStockQueryResoDTO {
+  code?: string;
+  data?: PageResultOnTheWayStockQueryResoDTO;
+  msg?: string;
+  success?: boolean;
+}
+
 /** BizResponse«PageResult«PageCustomerIdByProductCodeRespDTO»» */
 export interface BizResponsePageResultPageCustomerIdByProductCodeRespDTO {
   code?: string;
@@ -11689,6 +11803,19 @@ export interface PageResultDeliveryReviewOrderPage {
   /** @format int64 */
   current?: number;
   records?: DeliveryReviewOrderPage[];
+  /** @format int64 */
+  size?: number;
+  /** @format int64 */
+  total?: number;
+  /** @format int64 */
+  totalPage?: number;
+}
+
+/** PageResult«OnTheWayStockQueryResoDTO» */
+export interface PageResultOnTheWayStockQueryResoDTO {
+  /** @format int64 */
+  current?: number;
+  records?: OnTheWayStockQueryResoDTO[];
   /** @format int64 */
   size?: number;
   /** @format int64 */
@@ -12217,7 +12344,7 @@ export class HttpClient<SecurityDataType = unknown> {
   constructor({ securityWorker, secure, format, ...axiosConfig }: ApiConfig<SecurityDataType> = {}) {
     this.instance = axios.create({
       ...axiosConfig,
-      baseURL: axiosConfig.baseURL || "//master-gateway.theckb.com/order",
+      baseURL: axiosConfig.baseURL || "//master-gateway.theckb.com:443/order",
     });
     this.secure = secure;
     this.format = format;
@@ -12309,7 +12436,7 @@ export class HttpClient<SecurityDataType = unknown> {
 /**
  * @title API文档
  * @version v1.0.0
- * @baseUrl //master-gateway.theckb.com/order
+ * @baseUrl //master-gateway.theckb.com:443/order
  * @contact 史尼芙 (https://www.taobaockb.com/)
  *
  * 史尼芙API文档
@@ -12864,6 +12991,21 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: "POST",
         body: dto,
         type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 购物车
+     * @name CanUseOnTheWayStock
+     * @summary 是否支持在途库存
+     * @request GET:/cart/canUseOnTheWayStock
+     */
+    canUseOnTheWayStock: (params: RequestParams = {}) =>
+      this.request<BizResponseBoolean, any>({
+        path: `/cart/canUseOnTheWayStock`,
+        method: "GET",
         ...params,
       }),
 
@@ -13452,6 +13594,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags 平台订单（前台）
+     * @name PlatformOrderBatchPriorityShipping
+     * @summary 批量优先发货
+     * @request POST:/customer/platformOrder/batchPriorityShipping
+     */
+    platformOrderBatchPriorityShipping: (reqDTO: BatchPriorityReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseBoolean, any>({
+        path: `/customer/platformOrder/batchPriorityShipping`,
+        method: "POST",
+        body: reqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 平台订单（前台）
      * @name PlatformOrderBillingFeeDetails
      * @summary 结算费用详情
      * @request GET:/customer/platformOrder/billingFeeDetails
@@ -13546,6 +13705,21 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/customer/platformOrder/detail`,
         method: "GET",
         query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 平台订单（前台）
+     * @name PlatformOrderExistPriorityShippingJob
+     * @summary 获取是否存在优先发货任务
+     * @request GET:/customer/platformOrder/existPriorityShippingJob
+     */
+    platformOrderExistPriorityShippingJob: (params: RequestParams = {}) =>
+      this.request<BizResponseBoolean, any>({
+        path: `/customer/platformOrder/existPriorityShippingJob`,
+        method: "GET",
         ...params,
       }),
 
@@ -20983,6 +21157,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags 客户店铺sku
+     * @name ProductSkuHasAvailableTransportationNums
+     * @summary 是否有可用的在途库存
+     * @request POST:/shop/product/sku/hasAvailableTransportationNums
+     */
+    productSkuHasAvailableTransportationNums: (reqDTO: OnTheWayStockQueryReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseBoolean, any>({
+        path: `/shop/product/sku/hasAvailableTransportationNums`,
+        method: "POST",
+        body: reqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 客户店铺sku
      * @name ProductSkuList
      * @summary 客户店铺sku列表(b2b转用)
      * @request GET:/shop/product/sku/list
@@ -21070,6 +21261,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/shop/product/sku/pageMyInventoryList`,
         method: "POST",
         body: shopProductSkuList,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 客户店铺sku
+     * @name ProductSkuPageOnTheWayStock
+     * @summary 分页获取在途库存列表
+     * @request POST:/shop/product/sku/pageOnTheWayStock
+     */
+    productSkuPageOnTheWayStock: (reqDTO: OnTheWayStockQueryReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponsePageResultOnTheWayStockQueryResoDTO, any>({
+        path: `/shop/product/sku/pageOnTheWayStock`,
+        method: "POST",
+        body: reqDTO,
         type: ContentType.Json,
         ...params,
       }),

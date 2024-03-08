@@ -7,9 +7,12 @@ import { GetKeyByMap, GetValueByMap } from './type';
 import bwCookie from "js-cookie"
 import { PlatCookie, TokenSignCookie } from '@/config';
 import { Local } from '@/i18n/settings';
-import {readLocal} from '@/model/Local'
+
 import { CustomerDetail } from '@/model';
 import { atomCustomerDetail } from '@/model/CustomerDetail';
+import { lang } from './language';
+import { exitCode } from 'process';
+import { getUserFn } from './time';
 
 
 interface JumpPageDefaultOptions {
@@ -182,8 +185,12 @@ export const isB2B=()=>{
 export const isD2C=()=>{
     return getCookiePlat==='d2c'
 }
-/** 跳转外展链接 */
-export const gotoLink=(path:string)=>{
-   return `${process.env.THE_CKB_LINK}${readLocal}/${path}`
 
+
+
+
+
+/** 判断是否登录 */
+export const isLogin=()=>{
+    return Boolean(getCookieToken && getUserFn()?.customerId)
 }

@@ -8287,12 +8287,12 @@ export interface ShipQueryByForwardAndCustomerParam {
  * 店铺信息
  */
 export interface ShopInfo {
-  /** 店铺code */
-  shopCode?: string;
-  /** 店铺名称 */
-  shopName?: string;
   /** 店铺url */
   shopUrl?: string;
+  /** 店铺code */
+  supplierShopCode?: string;
+  /** 店铺名称 */
+  supplierShopName?: string;
 }
 
 /**
@@ -12367,7 +12367,7 @@ export class HttpClient<SecurityDataType = unknown> {
   constructor({ securityWorker, secure, format, ...axiosConfig }: ApiConfig<SecurityDataType> = {}) {
     this.instance = axios.create({
       ...axiosConfig,
-      baseURL: axiosConfig.baseURL || "//master-gateway.theckb.com/settlement",
+      baseURL: axiosConfig.baseURL || "//master-gateway.theckb.com:443/settlement",
     });
     this.secure = secure;
     this.format = format;
@@ -12459,7 +12459,7 @@ export class HttpClient<SecurityDataType = unknown> {
 /**
  * @title API文档
  * @version v1.0.0
- * @baseUrl //master-gateway.theckb.com/settlement
+ * @baseUrl //master-gateway.theckb.com:443/settlement
  * @contact 史尼芙 (https://www.taobaockb.com/)
  *
  * 史尼芙API文档

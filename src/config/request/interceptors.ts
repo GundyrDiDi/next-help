@@ -6,6 +6,7 @@ import { InternalAxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie'
 import {  getCookieToken } from '@/utils/index';
 import { PlatCookie } from '@/config';
+import { useSite2Station } from '@/utils/language';
 const domain =  '.theckb.com'
 // 用户信息
 export interface User {
@@ -18,17 +19,6 @@ export interface User {
     token: string;
 }
 
-// // 客户端获取 token
-// export const getToken = (config: InternalAxiosRequestConfig) => {
-//     const tokenStr = TokenSignCookie
-//     if (!tokenStr) return;
-//     try {
-//         const token = JSON.parse().val as User;
-//         return token;
-//     } catch (e) {
-//         return undefined;
-//     }
-// };
 // 获取店铺id
 export const getShopId = () => {
     const shopStr = window.localStorage.getItem('production_route/curShop');
@@ -68,13 +58,18 @@ apiInstanceList.forEach((item) => {
     // 请求拦截
     item.instance.instance.interceptors.request.use(async function (config:InternalAxiosRequestConfig) {
         config.headers = config.headers ?? {};
+        // TODO:请求如何获取本地信息
         const token = getCookieToken;
         const shopId = getShopId();
+        const stationCode=useSite2Station()
         if (token) {
             config.headers['X-Authtoken'] = token;
         }
         if (shopId) {
             config.headers['X-Authshopid'] = shopId;
+        }
+        if(stationCode){
+            config.headers['X-Stationcode'] = stationCode;
         }
         if (process.env.X_GRAY_TAG) {
             config.headers['X-GRAY-TAG'] = process.env.X_GRAY_TAG;
@@ -88,22 +83,6 @@ apiInstanceList.forEach((item) => {
             if (response.data?.code === '0' && response.data.success === true) {
                 return response;
             }
-            // if (response.data?.code === '10000000') {
-            //     if (!window.location.pathname.endsWith('/login')) {
-            //         window.location.pathname =
-            //         process.env.DB_HOST === 'local' ? '/dev/login' : '/login';
-            //     }
-            // }
-            // if (response.data.code === 401) {
-            //     if (!window.location.pathname.endsWith('/login')) {
-            //         // 跳转登陆
-            //         window.location.pathname = `/user/login`;
-            //     }
-            //     return Promise.reject(response.data.msg);
-            // }
-            // message.error(String(response.data.msg));
-
-            // const errorMsg = translateByRspCode(response.data.code);
             message.error(response.data.code);
             return Promise.reject(response.data.code);
         },

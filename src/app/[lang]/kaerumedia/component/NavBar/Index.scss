@@ -1,0 +1,53 @@
+
+.Nav {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  background-color: var(--pcolor);
+  .navmain {
+    width: var(--width);
+    height: 100%;
+    display: flex;
+    &-item {
+      flex: 1;
+      height: 100%;
+      border-right: 1px solid rgba(255, 255, 255, 0.4);
+      line-height: 50px;
+      text-align: center;
+      font-size: 18px;
+      color: #fff;
+      cursor: pointer;
+      &:first-child {
+        border-left: 1px solid rgba(255, 255, 255, 0.4);
+      }
+      &.active {
+        border-color: var(--dcolor);
+        position: relative;
+        background-color: var(--dcolor);
+        &::before {
+          content: '';
+          width: 1px;
+          height: 100%;
+          background-color: var(--dcolor);
+          position: absolute;
+          top: 0;
+          left: 0;
+          margin-left: -1px;
+        }
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          transform: translate(-50%, 0);
+          margin-bottom: -10px;
+          width: 0;
+          height: 0;
+          border-left: 10px solid transparent;
+          border-right: 10px solid transparent;
+          border-top: 10px solid var(--dcolor);
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import CustomerDetail from './CustomerDetail';
-import Local from './Local';
+import Lang from './Lang';
 import Plat from './Plat'
 
 
-export { CustomerDetail,Local,Plat };
+export { CustomerDetail,Lang,Plat };
