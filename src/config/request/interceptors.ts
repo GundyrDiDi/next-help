@@ -22,19 +22,13 @@ export interface User {
 // 获取店铺id
 export const getShopId = () => {
     const shopStr = window.localStorage.getItem('production_route/curShop');
-    if (!shopStr) return;
-    try {
-        const token = JSON.parse(shopStr).val as User;
-        return token;
-    } catch (e) {
-        return undefined;
-    }
+    if (shopStr) return shopStr;
 };
 
 /** B2B/D2C 主题切换 */
 export const togglePlat = (systemSource: number=ENUM_SYSTEM_SOURCE.D2C) => {
     const plat = systemSource === ENUM_SYSTEM_SOURCE.D2C ? 'D2C' : 'B2B';
-    Cookies.set(PlatCookie,plat.toLocaleLowerCase(),{ path: '/', domain })
+    Cookies.set(PlatCookie,plat.toLocaleLowerCase(),{ path: '/', domain,expires:3 })
     window.document.documentElement.setAttribute('data-theme', plat);
 };
 
@@ -65,7 +59,7 @@ apiInstanceList.forEach((item) => {
         if (token) {
             config.headers['X-Authtoken'] = token;
         }
-        if (shopId) {
+        if (shopId&&!config.url?.includes('getCustomerDetails')) {
             config.headers['X-Authshopid'] = shopId;
         }
         if(stationCode){

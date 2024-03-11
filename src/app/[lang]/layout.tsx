@@ -1,10 +1,8 @@
 import { Local } from "@/i18n/settings";
 import LayoutChild from "./LayoutChild";
 import { cookies } from "next/headers";
-import { PlatCookie } from "@/config";
-import '@/styles/theme/b2b-css-variable.scss';
-import '@/styles/theme/d2c-css-variable.scss';
-import "./globals.css";
+import { PlatCookie, TokenSignCookie } from "@/config";
+import "./globals.scss";
 
 export default function RootLayout({
   children,
@@ -17,14 +15,14 @@ export default function RootLayout({
 }>) {
   const cookieStore = cookies()
   const plat=cookieStore.get(encodeURIComponent(PlatCookie))?.value||'d2c'
-  console.log(plat);
+  const token=cookieStore.get(encodeURIComponent(TokenSignCookie))?.value
   
   return (
     <html lang={lang}>
       <script type="text/javascript" src="https://cdn.channel.io/plugin/ch-plugin-web.js" async></script>
       <body >
        <div id="app">
-       <LayoutChild params={{lang,initPlat:plat}}>
+       <LayoutChild params={{lang,initPlat:plat,token}}>
         {children}
         </LayoutChild>
        </div>

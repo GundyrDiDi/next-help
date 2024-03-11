@@ -36,6 +36,8 @@ const atomRequestCustomerDetail = atom(
                 isEN: response.data?.stationCode === Site.UK
             };
             set(atomCustomerDetail, res as CustomerDetailRespDTO2);
+            const fistShopId = response.data?.customerShopList?.[0].customerShopId||'';
+            window.localStorage.setItem('production_route/curShop',fistShopId);
             }
            
         } catch {

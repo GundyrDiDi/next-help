@@ -23,12 +23,13 @@ interface Props {
   params:{
     lang: Local;
     initPlat: string;
+    token?:string
   }
 }
 
 export default function Layout({
   children,
-  params:{lang,initPlat}
+  params:{lang,initPlat,token}
 }:Props ) {
   const [customerDetail, requestCustomerDetail] = useAtom(CustomerDetail);
   const [curLang,setCurLang]=useAtom(Lang)

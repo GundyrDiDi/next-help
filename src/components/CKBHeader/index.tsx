@@ -131,14 +131,6 @@ const CKBHeader = ({plat}:{plat?:string}) => {
                             src="https://static-jp.theckb.com/static-asset/client/homelogo_w.png"
                             alt=""
                         />
-                        {/* <span
-                            style={{
-                                fontWeight: 600,
-                                fontSize: 12
-                            }}
-                        >
-                            {t('更简单，更透明')}
-                        </span> */}
                     </div>
                     <div className="pl-10 flex items-center">
                         {stationCode === Site.JP && (
