@@ -42,7 +42,6 @@ export async function generateMetadata(
  
 export default async function Page({ params, searchParams }: Props) {
   const frogArticleId = params.frogArticleId
-  
   const article:BizResponseFrogArticleDetailRespDTO = await fetch(`https://gateway-prod.theckb.com/customer/frog/article/detail?frogArticleId=${frogArticleId}`).then(res=>res.json())
   return <div dangerouslySetInnerHTML={{__html:article?.data?.frogArticleContent??''}}/>
 }

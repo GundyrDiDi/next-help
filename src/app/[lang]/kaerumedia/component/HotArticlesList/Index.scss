@@ -1,0 +1,47 @@
+$hover-text-color: var(--hfccolor);
+.HotArticlesList {
+  height: 400px;
+  overflow: hidden;
+  border-radius: 6px;
+  &-title {
+    height: 40px;
+    color: #fff;
+    background-color: var(--fcolor);
+    line-height: 40px;
+    padding-left: 8px;
+    font-size: 16px;
+  }
+  &-main {
+    height: 359px;
+    background-color: #fff;
+    overflow-x: hidden;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    &-box {
+      padding: 0 10px;
+    }
+    &-item {
+      height: 60px;
+      padding: 10px 4px;
+      color: #666;
+      font-size: 14px;
+      cursor: pointer;
+      border-bottom: 1px dashed #E3E3E3;
+      line-height: 1.4;
+      &:hover {
+        color: $hover-text-color;
+      }
+      &:last-child {
+        border-bottom: none;
+      }
+      span {
+        height: 100%;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+      }
+    }
+  }
+}

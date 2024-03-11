@@ -13,13 +13,11 @@ export default function Layout({children}:Props){
 
 type MateProps = {
   params: { lang: Local }
-  searchParams: { [key: string]: string | string[] | undefined },
 }
 
 
-
 export async function generateMetadata(
-  { params, searchParams }: MateProps,
+  { params }: MateProps,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const {t} =await serveTranslation(params.lang)

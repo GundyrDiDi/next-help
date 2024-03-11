@@ -6,6 +6,8 @@ import "./index.scss"
 import NavBar from "./component/NavBar/Index";
 import ArticleList from "./component/ArticleList/Index";
 import { atom, useAtom } from "jotai";
+import HotArticlesList from "./component/HotArticlesList/Index";
+import ArticleDateFilter from "./component/ArticleDateFilter/Index";
 
 
 interface Props{
@@ -36,7 +38,10 @@ export default function Page({params: {}}: Props){
       <div className="Kaerumedia-main-list">
       <ArticleList navIndex={navIndex}/>
       </div>
-      <div className="Kaerumedia-main-recom"></div>
+      <div className="Kaerumedia-main-recom">
+        <HotArticlesList/>
+        <ArticleDateFilter/>
+      </div>
     </div>
   </div>
 }
