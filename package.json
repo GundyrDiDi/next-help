@@ -6,9 +6,9 @@
     "dev": "next dev -p 4000",
     "api": "npx @snifftest/api-gen config hu  && npx eslint ./src/service --fix",
     "build": "next build",
-    "start:dev": "next start",
-    "start:pre": "next start",
-    "start:prod": "next start",
+    "start": "next start -p 3000",
+    "start:pre": "next start -p 3000",
+    "start:prod": "next start -p 3000",
     "lint": "next lint"
   },
   "dependencies": {

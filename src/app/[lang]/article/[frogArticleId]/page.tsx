@@ -1,7 +1,10 @@
+import { PlatCookie, TokenSignCookie } from '@/config'
 import { BizResponseFrogArticleDetailRespDTO ,FrogArticleDetailRespDTO} from '@/service/customer'
+import { getCookieToken } from '@/utils'
 import type { Metadata, ResolvingMetadata } from 'next'
 import { getServerSideProps } from 'next/dist/build/templates/pages'
- 
+import { cookies } from 'next/headers'
+
 type Props = {
   params: { frogArticleId: string }
   searchParams: { [key: string]: string | string[] | undefined },
@@ -42,10 +45,11 @@ export async function generateMetadata(
  
 export default async function Page({ params, searchParams }: Props) {
   const frogArticleId = params.frogArticleId
+  const cookieStore = cookies()
+  let cookiesName=encodeURIComponent(TokenSignCookie)
+  const token = cookieStore.get(cookiesName)
+  console.log(token,token?.value,cookiesName);
+  
   const article:BizResponseFrogArticleDetailRespDTO = await fetch(`https://gateway-prod.theckb.com/customer/frog/article/detail?frogArticleId=${frogArticleId}`).then(res=>res.json())
   return <div dangerouslySetInnerHTML={{__html:article?.data?.frogArticleContent??''}}/>
 }
-
-// export async function  getServerSideProps({ params }){
-//   return {}
-// }
