@@ -50,7 +50,7 @@ useEffect(() => {
   }
   console.log(curLang,'当前语言');
   
-}, [lang, requestCustomerDetail, setCurLang, setPlat]);
+}, [curLang, lang, requestCustomerDetail, setCurLang, setPlat]);
 
 const locale = {
   [Local.JA]:ja_JP,

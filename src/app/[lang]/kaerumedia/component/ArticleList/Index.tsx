@@ -34,7 +34,7 @@ const ArticleList=({navIndex}:ArticleListProps)=>{
     },
   );
   useEffect(()=>{
-    articlePage({pageSize:16,current:1},{frogArticleType:navIndex===-1?undefined:navIndex,stationCode})
+    articlePage({pageSize:10,current:1},{frogArticleType:navIndex===-1?undefined:navIndex,stationCode})
   },[articlePage, navIndex,stationCode])
   
   return <div className="ArticleList">
@@ -49,6 +49,7 @@ const ArticleList=({navIndex}:ArticleListProps)=>{
     </div>
     {!!articleRes?.list?.length&&<div className="ArticleList-pagination">
       <Pagination 
+        onChange={pagination.onChange}
         showQuickJumper 
         current={pagination.current} 
         pageSize={pagination.pageSize}
