@@ -25,7 +25,7 @@ import platAtom from '@/model/Plat';
 
 
 const menuCommonStyle =
-    'flex items-center ml-[32px] hover:text-[color:--color-primary-light] cursor-pointer';
+    'flex items-center ml-[20px] hover:text-[color:--color-primary-light] cursor-pointer';
 
 
 const CKBHeader = ({plat}:{plat?:string}) => {
