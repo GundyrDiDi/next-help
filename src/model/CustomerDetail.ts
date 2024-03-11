@@ -37,7 +37,7 @@ const atomRequestCustomerDetail = atom(
             };
             set(atomCustomerDetail, res as CustomerDetailRespDTO2);
             const fistShopId = response.data?.customerShopList?.[0].customerShopId||'';
-            window.localStorage.setItem('production_route/curShop',fistShopId);
+            window.localStorage.setItem('production_route/curShop',String(fistShopId));
             }
            
         } catch {
