@@ -1,7 +1,4 @@
 "use client"
-import "./globals.css";
-import '@/styles/theme/b2b-css-variable.scss';
-import '@/styles/theme/d2c-css-variable.scss';
 import { useCallback, useEffect, useState } from "react";
 import ja_JP from 'antd/locale/ja_JP';
 import ko_KR from 'antd/locale/ko_KR';
@@ -16,22 +13,22 @@ import CKBHeader from "@/components/CKBHeader";
 import FloatToolbar from "@/components/FloatToolbar";
 import { Local } from "@/i18n/settings";
 import { LocalContext, runsOnServerSide } from "@/i18n/client";
-// import Providers from './providers'
 import platAtom from "@/model/Plat";
-// import { PlatCookie } from "@/config";
 import { getCookiePlat } from "@/utils";
-import "./globals.css";
+import { togglePlat } from "@/config/request/interceptors";
+import { ENUM_SYSTEM_SOURCE } from "@/const/enum";
 
 interface Props {
   children: React.ReactNode;
   params:{
     lang: Local;
+    initPlat: string;
   }
 }
 
 export default function Layout({
   children,
-  params:{lang}
+  params:{lang,initPlat}
 }:Props ) {
   const [customerDetail, requestCustomerDetail] = useAtom(CustomerDetail);
   const [curLang,setCurLang]=useAtom(Lang)
@@ -47,10 +44,16 @@ useEffect(() => {
     requestCustomerDetail();
     setPlat(getCookiePlat)
     setCurLang(lang)
+  }else{
+    setPlat(initPlat)
+    setCurLang(lang)
   }
-  console.log(curLang,'当前语言');
   
-}, [curLang, lang, requestCustomerDetail, setCurLang, setPlat]);
+}, [curLang, initPlat, lang, requestCustomerDetail, setCurLang, setPlat, plat]);
+
+useEffect(()=>{
+  togglePlat(plat==='d2c'?ENUM_SYSTEM_SOURCE.D2C:ENUM_SYSTEM_SOURCE.B2B);
+},[plat])
 
 const locale = {
   [Local.JA]:ja_JP,
