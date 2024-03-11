@@ -13,6 +13,7 @@ import { formatViewNum } from "@/utils/util";
 import classNames from "classnames";
 import { useAtom } from "jotai";
 import Router from "next/router"
+import "./ArticleItem.scss"
 
 interface Props {
   article: FrogArticleRespDTO;
@@ -52,7 +53,7 @@ const ArticleItem = ({ article }: Props) => {
           <div className="article-body tstn">{article.frogArticleSubTitle}</div>
           <div className="article-msg tstn">
             <div className="article-msg-read">
-              <SvgCheck style={{ fontSize: "12px", transform: "scale(1.4)" }} />
+              <SvgCheck  style={{ marginRight: "5px",fontSize: "12px", transform: "scale(1.4)", }} />
               {formatViewNum(article?.viewNum!)}
             </div>
             <div className="article-msg-date">

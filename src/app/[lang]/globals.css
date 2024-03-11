@@ -2,10 +2,18 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 @import "normalize.css";
+/* @import "../../../styles/flex.scss";
+@import '../../../styles/theme/b2b-css-variable.scss';
+@import '../../../styles/theme/d2c-css-variable.scss'; */
 
 :root {
   --max-width: 1200px;
 }
+
+* {
+  box-sizing: border-box
+}
+
 a {
   color: inherit;
   text-decoration: inherit;
@@ -15,4 +23,12 @@ a {
 .viewport {
   width: var(--max-width);
   margin: 0 auto;
+}
+
+svg {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
 }

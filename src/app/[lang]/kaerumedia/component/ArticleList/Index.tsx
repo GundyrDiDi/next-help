@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./Index.scss"
 import { usePagination, useRequest } from "ahooks";
 import { api } from "@/service";
 import ArticleItem from "./ArticleItem";
@@ -8,7 +7,8 @@ import { FrogArticleRespDTO ,GetFrogArticlePageDTO} from "@/service/customer";
 import { useTranslation } from "@/i18n/client";
 import { Local } from "@/i18n/settings";
 import { useSite2Station } from "@/utils/language";
-// GetFrogArticlePageDT
+import "./Index.scss"
+
 
 type Params=Omit<GetFrogArticlePageDTO, 'pageNum' | 'pageSize'>
 interface ArticleListProps {

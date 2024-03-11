@@ -212,8 +212,9 @@ const Footer = ({ plat, lang }: Props) => {
               </a>
             </>
           )}
-          <a href={gotoLink("agreement")}>{t("使用条约")}</a>
-          <a href={gotoLink("policy")}>{t("隐私权政策")}</a>
+          {/* TODO:跳转地址合成 */}
+          {/* <a href={}>{t("使用条约")}</a>
+          <a href={}>{t("隐私权政策")}</a> */}
         </div>
       </div>
     </div>

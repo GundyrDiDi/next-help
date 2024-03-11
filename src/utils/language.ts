@@ -1,5 +1,5 @@
 import { Local } from "@/i18n/settings";
-import { Lang } from "@/model";
+import { getLangType } from "@/model/Lang";
 import { getDefaultStore } from "jotai";
 
 /**
@@ -21,7 +21,7 @@ enum Site {
 }
 
 
-export const lang=getDefaultStore().get(Lang)
+export const lang=getDefaultStore().get(getLangType)
 
 
 export const isEN=()=> {

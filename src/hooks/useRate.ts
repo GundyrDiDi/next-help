@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, Dispatch, SetStateAction } from 'react';
 import { atom, useAtom } from 'jotai';
-import { CustomerDetail } from '@/model';
+import { atomCustomerDetail } from '@/model/CustomerDetail';
 import { siteMapMonetaryUnit, Site, countryCurrency } from '@/const';
 import { request } from '@/config/request';
 import { CustomerDetailRespDTO } from '@/service/customer';
@@ -66,7 +66,7 @@ const reqRate = (
 };
 
 export const useRate = () => {
-    const [customerDetail] = useAtom(CustomerDetail);
+    const [customerDetail] = useAtom(atomCustomerDetail);
 
     const rateInternitalRef = useRef<any>(null);
 

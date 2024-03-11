@@ -8,7 +8,7 @@ import ja_JP from 'antd/locale/ja_JP';
 import ko_KR from 'antd/locale/ko_KR';
 import en_GB from 'antd/locale/en_GB';
 import zh_CN from 'antd/locale/zh_CN';
-import { CustomerDetail, Lang} from '@/model';
+import {CustomerDetail,Lang} from '@/model';
 import { useAtom } from "jotai";
 import { ConfigProvider } from 'antd';
 import { ThemeConfig } from 'antd/lib/config-provider';
@@ -17,10 +17,11 @@ import CKBHeader from "@/components/CKBHeader";
 import FloatToolbar from "@/components/FloatToolbar";
 import { Local } from "@/i18n/settings";
 import { LocalContext, runsOnServerSide } from "@/i18n/client";
-import Providers from './providers'
+// import Providers from './providers'
 import platAtom from "@/model/Plat";
-import { PlatCookie } from "@/config";
+// import { PlatCookie } from "@/config";
 import { getCookiePlat } from "@/utils";
+import "./globals.css";
 
 
 export default function RootLayout({
@@ -47,6 +48,8 @@ useEffect(() => {
     setPlat(getCookiePlat)
     setCurLang(lang)
   }
+  console.log(curLang,'当前语言');
+  
 }, [lang, requestCustomerDetail, setCurLang, setPlat]);
 
 const locale = {
@@ -145,16 +148,16 @@ const getThemeStyle = useCallback(() => {
     <html lang={lang} data-theme={plat.toLocaleUpperCase()}>
       <script type="text/javascript" src="https://cdn.channel.io/plugin/ch-plugin-web.js" async></script>
       <body >
-          <Providers>
+          {/* <Providers> */}
             <LocalContext.Provider value={lang}>
                   <ConfigProvider locale={locale} theme={getThemeStyle()}>
                     <CKBHeader plat={plat}/> 
                     <FloatToolbar/>
                       {children}
-                  <CKBFooter lang={lang} plat={plat}/>·
+                  <CKBFooter lang={lang} plat={plat}/>
                   </ConfigProvider>
                   </LocalContext.Provider>
-            </Providers>
+            {/* </Providers> */}
         </body>
     </html>
   );

@@ -15,9 +15,10 @@ interface Props{
 }
 
 // 顶部navbar
-const navTab=atom<number>(0);
+const navTab=atom<number>(-1);
 
 export default function Page({params: {}}: Props){
+  // TODO:根据语言选择banner
   const [banner,setBaner]=useState<string>(bannerData.ja.D2C)
   // navIndex
   const [navIndex,setActiveIndex]=useAtom(navTab)

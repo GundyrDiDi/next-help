@@ -1,0 +1,94 @@
+$hover-text-color: var(--hfccolor);
+.ArticleItem {
+  height: 205px;
+  padding: 20px;
+  &.d2c {
+    &:hover {
+      .article-msg-read-icon {
+        background: url('https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/read-active.png') no-repeat;
+        background-size: 100%;
+      }
+    }
+  }
+  &.b2b {
+    &:hover {
+      .article-msg-read-icon {
+        background: url('https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/read-active-b2b.png') no-repeat;
+        background-size: 100%;
+      }
+    }
+  }
+  &-main {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    &:hover {
+      .article {
+        &-title, &-body, &-msg, &-msg-read{
+          color: $hover-text-color;
+        }
+      }
+    }
+    &-pic {
+      width: 380px;
+      height: 100%;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0px 2px 8px 0px rgba(0, 44, 33, 0.1);
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    &-text {
+      width: 502px;
+      height: 100%;
+      position: relative;
+      .article {
+        &-title {
+          height: 50px;
+          font-size: 18px;
+          margin-top: 8px;
+          font-weight: bolder;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+          overflow: hidden;
+          line-height: 1.4;
+        }
+        &-body {
+          height: 120px;
+          color: #666;
+          font-size: 14px;
+          margin-top: 14px;
+          line-height: 20px;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 6;
+          overflow: hidden;
+        }
+        &-msg {
+          width: 100%;
+          position: absolute;
+          bottom: 0;
+          display: flex;
+          justify-content: space-between;
+          font-size: 12px;
+          color: #666;
+          &-read {
+            vertical-align: middle;
+            &-icon {
+              width: 15px;
+              height: 9px;
+              display: inline-block;
+              background: url('https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/read.png') no-repeat;
+              background-size: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+}

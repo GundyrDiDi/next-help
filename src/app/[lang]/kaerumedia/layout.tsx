@@ -23,7 +23,6 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const {t} =await serveTranslation(params.lang)
-  // 
   return {
     title:t('青蛙频道')
   }

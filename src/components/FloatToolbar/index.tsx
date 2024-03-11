@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import './index.scss';
 import { useAtom } from 'jotai';
 import { CDN_HOST } from '@/const/staticURL/index';
-import { CustomerDetail } from '@/model';
+import { atomCustomerDetail } from '@/model/CustomerDetail';
 import { LocalContext, useTranslation } from '@/i18n/client';
 const FloatToolbar = () => {
     const lang=useContext(LocalContext)
@@ -10,7 +10,7 @@ const FloatToolbar = () => {
     
     const [isExpand, setIsExpand] = useState(true);
     const [msgCount, setMsgCount] = useState<number>(0);
-    const [useInfo] = useAtom(CustomerDetail);
+    const [useInfo] = useAtom(atomCustomerDetail);
     // 初始化聊天弹窗
     const initChannelIO = useCallback(() => {
         window?.ChannelIO('boot', {

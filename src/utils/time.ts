@@ -1,4 +1,4 @@
-import { CustomerDetail } from '@/model'
+import { atomCustomerDetail } from '@/model/CustomerDetail'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import { useAtom,getDefaultStore } from 'jotai'
@@ -17,7 +17,7 @@ export const setStationTime = (time: any, format?: any) => {
 
 // 获取用户信息
 export const getUserFn=()=>{
-  return getDefaultStore().get(CustomerDetail)
+  return getDefaultStore().get(atomCustomerDetail)
 }
 
 

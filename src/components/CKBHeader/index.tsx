@@ -119,8 +119,8 @@ const CKBHeader = ({plat}:{plat?:string}) => {
         return false;
     };
     return (
-        <div className="CKBHeader viewport">
-            <div className="wrap of-hd">
+        <div className="CKBHeader">
+            <div className="wrap of-hd viewport">
                 <div className="auto-width flex justify-between">
                     <div
                         className="logo flex items-center cursor-pointer"
