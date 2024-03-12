@@ -11,8 +11,8 @@ import {
   enSite,
 } from "./footerData";
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-// import { gotoLink } from "@/utils/router";
+import { toTheCkb } from "@/utils/router";
+import { useTranslation } from "@/i18n/client";
 interface Props {
   plat?: string;
   lang: Local;
@@ -22,7 +22,7 @@ const Footer = ({ plat, lang }: Props) => {
   // 链接列表
   const [aList, setAList] = useState<FooterData[]>();
   const [logoLink, setLogoLink] = useState<imgLinks>();
-  const { t, i18n } = useTranslation(lang);
+  const { t } = useTranslation();
   useEffect(() => {
     if (lang === Local.JA) {
       setAList(jaList);
@@ -212,9 +212,8 @@ const Footer = ({ plat, lang }: Props) => {
               </a>
             </>
           )}
-          {/* TODO:跳转地址合成 */}
-          {/* <a href={}>{t("使用条约")}</a>
-          <a href={}>{t("隐私权政策")}</a> */}
+          <a onClick={() => toTheCkb(`${lang}/agreement`)}>{t("使用条约")}</a>
+          <a onClick={()=>toTheCkb(`${lang}/policy`)}>{t("隐私权政策")}</a>
         </div>
       </div>
     </div>

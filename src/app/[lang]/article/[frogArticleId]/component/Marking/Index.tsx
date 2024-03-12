@@ -5,18 +5,21 @@ import { Lang } from "@/model"
 import { isKO } from "@/utils/language"
 import { isLogin } from "@/utils"
 import { Button } from "antd"
+import { toLogin, toTheCkb } from "@/utils/router"
 
 const Marking=()=>{
   const {t}=useTranslation()
-  const lang=useAtom(Lang)
+  const [lang]=useAtom(Lang)
   const hasLogin=isLogin()
 
   const vipLoginClick=()=>{
-    // TODO: VipLevel
+    toTheCkb(`${lang}/vip/VipLevel`)
+
   }
 
-  // TODO:登录
-  const loginClick=()=>{}
+  const loginClick=()=>{
+    toLogin()
+  }
   const registClick=()=>{}
 
   return <div className="marking">

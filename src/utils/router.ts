@@ -5,8 +5,9 @@ import { Lang } from "@/model";
  * 去登录
  */
 export const toLogin=()=>{
-  // TODO 登录逻辑实现
+  toTheCkb('/login')
 }
+
 
 
 export const queryString=(params:Record<string,string>) => Object.keys(params).map(function(key) {

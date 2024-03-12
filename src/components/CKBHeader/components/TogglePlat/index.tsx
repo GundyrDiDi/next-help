@@ -7,6 +7,8 @@ import { useAtom } from "jotai";
 import { atomCustomerDetail } from "@/model/CustomerDetail";
 import { togglePlat } from "@/config/request/interceptors";
 import { CustomerDetail } from "@/model";
+import { toTheCkb } from "@/utils/router";
+import { lang } from "@/utils/language";
 
 interface PlatDTO {
   label: string;
@@ -58,20 +60,12 @@ const TogglePlat = (props: TogglePlatProps) => {
             expire: null,
           })
         );
-        // TODO:切换后的跳转
         window.location.reload();
-        // const plat =
-        //     res.data.customerRespDTO?.systemSource ===
-        //     ENUM_SYSTEM_SOURCE.D2C
-        //         ? '/d2c/'
-        //         : '/b2b/';
-        // window.location.replace(
-        //     window.location.origin + plat + 'index/pure'
-        // );
       }
     } else {
       togglePlat(item.type);
       window.location.reload();
+      // toTheCkb(`${lang}/index/pure`)
     }
   };
   return (
