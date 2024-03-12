@@ -16,7 +16,7 @@ interface Props {
   showBtn: boolean;
   type?:string;
 }
-const HotArticles = ({ title = "热门文章", showBtn }: Props) => {
+const HotArticles = ({ title = "热门文章", showBtn,type }: Props) => {
   const { t } = useTranslation();
   const [list, setList] = useState<FrogArticleRespDTO[]>([]);
   const stationCode = useSite2Station();
