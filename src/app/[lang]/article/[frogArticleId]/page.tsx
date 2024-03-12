@@ -7,6 +7,11 @@ type Props = {
   searchParams: { [key: string]: string| undefined },
 }
 
+/** 获取数据 */
+const getData=async (frogArticleId:number)=>{
+  const article = await fetch(`${process.env.THE_CKB_API_URL}/customer/frog/article/detail?frogArticleId=${frogArticleId}`).then(res=>res.json())
+  return article.data as FrogArticleDetailRespDTO
+}
 
  
 export async function generateMetadata(
@@ -38,15 +43,8 @@ export async function generateMetadata(
 }
  
 export default async function Page({ params, searchParams }: Props) {
-  console.log(searchParams,'searchParams');
-
   const frogArticleId = +params.frogArticleId
    const article= await getData(frogArticleId)
   return <ArticlesCont frogArticle={article} querys={searchParams} />
 }
 
-/** 获取数据 */
-export const getData=async (frogArticleId:number)=>{
-  const article = await fetch(`${process.env.THE_CKB_API_URL}/customer/frog/article/detail?frogArticleId=${frogArticleId}`).then(res=>res.json())
-  return article.data as FrogArticleDetailRespDTO
-}
