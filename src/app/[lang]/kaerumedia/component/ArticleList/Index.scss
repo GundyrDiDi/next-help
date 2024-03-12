@@ -5,6 +5,11 @@
     border-radius: 6px;
     position: relative;
     z-index: 0;
+    :global{
+      .ant-spin-nested-loading{
+        height: 100%;
+      }
+    }
     &-shadow {
       position: absolute;
       top: 0;

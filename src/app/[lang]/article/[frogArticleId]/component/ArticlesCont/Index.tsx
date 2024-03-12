@@ -11,6 +11,7 @@ import Marking from "../Marking/Index";
 
 interface Props {
   frogArticle?: FrogArticleDetailRespDTO;
+  type?:string;
 }
 const ArticlesCont = ({ frogArticle }: Props) => {
   const [markingShow, setMarkingShow] = useState<boolean>(false);
@@ -35,7 +36,7 @@ const ArticlesCont = ({ frogArticle }: Props) => {
               }}
             ></div>
           </div>
-          <ArticleSwitch frogArticleId={frogArticle?.frogArticleId} type={}  />
+          <ArticleSwitch frogArticleId={frogArticle?.frogArticleId} type={type}  />
         </div>
         <div className="Article-hot box-style">
           <HotArticles  />

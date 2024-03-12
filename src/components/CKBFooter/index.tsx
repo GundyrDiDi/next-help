@@ -12,7 +12,7 @@ import {
 } from "./footerData";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { gotoLink } from "@/utils/router";
+// import { gotoLink } from "@/utils/router";
 interface Props {
   plat?: string;
   lang: Local;

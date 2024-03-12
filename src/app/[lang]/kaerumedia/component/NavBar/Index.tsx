@@ -3,19 +3,21 @@ import { NavItem } from "../../configData"
 import { useContext } from "react"
 import { LocalContext ,useTranslation} from "@/i18n/client"
 import "./Index.scss"
+import { useAtom } from "jotai"
+import { QueryParams } from "../../page"
  
  interface Props {
   navList:NavItem[],
-  navIndex?:number,
   changeType:(index:number)=>void;
  }
 
- const NavBar=({navList,navIndex,changeType}:Props)=>{
+ const NavBar=({navList,changeType}:Props)=>{
   const {t}=useTranslation()
+  const [querys]=useAtom(QueryParams)
   return <div className="Nav">
     <div className="navmain">
     {
-      navList?.map((nav)=><div onClick={()=>changeType(nav.value)} key={nav.value} className={classNames("navmain-item",{'active':navIndex===nav.value})}>
+      navList?.map((nav)=><div onClick={()=>changeType(nav.value)} key={nav.value} className={classNames("navmain-item",{'active':querys.tab===nav.value})}>
         <div>{ t(nav.label) }</div>
       </div>)
     }

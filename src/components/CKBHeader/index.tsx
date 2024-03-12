@@ -21,6 +21,7 @@ import './index.scss';
 import { LocalContext, useTranslation } from '@/i18n/client';
 import { myShopIcon } from '@/const/staticURL';
 import platAtom from '@/model/Plat';
+import { useSite2Station } from '@/utils/language';
 
 
 
@@ -35,6 +36,7 @@ const CKBHeader = ({plat}:{plat?:string}) => {
         timer: null as unknown as NodeJS.Timer
     });
     const {t}=useTranslation()
+    const nationCode=useSite2Station()
 
     const [date, setDate] = useState<string>();
     const [customerDetail] = useAtom(CustomerDetail);
@@ -317,7 +319,9 @@ const CKBHeader = ({plat}:{plat?:string}) => {
                                                 />
                                             )}
                                         </div>
-                                        <div>
+                                        <div  style={{
+                                                padding: '0 8px 0 8px'
+                                            }}>
                                             {`${timeRange} ${date}`}{' '}
                                         </div>
                                     </div>
@@ -343,7 +347,7 @@ const CKBHeader = ({plat}:{plat?:string}) => {
                                         }}
                                     >
                                         <img
-                                            src={`https://static-s.theckb.com/BusinessMarket/Client/country/flag_${customerDetail?.nationCode}_tab.png`}
+                                            src={`https://static-s.theckb.com/BusinessMarket/Client/country/flag_${nationCode}_tab.png`}
                                             alt=""
                                             width={20}
                                             height={14}

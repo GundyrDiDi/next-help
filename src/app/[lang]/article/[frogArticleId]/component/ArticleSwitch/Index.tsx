@@ -6,7 +6,7 @@ import { useState } from "react";
 
 interface Props {
   frogArticleId?:number;
-  type?:number;
+  type?:string;
 }
 
 const ArticleSwitch=({frogArticleId,type}:Props)=>{
@@ -19,7 +19,7 @@ const ArticleSwitch=({frogArticleId,type}:Props)=>{
   }
 
   useAsyncEffect(async ()=>{
-    const res=await articleGetPrepAndNext({frogArticleId,type})
+    const res=await articleGetPrepAndNext({frogArticleId,type:type?Number(type):undefined})
     setLastNextMsg(res.data)
   },[])
 

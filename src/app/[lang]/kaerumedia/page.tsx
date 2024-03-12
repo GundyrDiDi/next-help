@@ -10,37 +10,50 @@ import HotArticlesList from "./component/HotArticlesList/Index";
 import ArticleDateFilter from "./component/ArticleDateFilter/Index";
 import { Lang,Plat } from "@/model";
 
-
 interface Props{
   params: {
     lang: Local;
   }
 }
 
+// 页面的所有的参数
+interface QueryAtom {
+  tab?: number;
+  year?:number;
+  month?:number;
+}
+export const QueryParams=atom<QueryAtom>({tab:-1});
+
 // 顶部navbar
-const navTab=atom<number>(-1);
 export default function Page({params: {}}: Props){
   const [lang]=useAtom(Lang);
   const [plat]=useAtom(Plat) 
   const [banner,setBaner]=useState<string>('')
-  const [navIndex,setActiveIndex]=useAtom(navTab)
-  
+  const [querys,setQuerys]=useAtom(QueryParams)
+
   useEffect(()=>{
     setBaner(bannerData[lang][plat.toUpperCase() as 'B2B'| 'D2C'])
   },[lang, plat])
 
   const changeNav=(index:number)=>{
-    setActiveIndex(index)
+    setQuerys((value)=>{
+      return {
+        ...value,
+        tab:index
+      }
+    })
   }
+
+
 
   return <div className="Kaerumedia">
     <div className="Kaerumedia-banner">
       <img src={banner} alt="" />
     </div>
-    <NavBar navList={navList} changeType={changeNav} navIndex={navIndex}/>
+    <NavBar navList={navList} changeType={changeNav} navIndex={querys.tab}/>
     <div className="Kaerumedia-main viewport">
       <div className="Kaerumedia-main-list">
-      <ArticleList navIndex={navIndex}/>
+      <ArticleList />
       </div>
       <div className="Kaerumedia-main-recom">
         <HotArticlesList/>

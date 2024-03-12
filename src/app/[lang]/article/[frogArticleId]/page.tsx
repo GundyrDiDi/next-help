@@ -4,7 +4,7 @@ import ArticlesCont from './component/ArticlesCont/Index'
 
 type Props = {
   params: { frogArticleId: string }
-  searchParams: { [key: string]: string | string[] | undefined },
+  searchParams: { [key: string]: string| undefined },
 }
 
 
@@ -38,9 +38,10 @@ export async function generateMetadata(
 }
  
 export default async function Page({ params, searchParams }: Props) {
+  const {type}=searchParams
   const frogArticleId = +params.frogArticleId
    const article= await getData(frogArticleId)
-  return <ArticlesCont frogArticle={article} />
+  return <ArticlesCont type={type} frogArticle={article} />
 }
 
 /** 获取数据 */

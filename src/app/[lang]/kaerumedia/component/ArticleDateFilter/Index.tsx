@@ -10,13 +10,15 @@ import { api } from "@/service";
 import { useState } from "react";
 import { FrogArticleArchiveSortRespDTO } from "@/service/customer";
 import { Empty } from "antd";
+import { QueryParams } from "../../page";
 
 const ArticleDateFilter = () => {
   const [active,{toggle}] = useToggle();
   const [lang] = useAtom(Lang);
-  const { t } = useTranslation(lang);
+  const { t } = useTranslation();
   const stationCode = useSite2Station();
   const [userInfo] = useAtom(CustomerDetail);
+  const [querys,setQuerys]=useAtom(QueryParams)
   const [activeList, setActiveList] =
     useState<FrogArticleArchiveSortRespDTO[]>();
 
@@ -30,6 +32,15 @@ const ArticleDateFilter = () => {
     setActiveList(res.data || []);
   }, []);
 
+  const changeDate=(item:FrogArticleArchiveSortRespDTO)=>{
+    setQuerys((value)=>{
+      return {
+        year:item.frogArticleYear,
+        month:item.frogArticleMonth,
+        tab:-2
+      }
+    })
+  }
 
   return (
     <div
@@ -44,7 +55,7 @@ const ArticleDateFilter = () => {
           {activeList?.length ? (
             activeList?.map((item, index) => {
               return (
-                <div className="ArticleDateFilter-main-item tstn" key={index}>
+                <div onClick={()=>changeDate(item)} className={classNames('ArticleDateFilter-main-item tstn',{'active':querys.year===item.frogArticleYear&&querys.month===item.frogArticleMonth})} key={index}>
                   <div className="item-date">
                     {`${item.frogArticleYear}-${item.frogArticleMonth}`}
                   </div>

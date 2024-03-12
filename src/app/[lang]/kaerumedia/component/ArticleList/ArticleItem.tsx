@@ -13,14 +13,25 @@ import classNames from "classnames";
 import { useAtom } from "jotai";
 
 import "./ArticleItem.scss"
+import { QueryParams } from "../../page";
+import { useMemo } from "react";
 
 interface Props {
   article: FrogArticleRespDTO;
 }
 const ArticleItem = ({ article }: Props) => {
   const [userInfo] = useAtom(CustomerDetail);
-  // TODO：关于类型问题及登录问题需要解决
-  const href= useLink(`article/${article.frogArticleId}`,{type:1})
+  const [querys]=useAtom(QueryParams)
+  const type=useMemo(()=>{
+    if (querys.tab === -1) {
+      return 3
+    } else if (querys.tab === -2) {
+      return 1
+    } else {
+      return 0
+    }
+  },[querys.tab])
+  const href= useLink(`article/${article.frogArticleId}`,{type})
   // 点击跳转文章线详情
   const goArticle = () => {
     if (
@@ -55,7 +66,7 @@ const ArticleItem = ({ article }: Props) => {
           <div className="article-body tstn">{article.frogArticleSubTitle}</div>
           <div className="article-msg tstn">
             <div className="article-msg-read">
-              <SvgCheck  style={{ marginRight: "5px",fontSize: "12px", transform: "scale(1.4)", }} />
+              <SvgCheck className="icon"  style={{ marginRight: "5px",fontSize: "12px", transform: "scale(1.4)", }} />
               {formatViewNum(article?.viewNum!)}
             </div>
             <div className="article-msg-date">
