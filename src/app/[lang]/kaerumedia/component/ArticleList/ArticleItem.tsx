@@ -3,7 +3,7 @@ import {
   NO_LOGIN_RESTRICTION_TYPE,
   NO_MEMBERSHIP_RESTRICTION_TYPE,
 } from "@/const/enum";
-import { CustomerDetail } from "@/model";
+import { CustomerDetail, QueryParams } from "@/model";
 import { FrogArticleRespDTO } from "@/service/customer";
 import {  isD2C, isLogin } from "@/utils";
 import { useLink, toLogin } from "@/utils/router";
@@ -13,7 +13,6 @@ import classNames from "classnames";
 import { useAtom } from "jotai";
 
 import "./ArticleItem.scss"
-import { QueryParams } from "../../page";
 import { useMemo } from "react";
 
 interface Props {

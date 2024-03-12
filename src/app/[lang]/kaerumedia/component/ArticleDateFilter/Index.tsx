@@ -3,14 +3,13 @@ import classNames from "classnames";
 
 import "./Index.scss";
 import { useAtom } from "jotai";
-import { CustomerDetail, Lang } from "@/model";
+import { CustomerDetail, Lang, QueryParams } from "@/model";
 import { useTranslation } from "@/i18n/client";
 import { useSite2Station } from "@/utils/language";
 import { api } from "@/service";
 import { useState } from "react";
 import { FrogArticleArchiveSortRespDTO } from "@/service/customer";
 import { Empty } from "antd";
-import { QueryParams } from "../../page";
 
 const ArticleDateFilter = () => {
   const [active,{toggle}] = useToggle();

@@ -9,7 +9,7 @@ import { Local } from "@/i18n/settings";
 import { useSite2Station } from "@/utils/language";
 import "./Index.scss"
 import { useAtom } from "jotai";
-import { QueryParams } from "../../page";
+import { QueryParams } from "@/model";
 
 
 type Params=Omit<GetFrogArticlePageDTO&GetFrogArticleArchivePageDTO, 'pageNum' | 'pageSize'>

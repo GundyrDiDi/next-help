@@ -4,7 +4,7 @@ import { useContext } from "react"
 import { LocalContext ,useTranslation} from "@/i18n/client"
 import "./Index.scss"
 import { useAtom } from "jotai"
-import { QueryParams } from "../../page"
+import { QueryParams } from "@/model"
  
  interface Props {
   navList:NavItem[],

@@ -8,8 +8,7 @@ import ArticleList from "./component/ArticleList/Index";
 import { atom, useAtom } from "jotai";
 import HotArticlesList from "./component/HotArticlesList/Index";
 import ArticleDateFilter from "./component/ArticleDateFilter/Index";
-import { Lang,Plat } from "@/model";
-import { api } from "@/service";
+import { Lang,Plat, QueryParams } from "@/model";
 
 interface Props{
   params: {
@@ -17,13 +16,7 @@ interface Props{
   }
 }
 
-// 页面的所有的参数
-interface QueryAtom {
-  tab?: number;
-  year?:number;
-  month?:number;
-}
-export const QueryParams=atom<QueryAtom>({tab:-1});
+
 
 // 顶部navbar
 export default function Page({params: {}}: Props){
