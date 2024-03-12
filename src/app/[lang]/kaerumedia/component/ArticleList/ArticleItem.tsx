@@ -3,10 +3,10 @@ import {
   NO_LOGIN_RESTRICTION_TYPE,
   NO_MEMBERSHIP_RESTRICTION_TYPE,
 } from "@/const/enum";
-import { CustomerDetail, QueryParams } from "@/model";
+import { CustomerDetail, Lang, QueryParams } from "@/model";
 import { FrogArticleRespDTO } from "@/service/customer";
 import {  isD2C, isLogin } from "@/utils";
-import { useLink, toLogin } from "@/utils/router";
+import { useLink, toLogin, toTheCkb } from "@/utils/router";
 import { setStationTime } from "@/utils/time";
 import { formatViewNum } from "@/utils/util";
 import classNames from "classnames";
@@ -21,6 +21,7 @@ interface Props {
 const ArticleItem = ({ article }: Props) => {
   const [userInfo] = useAtom(CustomerDetail);
   const [querys]=useAtom(QueryParams)
+  const [lang]=useAtom(Lang)
   const type=useMemo(()=>{
     if (querys.tab === -1) {
       return 3
@@ -30,6 +31,7 @@ const ArticleItem = ({ article }: Props) => {
       return 0
     }
   },[querys.tab])
+
   const href= useLink(`article/${article.frogArticleId}`,{type})
   // 点击跳转文章线详情
   const goArticle = () => {
@@ -45,7 +47,7 @@ const ArticleItem = ({ article }: Props) => {
         NO_MEMBERSHIP_RESTRICTION_TYPE.CHECK_DISABLE &&
       !userInfo?.membership?.templateLevel
     ) {
-      // TODO：非会员弹窗提醒
+      toTheCkb(`${lang}/vip/VipLevel`);
     }
     
     location.href=href;

@@ -9,10 +9,11 @@ import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import "./Index.scss"
 import { isLogin } from "@/utils";
-import { toLogin } from "@/utils/router";
+import { toLogin, toTheCkb } from "@/utils/router";
 
 const HotArticlesList = () => {
   const { t } = useTranslation();
+  const [lang]=useAtom(Lang)
   const stationCode=useSite2Station()
   const [userInfo] = useAtom(CustomerDetail);
   // 热门分类列表
@@ -29,17 +30,16 @@ const HotArticlesList = () => {
   }, []);
 
   // 跳转文章详情
-  const toArticle=(item:HotFrogArticleRespDTO)=>{
-    if (!isLogin() && item.noLoginRestriction === 3) {
+  const toArticle=(article:HotFrogArticleRespDTO)=>{
+    if (!isLogin() && article.noLoginRestriction === 3) {
       toLogin()
       return
     }
-    if (item.noMembershipRestriction === 3 && !userInfo?.membership?.templateLevel) {
-      // TODO:开通会员，会员权限
+    if (article.noMembershipRestriction === 3 && !userInfo?.membership?.templateLevel) {
+      toTheCkb(`${lang}/vip/VipLevel`);
       return
     }
-    // TODO：跳转文章详情
-    // router.push(useRtfix('article', { params: { id: item.frogArticleId, type: 2 } }))
+    window.location.href = `/${lang}/article/${article?.frogArticleId}?type=${2}`;
   }
 
   return (

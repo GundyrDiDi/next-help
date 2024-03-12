@@ -14,6 +14,7 @@ interface Props {
   title?: string;
   // 是否显示右侧按钮
   showBtn: boolean;
+  type?:string;
 }
 const HotArticles = ({ title = "热门文章", showBtn }: Props) => {
   const { t } = useTranslation();
@@ -57,7 +58,7 @@ const HotArticles = ({ title = "热门文章", showBtn }: Props) => {
       <div className="HotArticles-list">
           {!!list.length ? (
             list.map((i) => {
-              return <ArticleItem article={i} key={i.frogArticleId} />;
+              return <ArticleItem type={type} article={i} key={i.frogArticleId} />;
             })
           ) : (
             <Empty

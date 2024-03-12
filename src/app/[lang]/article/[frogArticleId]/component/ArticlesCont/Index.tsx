@@ -47,7 +47,7 @@ const ArticlesCont = ({ frogArticle,querys }: Props) => {
           <ArticleSwitch frogArticleId={frogArticle?.frogArticleId} type={querys.type} source={querys.source} />
         </div>
         <div className="Article-hot box-style">
-          <HotArticles showBtn={false} />
+          <HotArticles showBtn={false} type={querys.type} />
         </div>
       </div>
       {markingShow&&<Marking/>}

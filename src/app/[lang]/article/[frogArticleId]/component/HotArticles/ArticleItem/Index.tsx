@@ -1,16 +1,31 @@
 import classNames from "classnames";
 import "./Index.scss";
-import { isD2C } from "@/utils";
+import { isD2C, isLogin } from "@/utils";
 import { FrogArticleRespDTO } from "@/service/customer";
 import { SvgCheck } from "@/components/svgs";
 import { formatViewNum } from "@/utils/util";
+import { useAtom } from "jotai";
+import { CustomerDetail, Lang } from "@/model";
+import { toLogin, toTheCkb } from "@/utils/router";
 
 interface Props {
   article: FrogArticleRespDTO;
+  type?:string;
 }
 
-const ArticleItem = ({ article }: Props) => {
-  const articleClick = () => {};
+const ArticleItem = ({ article,type }: Props) => {
+  const [lang]=useAtom(Lang)
+  const [userInfo]=useAtom(CustomerDetail)
+  const articleClick = () => {
+     if (!isLogin() && article.noLoginRestriction === 3) {
+      toLogin()
+      return
+    }
+    if(article.noMembershipRestriction===3&&!userInfo?.membership?.templateLevel){
+      toTheCkb(`${lang}/vip/VipLevel`);
+    }
+    window.location.href = `/${lang}/article/${article?.frogArticleId}?type=${type}`;
+  };
 
   return (
     <div

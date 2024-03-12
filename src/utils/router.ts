@@ -23,3 +23,8 @@ export const useLink=(path:string,params:Record<string,any>|null=null)=>{
   }
   return href;
 }
+
+
+export const toTheCkb=(path:string)=>{
+  location.href=`${process.env.THE_CKB_LINK}${path}`
+}
