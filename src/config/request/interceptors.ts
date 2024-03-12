@@ -52,8 +52,7 @@ apiInstanceList.forEach((item) => {
     // 请求拦截
     item.instance.instance.interceptors.request.use(async function (config:InternalAxiosRequestConfig) {
         config.headers = config.headers ?? {};
-        // TODO:请求如何获取本地信息
-        const token = getCookieToken;
+        let token = getCookieToken;
         const shopId = getShopId();
         const stationCode=useSite2Station()
         if (token) {
@@ -70,7 +69,6 @@ apiInstanceList.forEach((item) => {
         }
         return config;
     });
-    // https://test01-s.theckb.com/login
     // 返回拦截
     item.instance.instance.interceptors.response.use(
         function (response) {

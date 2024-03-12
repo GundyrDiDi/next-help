@@ -34,8 +34,7 @@ const CKBHeader = ({plat}:{plat?:string}) => {
     }>({
         timer: null as unknown as NodeJS.Timer
     });
-    const lang=useContext(LocalContext)
-    const {t,i18n}=useTranslation(lang)
+    const {t}=useTranslation()
 
     const [date, setDate] = useState<string>();
     const [customerDetail] = useAtom(CustomerDetail);

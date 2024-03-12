@@ -1,0 +1,44 @@
+$article-width: calc((100% - 40px) / 3);
+
+.HotArticles {
+
+  // padding: 0 20px;
+  &-header {
+    padding: 30px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &-title {
+      font-size: 28px;
+      line-height: 40px;
+      font-weight: 600;
+    }
+
+    &-btn {
+      .btn {
+        border-width: 2px;
+        font-size: 16px;
+        padding: 8px 15px;
+        font-weight: 500;
+      }
+    }
+  }
+
+  &-list {
+    min-height: 165px;
+    display: grid;
+    grid-template-columns: 380px 380px 380px;
+    grid-column-gap: 30px;
+    grid-row-gap: 20px;
+    position: relative;
+
+    &-empty {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+  }
+}

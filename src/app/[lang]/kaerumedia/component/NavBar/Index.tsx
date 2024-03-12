@@ -11,8 +11,7 @@ import "./Index.scss"
  }
 
  const NavBar=({navList,navIndex,changeType}:Props)=>{
-  const lang=useContext(LocalContext)
-  const {t}=useTranslation(lang)
+  const {t}=useTranslation()
   return <div className="Nav">
     <div className="navmain">
     {

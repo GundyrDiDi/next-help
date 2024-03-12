@@ -19,8 +19,7 @@ interface UserDropDwonProps {
 // hover:text-[color:--color-primary-light]
 const UserDropDwon: React.FC<UserDropDwonProps> = (props) => {
     const { children, className, customerDetail } = props;
-    const lang=useContext(LocalContext)
-    const {t,i18n}=useTranslation(lang)
+    const {t}=useTranslation()
 
 const DROP_DWON_LIST = [
     [t('登录账号管理'), ENUM_PAGE.SETUP_ACCOUNT],

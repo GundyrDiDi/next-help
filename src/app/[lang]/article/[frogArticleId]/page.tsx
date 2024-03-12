@@ -1,9 +1,6 @@
-import { PlatCookie, TokenSignCookie } from '@/config'
-import { BizResponseFrogArticleDetailRespDTO ,FrogArticleDetailRespDTO} from '@/service/customer'
-import { getCookieToken } from '@/utils'
+import { FrogArticleDetailRespDTO} from '@/service/customer'
 import type { Metadata, ResolvingMetadata } from 'next'
-import { getServerSideProps } from 'next/dist/build/templates/pages'
-import { cookies } from 'next/headers'
+import ArticlesCont from './component/ArticlesCont/Index'
 
 type Props = {
   params: { frogArticleId: string }
@@ -16,12 +13,9 @@ export async function generateMetadata(
   { params, searchParams }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  // read route params
-  const frogArticleId = params.frogArticleId
-  // fetch data
-  const article:BizResponseFrogArticleDetailRespDTO = await fetch(`https://gateway-prod.theckb.com/customer/frog/article/detail?frogArticleId=${frogArticleId}`).then(res=>res.json())
-  // optionally access and extend (rather than replace) parent metadata
-  const title=article?.data?.frogArticleTitle
+  const frogArticleId = +params.frogArticleId
+  const article=await getData(frogArticleId)
+  const title=article?.frogArticleTitle;
   return {
     metadataBase: new URL('https://s.theckb.com/'),
     alternates: {
@@ -44,12 +38,14 @@ export async function generateMetadata(
 }
  
 export default async function Page({ params, searchParams }: Props) {
-  const frogArticleId = params.frogArticleId
-  const cookieStore = cookies()
-  let cookiesName=encodeURIComponent(TokenSignCookie)
-  const token = cookieStore.get(cookiesName)
-  console.log(token,token?.value,cookiesName);
-  
-  const article:BizResponseFrogArticleDetailRespDTO = await fetch(`https://gateway-prod.theckb.com/customer/frog/article/detail?frogArticleId=${frogArticleId}`).then(res=>res.json())
-  return <div dangerouslySetInnerHTML={{__html:article?.data?.frogArticleContent??''}}/>
+  const frogArticleId = +params.frogArticleId
+   const article= await getData(frogArticleId)
+  return <ArticlesCont frogArticle={article} />
+}
+
+/** 获取数据 */
+export const getData=async (frogArticleId:number)=>{
+  const article = await fetch(`${process.env.THE_CKB_API_URL}/customer/frog/article/detail?frogArticleId=${frogArticleId}`).then(res=>res.json())
+  return article.data as FrogArticleDetailRespDTO
+
 }

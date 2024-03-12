@@ -1,4 +1,5 @@
-import { lang } from "./language";
+import { useAtom } from "jotai";
+import { Lang } from "@/model";
 
 /**
  * 去登录
@@ -14,10 +15,11 @@ export const queryString=(params:Record<string,string>) => Object.keys(params).m
 
 
 /** 跳转外展链接 */
-export const gotoLink=(path:string,params:Record<string,string>|null=null)=>{
-  let href=`${process.env.THE_CKB_LINK}${lang}/${path}`
+export const useLink=(path:string,params:Record<string,any>|null=null)=>{
+  const [lang]=useAtom(Lang)
+  let href=`/${lang}/${path}`
   if(params){
-    href+= `${queryString(params)}`
+    href+= `?${queryString(params)}`
   }
   return href;
 }

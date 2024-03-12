@@ -5,8 +5,7 @@ import { CDN_HOST } from '@/const/staticURL/index';
 import { atomCustomerDetail } from '@/model/CustomerDetail';
 import { LocalContext, useTranslation } from '@/i18n/client';
 const FloatToolbar = () => {
-    const lang=useContext(LocalContext)
-    const {t,i18n}=useTranslation(lang)
+    const {t}=useTranslation()
     
     const [isExpand, setIsExpand] = useState(true);
     const [msgCount, setMsgCount] = useState<number>(0);

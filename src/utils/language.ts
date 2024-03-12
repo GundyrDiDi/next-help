@@ -28,6 +28,13 @@ export const isEN=()=> {
   return lang === Local.EN;
 }
 
+export const isKO=()=> {
+  return lang === Local.KO;
+}
+
+export const isJA=()=> {
+  return lang === Local.JA;
+}
 
 
 /** 获取国家站点code */

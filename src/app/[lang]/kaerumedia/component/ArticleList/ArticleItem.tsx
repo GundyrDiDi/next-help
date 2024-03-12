@@ -6,13 +6,12 @@ import {
 import { CustomerDetail } from "@/model";
 import { FrogArticleRespDTO } from "@/service/customer";
 import {  isD2C, isLogin } from "@/utils";
-import { lang } from "@/utils/language";
-import { gotoLink, toLogin } from "@/utils/router";
+import { useLink, toLogin } from "@/utils/router";
 import { setStationTime } from "@/utils/time";
 import { formatViewNum } from "@/utils/util";
 import classNames from "classnames";
 import { useAtom } from "jotai";
-import Router from "next/router"
+
 import "./ArticleItem.scss"
 
 interface Props {
@@ -20,6 +19,8 @@ interface Props {
 }
 const ArticleItem = ({ article }: Props) => {
   const [userInfo] = useAtom(CustomerDetail);
+  // TODO：关于类型问题及登录问题需要解决
+  const href= useLink(`article/${article.frogArticleId}`,{type:1})
   // 点击跳转文章线详情
   const goArticle = () => {
     if (
@@ -36,8 +37,9 @@ const ArticleItem = ({ article }: Props) => {
     ) {
       // TODO：非会员弹窗提醒
     }
-    // location.href=gotoLink('article',)
-    Router.push({pathname:`${lang}/article/${article.frogArticleId}`,})
+    
+    location.href=href;
+
   };
   return (
     <div

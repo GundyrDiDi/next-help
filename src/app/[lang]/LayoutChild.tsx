@@ -39,8 +39,6 @@ export default function Layout({
   const systemSource = customerDetail?.systemSource;
 
 useEffect(() => {
-  console.log('runsOnServerSide',runsOnServerSide);
-  
   if(!runsOnServerSide){
     requestCustomerDetail();
     setPlat(getCookiePlat)

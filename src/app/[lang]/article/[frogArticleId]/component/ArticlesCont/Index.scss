@@ -1,0 +1,103 @@
+.Article {
+  padding-bottom: 100px;
+  position: relative;
+  z-index: 0;
+  .box-style {
+    border-radius: 6px;
+    background-color: #fff;
+    margin-top: 20px;
+  }
+  &-main {
+    min-height: 200px;
+    padding: 20px;
+    padding-bottom: 10px;
+    .content {
+      padding-bottom: 20px;
+      &-title {
+        font-size: 26px;
+        font-weight: bold;
+        line-height: 36px;
+      }
+      &-date {
+        font-size: 14px;
+        line-height: 20px;
+        margin-top: 6px;
+      }
+      &-html {
+        margin-top: 6px;
+        width: 100%;
+        overflow: hidden;
+      }
+    }
+  }
+  &-hot {
+    height: 394px;
+    padding-top: 10px;
+  }
+
+  :deep(.content-html-area) {
+    p,
+    li {
+      white-space: pre-wrap; /* 保留空格 */
+    }
+
+    blockquote {
+      background-color: #f5f2f0;
+      border-left: 8px solid #b4d5ff;
+      display: block;
+      font-size: 100%;
+      line-height: 1.5;
+      margin: 10px 0;
+      padding: 10px;
+    }
+
+    code {
+      font-family: monospace;
+      background-color: #eee;
+      padding: 3px;
+      border-radius: 3px;
+    }
+    pre>code {
+      display: block;
+      padding: 10px;
+    }
+
+    table {
+      border-collapse: collapse;
+    }
+    td,
+    th {
+      border: 1px solid #ccc;
+      line-height: 1.5;
+      min-width: 30px;
+      padding: 3px 5px;
+      text-align: left;
+    }
+    th {
+      background-color: #f1f1f1;
+    }
+
+    ul,
+    ol {
+      padding-left: 20px;
+    }
+
+    input[type="checkbox"] {
+      margin-right: 5px;
+    }
+    a {
+      color: #2a4992;
+      text-decoration: none;
+      background-color: transparent;
+      outline: none;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+  }
+
+}
+
+.readLess{
+  height: 100vh;
+  overflow: hidden;
+}

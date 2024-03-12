@@ -12,8 +12,7 @@ import { isLogin } from "@/utils";
 import { toLogin } from "@/utils/router";
 
 const HotArticlesList = () => {
-  const [lang] = useAtom(Lang);
-  const { t } = useTranslation(lang);
+  const { t } = useTranslation();
   const stationCode=useSite2Station()
   const [userInfo] = useAtom(CustomerDetail);
   // 热门分类列表

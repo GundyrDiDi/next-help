@@ -16,7 +16,7 @@ interface ArticleListProps {
 }
 const ArticleList=({navIndex}:ArticleListProps)=>{
   const stationCode=useSite2Station()
-  const {t}=useTranslation(Local.JA)
+  const {t}=useTranslation()
   const { data:articleRes, loading, pagination, run:articlePage, params } = usePagination(
    async ({ current, pageSize },params:Params) => {
     const res=await api.customer.frog.articlePage({
