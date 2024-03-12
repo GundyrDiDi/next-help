@@ -29,11 +29,9 @@ const Marking=()=>{
         </>:<>
         <p>{ t('注册或登录以查看更多信息') }</p>
         <div style={{display:'flex'}}>
-          <Button onClick={loginClick}>{ t('登录') }</Button>
+          <Button className="btn" onClick={loginClick}>{ t('登录') }</Button>
+          <Button onClick={registClick} className="signBtn btn ml-[30px]">{ t('注册')}</Button>
         </div>
-        <a className="ml-30" onClick={registClick}>
-          <Button className="signBtn btn">{ t('注册')}</Button>
-        </a>
         </>
         }
       </div>

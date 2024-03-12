@@ -9,6 +9,7 @@ import { atom, useAtom } from "jotai";
 import HotArticlesList from "./component/HotArticlesList/Index";
 import ArticleDateFilter from "./component/ArticleDateFilter/Index";
 import { Lang,Plat } from "@/model";
+import { api } from "@/service";
 
 interface Props{
   params: {
@@ -50,7 +51,7 @@ export default function Page({params: {}}: Props){
     <div className="Kaerumedia-banner">
       <img src={banner} alt="" />
     </div>
-    <NavBar navList={navList} changeType={changeNav} navIndex={querys.tab}/>
+    <NavBar navList={navList} changeType={changeNav}/>
     <div className="Kaerumedia-main viewport">
       <div className="Kaerumedia-main-list">
       <ArticleList />

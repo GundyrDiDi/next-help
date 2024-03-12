@@ -3,18 +3,26 @@ import { FrogArticleDetailRespDTO } from "@/service/customer";
 import { setStationTime } from "@/utils/time";
 import { Spin } from "antd";
 import classNames from "classnames";
-import { useState } from "react";
+import { memo, useEffect, useState } from "react";
 import "./Index.scss";
 import ArticleSwitch from "../ArticleSwitch/Index";
 import HotArticles from "../HotArticles/Index";
 import Marking from "../Marking/Index";
+import queryString from "query-string";
+import { api } from "@/service";
+import { useMount } from "ahooks";
 
 interface Props {
   frogArticle?: FrogArticleDetailRespDTO;
-  type?:string;
+  querys: { [key: string]: string| undefined },
 }
-const ArticlesCont = ({ frogArticle }: Props) => {
+const ArticlesCont = ({ frogArticle,querys }: Props) => {
   const [markingShow, setMarkingShow] = useState<boolean>(false);
+  useMount(()=>{
+    if(frogArticle?.frogArticleId){
+      api.customer.frog.articleCount({frogArticleId:frogArticle?.frogArticleId})
+    }
+  })
   return (
     <>
       {/* TODO:分类 */}
@@ -36,15 +44,15 @@ const ArticlesCont = ({ frogArticle }: Props) => {
               }}
             ></div>
           </div>
-          <ArticleSwitch frogArticleId={frogArticle?.frogArticleId} type={type}  />
+          <ArticleSwitch frogArticleId={frogArticle?.frogArticleId} type={querys.type} source={querys.source} />
         </div>
         <div className="Article-hot box-style">
           <HotArticles  />
         </div>
       </div>
-      {!markingShow&&<Marking/>}
+      {markingShow&&<Marking/>}
     </>
   );
 };
 
-export default ArticlesCont;
+export default memo(ArticlesCont);

@@ -38,15 +38,15 @@ export async function generateMetadata(
 }
  
 export default async function Page({ params, searchParams }: Props) {
-  const {type}=searchParams
+  console.log(searchParams,'searchParams');
+
   const frogArticleId = +params.frogArticleId
    const article= await getData(frogArticleId)
-  return <ArticlesCont type={type} frogArticle={article} />
+  return <ArticlesCont frogArticle={article} querys={searchParams} />
 }
 
 /** 获取数据 */
 export const getData=async (frogArticleId:number)=>{
   const article = await fetch(`${process.env.THE_CKB_API_URL}/customer/frog/article/detail?frogArticleId=${frogArticleId}`).then(res=>res.json())
   return article.data as FrogArticleDetailRespDTO
-
 }
