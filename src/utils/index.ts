@@ -1,18 +1,11 @@
-import qs from 'qs';
-import { ENUM_PAGE, ENUM_SYSTEM_SOURCE, PageConfig } from '@/const/enum';
-import { MAP_SYSTEM_SOURCE } from '@/const/map';
-import { ROUTER_BASENAME } from '@/config/base';
 // import { getRouter } from '@/App';
 import { GetKeyByMap, GetValueByMap } from './type';
 import bwCookie from "js-cookie"
 import { PlatCookie, TokenSignCookie } from '@/config';
-import { Local } from '@/i18n/settings';
 
 import { CustomerDetail } from '@/model';
-import { atomCustomerDetail } from '@/model/CustomerDetail';
-import { lang } from './language';
-import { exitCode } from 'process';
 import { getUserFn } from './time';
+import { getDefaultStore } from 'jotai';
 
 
 interface JumpPageDefaultOptions {
@@ -194,3 +187,6 @@ export const isD2C=()=>{
 export const isLogin=()=>{
     return Boolean(getCookieToken && getUserFn()?.customerId)
 }
+
+
+export const userInfo=()=>getDefaultStore().get(CustomerDetail)

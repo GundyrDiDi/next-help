@@ -104,7 +104,7 @@ const getThemeStyle = useCallback(() => {
           }
       }
   };
-  if (systemSource === 2) {
+  if (systemSource === ENUM_SYSTEM_SOURCE.B2B) {
       obj = {
           token: {
               colorPrimary: '#2e4968',

@@ -1,11 +1,12 @@
 import { useAtom } from "jotai";
 import { Lang } from "@/model";
+import { THE_CKB_LINK } from "@/config";
 
 /**
  * 去登录
  */
 export const toLogin=()=>{
-  toTheCkb('/login')
+  toTheCkb('login')
 }
 
 
@@ -27,5 +28,5 @@ export const useLink=(path:string,params:Record<string,any>|null=null)=>{
 
 
 export const toTheCkb=(path:string)=>{
-  location.href=`${process.env.THE_CKB_LINK}${path}`
+  location.href=`${THE_CKB_LINK}${path}`
 }

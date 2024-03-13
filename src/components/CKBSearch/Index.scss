@@ -23,22 +23,15 @@
   }
 }
 
-// .v-line-1 {
-//   &::before {
-//     content: "";
-//     display: flex;
-//     position: absolute;
-//     left: 0;
-//     top: 10%;
-//     height: 80%;
-//     width: 1px;
-//     background: #f2f2f2;
-//     transform: scale(0.8, 0.6);
-//   }
-// }
 
 .search-input {
   width: 600px;
+  background: #f6f6f6;
+  box-shadow: 0 0 4px 0 transparent;
+  border-radius: 32px;
+    .ant-select-arrow{
+      display: none !important;
+    }
 }
 
 @keyframes flash {
@@ -95,7 +88,7 @@
 }
 .icon-down{
   left: 78px;
-  top: 1px;
+  top: 6px;
   color: var(--el-input-text-color, var(--el-text-color-regular));
 }
 

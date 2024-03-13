@@ -19,7 +19,7 @@ interface CustomerDetailRespDTO2 extends CustomerDetailRespDTO {
 }
 
 export const atomCustomerDetail = atom<CustomerDetailRespDTO2 | undefined>(
-    undefined
+    {}
 );
 
 
