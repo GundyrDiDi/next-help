@@ -4,7 +4,7 @@ import { isJA, lang, useSite2Station } from "@/utils/language";
 import { Button, Dropdown, MenuProps } from "antd";
 import { useAsyncEffect, useRequest, useToggle } from "ahooks";
 import { useTranslation } from "@/i18n/client";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { api } from "@/service";
 import { Site } from "@/const";
 import { ProductCategoryFrontendShortRespDTO } from "@/service/goods";
@@ -19,18 +19,6 @@ interface SellerProps {
   key?:string
 }
 
-function traverse<T extends { children?: T[] }>(
-  arr: T[],
-  callback: (v: T) => void
-) {
-  return arr.map((v) => {
-    callback(v);
-    if (Array.isArray(v.children)) {
-      v.children = traverse(v.children, callback);
-    }
-    return v;
-  });
-}
 
 const SellerCate = () => {
   const [rotate1, { toggle: rotate1Toggle }] = useToggle();
@@ -51,7 +39,30 @@ const SellerCate = () => {
   >([]);
   // 分类ID
   const [productCategoryFrontendId, setProductCategoryFrontendId] =
-    useState<number>();
+    useState<number>(-1);
+
+  
+  // 渠道列表
+  const menu1Items = [
+    { label: t("采购来源"), key: "" },
+    { label:isJA()? t('1688国家货盘') : t('1688严选'), key: "AM" },
+    { label: t("淘宝"), key: "TB" },
+    { label: "Tmall", key: "TM" },
+  ];
+
+  // 分类列表显示
+  const showDrapText2 = useMemo(() => {
+    const cate = categoryList?.find(
+      (i) => i.productCategoryFrontendId === productCategoryFrontendId
+    );
+    return (
+      {
+        [Site.JA]: cate?.cateNameJp,
+        [Site.KO]: cate?.cateNameKr,
+        [Site.EN]: cate?.cateNameEn,
+      }[stationCode] || cate?.cateNameJp
+    );
+  }, [categoryList, productCategoryFrontendId, stationCode]);
 
   useAsyncEffect(async () => {
     const res = await productCategoryFrontendTree({ stationCode });
@@ -65,7 +76,8 @@ const SellerCate = () => {
             cateNameJp: t("类目"),
             cateNameKr: t("类目"),
             cateNameEn: t("类目"),
-            productCategoryFrontendId: "",
+            label: t("类目"),
+            productCategoryFrontendId: -1,
           } as any
         ].concat(v.productCategoryFrontendShortRespDTOList?.map((i) => {
           return {
@@ -84,27 +96,8 @@ const SellerCate = () => {
       // 暂时写死(透明购)
       setcCategoryList(category[2]);
     }
+    setSeller(menu1Items[0])
   }, []);
-
-  const menu1Items = [
-    { label: t("采购来源"), key: "" },
-    { label:isJA()? t('1688国家货盘') : t('1688严选'), key: "AM" },
-    { label: t("淘宝"), key: "TB" },
-    { label: "Tmall", key: "TM" },
-  ];
-
-  const showDrapText2 = useMemo(() => {
-    const cate = categoryList?.find(
-      (i) => i.productCategoryFrontendId === productCategoryFrontendId
-    );
-    return (
-      {
-        [Site.JA]: cate?.cateNameJp,
-        [Site.KO]: cate?.cateNameKr,
-        [Site.EN]: cate?.cateNameEn,
-      }[stationCode] || cate?.cateNameJp
-    );
-  }, [categoryList, productCategoryFrontendId, stationCode]);
 
   return (
     <div className={classNames("rel custom-plain", lang)}>
@@ -124,7 +117,7 @@ const SellerCate = () => {
         }}
         onOpenChange={rotate1Toggle}
       >
-        <Button className="xl-btn lf-btn v-line">
+        <Button shape="round" className="xl-btn lf-btn v-line">
         <img
         hidden={seller?.key !== 'AM'}
         src={`https://static-s.theckb.com/BusinessMarket/icon/1688selected/home-selected-tips-${lang}.png`}
@@ -141,11 +134,13 @@ const SellerCate = () => {
         placement="bottom"
         menu={{
           items: categoryList.map((i) => {
-            return { label: <div  className="drop-item">{i.label}</div>, key: i.productCategoryFrontendId! };
+            return { label: <div  onClick={() => {
+              setProductCategoryFrontendId(i.productCategoryFrontendId!);
+            }} className="drop-item">{i.label}</div>, key: i.productCategoryFrontendId! };
           })!,
         }}
       >
-        <Button className="xl-btn rt-btn">
+        <Button shape="round" className="xl-btn rt-btn">
           {showDrapText2}
           <i
             className="fa fa-caret-down"

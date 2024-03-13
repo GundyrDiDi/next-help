@@ -1,5 +1,5 @@
 .dropdown_categroy {
-  :deep(.el-button) {
+  :deep(.ant-btn) {
     width: 140px;
   }
 }
@@ -52,8 +52,6 @@
 .lf-btn {
   transition: all 0.3s linear;
   border-radius: 17px 0 0 17px;
-  // border: 1px solid #333;
-  // border-right: none;
 }
 
 .rt-btn {
@@ -78,5 +76,17 @@
 
   &.en {
     left: 30px;
+  }
+}
+
+
+.custom-plain {
+  border: 1px solid #333;
+  color: #333;
+  border-radius: 17px ;
+  &:hover {
+    border-color: var(--fcolor);
+    color: var(--fcolor);
+    background: #fff;
   }
 }

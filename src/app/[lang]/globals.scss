@@ -2,6 +2,9 @@
 // @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+@import "@/styles/flex.scss";
+@import "@/styles/font.scss";
+@import "@/styles/font-awesome.min.css";
 @import "@/styles/theme/b2b-css-variable.scss";
 @import "@/styles/theme/d2c-css-variable.scss";
 
@@ -13,6 +16,7 @@
   min-width: 1200px;
   overflow: auto;
 }
+
 li,
 ul {
   margin: 0;
@@ -51,3 +55,15 @@ ul,
 li {
   list-style: none;
 }
+
+
+
+.abs {
+  position: absolute
+}
+   
+
+.rel {
+  position: relative
+}
+    

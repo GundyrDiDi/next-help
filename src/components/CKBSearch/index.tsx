@@ -24,8 +24,8 @@ const CKBSearch = () => {
   /** 开始搜索 */
   const handleSearch = () => {};
   return (
-    <div className="search">
-      <div className="viewport flex-center">
+    <div id="search">
+      <div className="flex viewport flex-center">
         <div className="fx-1 flex-end">
           <div className={classNames('mr-[30px] SellerCate',{'flash-trigget':tipsVisabled})}>
             <SellerCate/>
