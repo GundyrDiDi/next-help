@@ -16,9 +16,8 @@ interface exProductCategoryFrontendShortRespDTO
 
 interface SellerProps {
   label?: string;
-  key?:string
+  key?: string;
 }
-
 
 const SellerCate = () => {
   const [rotate1, { toggle: rotate1Toggle }] = useToggle();
@@ -27,7 +26,6 @@ const SellerCate = () => {
   const stationCode = useSite2Station();
   // 渠道选择
   const [seller, setSeller] = useState<SellerProps>();
-  
 
   const { runAsync: productCategoryFrontendTree } = useRequest(
     api.goods.productCategoryFrontend.tree,
@@ -41,11 +39,10 @@ const SellerCate = () => {
   const [productCategoryFrontendId, setProductCategoryFrontendId] =
     useState<number>(-1);
 
-  
   // 渠道列表
   const menu1Items = [
     { label: t("采购来源"), key: "" },
-    { label:isJA()? t('1688国家货盘') : t('1688严选'), key: "AM" },
+    { label: isJA() ? t("1688国家货盘") : t("1688严选"), key: "AM" },
     { label: t("淘宝"), key: "TB" },
     { label: "Tmall", key: "TM" },
   ];
@@ -78,25 +75,27 @@ const SellerCate = () => {
             cateNameEn: t("类目"),
             label: t("类目"),
             productCategoryFrontendId: -1,
-          } as any
-        ].concat(v.productCategoryFrontendShortRespDTOList?.map((i) => {
-          return {
-            ...i,
-            label:
-              {
-                [Site.JA]: i?.cateNameJp,
-                [Site.KO]: i?.cateNameKr,
-                [Site.EN]: i?.cateNameEn,
-              }[stationCode] || i?.cateNameJp,
-          };
-        }));
+          } as any,
+        ].concat(
+          v.productCategoryFrontendShortRespDTOList?.map((i) => {
+            return {
+              ...i,
+              label:
+                {
+                  [Site.JA]: i?.cateNameJp,
+                  [Site.KO]: i?.cateNameKr,
+                  [Site.EN]: i?.cateNameEn,
+                }[stationCode] || i?.cateNameJp,
+            };
+          })
+        );
       });
-      console.log(category[2],'category[2]');
-      
+      console.log(category[2], "category[2]");
+
       // 暂时写死(透明购)
       setcCategoryList(category[2]);
     }
-    setSeller(menu1Items[0])
+    setSeller(menu1Items[0]);
   }, []);
 
   return (
@@ -107,21 +106,29 @@ const SellerCate = () => {
         menu={{
           items: menu1Items.map((i) => {
             return {
-              label: <div onClick={() => {
-              setSeller(i);
-            }} 
-            className="drop-item">{i?.label}</div>,
-            key: i?.key,
+              label: (
+                <div
+                  onClick={() => {
+                    setSeller(i);
+                  }}
+                  className="drop-item"
+                >
+                  {i?.label}
+                </div>
+              ),
+              key: i?.key,
             };
           }),
         }}
         onOpenChange={rotate1Toggle}
       >
-        <Button shape="round" className="xl-btn lf-btn v-line">
-        <img
-        hidden={seller?.key !== 'AM'}
-        src={`https://static-s.theckb.com/BusinessMarket/icon/1688selected/home-selected-tips-${lang}.png`}
-        alt="" className={classNames('regularTagImg',lang)} />
+        <Button shape="round" className="xl-btn lf-btn v-line w-[150px]">
+          <img
+            hidden={seller?.key !== "AM"}
+            src={`https://static-s.theckb.com/BusinessMarket/icon/1688selected/home-selected-tips-${lang}.png`}
+            alt=""
+            className={classNames("regularTagImg", lang)}
+          />
           {seller?.label}
           <i
             className="fa fa-caret-down"
@@ -134,17 +141,31 @@ const SellerCate = () => {
         placement="bottom"
         menu={{
           items: categoryList.map((i) => {
-            return { label: <div  onClick={() => {
-              setProductCategoryFrontendId(i.productCategoryFrontendId!);
-            }} className="drop-item">{i.label}</div>, key: i.productCategoryFrontendId! };
+            return {
+              label: (
+                <div
+                  onClick={() => {
+                    setProductCategoryFrontendId(i.productCategoryFrontendId!);
+                  }}
+                  className="drop-item"
+                >
+                  {i.label}
+                </div>
+              ),
+              key: i.productCategoryFrontendId!,
+            };
           })!,
         }}
       >
         <Button shape="round" className="xl-btn rt-btn">
-          {showDrapText2}
+          <div className="line--only w-[60px] align-bottom">{showDrapText2}</div>
           <i
             className="fa fa-caret-down"
-            style={{ transform: `scaleY(${rotate2 ? -1 : 1})` }}
+            style={{
+              transform: `scaleY(${rotate2 ? -1 : 1})`,
+              transformOrigin: "center",
+              marginTop: "3px",
+            }}
           ></i>
         </Button>
       </Dropdown>

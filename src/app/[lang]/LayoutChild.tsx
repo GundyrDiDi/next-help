@@ -92,7 +92,8 @@ const getThemeStyle = useCallback(() => {
           },
           Button: {
               controlOutlineWidth: 0,
-              motionEaseInOutCirc: 'cubic-dezier(0,0,0,0)'
+              motionEaseInOutCirc: 'cubic-dezier(0,0,0,0)',
+              defaultActiveColor:'transparent'
           },
           Wave: {
               motionEaseInOutCirc: 'cubic-dezier(0,0,0,0)',
@@ -131,7 +132,8 @@ const getThemeStyle = useCallback(() => {
               },
               Button: {
                   controlOutlineWidth: 0,
-                  motionEaseInOutCirc: 'cubic-dezier(0,0,0,0)'
+                  motionEaseInOutCirc: 'cubic-dezier(0,0,0,0)',
+                  defaultActiveColor:'transparent'
               },
               Wave: {
                   motionEaseInOutCirc: 'cubic-dezier(0,0,0,0)',

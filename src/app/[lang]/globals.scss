@@ -1,12 +1,8 @@
 @import "normalize.css";
-// @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-@import "@/styles/flex.scss";
-@import "@/styles/font.scss";
-@import "@/styles/font-awesome.min.css";
-@import "@/styles/theme/b2b-css-variable.scss";
-@import "@/styles/theme/d2c-css-variable.scss";
+@import "@/styles/index";
+
 
 :root {
   --max-width: 1200px;
@@ -67,3 +63,11 @@ li {
   position: relative
 }
     
+
+.line--only {
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+  
