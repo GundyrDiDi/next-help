@@ -1,0 +1,36 @@
+content {
+  padding: 30px 20px 20px 30px;
+  &.en {
+    padding: 30px 10px 20px 20px;
+  }
+  :deep(.el-form-item__label) {
+    font-weight: 600;
+  }
+}
+
+.el-form--inline .el-form-item {
+  margin-right: 0px;
+}
+
+.second {
+  margin-left: 10px;
+}
+
+.plat {
+  width: 100px;
+}
+
+.cate {
+  width: 125px;
+}
+
+.keyword {
+  width: 320px;
+}
+
+.search-btn {
+  img {
+    height: 16px;
+    margin-right: 6px;
+  }
+}

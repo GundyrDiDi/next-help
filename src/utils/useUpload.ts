@@ -3,6 +3,7 @@ import FileUtils from './useFileUtils'
 import { api } from '@/service'
 
 import {userInfo} from "./index"
+import axios from 'axios'
 const { getExtension } = FileUtils()
 interface FAO {
   bizType: any
@@ -66,4 +67,17 @@ export const uploadAliOSS = (params: FAO) => {
       })
     })
   })
+}
+
+export const GOODS_IMAGE_SEARCH = `goods/imageSearch/${userInfo()?.customerId}/` // 图搜
+
+
+export const upFileToAliOss = async (file:any) => {
+  const res = await uploadAliOSS({
+    file: file,
+    path: GOODS_IMAGE_SEARCH,
+    bizType: 'searchPic',
+    readAuto: true
+  })
+  return res
 }
