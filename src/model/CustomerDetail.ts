@@ -1,7 +1,7 @@
 import { atom } from 'jotai';
 import { request } from '@/config/request';
 import { CustomerDetailRespDTO, CustomerMembershipResDTO } from '@/service/customer';
-import {  Site, simpleSite } from '@/const';
+import {  Site } from '@/const';
 import { getCookieToken } from '@/utils';
 import cookie from 'js-cookie'
 import { TokenSignCookie } from '@/config';
@@ -31,9 +31,9 @@ const atomRequestCustomerDetail = atom(
                 const response =await request.customer.getCustomerDetails.getCustomerDetails();
             const res = {
                 ...response.data,
-                isJA: response.data?.stationCode === Site.JP,
-                isKO: response.data?.stationCode === Site.KR,
-                isEN: response.data?.stationCode === Site.UK
+                isJA: response.data?.stationCode === Site.JA,
+                isKO: response.data?.stationCode === Site.KO,
+                isEN: response.data?.stationCode === Site.EN
             };
             set(atomCustomerDetail, res as CustomerDetailRespDTO2);
             const fistShopId = response.data?.customerShopList?.[0].customerShopId||'';

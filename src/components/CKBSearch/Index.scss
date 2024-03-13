@@ -1,0 +1,269 @@
+#search {
+  position: sticky;
+  z-index: 100;
+  top: 32px;
+  height: 84px;
+  background: #fff;
+  padding: 0 10px;
+}
+
+.viewport {
+  height: 100%;
+}
+
+.guide-line {
+  position: absolute;
+  left: 50%;
+  top: 68px;
+  margin-left: -432px;
+  z-index: -10px;
+
+  img {
+    width: 730px;
+  }
+}
+
+.v-line {
+  &::before {
+    content: "";
+    display: flex;
+    position: absolute;
+    left: 0;
+    top: 10%;
+    height: 80%;
+    width: 1px;
+    background: #f2f2f2;
+    transform: scale(0.8, 0.6);
+  }
+}
+
+.search-input {
+  width: 600px;
+}
+
+@keyframes flash {
+  0% {
+    box-shadow: 0px 0px 4px 0px rgba(4, 59, 46, 0.06);
+  }
+
+  25% {
+    box-shadow: 0px 0px 2px 1px var(--fcolor);
+  }
+
+  50% {
+    box-shadow: 0px 0px 4px 0px rgba(4, 59, 46, 0.06);
+  }
+
+  75% {
+    box-shadow: 0px 0px 2px 1px var(--fcolor);
+  }
+
+  100% {
+    box-shadow: 0px 0px 4px 0px rgba(4, 59, 46, 0.06);
+  }
+}
+
+@keyframes flash2 {
+  0% {
+    color: var(--fcolor);
+    background: var(--home-btn-active);
+  }
+
+  20% {
+    color: #333333;
+    background: #fff;
+  }
+
+  50% {
+    color: var(--fcolor);
+    background: var(--home-btn-active);
+  }
+
+  75% {
+    color: #333333;
+    background: #fff;
+  }
+
+  100% {
+    color: var(--fcolor);
+    background: var(--home-btn-active);
+  }
+}
+.SellerCate{
+  border-radius:17px;
+  box-shadow: 0px 2px 10px 0px rgba(242,245,247,0.5);
+}
+.icon-down{
+  left: 78px;
+  top: 1px;
+  color: var(--el-input-text-color, var(--el-text-color-regular));
+}
+
+#search .flash-trigget {
+  border-color: var(--fcolor);
+
+  :deep(.el-dropdown .el-button) {
+    animation: flash2 3s linear;
+  }
+}
+
+#search .el-input {
+  &.null-trigger> :deep(input) {
+    animation: flash 1.5s linear;
+  }
+
+  > :deep(input) {
+    font-size: 12px;
+    border-radius: 17px;
+    height: 34px;
+    background: #f6f6f6;
+    box-shadow: 0px 0px 4px 0px transparent;
+    padding-left: 110px;
+    padding-right: 95px;
+  }
+
+  > :deep(.el-input__prefix) {
+    display: flex;
+    align-items: center;
+    left: 0;
+
+    .el-select {
+      width: 70px;
+      padding-right: 0px;
+
+      &::before {
+        content: "";
+        display: flex;
+        position: absolute;
+        left: 100%;
+        top: 0%;
+        height: 100%;
+        width: 1px;
+        background: #f2f2f2;
+        transform: scale(0.8, 0.6);
+      }
+
+      input {
+        background: transparent;
+        border: none;
+        box-shadow: none !important;
+        padding: 0 20px 0 12px;
+      }
+
+      .el-icon {
+        display: none;
+      }
+
+      .el-input__suffix {
+        right: 7px;
+      }
+    }
+  }
+
+  > :deep(.el-input__suffix) {
+    right: 10px;
+    display: flex;
+    align-items: center;
+
+    img {
+      height: 16px;
+      // &:hover {
+      //   filter: invert(100%);
+      // }
+    }
+
+    .el-tag {
+      height: 24px;
+      border-radius: 15px;
+      margin: 0 7px;
+
+      &:hover {
+        background: #e2e2e2;
+      }
+    }
+  }
+}
+
+.searchIcon {
+  background: var(--fcolor);
+  border-radius: 0px 18px 18px 0px;
+  width: 50px;
+  margin-right: -9px;
+}
+
+.searchIcon:hover,
+.searchIcon:active {
+  background: var(--home-btn-active);
+  cursor: pointer;
+
+  .icon {
+    color: var(--fcolor) !important;
+  }
+}
+
+.search-btn {
+  .sqire {
+    height: 18px;
+  }
+
+  .cart {
+    height: 16px;
+    margin-right: 8px;
+  }
+
+  // .el-button:first-child {
+  //   height: 34px;
+  //   width: 34px;
+  // }
+
+  .el-button {
+    border-radius: 17px;
+    // box-shadow: 0px 0px 4px 0px rgba(4, 59, 46, 0.06);
+  }
+
+  .el-button:hover,
+  .el-button:active {
+    background: var(--home-btn-active);
+  }
+
+  .guide-btn {
+    // box-shadow: 0px 0px 4px 0px rgba(4, 59, 46, 0.06);
+    height: 34px;
+    border-radius: 18px;
+    border: 1px solid var(--fcolor);
+    color: var(--fcolor);
+    font-size: 12px;
+    background: #fff;
+  }
+
+  .guide-btn:hover,
+  .guide-btn:active {
+    background: var(--home-btn-active);
+    border-radius: 18px;
+  }
+
+  .cart-num {
+    background: #f83838;
+    padding-top: 1px;
+    color: #fff;
+    height: 16px;
+    right: 0px;
+    top: -5px;
+    border-radius: 8px;
+    padding: 2px 4px;
+    font-size: 12px;
+  }
+}
+
+:global(.el-popover.particular) {
+  border-radius: 12px;
+}
+
+.ico-btn {
+  color: #555;
+  margin-right: 10px;
+
+  &:hover {
+    color: var(--fcolor) !important;
+  }
+}

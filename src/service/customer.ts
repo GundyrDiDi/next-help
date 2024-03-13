@@ -6306,6 +6306,28 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags 地区设置
+     * @name GetByKrNameLike
+     * @summary getByKrNameLike
+     * @request GET:/area/getByKrNameLike
+     */
+    getByKrNameLike: (
+      query: {
+        /** krName */
+        krName: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseIntAreaDTO, any>({
+        path: `/area/getByKrNameLike`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 地区设置
      * @name GetJapanProvinceByEnLike
      * @summary getJapanProvinceByEnLike
      * @request GET:/area/getJapanProvinceByEnLike
@@ -10623,6 +10645,29 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       this.request<BizResponseManageRoleRespDTO, any>({
         path: `/getPurchaserRole`,
         method: "GET",
+        ...params,
+      }),
+  };
+  getRoleByCode = {
+    /**
+     * No description
+     *
+     * @tags manage-feign-api-impl
+     * @name GetRoleByCode
+     * @summary getPurchaserRoleByCode
+     * @request GET:/getRoleByCode
+     */
+    getRoleByCode: (
+      query: {
+        /** code */
+        code: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseManageRoleRespDTO, any>({
+        path: `/getRoleByCode`,
+        method: "GET",
+        query: query,
         ...params,
       }),
   };

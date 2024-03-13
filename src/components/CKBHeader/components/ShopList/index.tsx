@@ -132,7 +132,7 @@ const ShopList = ({
                 value: 0
             }
         ];
-        if (stationCode === Site.KR) {
+        if (stationCode === Site.KO) {
             options = [
                 {
                     label: t('其他'),
@@ -140,7 +140,7 @@ const ShopList = ({
                 }
             ];
         }
-        if (stationCode === Site.UK) {
+        if (stationCode === Site.EN) {
             options = [
                 {
                     label: 'Shopify',
@@ -243,7 +243,7 @@ const ShopList = ({
                 <div className="my-[16px] mx-[6px]">
                     <div className="flex text-[#333] text-[16px] font-[500] clear-both mb-[20px] items-center">
                         <span>{t('创建店铺')}</span>
-                        {userInfo?.stationCode === Site.JP && (
+                        {userInfo?.stationCode === Site.JA && (
                             <QuestionCircleFilled
                                 className="ml-[20px] mt-[-1px]"
                                 onClick={createShopTipOpen.setTrue}

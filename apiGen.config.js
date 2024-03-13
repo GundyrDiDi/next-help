@@ -21,6 +21,10 @@ const swaggerList = [
     title: "订单",
     name: "order",
     url: "https://master-gateway.theckb.com/order/v2/api-docs",
+  },{
+    title: "商品",
+    name: "goods",
+    url: "https://master-gateway.theckb.com/goods/v2/api-docs",
   },
 ];
 

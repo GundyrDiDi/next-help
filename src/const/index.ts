@@ -5,49 +5,35 @@ enum Site {
   /**
    * 日本站
    */
-  JP = 'JapanStation',
+  JA = 'JapanStation',
   /**
    * 韩国站
    */
-  KR = 'KoreaStation',
+  KO = 'KoreaStation',
   /**
    * 英国站
    */
-  UK = 'UkStation'
+  EN = 'UkStation'
 }
 
-enum simpleSite {
-  /**
-   * 日本站
-   */
-  JP = 'ja',
-  /**
-   * 韩国站
-   */
-  KR = 'ko',
-  /**
-   * 英国站
-   */
-  UK = 'en'
-}
 /**
 * 站点对应的货币单位
 */
 const siteMapMonetaryUnit = new Map<string, string>();
-siteMapMonetaryUnit.set(Site.JP, '円');
-siteMapMonetaryUnit.set(Site.KR, '원');
-siteMapMonetaryUnit.set(Site.UK, '$');
+siteMapMonetaryUnit.set(Site.JA, '円');
+siteMapMonetaryUnit.set(Site.KO, '원');
+siteMapMonetaryUnit.set(Site.EN, '$');
 
 /**
 * 站点的导航条时区名字
 */
 const siteMapAreaName = new Map<string, string>();
 // 日本
-siteMapAreaName.set(Site.JP, 'Tokyo');
+siteMapAreaName.set(Site.JA, 'Tokyo');
 // 韩国
-siteMapAreaName.set(Site.KR, 'Seoul');
+siteMapAreaName.set(Site.KO, 'Seoul');
 // GMT +n
-siteMapAreaName.set(Site.UK, 'GMT');
+siteMapAreaName.set(Site.EN, 'GMT');
 
 /**
 * 国家枚举
@@ -195,21 +181,21 @@ Object.keys(CountriesEnum).forEach((countryKey) => {
   const isUKStationCounyty = ukStationCor2Country.includes(countryKey);
 
   if (isJapanStationCountry) {
-      countryMapSite.set(countryKey, Site.JP);
+      countryMapSite.set(countryKey, Site.JA);
   }
   if (isKoreaStationCountry) {
-      countryMapSite.set(countryKey, Site.KR);
+      countryMapSite.set(countryKey, Site.KO);
   }
   if (isUKStationCounyty) {
-      countryMapSite.set(countryKey, Site.UK);
+      countryMapSite.set(countryKey, Site.EN);
   }
 });
 
 // 国家货币
 const countryCurrency = new Map<string, string>();
-countryCurrency.set(Site.JP, 'JPY');
-countryCurrency.set(Site.KR, 'KRW');
-countryCurrency.set(Site.UK, 'USD');
+countryCurrency.set(Site.JA, 'JPY');
+countryCurrency.set(Site.KO, 'KRW');
+countryCurrency.set(Site.EN, 'USD');
 
 enum TermType {
   /** 利用规约 */
@@ -234,5 +220,4 @@ export {
   koreaStationCor2Country,
   ukStationCor2Country,
   siteMapAreaName,
-  simpleSite
 };

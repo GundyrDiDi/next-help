@@ -2326,6 +2326,7 @@ export interface CustomerPlatformOrderRespDTO {
   separateFlag?: number;
   stageInfos?: StageInfoDTO[];
   totalFreezeAmount?: number;
+  trackingNumber?: string;
   /** @format int32 */
   untreatedNum?: number;
   /** @format int32 */
@@ -3331,6 +3332,8 @@ export interface DeliveryCreateReqDTO {
    * @format int32
    */
   labelType?: number;
+  /** @format int32 */
+  orderSource?: number;
   /** 装箱清单url */
   packingListUrl?: string;
   /** 直行便订单编号 */
@@ -5471,9 +5474,14 @@ export interface OrderItem {
 
 /** OrderItemSpecialCheckEditReqDTO */
 export interface OrderItemSpecialCheckEditReqDTO {
+  customerOrderNo?: string;
+  /** @format int64 */
+  customerShopId?: number;
   /** @format int64 */
   operatorId?: number;
   operatorName?: string;
+  predictFinish?: string;
+  productSku?: string;
   /** 特殊质检要求 */
   specialCheckRequirement?: string;
   /** 特殊质检要求图片 */
@@ -7364,6 +7372,8 @@ export interface SearchSourceOrder {
   fabricInfoZh?: string;
   /** 面料链接 */
   fabricUrl?: string;
+  /** 费用等级：1,2,3 */
+  feeLevel?: string;
   /** 杂货问题-是否要加logo【问题3：请问您需要加logo吗？】 */
   groceriesQuestionAddLogo?: string;
   /** 杂货问题-是否可以邮寄样品【问题2-1：请问您是否有样品可邮寄？】 */
@@ -7822,6 +7832,8 @@ export interface SearchSourceOrderCreateVO {
   fabricInfoZh?: string;
   /** 面料链接 */
   fabricUrl?: string;
+  /** 费用等级：1,2,3 */
+  feeLevel?: string;
   /** 杂货问题-是否要加logo【问题3：请问您需要加logo吗？】 */
   groceriesQuestionAddLogo?: string;
   /** 杂货问题-是否可以邮寄样品【问题2-1：请问您是否有样品可邮寄？】 */
@@ -9687,6 +9699,8 @@ export interface SearchSourceType {
   createTime?: string;
   /** 面料信息要求 */
   fabricInformationRequirements?: string;
+  /** 费用等级：1，2，3 */
+  feeLevel?: string;
   firstQuestion?: string;
   /** 商品类型 */
   productClassification?: string;
@@ -17973,6 +17987,26 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/manage/platformOrderItem/specialCheckEdit`,
         method: "POST",
         body: reqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 平台订单详情（后台）
+     * @name PlatformOrderItemSpecialCheckEditBatch
+     * @summary 批量编辑特殊质检要求
+     * @request POST:/manage/platformOrderItem/specialCheckEditBatch
+     */
+    platformOrderItemSpecialCheckEditBatch: (
+      reqDTOList: OrderItemSpecialCheckEditReqDTO[],
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseObject, any>({
+        path: `/manage/platformOrderItem/specialCheckEditBatch`,
+        method: "POST",
+        body: reqDTOList,
         type: ContentType.Json,
         ...params,
       }),

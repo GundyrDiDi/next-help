@@ -29,7 +29,7 @@ const reqRate = (
             // 英国站 美元比人民币高,后端给的7.14  1￥=7.14$
             // 后端的汇率逻辑 7.14￥=1$   1￥=200韩元  1￥ = 20日元
             // 前端金额的计算统一是乘法 人民币*汇率得到对应国家的金额  所以英国要做除法
-            if (stationCode === Site.UK) {
+            if (stationCode === Site.EN) {
                 setRate(1 / Number(res.data?.originalExchangeRate));
                 setFloatingRate(1 / Number(res.data?.exchangeRate));
                 setFloatExchangeRate(
@@ -50,7 +50,7 @@ const reqRate = (
             // 英国站 美元比人民币高,后端给的7.14  1￥=7.14$
             // 后端的汇率逻辑 7.14￥=1$   1￥=200韩元  1￥ = 20日元
             // 前端金额的计算统一是乘法 人民币*汇率得到对应国家的金额  所以英国要做除法
-            if (stationCode === Site.UK) {
+            if (stationCode === Site.EN) {
                 setRate(1 / (res.data?.originalExchangeRate??1));
                 setFloatingRate(1 / Number(res.data?.exchangeRate));
                 setFloatExchangeRate(
@@ -122,13 +122,13 @@ export const useRate = () => {
         let price = calc(rmb);
         const stationCode = customerDetail?.stationCode;
         switch (stationCode) {
-            case Site.JP:
+            case Site.JA:
                 price = price + ' 円';
                 break;
-            case Site.KR:
+            case Site.KO:
                 price = '₩ ' + price;
                 break;
-            case Site.UK:
+            case Site.EN:
                 price = '$ ' + price;
                 break;
         }
@@ -140,13 +140,13 @@ export const useRate = () => {
         // 是否千分位化
         const newMoney = isThousandth ? formatMoney(money) : money;
         switch (stationCode) {
-            case Site.JP:
+            case Site.JA:
                 showText = newMoney + ' 円';
                 break;
-            case Site.KR:
+            case Site.KO:
                 showText = '₩ ' + newMoney;
                 break;
-            case Site.UK:
+            case Site.EN:
                 showText = '$ ' + newMoney;
                 break;
         }
@@ -154,9 +154,9 @@ export const useRate = () => {
     };
     const getActivePriceByStation = (): number => {
         const stationCode = customerDetail?.stationCode;
-        if (stationCode === Site.JP) {
+        if (stationCode === Site.JA) {
             return 1;
-        } else if (stationCode === Site.KR) {
+        } else if (stationCode === Site.KO) {
             return 10;
         }
         return 0.1;

@@ -17,6 +17,7 @@ import platAtom from "@/model/Plat";
 import { getCookiePlat } from "@/utils";
 import { togglePlat } from "@/config/request/interceptors";
 import { ENUM_SYSTEM_SOURCE } from "@/const/enum";
+import CKBSearch from "@/components/CKBSearch";
 
 interface Props {
   children: React.ReactNode;
@@ -151,6 +152,7 @@ const getThemeStyle = useCallback(() => {
             <LocalContext.Provider value={lang}>
                   <ConfigProvider locale={locale} theme={getThemeStyle()}>
                     <CKBHeader plat={plat}/> 
+                    <CKBSearch/>
                     <FloatToolbar/>
                       {children}
                   <CKBFooter lang={lang} plat={plat}/>

@@ -1,10 +1,11 @@
 import { Api as Customer } from './customer';
 import { Api as Settlement } from './settlement';
 import { Api as Order } from './order';
+import { Api as Goods } from './goods';
 
 import { serviceConfig } from '@/config/request/swaggerServiceConfig';
 
-export const Api = { Customer, Settlement, Order };
+export const Api = { Customer, Settlement, Order, Goods };
 
 const warpperServiceConfig = (serviceConfig: any, ctx: { name: string; basePath: string; }) => {
         const newConfig = { ...serviceConfig };
@@ -17,7 +18,8 @@ const warpperServiceConfig = (serviceConfig: any, ctx: { name: string; basePath:
 const customer = new Customer(warpperServiceConfig(serviceConfig, { name: 'customer', basePath: '/customer' }));
 const settlement = new Settlement(warpperServiceConfig(serviceConfig, { name: 'settlement', basePath: '/settlement' }));
 const order = new Order(warpperServiceConfig(serviceConfig, { name: 'order', basePath: '/order' }));
+const goods = new Goods(warpperServiceConfig(serviceConfig, { name: 'goods', basePath: '/goods' }));
 
-export const apiInstanceList = [{ key: 'customer', instance: customer }, { key: 'settlement', instance: settlement }, { key: 'order', instance: order }];
+export const apiInstanceList = [{ key: 'customer', instance: customer }, { key: 'settlement', instance: settlement }, { key: 'order', instance: order }, { key: 'goods', instance: goods }];
 
-export const api = { customer, settlement, order };
+export const api = { customer, settlement, order, goods };

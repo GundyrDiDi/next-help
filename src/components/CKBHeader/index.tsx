@@ -3,7 +3,7 @@ import { Badge, Popover, message } from "antd";
 import { CaretDownOutlined } from "@ant-design/icons";
 import { useAtom, useStore } from "jotai";
 import dayjs from "dayjs";
-import { CustomerDetail } from "@/model";
+import { CustomerDetail, Lang } from "@/model";
 import IconHeadSculpture from "@/components/Icon/IconHeadSculpture";
 import { request } from "@/config/request";
 
@@ -22,6 +22,7 @@ import { LocalContext, useTranslation } from "@/i18n/client";
 import { myShopIcon } from "@/const/staticURL";
 import platAtom from "@/model/Plat";
 import { useSite2Station } from "@/utils/language";
+import { toTheCkb } from "@/utils/router";
 
 const menuCommonStyle =
   "flex items-center ml-[20px] hover:text-[color:--color-primary-light] cursor-pointer";
@@ -41,16 +42,14 @@ const CKBHeader = ({ plat }: Props) => {
 
   const [date, setDate] = useState<string>();
   const [customerDetail] = useAtom(CustomerDetail);
-  // console.log(customerDetail,'customerDetail');
-
   const stationCode = customerDetail?.stationCode || "";
   const [isShowShopList, setIsShowShopList] = useState(false);
   const [messageNum, setMessageNum] = useState<number>();
   const [cartNum, setCartNum] = useState<number>();
-  // const [newMemberActivity, setNewMemberActivity] = useState();
   const [site, setSite] = useState<string>();
   const membership = customerDetail?.membership;
   const [userInfo] = useAtom(CustomerDetail);
+  const [lang]=useAtom(Lang);
   const systemSource =
     plat === "d2c" ? ENUM_SYSTEM_SOURCE.D2C : ENUM_SYSTEM_SOURCE.B2B;
   // 获取消息未读数量
@@ -94,8 +93,8 @@ const CKBHeader = ({ plat }: Props) => {
     }
   };
   const linkToPure = () => {
-    const plat = systemSource === ENUM_SYSTEM_SOURCE.D2C ? "/d2c/" : "/b2b/";
-    window.location.replace(window.location.origin + plat + "index/pure");
+    const plat = systemSource === ENUM_SYSTEM_SOURCE.D2C ? "/d2c/index/pure" : "/b2b/index/pure";
+    toTheCkb(plat)
   };
   const getRate = (rate: number) => {
     if (!customerDetail?.isEN) {
@@ -134,7 +133,7 @@ const CKBHeader = ({ plat }: Props) => {
             />
           </div>
           <div className="pl-10 flex items-center">
-            {stationCode === Site.JP && (
+            {stationCode === Site.JA && (
               <div className={menuCommonStyle}>
                 <img
                   src="https://static-s.theckb.com/BusinessMarket/OEM/new_tag.png"
@@ -147,7 +146,7 @@ const CKBHeader = ({ plat }: Props) => {
                   <div
                     className="ml-[2px]"
                     onClick={() => {
-                      // jumpPage(ENUM_PAGE.MY_PROMOTION);
+                        toTheCkb(`${lang}/smc/promotion/Index?redirect=MyPromotion`)
                     }}
                   >
                     {t("推广联盟")}
@@ -160,7 +159,6 @@ const CKBHeader = ({ plat }: Props) => {
                 <MembershipLevel
                   t={t}
                   membership={membership}
-                  // newMemberActivity={newMemberActivity}
                 />
               </div>
             </div>
@@ -169,7 +167,7 @@ const CKBHeader = ({ plat }: Props) => {
               <div
                 className="ml-[2px]"
                 onClick={() => {
-                  // jumpPage(ENUM_PAGE.WORKER_SPACE);
+                    toTheCkb(`${lang}${ENUM_PAGE.WORKER_SPACE}`);
                 }}
               >
                 {t("工作台")}
@@ -181,7 +179,7 @@ const CKBHeader = ({ plat }: Props) => {
                 <div
                   className="hover:text-[color:--color-primary-light] mr-[16px] text-[--color-white]"
                   onClick={() => {
-                    // jumpPage(ENUM_PAGE.SHOP_CART);
+                    toTheCkb(`${lang}${ENUM_PAGE.SHOP_CART}`)
                   }}
                 >
                   <span>{t("购物车")}</span>
@@ -252,7 +250,7 @@ const CKBHeader = ({ plat }: Props) => {
                 <div
                   className="hover:text-[color:--color-primary-light] mr-[16px] text-[--color-white]"
                   onClick={() => {
-                    // jumpPage(ENUM_PAGE.INFORMATION);
+                    toTheCkb(`${lang}${ENUM_PAGE.INFORMATION}`);
                   }}
                 >
                   <span>{t("消息")}</span>
