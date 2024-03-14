@@ -23,7 +23,7 @@ const HotSearch = ({  hotSearchSelected }: Props) => {
     api.goods.search.keywordHistory,
     { manual: true }
   );
-  const { runAsync: keywordHost } = useRequest(api.goods.search.keywordHost, {
+  const { runAsync: keywordHost ,loading:loading1} = useRequest(api.goods.search.keywordHost, {
     manual: true,
   });
   // 历史关键词列表
@@ -55,7 +55,7 @@ const HotSearch = ({  hotSearchSelected }: Props) => {
 
   return (
     <div className="HotSearch abs">
-      <Spin spinning={loading}>
+      <Spin spinning={loading||loading1}>
         {token && (
           <div className="HotSearch-block">
             <div className="HotSearch-title">{t("搜索历史")}</div>
