@@ -8,3 +8,14 @@ export function formatViewNum (num: number) {
     return num
   }
 }
+
+/**
+ * 是不是URL
+ * @param url 
+ * @returns 
+ */
+export const isUrl = (url: string): boolean =>
+  /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-.,@?^=%&:/~+#]*[\w\-@?^=%&/~+#])?/.test(url)
+export const onlyHttps = (url: string): boolean => /(https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-.,@?^=%&:/~+#]*[\w\-@?^=%&/~+#])?/.test(
+  url
+)

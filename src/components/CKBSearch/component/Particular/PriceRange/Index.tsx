@@ -5,7 +5,7 @@ import classNames from "classnames";
 import { useState } from "react";
 import "./Index.scss"
 
-type RangType={
+export type PriceRangType={
   max?:string
   ,min?:string
 }
@@ -13,8 +13,8 @@ type RangType={
 interface Props {
   max?:string;
   min?:string;
-  value?:RangType,
-  onChange?:(value:RangType)=>void
+  value?:PriceRangType,
+  onChange?:(value:PriceRangType)=>void
 }
 
 const PriceRange=({value,onChange}:Props)=>{

@@ -52,4 +52,142 @@ export  const useLangOptions=(site:Site)=>{
 }
 
 
-const cates=[]
+// 排序选项
+export const sortData: any = {
+  // 淘宝
+  TB: [
+    {
+      label: '综合',
+      value: ''
+    },
+    {
+      label: '销量',
+      value: 'sale-desc'
+    },
+    {
+      label: '信用',
+      value: 'credit-desc'
+    },
+    {
+      label: '价格',
+      value: 'price-desc'
+    }
+  ],
+  // 天猫
+  TM: [
+    {
+      label: '综合',
+      value: ''
+    },
+    {
+      label: '人气',
+      value: 'rq'
+    },
+    {
+      label: '新品',
+      value: 'new'
+    },
+    {
+      label: '销量',
+      value: 'd'
+    },
+    {
+      label: '价格',
+      value: 'p'
+    }
+  ],
+  // 1688
+  AM: [
+    {
+      label: '综合',
+      value: ''
+    },
+    {
+      label: '成交额',
+      value: 'va_rmdarkgmv30'
+    },
+    {
+      label: '价格',
+      value: 'price'
+    }
+  ]
+}
+
+// 其他条件选项
+export const otherData: any = {
+  // 淘宝
+  TB: [
+    {
+      label: '包邮',
+      value: 'baoyou=1'
+    },
+    {
+      label: '赠送退货运费险',
+      value: 'auction_tag[]=385'
+    },
+    {
+      label: '新品',
+      value: 'auction_tag[]=1154'
+    },
+    {
+      label: '正品保障',
+      value: 'user_type=1'
+    },
+    {
+      label: '公益宝贝',
+      value: 'gybb=1'
+    },
+    {
+      label: '7+天内退货',
+      value: 'auction_tag[]=4806'
+    }
+  ],
+  // 天猫
+  TM: [
+    {
+      label: '包邮',
+      value: 'post_fee=-1'
+    },
+    {
+      label: '折扣',
+      value: 'miaosha=1'
+    },
+    {
+      label: '搭配满减',
+      value: 'combo=1'
+    },
+    {
+      label: '满就减',
+      value: 'filter_mj=1'
+    },
+    {
+      label: '货到付款',
+      value: 'support_cod=1'
+    }
+  ],
+  // 1688
+  AM: [
+    {
+      label: '48小时内发货',
+      value: 'extendProperties=buyerProtection:essxsfh,buyerProtection:ssbxsfh'
+    },
+    {
+      label: '实力商家',
+      value: 'memberTags=205185'
+    },
+    {
+      label: '超级工厂',
+      value: 'memberTags=3938689'
+    },
+    {
+      label: '加工定制',
+      value: 'offerTags=1803842'
+    }
+  ]
+}
+
+export const externalLinks:any= {
+  'TB': 'https://s.taobao.com/search?',
+  'TM': 'https://list.tmall.com/search_product.htm?',
+  'AM': 'https://s.1688.com/selloffer/offer_search.htm?'
+}

@@ -1,18 +1,35 @@
 import classNames from "classnames";
 import { isJA, lang } from "@/utils/language";
-import { Button, Flex, Form, Input, Radio, Select } from "antd";
+import { Button, Checkbox, Flex, Form, Input, Radio, Select } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { useTranslation } from "@/i18n/client";
 import { useAtom } from "jotai";
 import { cateListAtom } from "../SellerCate/Index";
-import PriceRange from "./PriceRange/Index";
+import PriceRange, { PriceRangType } from "./PriceRange/Index";
 import "./Index.scss";
+import { useEffect, useMemo } from "react";
+import { otherData, sortData } from "../../initData";
+import { searchParamsAtom } from "../..";
+
+export interface SearchParams {
+  keyword?: string;
+  sortType?:string;
+  productCategoryFrontendId?:string;
+  platformType?:string;
+  sellPrice?:PriceRangType
+  other?:string[]
+}
 
 interface Props {
   keyword?: string;
-  handleSearch: () => void;
-  handleJump: () => void;
+  handleSearch: (params?:SearchParams) => void;
+  handleJump: (params?:SearchParams) => void;
   setKeyword: (keyword: string) => void;
+}
+
+interface SortProps {
+  label: string;
+  value: string;
 }
 const Particular = ({
   keyword,
@@ -23,6 +40,19 @@ const Particular = ({
   const { t } = useTranslation();
   const [categoryList] = useAtom(cateListAtom);
   const [form] = Form.useForm();
+  const [seletParams, setSelectParams] = useAtom(searchParamsAtom);
+
+
+  useEffect(()=>{
+    console.log(seletParams,'seletParams');
+    
+    form.setFieldsValue(seletParams)
+  },[seletParams,form])
+  // const platformType = Form.useWatch("platformType", form);
+  // const productCategoryFrontendId = Form.useWatch(
+  //   "productCategoryFrontendId",
+  //   form
+  // );
 
   const menu1Items = [
     { label: t("采购来源"), key: "" },
@@ -31,29 +61,48 @@ const Particular = ({
     { label: "Tmall", key: "TM" },
   ];
 
-  const sortTypes = [
-    { label: t("默认顺序"), bothway: false, name: "", showInImageSearch: true }, // 默认 update_time
-    {
-      label: t("销量"),
-      bothway: false,
-      name: "product_sell_quantity",
-      showInImageSearch: false,
-    },
-    {
-      label: t("价格"),
-      bothway: true,
-      name: "product_sell_price",
-      showInImageSearch: false,
-    },
-  ];
+  const sortTypes: SortProps[] = useMemo(() => {
+    const list = sortData[seletParams.platformType] || [
+      { label: "默认顺序", value: "" }, // 默认 update_time
+      {
+        label: "销量",
+        value: "product_sell_quantity",
+      },
+      {
+        label: "价格",
+        value: "product_sell_price",
+      },
+    ];
 
-  const onFinish = (val: any) => {
-    console.log(val);
+    return list.map((i: SortProps) => {
+      return {
+        label: t(i.label),
+        value: i.value,
+      };
+    });
+  }, [seletParams.platformType, t]);
+
+  const otherTypes: SortProps[] = useMemo(() => {
+    const list = otherData[seletParams.platformType]?.map((i: SortProps) => {
+      return {
+        label: t(i.label),
+        value: i.value,
+      };
+    });
+    return list || [];
+  }, [seletParams.platformType, t]);
+
+  const onFinish = (val: SearchParams) => {
+    console.log(val,'onFinish');
+    
+    handleSearch(val)
   };
 
   return (
     <div className={classNames("content", lang)}>
-      <Form colon={false} form={form} onFinish={onFinish}>
+      <Form colon={false} form={form} onFinish={onFinish} onReset={()=>{
+        setKeyword('')
+      }}>
         <div className="flex">
           <FormItem
             className="w-[45%]"
@@ -65,6 +114,10 @@ const Particular = ({
                 return { ...i, value: i.key };
               })}
               className="plat"
+              // value={seletParams.platformType}
+              onChange={(e)=>{
+                setSelectParams({...seletParams,platformType:e})
+              }}
             />
           </FormItem>
           <FormItem
@@ -76,6 +129,9 @@ const Particular = ({
               options={categoryList.map((i) => {
                 return { ...i, value: i.productCategoryFrontendId };
               })}
+              onChange={(e)=>{
+                setSelectParams({...seletParams,productCategoryFrontendId:e,productCategoryFrontendIdNameZh:categoryList.find(i=>i.productCategoryFrontendId===e)?.label})
+              }}
               className="second"
             />
           </FormItem>
@@ -92,36 +148,41 @@ const Particular = ({
           />
         </FormItem>
         <FormItem label={t("排序")} name="sortType">
-          <Radio.Group optionType="button" buttonStyle="solid">
-            {sortTypes.map((i) => {
-              return (
-                <Radio.Button key={i.name} value={i.name}>
-                  {i.label}
-                </Radio.Button>
-              );
-            })}
-          </Radio.Group>
+          <Radio.Group
+            options={sortTypes}
+            optionType="button"
+            buttonStyle="solid"
+          ></Radio.Group>
         </FormItem>
         <FormItem label={t("价格区间")} name="sellPrice">
           <PriceRange />
         </FormItem>
-          <Flex gap="small" wrap="wrap"  justify="flex-end" >
-            <Button htmlType="submit" type="primary" className="search-btn">
+        {!!seletParams.platformType && (
+          <FormItem label={t("其他条件")} name="other">
+            <Checkbox.Group options={otherTypes}></Checkbox.Group>
+          </FormItem>
+        )}
+        <Flex gap="small" wrap="wrap" justify="flex-end">
+          <Button htmlType="submit" type="primary" className="search-btn">
+            <div className="flex items-center">
               <img
                 src="https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/search.png"
                 alt=""
               />
               {t("站内搜索")}
-            </Button>
-            <Button type="primary" className="search-btn">
+            </div>
+          </Button>
+          <Button type="primary" className="search-btn">
+            <div className="flex items-center">
               <img
                 src="https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/sqire.png"
                 alt=""
               />
               {t("外部搜索")}
-            </Button>
-            <Button type="text">{t("重置条件")}</Button>
-          </Flex>
+            </div>
+          </Button>
+          <Button htmlType="reset" type="text">{t("重置条件")}</Button>
+        </Flex>
       </Form>
     </div>
   );

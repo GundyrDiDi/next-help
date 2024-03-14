@@ -26,6 +26,7 @@
 
 .search-input {
   width: 600px;
+  height: 32px;
   background: #f6f6f6;
   box-shadow: 0 0 4px 0 transparent;
   border-radius: 32px;
@@ -101,7 +102,7 @@
 }
 
 #search .el-input {
-  &.null-trigger> :deep(input) {
+  &.null-trigger> input {
     animation: flash 1.5s linear;
   }
 
@@ -182,6 +183,7 @@
   border-radius: 0px 18px 18px 0px;
   width: 50px;
   margin-right: -9px;
+  // height: 100%;
 }
 
 .searchIcon:hover,
@@ -254,7 +256,7 @@
 
 .ico-btn {
   color: #555;
-  margin-right: 10px;
+  // margin-right: 10px;
 
   &:hover {
     color: var(--fcolor) !important;

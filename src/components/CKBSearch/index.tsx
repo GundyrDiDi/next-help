@@ -1,10 +1,10 @@
-import { Form, Input, Popover, Select, Space, Spin } from "antd";
+import { Form, Input, InputProps, Popover, Select, Space, Spin } from "antd";
 import "./Index.scss";
 import classNames from "classnames";
-import { ChangeEvent, useRef, useState } from "react";
-import { useAtom } from "jotai";
+import { ChangeEvent, MutableRefObject, useRef, useState } from "react";
+import { atom, useAtom, useAtomValue } from "jotai";
 import { useTranslation } from "@/i18n/client";
-import { SearchLangType, getSearchLangType, useLangOptions } from "./initData";
+import { SearchLangType, externalLinks, getSearchLangType, useLangOptions } from "./initData";
 import { Lang } from "@/model";
 import { useSite2Station } from "@/utils/language";
 import { SvgSearch } from "../svgs";
@@ -15,12 +15,33 @@ import { toLogin, toTheCkb } from "@/utils/router";
 import { isImage, transImgToBase64 } from "@/utils/file";
 import { upFileToAliOss } from "@/utils/useUpload";
 import { api } from "@/service";
-import Particular from "./component/Particular/Index";
+import Particular, { SearchParams } from "./component/Particular/Index";
+import { isUrl } from "@/utils/util";
+import queryString from "query-string";
+import gbk from 'gbk-encode'
+const { encode } = gbk
+export interface SelectParams {
+  // 频道
+  platformType: string;
+  // 分类
+  productCategoryFrontendId: string;
+  productCategoryFrontendIdNameZh?:string
+}
+
+export const searchParamsAtom = atom<SelectParams>({
+  platformType: "",
+  productCategoryFrontendId: "",
+  productCategoryFrontendIdNameZh:""
+});
+let timer: string | number | NodeJS.Timeout | null | undefined=null;
 
 const CKBSearch = () => {
   const [t] = useTranslation();
   const [lang] = useAtom(Lang);
   const stationCode = useSite2Station();
+  const seletParams = useAtomValue(searchParamsAtom);
+  const PopoverRef1 = useRef<any>(null);
+  const InputRef=useRef<any>(null)
 
   // 空词输入框触发效果
   const [nullTrigger, setNullTrigger] = useState(false);
@@ -81,13 +102,121 @@ const CKBSearch = () => {
       toTheCkb(`${lang}/list?imageId=${res1.data}&&imageUrl=${urlData?.url}`);
   };
 
-  // 搜索跳转
-  const handleJump=()=>{
-
+  const encodeKeyword = (text: any) => {
+    if (seletParams.platformType === 'AM') {
+      return encode(text + ' ' + seletParams.productCategoryFrontendIdNameZh??'')
+    } else {
+      return text + ' ' + seletParams.productCategoryFrontendIdNameZh??''
+    }
   }
 
+  // 搜索跳转 
+  const handleJump =async (formData: SearchParams = {}) => {
+    // TODO:省略插件安装逻辑
+    const arr: any = []
+    const {platformType,sortType,sellPrice,other=[]}=formData
+    const startPrice=sellPrice?.min??''
+    const endPrice=sellPrice?.max??''
+    const url=externalLinks[platformType??''];
+    const key = platformType === 'AM' ? 'keywords=' : 'q='
+    if (platformType === 'TB') {
+      arr.push(
+        'sort=' + sortType,
+        'filter=' + `reserve_price[${startPrice},${endPrice}]`,
+        ...other
+      )
+    } else if (platformType === 'TM') {
+      arr.push(
+        'sort=' + sortType,
+        'start_price=' + startPrice,
+        'end_price=' + endPrice,
+        ...other
+      )
+    } else if (platformType === 'AM') {
+      arr.push(
+        'sortType=' + sortType,
+        'priceStart=' + startPrice,
+        'priceEnd=' + endPrice,
+        ...other
+      )
+    }
+    if (['1', '3', '4'].includes(langType)) {
+      const formData = {
+        from: lang,
+        to: 'zh',
+        text: keyword
+      }
+     const res=  await api.goods.translate.common(formData);
+        if (res.code === '0') {
+          if (res.data === '') {
+            arr.unshift(key + encodeKeyword(keyword))
+          } else {
+            arr.unshift(key + encodeKeyword(res.data))
+          }
+        } else {
+          arr.unshift(key + encodeKeyword(keyword))
+        }
+        window.open(url + arr.join('&'))
+    } else {
+      arr.unshift(key + encodeKeyword(keyword))
+      window.open(url + arr.join('&'))
+    }
+  };
+
   /** 开始搜索 */
-  const handleSearch = () => {};
+  const handleSearch = async (formData: SearchParams = {}) => {
+    const kw = keyword.trim();
+    if (kw) {
+      let query: any = { schannel: 2 };
+      if (isUrl(kw)) {
+        query.detailUrl = encodeURIComponent(kw);
+        setKeyword("");
+        toTheCkb(`${lang}/index/pure?detailUrl=${query.detailUrl}`);
+      } else {
+        if (/[a-zA-Z0-9]{28,36}/.test(kw) && isLogin()) {
+          const data = {
+            pageSize: 50,
+            pageNum: 1,
+            keyword: kw,
+            stationCode,
+          };
+          const res = await api.goods.search.products(data);
+          const records = res?.data?.records;
+          if (records?.length === 1) {
+            const productCode = records[0].productCode;
+            toTheCkb(`${lang}/goods/${productCode}`);
+            return;
+          }
+        }
+        // 传递参数默认化
+        const params = {
+          descendOrder: true,
+          keyword: kw,
+          platformType: seletParams.platformType,
+          productCategoryFrontendId: seletParams.productCategoryFrontendId,
+          langType,
+          schannel: 2,
+          sortType: formData.sortType,
+          sellPriceStart: formData.sellPrice?.min,
+          sellPriceEnd: formData.sellPrice?.max,
+          _t: Date.now(),
+        };
+        toTheCkb(`${lang}/list?${queryString.stringify(params)}`);
+      }
+    } 
+    // TODO:没有单词的光效
+    // else {
+    //   setNullTrigger(true)
+    //   timer&&clearTimeout(timer)
+    //   timer= setTimeout(() => {
+    //     InputRef.current&&InputRef.current?.focus()
+    //     PopoverRef1.current&&PopoverRef1.current?.close()
+    //     setNullTrigger(false)
+    //   }, 1500)
+    // }
+
+  };
+
   return (
     <div id="search">
       <div className="flex viewport flex-center">
@@ -110,6 +239,8 @@ const CKBSearch = () => {
             className={classNames("rel", { "null-trigger": nullTrigger })}
             placeholder={t("请输入主营类目、品牌名称或风格")}
             maxLength={500}
+            height={32}
+            ref={InputRef}
             onChange={(e) => {
               setKeyword(e.target.value);
             }}
@@ -134,18 +265,29 @@ const CKBSearch = () => {
                     onChange={choosePic}
                   />
                 </label>
-                <Popover open placement="bottom"  content={
-                  <Particular setKeyword={setKeyword} keyword={keyword} handleSearch={handleSearch} handleJump={handleJump}/>
-                }>
-                <div className="pl-[10px] pr-[10px]">
-                  <i className="iconfont icon-search_filter1 ico-btn text-[14px] cursor-pointer" ></i>
-                </div>
+                <Popover
+                  ref={PopoverRef1}
+                  placement="bottom"
+                  content={
+                    <Particular
+                      setKeyword={setKeyword}
+                      keyword={keyword}
+                      handleSearch={handleSearch}
+                      handleJump={handleJump}
+                    />
+                  }
+                >
+                  <div className="pl-[10px]">
+                    <i className="iconfont icon-search_filter1 ico-btn text-[14px] cursor-pointer"></i>
+                  </div>
                 </Popover>
                 <div
-                  className="flex-ter rel pl-10 searchIcon h-[10px]"
-                  onClick={handleSearch}
+                  className="flex justify-center items-center searchIcon h-[32px]"
+                  onClick={() => {
+                    handleSearch();
+                  }}
                 >
-                  <SvgSearch className="btn rel font-[18px] text-white ml-[5px]" />
+                  <SvgSearch className="icon rel text-[18px] text-white ml-[5px]" />
                 </div>
               </>
             }

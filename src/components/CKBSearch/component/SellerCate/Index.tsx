@@ -9,6 +9,7 @@ import { api } from "@/service";
 import { Site } from "@/const";
 import { ProductCategoryFrontendShortRespDTO } from "@/service/goods";
 import { atom, useAtom } from "jotai";
+import { searchParamsAtom } from "../..";
 
 interface exProductCategoryFrontendShortRespDTO
   extends ProductCategoryFrontendShortRespDTO {
@@ -20,30 +21,28 @@ interface SellerProps {
   key?: string;
 }
 
-export const cateListAtom=atom<exProductCategoryFrontendShortRespDTO[]>([])
+export const cateListAtom = atom<exProductCategoryFrontendShortRespDTO[]>([]);
+
+interface Props {
+  onChange: ({}) => void;
+}
 
 const SellerCate = () => {
   const [rotate1, { toggle: rotate1Toggle }] = useToggle();
   const [rotate2, { toggle: rotate2Toggle }] = useToggle();
-  const [categoryList,setCateAtom]=useAtom(cateListAtom)
+  const [categoryList, setCateAtom] = useAtom(cateListAtom);
+  const [seletParams, setSelectParams] = useAtom(searchParamsAtom);
   const { t } = useTranslation();
   const stationCode = useSite2Station();
   // 渠道选择
-  const [seller, setSeller] = useState<SellerProps>();
+  // const [seller, setSeller] = useState<SellerProps>();
 
   const { runAsync: productCategoryFrontendTree } = useRequest(
     api.goods.productCategoryFrontend.tree,
     { manual: true }
   );
-  // 分类列表
-  // const [categoryList, setcCategoryList] = useState<
-  //   exProductCategoryFrontendShortRespDTO[]
-  // >([]);
-  // 分类ID
-  const [productCategoryFrontendId, setProductCategoryFrontendId] =
-    useState<number>(-1);
-
   // 渠道列表
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const menu1Items = [
     { label: t("采购来源"), key: "" },
     { label: isJA() ? t("1688国家货盘") : t("1688严选"), key: "AM" },
@@ -54,7 +53,8 @@ const SellerCate = () => {
   // 分类列表显示
   const showDrapText2 = useMemo(() => {
     const cate = categoryList?.find(
-      (i) => i.productCategoryFrontendId === productCategoryFrontendId
+      (i) =>
+        String(i.productCategoryFrontendId)=== seletParams.productCategoryFrontendId
     );
     return (
       {
@@ -63,7 +63,7 @@ const SellerCate = () => {
         [Site.EN]: cate?.cateNameEn,
       }[stationCode] || cate?.cateNameJp
     );
-  }, [categoryList, productCategoryFrontendId, stationCode]);
+  }, [categoryList, seletParams.productCategoryFrontendId, stationCode]);
 
   useAsyncEffect(async () => {
     const res = await productCategoryFrontendTree({ stationCode });
@@ -78,7 +78,7 @@ const SellerCate = () => {
             cateNameKr: t("类目"),
             cateNameEn: t("类目"),
             label: t("类目"),
-            productCategoryFrontendId: -1,
+            productCategoryFrontendId:'' ,
           } as any,
         ].concat(
           v.productCategoryFrontendShortRespDTOList?.map((i) => {
@@ -94,13 +94,14 @@ const SellerCate = () => {
           })
         );
       });
-      console.log(category[2], "category[2]");
-      setCateAtom(category[2])
-      // 暂时写死(透明购)
-      // setcCategoryList(category[2]);
+      // 特定channal=2的渠道数据
+      setCateAtom(category[2]);
     }
-    setSeller(menu1Items[0]);
   }, []);
+
+  const seller = useMemo(() => {
+    return menu1Items.find((i) => i.key === seletParams.platformType)||menu1Items[0];
+  }, [menu1Items, seletParams.platformType]);
 
   return (
     <div className={classNames("rel custom-plain", lang)}>
@@ -113,7 +114,12 @@ const SellerCate = () => {
               label: (
                 <div
                   onClick={() => {
-                    setSeller(i);
+                    setSelectParams((val)=>{
+                      return {
+                        ...val,
+                        platformType:i.key
+                      }
+                    })
                   }}
                   className="drop-item"
                 >
@@ -149,7 +155,13 @@ const SellerCate = () => {
               label: (
                 <div
                   onClick={() => {
-                    setProductCategoryFrontendId(i.productCategoryFrontendId!);
+                    setSelectParams((val) => {
+                      return {
+                        ...val,
+                        productCategoryFrontendId: String(i.productCategoryFrontendId),
+                        productCategoryFrontendIdNameZh:i.label??''
+                      };
+                    });
                   }}
                   className="drop-item"
                 >
@@ -162,7 +174,9 @@ const SellerCate = () => {
         }}
       >
         <Button shape="round" className="xl-btn rt-btn">
-          <div className="line--only w-[60px] align-bottom">{showDrapText2}</div>
+          <div className="line--only w-[60px] align-bottom">
+            {showDrapText2}
+          </div>
           <i
             className="fa fa-caret-down"
             style={{
