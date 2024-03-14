@@ -265,3 +265,19 @@
     color: var(--fcolor) !important;
   }
 }
+
+
+.HotSearchTrans-enter {
+  opacity: 0;
+}
+.HotSearchTrans-enter-active {
+  opacity: 1;
+  transition: opacity 200ms;
+}
+.HotSearchTrans-exit {
+  opacity: 1;
+}
+.HotSearchTrans-exit-active {
+  opacity: 0;
+  transition: opacity 200ms;
+}

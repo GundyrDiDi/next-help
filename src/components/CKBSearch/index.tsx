@@ -35,6 +35,7 @@ import queryString from "query-string";
 import gbk from "gbk-encode";
 import HotSearch from "./component/HotSearch/Index";
 import { CustomerSearchKeywordHotRespDTO } from "@/service/goods";
+import { CSSTransition } from "react-transition-group";
 
 const { encode } = gbk;
 export interface SelectParams {
@@ -62,6 +63,7 @@ const CKBSearch = () => {
   const InputRef = useRef<any>(null);
   const setSelectParams = useSetAtom(searchParamsAtom);
   const [categoryList] = useAtom(cateListAtom);
+  const nodeRef = useRef(null);
 
   // 空词输入框触发效果
   const [nullTrigger, setNullTrigger] = useState(false);
@@ -250,8 +252,8 @@ const CKBSearch = () => {
     keyword: string,
     item?: CustomerSearchKeywordHotRespDTO
   ) => {
-    console.log(keyword,'keyword');
-    
+    console.log(keyword, "keyword");
+
     setKeyword(keyword);
     if (!item) {
       handleSearch();
@@ -268,7 +270,6 @@ const CKBSearch = () => {
       });
     }
     setShowHot(false);
-
   };
   return (
     <div id="search">
@@ -302,12 +303,13 @@ const CKBSearch = () => {
               setShowHot(true);
             }}
             onBlur={() => {
-              setTimeout(()=>{
-                setShowHot(false);
-              },100)
+              // setTimeout(() => {
+              // }, 100);
+              setShowHot(false);
+
             }}
-            suffix={
-              <>
+            addonAfter={
+              <div className="flex items-center">
                 <label htmlFor="upload_image" className="flex-ter">
                   <i className="iconfont icon-search_camera1 ico-btn text-[14px] cursor-pointer"></i>
                   <input
@@ -332,30 +334,38 @@ const CKBSearch = () => {
                     />
                   }
                 >
-                  <div className="pl-[10px]">
+                  <div className="pl-[10px] pr-[10px]">
                     <i className="iconfont icon-search_filter1 ico-btn text-[14px] cursor-pointer"></i>
                   </div>
                 </Popover>
                 <div
                   className="flex justify-center items-center searchIcon h-[32px]"
-                  onClick={() => {
+                  onClick={(e) => {
                     handleSearch();
+                    setShowHot(false)
                   }}
                 >
                   <SvgSearch className="icon rel text-[18px] text-white ml-[5px]" />
                 </div>
-              </>
+              </div>
             }
           ></Input>
           <span className="abs icon-down">
             <i className="fa fa-caret-down"></i>
           </span>
-          {showHot && (
-            <HotSearch
-              hotSearchSelected={hotSearchSelected}
-              keyword={keyword}
-            />
-          )}
+          <CSSTransition nodeRef={nodeRef} in={showHot} timeout={200} classNames="HotSearchTrans">
+            <div ref={nodeRef}>
+              {showHot && (
+                <HotSearch
+                  hotSearchSelected={hotSearchSelected}
+                  keyword={keyword}
+                />
+              )}
+            </div>
+          </CSSTransition>
+          {/* { && (
+            
+          )} */}
         </div>
         <div className="fx-1 search-btn flex">
           <Button

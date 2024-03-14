@@ -7,8 +7,8 @@ import { useTranslation } from "@/i18n/client";
 import { useEffect, useMemo, useState } from "react";
 import { api } from "@/service";
 import { Site } from "@/const";
-import { ProductCategoryFrontendShortRespDTO } from "@/service/goods";
-import { atom, useAtom } from "jotai";
+import { ProductCategoryFrontendGroupChannelRespDTO, ProductCategoryFrontendShortRespDTO } from "@/service/goods";
+import { atom, useAtom, useSetAtom } from "jotai";
 import { searchParamsAtom } from "../..";
 
 interface exProductCategoryFrontendShortRespDTO
@@ -22,6 +22,7 @@ interface SellerProps {
 }
 
 export const cateListAtom = atom<exProductCategoryFrontendShortRespDTO[]>([]);
+export const fastCatesAtom = atom<exProductCategoryFrontendShortRespDTO[]>([]);
 
 interface Props {
   onChange: ({}) => void;
@@ -31,6 +32,8 @@ const SellerCate = () => {
   const [rotate1, { toggle: rotate1Toggle }] = useToggle();
   const [rotate2, { toggle: rotate2Toggle }] = useToggle();
   const [categoryList, setCateAtom] = useAtom(cateListAtom);
+  const setFastCates = useSetAtom(fastCatesAtom);
+  
   const [seletParams, setSelectParams] = useAtom(searchParamsAtom);
   const { t } = useTranslation();
   const stationCode = useSite2Station();
@@ -94,6 +97,42 @@ const SellerCate = () => {
           })
         );
       });
+
+      // treeData.forEach((c, i) => {
+      //   let cate:ProductCategoryFrontendGroupChannelRespDTO[]=[]
+      //   const v = c.productCategoryFrontendShortRespDTOList
+      //   if (cate.length) {
+      //     const cateSet: Map<string, boolean> = new Map(
+      //       cate.map((v) => [
+      //         v.productCategoryFrontendId,
+      //         v.check
+      //       ])
+      //     )
+      //     cate = v.filter((item: CateItem) => {
+      //       if (cateSet.has(item.productCategoryFrontendId)) {
+      //         item.check = cateSet.get(item.productCategoryFrontendId)
+      //         return v
+      //       }
+      //     })
+      //     const newCate = v.filter((item: CateItem) => {
+      //       return !cateSet.has(item.productCategoryFrontendId)
+      //     })
+      //     if (newCate.length) {
+      //       cate = cate.concat(newCate)
+      //     }
+      //   } else {
+      //     let count = 0
+      //     cate = v.map((item: CateItem) => {
+      //       if (count < 8) {
+      //         item.check = true
+      //       }
+      //       count += 1
+      //       return item
+      //     })
+      //   }
+      //   fastCates[c.channel] = cate
+      // })
+
       // 特定channal=2的渠道数据
       setCateAtom(category[2]);
     }
