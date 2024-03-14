@@ -1,6 +1,10 @@
 import { useState } from "react";
 import "./Index.scss";
 import classNames from "classnames";
+import { useAtom } from "jotai";
+// import { fastCatesAtom } from "@/components/CKBSearch/component/SellerCate/Index";
+
+
 
 const SecondDrop = () => {
   const [hover, setHover] = useState(false);
@@ -10,7 +14,7 @@ const SecondDrop = () => {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      
+
     </div>
   );
 };

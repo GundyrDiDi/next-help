@@ -7,9 +7,13 @@ import { useTranslation } from "@/i18n/client";
 import { useEffect, useMemo, useState } from "react";
 import { api } from "@/service";
 import { Site } from "@/const";
-import { ProductCategoryFrontendGroupChannelRespDTO, ProductCategoryFrontendShortRespDTO } from "@/service/goods";
+import {
+  ProductCategoryFrontendGroupChannelRespDTO,
+  ProductCategoryFrontendShortRespDTO,
+} from "@/service/goods";
 import { atom, useAtom, useSetAtom } from "jotai";
 import { searchParamsAtom } from "../..";
+import { atomWithStorage } from "jotai/utils";
 
 interface exProductCategoryFrontendShortRespDTO
   extends ProductCategoryFrontendShortRespDTO {
@@ -21,8 +25,16 @@ interface SellerProps {
   key?: string;
 }
 
+interface widthCheckProductCategoryFrontendShortRespDTO
+  extends ProductCategoryFrontendShortRespDTO {
+  check?: boolean;
+  label?:string;
+}
+
 export const cateListAtom = atom<exProductCategoryFrontendShortRespDTO[]>([]);
-export const fastCatesAtom = atom<exProductCategoryFrontendShortRespDTO[]>([]);
+export const fastCatesAtom = atomWithStorage<
+  widthCheckProductCategoryFrontendShortRespDTO[]
+>("fastCates", []);
 
 interface Props {
   onChange: ({}) => void;
@@ -32,8 +44,8 @@ const SellerCate = () => {
   const [rotate1, { toggle: rotate1Toggle }] = useToggle();
   const [rotate2, { toggle: rotate2Toggle }] = useToggle();
   const [categoryList, setCateAtom] = useAtom(cateListAtom);
-  const setFastCates = useSetAtom(fastCatesAtom);
-  
+  const [fastCates, setFastCates] = useAtom(fastCatesAtom);
+
   const [seletParams, setSelectParams] = useAtom(searchParamsAtom);
   const { t } = useTranslation();
   const stationCode = useSite2Station();
@@ -57,7 +69,8 @@ const SellerCate = () => {
   const showDrapText2 = useMemo(() => {
     const cate = categoryList?.find(
       (i) =>
-        String(i.productCategoryFrontendId)=== seletParams.productCategoryFrontendId
+        String(i.productCategoryFrontendId) ===
+        seletParams.productCategoryFrontendId
     );
     return (
       {
@@ -81,7 +94,7 @@ const SellerCate = () => {
             cateNameKr: t("类目"),
             cateNameEn: t("类目"),
             label: t("类目"),
-            productCategoryFrontendId:'' ,
+            productCategoryFrontendId: "",
           } as any,
         ].concat(
           v.productCategoryFrontendShortRespDTOList?.map((i) => {
@@ -97,49 +110,58 @@ const SellerCate = () => {
           })
         );
       });
+      const v: widthCheckProductCategoryFrontendShortRespDTO[] =
+        treeData.find((i) => i.channel === 2)
+          ?.productCategoryFrontendShortRespDTOList || [];
+      let cate: widthCheckProductCategoryFrontendShortRespDTO[] =
+        fastCates || [];
+      if (cate.length) {
+        const cateSet: Map<number, boolean> = new Map(
+          cate.map((v) => [v.productCategoryFrontendId!, v.check!])
+        );
+        cate = v?.filter((item) => {
+          if (cateSet.has(item.productCategoryFrontendId!)) {
+            item.check = cateSet.get(item.productCategoryFrontendId!);
+            return v;
+          }
+        });
+        const newCate = v.filter((item) => {
+          return !cateSet.has(item.productCategoryFrontendId!);
+        });
+        if (newCate.length) {
+          cate = cate.concat(newCate);
+        }
+      } else {
+        let count = 0;
+        cate = v.map((item) => {
+          if (count < 8) {
+            item.check = true;
+          }
+          count += 1;
+          return item;
+        });
+      }
 
-      // treeData.forEach((c, i) => {
-      //   let cate:ProductCategoryFrontendGroupChannelRespDTO[]=[]
-      //   const v = c.productCategoryFrontendShortRespDTOList
-      //   if (cate.length) {
-      //     const cateSet: Map<string, boolean> = new Map(
-      //       cate.map((v) => [
-      //         v.productCategoryFrontendId,
-      //         v.check
-      //       ])
-      //     )
-      //     cate = v.filter((item: CateItem) => {
-      //       if (cateSet.has(item.productCategoryFrontendId)) {
-      //         item.check = cateSet.get(item.productCategoryFrontendId)
-      //         return v
-      //       }
-      //     })
-      //     const newCate = v.filter((item: CateItem) => {
-      //       return !cateSet.has(item.productCategoryFrontendId)
-      //     })
-      //     if (newCate.length) {
-      //       cate = cate.concat(newCate)
-      //     }
-      //   } else {
-      //     let count = 0
-      //     cate = v.map((item: CateItem) => {
-      //       if (count < 8) {
-      //         item.check = true
-      //       }
-      //       count += 1
-      //       return item
-      //     })
-      //   }
-      //   fastCates[c.channel] = cate
-      // })
-
-      // 特定channal=2的渠道数据
+      // TODO:特定channal=2的渠道数据
+      setFastCates(cate.map((item) => {
+        return {
+          ...item,
+          label:{
+            [Site.JA]: item?.cateNameJp,
+            [Site.KO]: item?.cateNameKr,
+            [Site.EN]: item?.cateNameEn,
+          }[stationCode] || item?.cateNameJp
+        }
+      }));
       setCateAtom(category[2]);
     }
   }, []);
 
   const seller = useMemo(() => {
-    return menu1Items.find((i) => i.key === seletParams.platformType)||menu1Items[0];
+    return (
+      menu1Items.find((i) => i.key === seletParams.platformType) ||
+      menu1Items[0]
+    );
   }, [menu1Items, seletParams.platformType]);
 
   return (
@@ -153,12 +175,12 @@ const SellerCate = () => {
               label: (
                 <div
                   onClick={() => {
-                    setSelectParams((val)=>{
+                    setSelectParams((val) => {
                       return {
                         ...val,
-                        platformType:i.key
-                      }
-                    })
+                        platformType: i.key,
+                      };
+                    });
                   }}
                   className="drop-item"
                 >
@@ -197,8 +219,10 @@ const SellerCate = () => {
                     setSelectParams((val) => {
                       return {
                         ...val,
-                        productCategoryFrontendId: i.productCategoryFrontendId?String(i.productCategoryFrontendId):'',
-                        productCategoryFrontendIdNameZh:i.label??''
+                        productCategoryFrontendId: i.productCategoryFrontendId
+                          ? String(i.productCategoryFrontendId)
+                          : "",
+                        productCategoryFrontendIdNameZh: i.label ?? "",
                       };
                     });
                   }}
