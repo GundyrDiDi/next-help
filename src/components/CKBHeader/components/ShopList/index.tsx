@@ -68,10 +68,7 @@ const ShopList = ({
                         onClick={() => {
                             window.localStorage.setItem(
                                 'production_route/curShop',
-                                JSON.stringify({
-                                    val: item.customerShopId,
-                                    expire: null
-                                })
+                                String(item.customerShopId)
                             );
                             window.location.reload();
                         }}

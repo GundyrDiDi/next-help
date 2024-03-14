@@ -9,7 +9,7 @@ type Props = {
 
 /** 获取数据 */
 const getData=async (frogArticleId:number)=>{
-  const article = await fetch(`${process.env.NEXT_THE_CKB_API_URL}/customer/frog/article/detail?frogArticleId=${frogArticleId}`).then(res=>res.json())
+  const article = await fetch(`${process.env.NEXT_PUBLIC_THE_CKB_API_URL}/customer/frog/article/detail?frogArticleId=${frogArticleId}`).then(res=>res.json())
   return article.data as FrogArticleDetailRespDTO
 }
 

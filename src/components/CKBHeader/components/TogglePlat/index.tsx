@@ -55,10 +55,7 @@ const TogglePlat = (props: TogglePlatProps) => {
         const fistShopId = res.data?.customerShopList?.[0].customerShopId;
         window.localStorage.setItem(
           "production_route/curShop",
-          JSON.stringify({
-            val: fistShopId,
-            expire: null,
-          })
+          String(fistShopId)
         );
         window.location.reload();
       }

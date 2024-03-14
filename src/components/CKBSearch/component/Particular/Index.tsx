@@ -92,15 +92,19 @@ const Particular = ({
     return list || [];
   }, [seletParams.platformType, t]);
 
-  const onFinish = (val: SearchParams) => {
-    console.log(val,'onFinish');
-    
-    handleSearch(val)
-  };
+  
+
+  const onFinishSearch=()=>{
+    handleSearch(form.getFieldsValue())
+  }
+
+  const onFinishJump=()=>{
+    handleJump(form.getFieldsValue())
+  }
 
   return (
     <div className={classNames("content", lang)}>
-      <Form colon={false} form={form} onFinish={onFinish} onReset={()=>{
+      <Form colon={false} form={form}  onReset={()=>{
         setKeyword('')
       }}>
         <div className="flex">
@@ -163,7 +167,7 @@ const Particular = ({
           </FormItem>
         )}
         <Flex gap="small" wrap="wrap" justify="flex-end">
-          <Button htmlType="submit" type="primary" className="search-btn">
+          <Button onClick={onFinishSearch} type="primary" className="search-btn">
             <div className="flex items-center">
               <img
                 src="https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/search.png"
@@ -172,7 +176,7 @@ const Particular = ({
               {t("站内搜索")}
             </div>
           </Button>
-          <Button type="primary" className="search-btn">
+          <Button onClick={onFinishJump} type="primary" className="search-btn">
             <div className="flex items-center">
               <img
                 src="https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/sqire.png"
