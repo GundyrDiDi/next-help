@@ -20,6 +20,7 @@ import CKBSearch from "@/components/CKBSearch";
 import { TokenSignCookie } from "@/config";
 import { useAsyncEffect, useRequest } from "ahooks";
 import { api } from "@/service";
+import CKBCategory from "@/components/CKBCategory/Index";
 
 interface Props {
   children: React.ReactNode;
@@ -172,6 +173,7 @@ export default function Layout({
     <ConfigProvider locale={locale} theme={getThemeStyle()}>
       <CKBHeader plat={plat} />
       <CKBSearch />
+      <CKBCategory/>
       <FloatToolbar />
       {children}
       <CKBFooter lang={lang} plat={plat} />

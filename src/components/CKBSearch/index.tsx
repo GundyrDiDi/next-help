@@ -67,7 +67,7 @@ const CKBSearch = () => {
   // 关键词
   const [keyword, setKeyword] = useState("");
   // 热词展示
-  const [showHot, setShowHot] = useState(true);
+  const [showHot, setShowHot] = useState(false);
   // 语言搜索
   const [langType, setLangType] = useState(getSearchLangType(lang));
   // 上传input-dom
