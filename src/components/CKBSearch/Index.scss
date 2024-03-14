@@ -247,11 +247,14 @@
     border-radius: 8px;
     padding: 2px 4px;
     font-size: 12px;
+    display: flex;
+    align-items: center;
   }
 }
 
-:global(.el-popover.particular) {
+.el-popover.particular{
   border-radius: 12px;
+
 }
 
 .ico-btn {

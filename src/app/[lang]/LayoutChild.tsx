@@ -3,8 +3,8 @@ import { useCallback, useEffect, useState } from "react";
 import ja_JP from "antd/locale/ja_JP";
 import ko_KR from "antd/locale/ko_KR";
 import en_GB from "antd/locale/en_GB";
-import { CustomerDetail, Lang, LoadAtom } from "@/model";
-import { useAtom } from "jotai";
+import { CustomerDetail, Lang, LoadAtom, MessageAtom } from "@/model";
+import { useAtom, useSetAtom } from "jotai";
 import { ConfigProvider, Spin } from "antd";
 import { ThemeConfig } from "antd/lib/config-provider";
 import CKBFooter from "@/components/CKBFooter";
@@ -17,6 +17,9 @@ import { getCookiePlat } from "@/utils";
 import { togglePlat } from "@/config/request/interceptors";
 import { ENUM_SYSTEM_SOURCE } from "@/const/enum";
 import CKBSearch from "@/components/CKBSearch";
+import { TokenSignCookie } from "@/config";
+import { useAsyncEffect, useRequest } from "ahooks";
+import { api } from "@/service";
 
 interface Props {
   children: React.ReactNode;
@@ -33,15 +36,24 @@ export default function Layout({
 }: Props) {
   const [customerDetail, requestCustomerDetail] = useAtom(CustomerDetail);
   const [curLang, setCurLang] = useAtom(Lang);
-  const [loading]=useAtom(LoadAtom)
-
+  const setMessages=useSetAtom(MessageAtom)
   const [plat, setPlat] = useAtom(platAtom);
-
   const systemSource = customerDetail?.systemSource;
 
-  useEffect(() => {
+  const {runAsync:getCurrentCartList}=useRequest(api.order.cart.getCurrentCartList,{manual:true})
+
+  useAsyncEffect( async() => {
     if (!runsOnServerSide) {
-      requestCustomerDetail();
+      if(TokenSignCookie){
+       await requestCustomerDetail();
+       const res= await getCurrentCartList()
+       setMessages((val)=>{
+       return {
+        ...val,
+        carNum:res.data?.cartSummary?.sumCartProductQuantity??0
+       }
+       })
+      }
       setPlat(getCookiePlat);
       setCurLang(lang);
     } else {
@@ -157,7 +169,6 @@ export default function Layout({
   }, [systemSource]);
 
   return (
-    <Spin spinning={loading}>
     <ConfigProvider locale={locale} theme={getThemeStyle()}>
       <CKBHeader plat={plat} />
       <CKBSearch />
@@ -165,6 +176,5 @@ export default function Layout({
       {children}
       <CKBFooter lang={lang} plat={plat} />
     </ConfigProvider>
-    </Spin>
   );
 }
