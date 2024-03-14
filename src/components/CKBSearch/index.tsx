@@ -140,11 +140,12 @@ const CKBSearch = () => {
         ...other
       )
     }
-    if (['1', '3', '4'].includes(langType)) {
+  debugger
+    if (['1', '3', '4'].includes(langType)&&keyword.trim()) {
       const formData = {
         from: lang,
         to: 'zh',
-        text: keyword
+        text: keyword||""
       }
      const res=  await api.goods.translate.common(formData);
         if (res.code === '0') {
