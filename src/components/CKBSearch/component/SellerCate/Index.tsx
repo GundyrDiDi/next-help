@@ -8,6 +8,7 @@ import { useEffect, useMemo, useState } from "react";
 import { api } from "@/service";
 import { Site } from "@/const";
 import { ProductCategoryFrontendShortRespDTO } from "@/service/goods";
+import { atom, useAtom } from "jotai";
 
 interface exProductCategoryFrontendShortRespDTO
   extends ProductCategoryFrontendShortRespDTO {
@@ -19,9 +20,12 @@ interface SellerProps {
   key?: string;
 }
 
+export const cateListAtom=atom<exProductCategoryFrontendShortRespDTO[]>([])
+
 const SellerCate = () => {
   const [rotate1, { toggle: rotate1Toggle }] = useToggle();
   const [rotate2, { toggle: rotate2Toggle }] = useToggle();
+  const [categoryList,setCateAtom]=useAtom(cateListAtom)
   const { t } = useTranslation();
   const stationCode = useSite2Station();
   // 渠道选择
@@ -32,9 +36,9 @@ const SellerCate = () => {
     { manual: true }
   );
   // 分类列表
-  const [categoryList, setcCategoryList] = useState<
-    exProductCategoryFrontendShortRespDTO[]
-  >([]);
+  // const [categoryList, setcCategoryList] = useState<
+  //   exProductCategoryFrontendShortRespDTO[]
+  // >([]);
   // 分类ID
   const [productCategoryFrontendId, setProductCategoryFrontendId] =
     useState<number>(-1);
@@ -91,9 +95,9 @@ const SellerCate = () => {
         );
       });
       console.log(category[2], "category[2]");
-
+      setCateAtom(category[2])
       // 暂时写死(透明购)
-      setcCategoryList(category[2]);
+      // setcCategoryList(category[2]);
     }
     setSeller(menu1Items[0]);
   }, []);

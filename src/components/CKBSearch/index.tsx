@@ -1,4 +1,4 @@
-import { Input, Popover, Select, Space, Spin } from "antd";
+import { Form, Input, Popover, Select, Space, Spin } from "antd";
 import "./Index.scss";
 import classNames from "classnames";
 import { ChangeEvent, useRef, useState } from "react";
@@ -134,8 +134,8 @@ const CKBSearch = () => {
                     onChange={choosePic}
                   />
                 </label>
-                <Popover placement="bottom" content={
-                  <Particular keyword={keyword} handleSearch={handleSearch} handleJump={handleJump}/>
+                <Popover open placement="bottom"  content={
+                  <Particular setKeyword={setKeyword} keyword={keyword} handleSearch={handleSearch} handleJump={handleJump}/>
                 }>
                 <div className="pl-[10px] pr-[10px]">
                   <i className="iconfont icon-search_filter1 ico-btn text-[14px] cursor-pointer" ></i>

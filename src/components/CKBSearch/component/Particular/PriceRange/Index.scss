@@ -1,0 +1,50 @@
+.el-input {
+  width: auto;
+
+  input {
+    width: 81px;
+    text-align: center;
+    font-size: 12px;
+    padding: 3px 20px 3px 10px;
+  }
+
+  :deep(.el-input__suffix) {
+    right: 5px;
+  }
+}
+
+[small] {
+  :deep(input) {
+    height: 28px;
+    width: 70px;
+  }
+
+  :deep(.el-input__suffix) {
+    right: 7px;
+    top: -2px;
+  }
+}
+
+.dash {
+  display: inline-block;
+  height: 1px;
+  width: 8px;
+  transform: scaleY(1);
+  background: #666;
+  border-radius: 1px;
+  margin: 0 4px;
+}
+
+.curret {
+  font-size: 12px;
+  color: #aaa;
+  z-index: 1;
+}
+.en{
+  :deep(.el-input__suffix){
+    right:-34px;
+  }
+  .dash{
+    margin: 0 7px 0 40px;
+  }
+}
