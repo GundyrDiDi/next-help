@@ -158,7 +158,7 @@ const SellerCate = () => {
                     setSelectParams((val) => {
                       return {
                         ...val,
-                        productCategoryFrontendId: String(i.productCategoryFrontendId),
+                        productCategoryFrontendId: i.productCategoryFrontendId?String(i.productCategoryFrontendId):'',
                         productCategoryFrontendIdNameZh:i.label??''
                       };
                     });

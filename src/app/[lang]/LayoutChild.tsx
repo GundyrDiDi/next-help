@@ -13,7 +13,7 @@ import FloatToolbar from "@/components/FloatToolbar";
 import { Local } from "@/i18n/settings";
 import { LocalContext, runsOnServerSide } from "@/i18n/client";
 import platAtom from "@/model/Plat";
-import { getCookiePlat } from "@/utils";
+import { getCookiePlat, getCookieToken } from "@/utils";
 import { togglePlat } from "@/config/request/interceptors";
 import { ENUM_SYSTEM_SOURCE } from "@/const/enum";
 import CKBSearch from "@/components/CKBSearch";
@@ -44,7 +44,7 @@ export default function Layout({
 
   useAsyncEffect( async() => {
     if (!runsOnServerSide) {
-      if(TokenSignCookie){
+      if(getCookieToken){
        await requestCustomerDetail();
        const res= await getCurrentCartList()
        setMessages((val)=>{

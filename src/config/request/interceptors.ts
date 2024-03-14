@@ -58,7 +58,7 @@ apiInstanceList.forEach((item) => {
         if (token) {
             config.headers['X-Authtoken'] = token;
         }
-        if (shopId&&!config.url?.includes('getCustomerDetails')) {
+        if (shopId&&!config.url?.includes('getCustomerDetails')&&token) {
             config.headers['X-Authshopid'] = shopId;
         }
         if(stationCode){

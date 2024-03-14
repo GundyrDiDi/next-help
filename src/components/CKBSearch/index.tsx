@@ -11,7 +11,7 @@ import {
 import "./Index.scss";
 import classNames from "classnames";
 import { ChangeEvent, MutableRefObject, useRef, useState } from "react";
-import { atom, useAtom, useAtomValue } from "jotai";
+import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useTranslation } from "@/i18n/client";
 import {
   SearchLangType,
@@ -22,7 +22,7 @@ import {
 import { Lang, MessageAtom } from "@/model";
 import { useSite2Station } from "@/utils/language";
 import { SvgOutLink, SvgSearch } from "../svgs";
-import SellerCate from "./component/SellerCate/Index";
+import SellerCate, { cateListAtom } from "./component/SellerCate/Index";
 import { Site } from "@/const";
 import { isLogin } from "@/utils";
 import { toLogin, toTheCkb } from "@/utils/router";
@@ -33,6 +33,8 @@ import Particular, { SearchParams } from "./component/Particular/Index";
 import { isUrl } from "@/utils/util";
 import queryString from "query-string";
 import gbk from "gbk-encode";
+import HotSearch from "./component/HotSearch/Index";
+import { CustomerSearchKeywordHotRespDTO } from "@/service/goods";
 const { encode } = gbk;
 export interface SelectParams {
   // 频道
@@ -54,16 +56,18 @@ const CKBSearch = () => {
   const [lang] = useAtom(Lang);
   const stationCode = useSite2Station();
   const seletParams = useAtomValue(searchParamsAtom);
-  const messages=useAtomValue(MessageAtom);
+  const messages = useAtomValue(MessageAtom);
   const PopoverRef1 = useRef<any>(null);
   const InputRef = useRef<any>(null);
+  const setSelectParams = useSetAtom(searchParamsAtom);
+  const [categoryList] = useAtom(cateListAtom);
 
   // 空词输入框触发效果
   const [nullTrigger, setNullTrigger] = useState(false);
   // 关键词
   const [keyword, setKeyword] = useState("");
   // 热词展示
-  const [showHot, setShowHot] = useState(false);
+  const [showHot, setShowHot] = useState(true);
   // 语言搜索
   const [langType, setLangType] = useState(getSearchLangType(lang));
   // 上传input-dom
@@ -234,12 +238,37 @@ const CKBSearch = () => {
     // }
   };
 
-  const gotoCar=()=>{
-    if(isLogin()) return toLogin()
-    toTheCkb(`${lang}/shopcart`)
+  // 去购物车
+  const gotoCar = () => {
+    if (isLogin()) return toLogin();
+    toTheCkb(`${lang}/shopcart`);
+  };
 
-  }
+  // 热词选择
+  const hotSearchSelected = (
+    keyword: string,
+    item?: CustomerSearchKeywordHotRespDTO
+  ) => {
+    console.log(keyword,'keyword');
+    
+    setKeyword(keyword);
+    if (!item) {
+      handleSearch();
+    } else {
+      const cate = categoryList.find((v) => v.cateNameZh === item.cateNameZh);
+      setSelectParams((val) => {
+        return {
+          ...val,
+          productCategoryFrontendId: cate?.productCategoryFrontendId
+            ? String(cate?.productCategoryFrontendId)
+            : "",
+          productCategoryFrontendIdNameZh: cate?.cateNameZh ?? "",
+        };
+      });
+    }
+    setShowHot(false);
 
+  };
   return (
     <div id="search">
       <div className="flex viewport flex-center">
@@ -272,7 +301,9 @@ const CKBSearch = () => {
               setShowHot(true);
             }}
             onBlur={() => {
-              setShowHot(false);
+              setTimeout(()=>{
+                setShowHot(false);
+              },100)
             }}
             suffix={
               <>
@@ -318,6 +349,12 @@ const CKBSearch = () => {
           <span className="abs icon-down">
             <i className="fa fa-caret-down"></i>
           </span>
+          {showHot && (
+            <HotSearch
+              hotSearchSelected={hotSearchSelected}
+              keyword={keyword}
+            />
+          )}
         </div>
         <div className="fx-1 search-btn flex">
           <Button
@@ -333,11 +370,17 @@ const CKBSearch = () => {
               <span id="guideText">{t("站外搜索")}</span>
             </div>
           </Button>
-          <Button className="rel ml-[30px] custom-plain flex items-center" onClick={gotoCar}>
-            <span className="iconfont icon-gouwuche text-[15px] mr-[4px] inline-block align-bottom">
-            </span>
-            { t('购物车') }
-            {!!messages?.carNum&&<span  className="abs cart-num " v-show="num !== 0">{messages?.carNum > 99 ? '99+' : messages?.carNum }</span>}
+          <Button
+            className="rel ml-[30px] custom-plain flex items-center"
+            onClick={gotoCar}
+          >
+            <span className="iconfont icon-gouwuche text-[15px] mr-[4px] inline-block align-bottom"></span>
+            {t("购物车")}
+            {!!messages?.carNum && (
+              <span className="abs cart-num " v-show="num !== 0">
+                {messages?.carNum > 99 ? "99+" : messages?.carNum}
+              </span>
+            )}
           </Button>
         </div>
       </div>
