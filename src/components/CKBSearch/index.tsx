@@ -35,6 +35,7 @@ import queryString from "query-string";
 import gbk from "gbk-encode";
 import HotSearch from "./component/HotSearch/Index";
 import { CustomerSearchKeywordHotRespDTO } from "@/service/goods";
+
 const { encode } = gbk;
 export interface SelectParams {
   // 频道
