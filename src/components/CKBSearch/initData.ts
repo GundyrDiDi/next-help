@@ -191,3 +191,11 @@ export const externalLinks:any= {
   'TM': 'https://list.tmall.com/search_product.htm?',
   'AM': 'https://s.1688.com/selloffer/offer_search.htm?'
 }
+
+
+export const menu1Items = [
+  { label: "采购来源", key: "" },
+  { label: "1688", key: "AM" },
+  { label: "淘宝", key: "TB" },
+  { label: "Tmall", key: "TM" },
+];

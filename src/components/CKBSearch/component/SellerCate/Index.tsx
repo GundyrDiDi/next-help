@@ -20,12 +20,12 @@ interface exProductCategoryFrontendShortRespDTO
   label?: string;
 }
 
-interface SellerProps {
+export interface SellerProps {
   label?: string;
   key?: string;
 }
 
-interface widthCheckProductCategoryFrontendShortRespDTO
+export interface widthCheckProductCategoryFrontendShortRespDTO
   extends ProductCategoryFrontendShortRespDTO {
   check?: boolean;
   label?:string;

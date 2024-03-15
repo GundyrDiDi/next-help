@@ -8,7 +8,7 @@ import { cateListAtom } from "../SellerCate/Index";
 import PriceRange, { PriceRangType } from "./PriceRange/Index";
 import "./Index.scss";
 import { useEffect, useMemo } from "react";
-import { otherData, sortData } from "../../initData";
+import { menu1Items, otherData, sortData } from "../../initData";
 import { searchParamsAtom } from "../..";
 
 export interface SearchParams {
@@ -54,12 +54,7 @@ const Particular = ({
   //   form
   // );
 
-  const menu1Items = [
-    { label: t("采购来源"), key: "" },
-    { label: "1688", key: "AM" },
-    { label: t("淘宝"), key: "TB" },
-    { label: "Tmall", key: "TM" },
-  ];
+
 
   const sortTypes: SortProps[] = useMemo(() => {
     const list = sortData[seletParams.platformType] || [
@@ -115,7 +110,7 @@ const Particular = ({
           >
             <Select
               options={menu1Items.map((i) => {
-                return { ...i, value: i.key };
+                return { label:t(i.label), value: i.key };
               })}
               className="plat"
               // value={seletParams.platformType}
