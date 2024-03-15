@@ -1,24 +1,31 @@
-import { SellerProps } from "@/components/CKBSearch/component/SellerCate/Index";
+import {
+  SellerProps,
+  mergeDataSell,
+  widthCheckProductCategoryFrontendShortRespDTO,
+} from "@/components/CKBSearch/component/SellerCate/Index";
 import classNames from "classnames";
 import { useRef, useState } from "react";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import "./Index.scss";
 
 interface Props {
-  children?: React.ReactNode;
-  options?: SellerProps[];
-  itemChilren?: (item: SellerProps) => React.ReactNode;
+  value?: widthCheckProductCategoryFrontendShortRespDTO;
+  options?: mergeDataSell[];
+  itemChilren?: (item: mergeDataSell) => React.ReactNode;
 }
-const ThirdDrop = ({ children, options, itemChilren }: Props) => {
+const ThirdDrop = ({ value, options, itemChilren }: Props) => {
   const [hover, setHover] = useState<boolean>(false);
   const divRef = useRef<HTMLDivElement>(null);
   return (
     <div
-      className={classNames("dropdown cate-dropdown rel", { active: hover })}
+      className={classNames("dropdown1 cate-dropdown rel btn second-item", {
+        active: hover,
+      })}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      <div className="flex-ter-bwn btn line--only">
-        {children}
+      <div className="flex-ter-bwn btn  option-item">
+        <div className="line--only">{value?.label}</div>
         <i className="ml-5 fa fa-caret-right"></i>
       </div>
       <CSSTransition
@@ -27,9 +34,9 @@ const ThirdDrop = ({ children, options, itemChilren }: Props) => {
         classNames="fade"
         timeout={100}
       >
-        <div ref={divRef} className="abs dropdown-menu online">
-          {options?.map((i) => {
-            return <div key={i.key}>{itemChilren && itemChilren(i)}</div>;
+        <div hidden={!hover} ref={divRef} className="abs dropdown-menu1 online">
+          {value?.children?.map((i) => {
+            return <div key={i.productCategoryFrontendId}>{itemChilren && itemChilren(i)}</div>;
           })}
         </div>
       </CSSTransition>

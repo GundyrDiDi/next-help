@@ -28,8 +28,12 @@ export interface SellerProps {
 export interface widthCheckProductCategoryFrontendShortRespDTO
   extends ProductCategoryFrontendShortRespDTO {
   check?: boolean;
-  label?:string;
+  label?: string;
 }
+
+export type mergeDataSell =
+  | SellerProps
+  | widthCheckProductCategoryFrontendShortRespDTO;
 
 export const cateListAtom = atom<exProductCategoryFrontendShortRespDTO[]>([]);
 export const fastCatesAtom = atomWithStorage<
@@ -142,17 +146,29 @@ const SellerCate = () => {
         });
       }
 
-      // TODO:特定channal=2的渠道数据
-      setFastCates(cate.map((item) => {
-        return {
-          ...item,
-          label:{
-            [Site.JA]: item?.cateNameJp,
-            [Site.KO]: item?.cateNameKr,
-            [Site.EN]: item?.cateNameEn,
-          }[stationCode] || item?.cateNameJp
+      const transformData = (
+        data: widthCheckProductCategoryFrontendShortRespDTO[] = []
+      ): widthCheckProductCategoryFrontendShortRespDTO[] => {
+        if (!data.length) {
+          return [];
+        } else {
+          return data.map((item) => {
+            return {
+              ...item,
+              label:
+                {
+                  [Site.JA]: item?.cateNameJp,
+                  [Site.KO]: item?.cateNameKr,
+                  [Site.EN]: item?.cateNameEn,
+                }[stationCode] || item?.cateNameJp,
+              children: transformData(item.children ?? []),
+            };
+          });
         }
-      }));
+      };
+
+      // TODO:特定channal=2的渠道数据
+      setFastCates(transformData(cate));
       setCateAtom(category[2]);
     }
   }, []);
