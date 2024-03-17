@@ -50,7 +50,7 @@ const MyPopover = () => {
         content={dragContent}
         placement="bottomRight"
       >
-        <span className="btn pl-[15px]  translate-x-[15px] text-center cursor-pointer">
+        <span className="btn pl-[15px]  translate-x-[20px] text-center cursor-pointer">
           <i className="fa fa-bars"></i>
         </span>
       </Popover>
