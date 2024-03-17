@@ -20,7 +20,7 @@
 
 .second-drop {
   &::before {
-    content: '';
+    content: "";
     display: flex;
     position: absolute;
     left: -0.5%;
@@ -42,7 +42,7 @@
   .second-item {
     width: 100%;
     white-space: nowrap;
-    padding: 12px 10px;
+    // padding: 12px 10px;
     font-weight: 500;
 
     &:hover {
@@ -73,7 +73,7 @@
   margin-right: -20px;
 
   &::before {
-    content: '';
+    content: "";
     display: flex;
     position: absolute;
     left: -0.5%;
@@ -85,7 +85,7 @@
   }
 
   &::after {
-    content: '';
+    content: "";
     display: flex;
     position: absolute;
     left: 100%;
@@ -111,4 +111,9 @@
   font-weight: 600;
   padding: 8px 0;
   border-bottom: 1px solid #eee;
+}
+
+.ant-switch.ant-switch-checked {
+  border-color: rgb(229, 229, 229);
+  background-color: rgb(229, 229, 229);
 }

@@ -18,13 +18,13 @@ const ThirdDrop = ({ value, options, itemChilren }: Props) => {
   const divRef = useRef<HTMLDivElement>(null);
   return (
     <div
-      className={classNames("dropdown1 cate-dropdown rel btn second-item", {
+      className={classNames("dropdown1 cate-dropdown rel btn second-item w-[100%]", {
         active: hover,
       })}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      <div className="flex-ter-bwn btn  option-item">
+      <div className="flex-ter-bwn btn  option-item w-[100%] cursor-pointer">
         <div className="line--only">{value?.label}</div>
         <i className="ml-5 fa fa-caret-right"></i>
       </div>

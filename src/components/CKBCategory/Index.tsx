@@ -10,16 +10,24 @@ import "./Index.scss";
 import { createRef, useMemo } from "react";
 import { menu1Items } from "../CKBSearch/initData";
 import { searchParamsAtom } from "../CKBSearch";
-import { useSite2Station } from "@/utils/language";
+import { lang, useSite2Station } from "@/utils/language";
 import { Site } from "@/const";
 import ThirdDrop from "./components/ThirdDrop/Index";
 import { t } from "i18next";
 import { useTranslation } from "@/i18n/client";
+import { toTheCkb } from "@/utils/router";
+import MySwitch from "./components/MySwitch/Index";
+import { useToggle } from "ahooks";
+import { Switch } from "antd";
 
 const CKBCategory = () => {
   const fastCates = useAtomValue(fastCatesAtom);
   const [seletParams, setSelectParams] = useAtom(searchParamsAtom);
+  const selectParams=useAtomValue(searchParamsAtom)
   const { t } = useTranslation();
+  // 站内站外搜素
+  const [state, { toggle, }] = useToggle(false);
+
   const firstList: any = useMemo(() => {
     return menu1Items.map((i) => {
       return {
@@ -39,7 +47,7 @@ const CKBCategory = () => {
         nodeRef: createRef<HTMLDivElement>(),
       };
     })
-    .filter((i) => i.check).slice(0,1);
+    .filter((i) => i.check);
 
   const changeParams = (i: SellerProps) => {
     setSelectParams((val) => {
@@ -49,8 +57,15 @@ const CKBCategory = () => {
       };
     });
   };
+  //跳转列表
+  const jump = (i: widthCheckProductCategoryFrontendShortRespDTO) => {
+    if(state){
 
-  const jump = (i: any) => {};
+    }
+    toTheCkb(
+      `${lang}/list?productCategoryFrontendId=${i.productCategoryFrontendId}&schannel=2&platformType=${selectParams.platformType}`
+    );
+  };
 
   return (
     <div id="category" className="flex-cen category bt-lg-shadow">
@@ -65,6 +80,7 @@ const CKBCategory = () => {
             return (
               <CSSTransition key={i.productCategoryFrontendId} timeout={200}>
                 <SecondDrop
+                className="second-drop flex-1"
                   ref={i.nodeRef}
                   options={i.children}
                   itemChilren={(
@@ -77,7 +93,7 @@ const CKBCategory = () => {
                           options={j.children}
                           itemChilren={(third) => (
                             <div
-                              className="flex line--only third-item"
+                              className="flex line--only third-item cursor-pointer"
                               onClick={() => jump(third)}
                             >
                               {third.label}
@@ -89,7 +105,7 @@ const CKBCategory = () => {
 
                     return (
                       <div
-                        className="flex line--only btn option-item"
+                        className="flex line--only btn option-item cursor-pointer"
                         onClick={() => jump(j)}
                       >
                         {j?.label}
@@ -102,6 +118,10 @@ const CKBCategory = () => {
               </CSSTransition>
             );
           })}
+        </div>
+        <div className="btn rel toggle line--only flex items-center ">
+          <span className="mr-[4px]">{t('站外搜索')}</span>
+          <Switch value={state} onChange={toggle} checkedChildren="I" unCheckedChildren="O"/>
         </div>
       </div>
     </div>
