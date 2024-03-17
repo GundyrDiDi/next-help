@@ -29,6 +29,7 @@ export interface widthCheckProductCategoryFrontendShortRespDTO
   extends ProductCategoryFrontendShortRespDTO {
   check?: boolean;
   label?: string;
+  id?: number;
 }
 
 export type mergeDataSell =
@@ -155,6 +156,7 @@ const SellerCate = () => {
           return data.map((item) => {
             return {
               ...item,
+              id: item.productCategoryFrontendId,
               label:
                 {
                   [Site.JA]: item?.cateNameJp,

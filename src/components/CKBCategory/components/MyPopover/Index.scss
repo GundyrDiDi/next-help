@@ -1,0 +1,46 @@
+.MyPopover{
+ 
+}
+
+.list-item {
+  display: flex;
+  padding: 10px 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.02);
+
+  &:active {
+    box-shadow: 1px 0 2px rgba(0, 0, 0, 0.15);
+  }
+
+  .handle {
+    margin-right: 10px;
+    cursor: move;
+  }
+
+  .btn.check {
+    color: #333;
+
+    i {
+      color: var(--fcolor);
+    }
+  }
+}
+
+// .check-icon {
+//   font-size: 16px;
+// }
+.btm-tip {
+  padding: 5px 15px;
+  font-size: 12px;
+  color: #aaa;
+}
+ 
+.ant-popover .ant-popover-inner{
+  padding: 0;
+}
+
+.tip {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}

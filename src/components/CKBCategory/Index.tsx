@@ -19,6 +19,7 @@ import { toTheCkb } from "@/utils/router";
 import MySwitch from "./components/MySwitch/Index";
 import { useToggle } from "ahooks";
 import { Switch } from "antd";
+import MyPopover from "./components/MyPopover/Index";
 
 const CKBCategory = () => {
   const fastCates = useAtomValue(fastCatesAtom);
@@ -123,6 +124,7 @@ const CKBCategory = () => {
           <span className="mr-[4px]">{t('站外搜索')}</span>
           <Switch value={state} onChange={toggle} checkedChildren="I" unCheckedChildren="O"/>
         </div>
+        <MyPopover/>
       </div>
     </div>
   );

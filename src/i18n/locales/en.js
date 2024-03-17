@@ -988,7 +988,7 @@ const en={
   搜索: 'Search',
   最近加入的商品: 'Recently Added Products',
   选择你经常使用的功能: 'Adjust top menu structure',
-  最多可选择X个: 'Please select up to X items',
+  最多可选择X个: 'Please select up to {{X}} items',
   请选择你经常使用的类目: 'Please select your most frequently used categories',
   '欢迎来到THE CKB': 'Welcome to THE CKB System',
   会员等级: 'Membership Rank',
