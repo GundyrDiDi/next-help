@@ -4,12 +4,14 @@ import { atomCustomerDetail } from '@/model/CustomerDetail';
 import { siteMapMonetaryUnit, Site, countryCurrency } from '@/const';
 import { request } from '@/config/request';
 import { CustomerDetailRespDTO } from '@/service/customer';
+import { useSite2Station } from '@/utils/language';
 
 interface Props {
     customerDetail?: CustomerDetailRespDTO;
     setRate:  Dispatch<SetStateAction<number | undefined>>
     setFloatingRate: (val: number) => void;
     setFloatExchangeRate: (val: number) => void;
+    stationCode:Site
 }
 
 const reqRate = (
@@ -17,10 +19,10 @@ const reqRate = (
         customerDetail,
         setRate,
         setFloatingRate,
-        setFloatExchangeRate
+        setFloatExchangeRate,
+        stationCode
     }:Props
 ) => {
-    const stationCode = customerDetail?.stationCode;
     const mainCustomerId = customerDetail?.mainCustomerId;
     if (mainCustomerId) {
       request.settlement.exchangeRate.cnyToJpyExchangeRateAfterConfigFloat({
@@ -42,10 +44,8 @@ const reqRate = (
             }
         });
     } else {
-        const code = stationCode ?? localStorage.getItem('stationCode');
-        if (!code) return;
         request.settlement.exchangeRate.getOriginExchangeRate({
-            stationCode: code
+            stationCode
         }).then((res) => {
             // 英国站 美元比人民币高,后端给的7.14  1￥=7.14$
             // 后端的汇率逻辑 7.14￥=1$   1￥=200韩元  1￥ = 20日元
@@ -67,9 +67,8 @@ const reqRate = (
 
 export const useRate = () => {
     const [customerDetail] = useAtom(atomCustomerDetail);
-
+    const stationCode=useSite2Station()
     const rateInternitalRef = useRef<any>(null);
-
     /** 源汇率(银行查出来的) */
     const [rate, setRate] = useState<number>();
     /**  源汇率 + 浮动汇率  */
@@ -77,7 +76,7 @@ export const useRate = () => {
     /** 浮动汇率(我们配置的) */
     const [floatExchangeRate, setFloatExchangeRate] = useState<number>(1);
     useEffect(() => {
-        reqRate({customerDetail, setRate, setFloatingRate, setFloatExchangeRate});
+        reqRate({customerDetail, setRate, setFloatingRate, setFloatExchangeRate,stationCode});
         rateInternitalRef.current = setInterval(
             () => {
                 reqRate(
@@ -161,8 +160,8 @@ export const useRate = () => {
         }
         return 0.1;
     };
-    const getCountryCurrency = () => {
-        const currentSite = customerDetail?.stationCode ?? '';
+    const getCountryCurrency = (stationCode:Site) => {
+        const currentSite = customerDetail?.stationCode ??stationCode;
         const currentCountryCurrency = countryCurrency.get(currentSite);
         return currentCountryCurrency;
     };

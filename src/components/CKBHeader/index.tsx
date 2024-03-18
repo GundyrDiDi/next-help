@@ -10,7 +10,7 @@ import { request } from "@/config/request";
 import { formatTimeZone, getCookiePlat, isB2B, isLogin } from "@/utils";
 import { ENUM_PAGE, ENUM_SYSTEM_SOURCE } from "@/const/enum";
 import { getShopId } from "@/config/request/interceptors";
-import { Site, siteMapAreaName } from "@/const";
+import { Site, siteMapAreaName, useSite2Code } from "@/const";
 import { useRate } from "@/hooks/useRate";
 import UserDropDwon from "./components/UserDropDwon";
 import ShopList from "./components/ShopList";
@@ -37,8 +37,10 @@ const CKBHeader = ({ plat }: Props) => {
   }>({
     timer: null as unknown as NodeJS.Timer,
   });
+  const [lang] = useAtom(Lang);
   const { t } = useTranslation();
   const stationCode = useSite2Station();
+  const siteCode = useSite2Code(lang);
 
   const [date, setDate] = useState<string>();
   const [customerDetail] = useAtom(CustomerDetail);
@@ -47,7 +49,6 @@ const CKBHeader = ({ plat }: Props) => {
   const [cartNum, setCartNum] = useState<number>();
   const [site, setSite] = useState<string>();
   const membership = customerDetail?.membership;
-  const [lang] = useAtom(Lang);
   const systemSource =
     plat === "d2c" ? ENUM_SYSTEM_SOURCE.D2C : ENUM_SYSTEM_SOURCE.B2B;
   // 获取消息未读数量
@@ -119,7 +120,6 @@ const CKBHeader = ({ plat }: Props) => {
     // 英国站不展示
     return false;
   };
-  console.log(stationCode, stationCode === Site.JA, "stationCode");
 
   return (
     <div className="CKBHeader">
@@ -220,7 +220,6 @@ const CKBHeader = ({ plat }: Props) => {
                 />
                 <a
                   className="light hover:text-[color:--color-primary-light] cursor-pointer"
-                  href="javascript:;"
                   onClick={() => {
                     toTheCkb(`${lang}${ENUM_PAGE.LOGIN}`);
                   }}
@@ -230,7 +229,6 @@ const CKBHeader = ({ plat }: Props) => {
                 /
                 <a
                   className="light hover:text-[color:--color-primary-light] cursor-pointer"
-                  href="javascript:;"
                   onClick={() => {
                     toTheCkb(`${lang}${ENUM_PAGE.REGISTER}`);
                   }}
@@ -340,7 +338,7 @@ const CKBHeader = ({ plat }: Props) => {
                         padding: "0 8px 0 8px",
                       }}
                     >
-                      {`${timeRange} ${date}`}{" "}
+                      {`${timeRange} ${date}`}
                     </div>
                   </div>
                 }
@@ -365,7 +363,7 @@ const CKBHeader = ({ plat }: Props) => {
                     }}
                   >
                     <img
-                      src={`https://static-s.theckb.com/BusinessMarket/Client/country/flag_${stationCode}_tab.png`}
+                      src={`https://static-s.theckb.com/BusinessMarket/Client/country/flag_${siteCode}_tab.png`}
                       alt=""
                       width={20}
                       height={14}
@@ -374,7 +372,7 @@ const CKBHeader = ({ plat }: Props) => {
                       }}
                     />
                   </div>
-                  <span>{`CNY1=${getCountryCurrency()}${getRate(
+                  <span>{`CNY1=${getCountryCurrency(stationCode)}${getRate(
                     floatingRate ?? 0
                   )}`}</span>
                 </div>

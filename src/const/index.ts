@@ -1,3 +1,7 @@
+import { Local } from "@/i18n/settings";
+import { getLangType } from "@/model/Lang";
+import { getDefaultStore } from "jotai";
+
 /**
  * 国家及货币单位
  */
@@ -15,6 +19,8 @@ enum Site {
    */
   EN = 'UkStation'
 }
+
+
 
 /**
 * 站点对应的货币单位
@@ -206,6 +212,17 @@ enum TermType {
   regular = 'regular',
   /** OEM条款 */
   oem = 'oem'
+}
+
+const lang=getDefaultStore().get(getLangType)
+
+// 站点转JP KR GB
+export const useSite2Code = (site:Local) => {
+  return {
+  [Local.JA]: CountriesEnum.Japan,
+  [Local.KO]: CountriesEnum.Korea,
+    [Local.EN]: CountriesEnum.UK
+  }[site]
 }
 
 export {
