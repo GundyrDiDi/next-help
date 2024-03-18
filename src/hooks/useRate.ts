@@ -84,7 +84,8 @@ export const useRate = () => {
                     customerDetail,
                     setRate,
                     setFloatingRate,
-                    setFloatExchangeRate
+                    setFloatExchangeRate,
+                    stationCode
                     }
                 );
             },
@@ -96,7 +97,7 @@ export const useRate = () => {
                 clearInterval(rateInternitalRef.current);
             }
         };
-    }, [customerDetail]);
+    }, [customerDetail, stationCode]);
 
     const calc = (rmb: any) => {
         if (!floatingRate) return '***';

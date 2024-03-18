@@ -215,7 +215,7 @@ const CKBHeader = ({ plat }: Props) => {
                       ? "https://static-jp.theckb.com/static-asset/client/ckbuser.png?t=2024"
                       : "https://static-s.theckb.com/BusinessMarket/Client/ckbuser.png?t=2024"
                   }
-                  className="w-[16px] h-[16px] rounded-[50%]"
+                  className="w-[16px] h-[16px] rounded-[50%] mr-[4px]"
                   alt=""
                 />
                 <a
@@ -302,7 +302,7 @@ const CKBHeader = ({ plat }: Props) => {
             >
               <Popover
                 content={
-                  <div className="">
+                  <div>
                     <div
                       style={{
                         padding: "0 8px 0 8px",
@@ -333,11 +333,7 @@ const CKBHeader = ({ plat }: Props) => {
                         />
                       )}
                     </div>
-                    <div
-                      style={{
-                        padding: "0 8px 0 8px",
-                      }}
-                    >
+                    <div className="px-[8px] h-[28px] leading-[28px] bg-[#f5f5f5] text-[#333] text-[12px]">
                       {`${timeRange} ${date}`}
                     </div>
                   </div>
