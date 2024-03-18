@@ -1,18 +1,19 @@
 import { SvgCheck } from "@/components/svgs";
 import {
+  ENUM_PAGE,
   NO_LOGIN_RESTRICTION_TYPE,
   NO_MEMBERSHIP_RESTRICTION_TYPE,
 } from "@/const/enum";
 import { CustomerDetail, Lang, QueryParams } from "@/model";
 import { FrogArticleRespDTO } from "@/service/customer";
-import {  isD2C, isLogin } from "@/utils";
+import { isD2C, isLogin } from "@/utils";
 import { useLink, toLogin, toTheCkb } from "@/utils/router";
 import { setStationTime } from "@/utils/time";
 import { formatViewNum } from "@/utils/util";
 import classNames from "classnames";
 import { useAtom } from "jotai";
 
-import "./ArticleItem.scss"
+import "./ArticleItem.scss";
 import { useMemo } from "react";
 
 interface Props {
@@ -20,19 +21,19 @@ interface Props {
 }
 const ArticleItem = ({ article }: Props) => {
   const [userInfo] = useAtom(CustomerDetail);
-  const [querys]=useAtom(QueryParams)
-  const [lang]=useAtom(Lang)
-  const type=useMemo(()=>{
+  const [querys] = useAtom(QueryParams);
+  const [lang] = useAtom(Lang);
+  const type = useMemo(() => {
     if (querys.tab === -1) {
-      return 3
+      return 3;
     } else if (querys.tab === -2) {
-      return 1
+      return 1;
     } else {
-      return 0
+      return 0;
     }
-  },[querys.tab])
+  }, [querys.tab]);
 
-  const href= useLink(`article/${article.frogArticleId}`,{type})
+  const href = useLink(`article/${article.frogArticleId}`, { type });
   // 点击跳转文章线详情
   const goArticle = () => {
     if (
@@ -47,11 +48,10 @@ const ArticleItem = ({ article }: Props) => {
         NO_MEMBERSHIP_RESTRICTION_TYPE.CHECK_DISABLE &&
       !userInfo?.membership?.templateLevel
     ) {
-      toTheCkb(`${lang}/vip/VipLevel`);
+      toTheCkb(ENUM_PAGE.VIP_LEVEL);
     }
-    
-    location.href=href;
 
+    location.href = href;
   };
   return (
     <div
@@ -67,7 +67,14 @@ const ArticleItem = ({ article }: Props) => {
           <div className="article-body tstn">{article.frogArticleSubTitle}</div>
           <div className="article-msg tstn">
             <div className="article-msg-read">
-              <SvgCheck className="icon"  style={{ marginRight: "5px",fontSize: "12px", transform: "scale(1.4)", }} />
+              <SvgCheck
+                className="icon"
+                style={{
+                  marginRight: "5px",
+                  fontSize: "12px",
+                  transform: "scale(1.4)",
+                }}
+              />
               {formatViewNum(article?.viewNum!)}
             </div>
             <div className="article-msg-date">

@@ -77,7 +77,7 @@ const CKBCategory = () => {
       jumpLinks(i.cateNameZh);
     }
     toTheCkb(
-      `${lang}/list?productCategoryFrontendId=${i.productCategoryFrontendId}&schannel=2&platformType=${selectParams.platformType}`
+      `/list?productCategoryFrontendId=${i.productCategoryFrontendId}&schannel=2&platformType=${selectParams.platformType}`
     );
   };
 

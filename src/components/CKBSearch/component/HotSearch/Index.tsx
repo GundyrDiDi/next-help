@@ -12,10 +12,13 @@ import { Site } from "@/const";
 
 interface Props {
   keyword?: string;
-  hotSearchSelected: (keyword: string,item?:CustomerSearchKeywordHotRespDTO) => void;
+  hotSearchSelected: (
+    keyword: string,
+    item?: CustomerSearchKeywordHotRespDTO
+  ) => void;
 }
 
-const HotSearch = ({  hotSearchSelected }: Props) => {
+const HotSearch = ({ hotSearchSelected }: Props) => {
   const token = isLogin();
   const { t } = useTranslation();
   const stationCode = useSite2Station();
@@ -23,9 +26,12 @@ const HotSearch = ({  hotSearchSelected }: Props) => {
     api.goods.search.keywordHistory,
     { manual: true }
   );
-  const { runAsync: keywordHost ,loading:loading1} = useRequest(api.goods.search.keywordHost, {
-    manual: true,
-  });
+  const { runAsync: keywordHost, loading: loading1 } = useRequest(
+    api.goods.search.keywordHost,
+    {
+      manual: true,
+    }
+  );
   // 历史关键词列表
   const [historyList, setHistoryList] = useState<string[]>();
   // 热搜关键词列表
@@ -39,23 +45,26 @@ const HotSearch = ({  hotSearchSelected }: Props) => {
       setHistoryList(res?.data?.slice(0, 10));
     }
     const res1 = await keywordHost({ stationCode } as any);
-    setHotList(res1?.data?.map(i=>{
-      const keywordList = i?.keywordList?.slice(0, 10)
-      return {
-        ...i,
-        keywordList
-      }
-    }).reverse());
+    setHotList(
+      res1?.data
+        ?.map((i) => {
+          const keywordList = i?.keywordList?.slice(0, 10);
+          return {
+            ...i,
+            keywordList,
+          };
+        })
+        .reverse()
+    );
   }, []);
 
-
   const goToList = (path: string) => {
-    toTheCkb(`${lang}/activity/${path}`);
+    toTheCkb(`/activity/${path}`);
   };
 
   return (
     <div className="HotSearch abs">
-      <Spin spinning={loading||loading1}>
+      <Spin spinning={loading || loading1}>
         {token && (
           <div className="HotSearch-block">
             <div className="HotSearch-title">{t("搜索历史")}</div>
@@ -158,11 +167,21 @@ const HotSearch = ({  hotSearchSelected }: Props) => {
                     }[stationCode]
                   }
                 </div>
-                <div className="HotSearch-block-list">{
-                  !!i.keywordList?.length&&i.keywordList?.map(keyItem=>{
-                    return <span key={keyItem} onClick={()=>{hotSearchSelected(keyItem,i)}}>{keyItem}</span>
-                  })
-                }</div>
+                <div className="HotSearch-block-list">
+                  {!!i.keywordList?.length &&
+                    i.keywordList?.map((keyItem) => {
+                      return (
+                        <span
+                          key={keyItem}
+                          onClick={() => {
+                            hotSearchSelected(keyItem, i);
+                          }}
+                        >
+                          {keyItem}
+                        </span>
+                      );
+                    })}
+                </div>
               </div>
             );
           })}

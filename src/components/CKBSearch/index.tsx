@@ -122,7 +122,7 @@ const CKBSearch = () => {
     }
     setLoading(false);
     if (res1.success)
-      toTheCkb(`${lang}/list?imageId=${res1.data}&&imageUrl=${urlData?.url}`);
+      toTheCkb(`/list?imageId=${res1.data}&&imageUrl=${urlData?.url}`);
   };
 
   const encodeKeyword = (text: any) => {
@@ -197,7 +197,7 @@ const CKBSearch = () => {
       if (isUrl(kw)) {
         query.detailUrl = encodeURIComponent(kw);
         setKeyword("");
-        toTheCkb(`${lang}/index/pure?detailUrl=${query.detailUrl}`);
+        toTheCkb(`/index/pure?detailUrl=${query.detailUrl}`);
       } else {
         if (/[a-zA-Z0-9]{28,36}/.test(kw) && isLogin()) {
           const data = {
@@ -210,7 +210,7 @@ const CKBSearch = () => {
           const records = res?.data?.records;
           if (records?.length === 1) {
             const productCode = records[0].productCode;
-            toTheCkb(`${lang}/goods/${productCode}`);
+            toTheCkb(`/goods/${productCode}`);
             return;
           }
         }
@@ -227,7 +227,7 @@ const CKBSearch = () => {
           sellPriceEnd: formData.sellPrice?.max,
           _t: Date.now(),
         };
-        toTheCkb(`${lang}/list?${queryString.stringify(params)}`);
+        toTheCkb(`/list?${queryString.stringify(params)}`);
       }
     }
     // TODO:没有单词的光效
@@ -245,7 +245,7 @@ const CKBSearch = () => {
   // 去购物车
   const gotoCar = () => {
     if (isLogin()) return toLogin();
-    toTheCkb(`${lang}/shopcart`);
+    toTheCkb(`/shopcart`);
   };
 
   // 热词选择

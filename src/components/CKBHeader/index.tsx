@@ -99,8 +99,8 @@ const CKBHeader = ({ plat }: Props) => {
   const linkToPure = () => {
     const plat =
       systemSource === ENUM_SYSTEM_SOURCE.D2C
-        ? "d2c/index/pure"
-        : "b2b/index/pure";
+        ? "/d2c/index/pure"
+        : "/b2b/index/pure";
     toTheCkb(plat);
   };
   const getRate = (rate: number) => {
@@ -154,9 +154,7 @@ const CKBHeader = ({ plat }: Props) => {
                   <div
                     className="ml-[2px]"
                     onClick={() => {
-                      toTheCkb(
-                        `${lang}/smc/promotion/Index?redirect=MyPromotion`
-                      );
+                      toTheCkb(`/smc/promotion/Index?redirect=MyPromotion`);
                     }}
                   >
                     {t("推广联盟")}
@@ -174,7 +172,7 @@ const CKBHeader = ({ plat }: Props) => {
               <div
                 className="ml-[2px]"
                 onClick={() => {
-                  toTheCkb(`${lang}${ENUM_PAGE.WORKER_SPACE}`);
+                  toTheCkb(`${ENUM_PAGE.WORKER_SPACE}`);
                 }}
               >
                 {t("工作台")}
@@ -187,7 +185,7 @@ const CKBHeader = ({ plat }: Props) => {
                   <div
                     className="hover:text-[color:--color-primary-light] mr-[16px] text-[--color-white]"
                     onClick={() => {
-                      toTheCkb(`${lang}${ENUM_PAGE.SHOP_CART}`);
+                      toTheCkb(`${ENUM_PAGE.SHOP_CART}`);
                     }}
                   >
                     <span>{t("购物车")}</span>
@@ -226,7 +224,7 @@ const CKBHeader = ({ plat }: Props) => {
                 <a
                   className="light hover:text-[color:--color-primary-light] cursor-pointer"
                   onClick={() => {
-                    toTheCkb(`${lang}${ENUM_PAGE.LOGIN}`);
+                    toTheCkb(`${ENUM_PAGE.LOGIN}`, false);
                   }}
                 >
                   {t("请登录")}
@@ -235,7 +233,7 @@ const CKBHeader = ({ plat }: Props) => {
                 <a
                   className="light hover:text-[color:--color-primary-light] cursor-pointer"
                   onClick={() => {
-                    toTheCkb(`${lang}${ENUM_PAGE.REGISTER}`);
+                    toTheCkb(`${ENUM_PAGE.REGISTER}`, false);
                   }}
                 >
                   {t("免费注册")}
@@ -290,7 +288,7 @@ const CKBHeader = ({ plat }: Props) => {
                 <div
                   className="hover:text-[color:--color-primary-light] mr-[16px] text-[--color-white]"
                   onClick={() => {
-                    toTheCkb(`${lang}${ENUM_PAGE.INFORMATION}`);
+                    toTheCkb(`${ENUM_PAGE.INFORMATION}`);
                   }}
                 >
                   <span>{t("消息")}</span>

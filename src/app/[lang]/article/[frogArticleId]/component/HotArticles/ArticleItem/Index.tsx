@@ -7,22 +7,26 @@ import { formatViewNum } from "@/utils/util";
 import { useAtom } from "jotai";
 import { CustomerDetail, Lang } from "@/model";
 import { toLogin, toTheCkb } from "@/utils/router";
+import { ENUM_PAGE } from "@/const/enum";
 
 interface Props {
   article: FrogArticleRespDTO;
-  type?:string;
+  type?: string;
 }
 
-const ArticleItem = ({ article,type }: Props) => {
-  const [lang]=useAtom(Lang)
-  const [userInfo]=useAtom(CustomerDetail)
+const ArticleItem = ({ article, type }: Props) => {
+  const [lang] = useAtom(Lang);
+  const [userInfo] = useAtom(CustomerDetail);
   const articleClick = () => {
-     if (!isLogin() && article.noLoginRestriction === 3) {
-      toLogin()
-      return
+    if (!isLogin() && article.noLoginRestriction === 3) {
+      toLogin();
+      return;
     }
-    if(article.noMembershipRestriction===3&&!userInfo?.membership?.templateLevel){
-      toTheCkb(`${lang}/vip/VipLevel`);
+    if (
+      article.noMembershipRestriction === 3 &&
+      !userInfo?.membership?.templateLevel
+    ) {
+      toTheCkb(ENUM_PAGE.VIP_LEVEL);
     }
     window.location.href = `/${lang}/article/${article?.frogArticleId}?type=${type}`;
   };

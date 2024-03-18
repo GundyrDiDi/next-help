@@ -110,7 +110,7 @@ const Footer = ({ plat, lang }: Props) => {
         </div>
       )}
 
-      <div className="Footer-bottom">
+      <div className="Footer-bottom items-center">
         <div className="left">
           <div className="left-logo">
             <img
@@ -212,8 +212,8 @@ const Footer = ({ plat, lang }: Props) => {
               </a>
             </>
           )}
-          <a onClick={() => toTheCkb(`${lang}/agreement`)}>{t("使用条约")}</a>
-          <a onClick={()=>toTheCkb(`${lang}/policy`)}>{t("隐私权政策")}</a>
+          <a onClick={() => toTheCkb(`/agreement`)}>{t("使用条约")}</a>
+          <a onClick={() => toTheCkb(`/policy`)}>{t("隐私权政策")}</a>
         </div>
       </div>
     </div>

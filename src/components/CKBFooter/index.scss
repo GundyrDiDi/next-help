@@ -6,13 +6,12 @@ $ft-color: var(--ftcolor);
 
   .concat {
     padding: 13px 0;
-
   }
 
-  .concat-d2c{
+  .concat-d2c {
     background-color: #576663;
   }
-  .concat-b2b{
+  .concat-b2b {
     background-color: #446182;
   }
 
@@ -25,7 +24,7 @@ $ft-color: var(--ftcolor);
 
   .hover {
     &:hover {
-      color: #FEFEFE;
+      color: #fefefe;
     }
   }
 
@@ -36,14 +35,13 @@ $ft-color: var(--ftcolor);
     justify-content: space-between;
 
     .column {
-      color: #FEFEFE;
+      color: #fefefe;
       font-size: 14px;
       flex: 1;
 
       &:last-child {
         flex: unset;
       }
-
 
       &-td {
         margin-top: 30px;
@@ -63,7 +61,7 @@ $ft-color: var(--ftcolor);
 
     .left {
       display: flex;
-      .left-social{
+      .left-social {
         display: flex;
       }
 
@@ -73,7 +71,7 @@ $ft-color: var(--ftcolor);
 
         img {
           height: 36px;
-          margin-top: 8px
+          margin-top: 8px;
         }
       }
 
@@ -90,7 +88,7 @@ $ft-color: var(--ftcolor);
     }
 
     .right {
-      margin-top: 26px;
+      // margin-top: 26px;
 
       a {
         display: inline-block;
@@ -114,30 +112,30 @@ $ft-color: var(--ftcolor);
   }
 }
 
-.ko-footer{
-  width:1200px;
-  padding:  32px 0 24px;
-  margin:auto;
-  .logo{
-    img{
-      width:156px;
+.ko-footer {
+  width: 1200px;
+  padding: 32px 0 24px;
+  margin: auto;
+  .logo {
+    img {
+      width: 156px;
     }
-    padding-bottom:16px;
-    margin-bottom:16px;
-    border-bottom:1px solid rgba(255, 255, 255, 0.25);
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
   }
-  .company-info{
-    .company-info-content{
-      flex:1;
-      .compayn-info-item{
-        margin-bottom:16px;
-        .title{
-          color:#fff;
+  .company-info {
+    .company-info-content {
+      flex: 1;
+      .compayn-info-item {
+        margin-bottom: 16px;
+        .title {
+          color: #fff;
           font-size: 12px;
           line-height: 20px;
           font-weight: 600;
         }
-        .text{
+        .text {
           line-height: 20px;
           font-size: 12px;
           color: rgba(255, 255, 255, 0.88);

@@ -62,7 +62,6 @@ const TogglePlat = (props: TogglePlatProps) => {
     } else {
       togglePlat(item.type);
       window.location.reload();
-      // toTheCkb(`${lang}/index/pure`)
     }
   };
   return (
