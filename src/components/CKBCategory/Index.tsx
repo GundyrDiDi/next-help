@@ -16,7 +16,6 @@ import ThirdDrop from "./components/ThirdDrop/Index";
 import { t } from "i18next";
 import { useTranslation } from "@/i18n/client";
 import { toTheCkb } from "@/utils/router";
-import MySwitch from "./components/MySwitch/Index";
 import { useToggle } from "ahooks";
 import { Switch } from "antd";
 import MyPopover from "./components/MyPopover/Index";
@@ -24,10 +23,10 @@ import MyPopover from "./components/MyPopover/Index";
 const CKBCategory = () => {
   const fastCates = useAtomValue(fastCatesAtom);
   const [seletParams, setSelectParams] = useAtom(searchParamsAtom);
-  const selectParams=useAtomValue(searchParamsAtom)
+  const selectParams = useAtomValue(searchParamsAtom);
   const { t } = useTranslation();
   // 站内站外搜素
-  const [state, { toggle, }] = useToggle(false);
+  const [state, { toggle }] = useToggle(false);
 
   const firstList: any = useMemo(() => {
     return menu1Items.map((i) => {
@@ -60,8 +59,7 @@ const CKBCategory = () => {
   };
   //跳转列表
   const jump = (i: widthCheckProductCategoryFrontendShortRespDTO) => {
-    if(state){
-
+    if (state) {
     }
     toTheCkb(
       `${lang}/list?productCategoryFrontendId=${i.productCategoryFrontendId}&schannel=2&platformType=${selectParams.platformType}`
@@ -81,7 +79,7 @@ const CKBCategory = () => {
             return (
               <CSSTransition key={i.productCategoryFrontendId} timeout={200}>
                 <SecondDrop
-                className="second-drop flex-1"
+                  className="second-drop flex-1"
                   ref={i.nodeRef}
                   options={i.children}
                   itemChilren={(
@@ -121,10 +119,15 @@ const CKBCategory = () => {
           })}
         </div>
         <div className="btn rel toggle line--only flex items-center ">
-          <span className="mr-[4px]">{t('站外搜索')}</span>
-          <Switch value={state} onChange={toggle} checkedChildren="I" unCheckedChildren="O"/>
+          <span className="mr-[4px]">{t("站外搜索")}</span>
+          <Switch
+            value={state}
+            onChange={toggle}
+            checkedChildren="I"
+            unCheckedChildren="O"
+          />
         </div>
-        <MyPopover/>
+        <MyPopover />
       </div>
     </div>
   );
