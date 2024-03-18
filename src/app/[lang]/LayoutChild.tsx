@@ -79,8 +79,6 @@ export default function Layout({
         `/${lang}/`,
         `/${customerDetail?.langcode}/`
       );
-
-      // location.href =
     }
   }, [customerDetail, lang]);
 
