@@ -3,7 +3,6 @@
 @import "tailwindcss/utilities";
 @import "@/styles/index";
 
-
 :root {
   --max-width: 1200px;
 }
@@ -52,17 +51,13 @@ li {
   list-style: none;
 }
 
-
-
 .abs {
-  position: absolute
+  position: absolute;
 }
-   
 
 .rel {
-  position: relative
+  position: relative;
 }
-    
 
 .line--only {
   display: inline-block;
@@ -70,4 +65,3 @@ li {
   white-space: nowrap;
   overflow: hidden;
 }
-  

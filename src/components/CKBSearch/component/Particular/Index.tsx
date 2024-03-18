@@ -13,17 +13,17 @@ import { searchParamsAtom } from "../..";
 
 export interface SearchParams {
   keyword?: string;
-  sortType?:string;
-  productCategoryFrontendId?:string;
-  platformType?:string;
-  sellPrice?:PriceRangType
-  other?:string[]
+  sortType?: string;
+  productCategoryFrontendId?: string;
+  platformType?: string;
+  sellPrice?: PriceRangType;
+  other?: string[];
 }
 
 interface Props {
   keyword?: string;
-  handleSearch: (params?:SearchParams) => void;
-  handleJump: (params?:SearchParams) => void;
+  handleSearch: (params?: SearchParams) => void;
+  handleJump: (params?: SearchParams) => void;
   setKeyword: (keyword: string) => void;
 }
 
@@ -42,19 +42,16 @@ const Particular = ({
   const [form] = Form.useForm();
   const [seletParams, setSelectParams] = useAtom(searchParamsAtom);
 
+  useEffect(() => {
+    console.log(seletParams, "seletParams");
 
-  useEffect(()=>{
-    console.log(seletParams,'seletParams');
-    
-    form.setFieldsValue(seletParams)
-  },[seletParams,form])
+    form.setFieldsValue(seletParams);
+  }, [seletParams, form]);
   // const platformType = Form.useWatch("platformType", form);
   // const productCategoryFrontendId = Form.useWatch(
   //   "productCategoryFrontendId",
   //   form
   // );
-
-
 
   const sortTypes: SortProps[] = useMemo(() => {
     const list = sortData[seletParams.platformType] || [
@@ -87,21 +84,23 @@ const Particular = ({
     return list || [];
   }, [seletParams.platformType, t]);
 
-  
+  const onFinishSearch = () => {
+    handleSearch(form.getFieldsValue());
+  };
 
-  const onFinishSearch=()=>{
-    handleSearch(form.getFieldsValue())
-  }
-
-  const onFinishJump=()=>{
-    handleJump(form.getFieldsValue())
-  }
+  const onFinishJump = () => {
+    handleJump(form.getFieldsValue());
+  };
 
   return (
-    <div className={classNames("content", lang)}>
-      <Form colon={false} form={form}  onReset={()=>{
-        setKeyword('')
-      }}>
+    <div className={classNames("Particular-content", lang)}>
+      <Form
+        colon={false}
+        form={form}
+        onReset={() => {
+          setKeyword("");
+        }}
+      >
         <div className="flex">
           <FormItem
             className="w-[45%]"
@@ -110,12 +109,12 @@ const Particular = ({
           >
             <Select
               options={menu1Items.map((i) => {
-                return { label:t(i.label), value: i.key };
+                return { label: t(i.label), value: i.key };
               })}
               className="plat"
               // value={seletParams.platformType}
-              onChange={(e)=>{
-                setSelectParams({...seletParams,platformType:e})
+              onChange={(e) => {
+                setSelectParams({ ...seletParams, platformType: e });
               }}
             />
           </FormItem>
@@ -128,8 +127,14 @@ const Particular = ({
               options={categoryList.map((i) => {
                 return { ...i, value: i.productCategoryFrontendId };
               })}
-              onChange={(e)=>{
-                setSelectParams({...seletParams,productCategoryFrontendId:e,productCategoryFrontendIdNameZh:categoryList.find(i=>i.productCategoryFrontendId===e)?.label})
+              onChange={(e) => {
+                setSelectParams({
+                  ...seletParams,
+                  productCategoryFrontendId: e,
+                  productCategoryFrontendIdNameZh: categoryList.find(
+                    (i) => i.productCategoryFrontendId === e
+                  )?.label,
+                });
               }}
               className="second"
             />
@@ -162,7 +167,11 @@ const Particular = ({
           </FormItem>
         )}
         <Flex gap="small" wrap="wrap" justify="flex-end">
-          <Button onClick={onFinishSearch} type="primary" className="search-btn">
+          <Button
+            onClick={onFinishSearch}
+            type="primary"
+            className="search-btn"
+          >
             <div className="flex items-center">
               <img
                 src="https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/search.png"
@@ -180,7 +189,9 @@ const Particular = ({
               {t("外部搜索")}
             </div>
           </Button>
-          <Button htmlType="reset" type="text">{t("重置条件")}</Button>
+          <Button htmlType="reset" type="text">
+            {t("重置条件")}
+          </Button>
         </Flex>
       </Form>
     </div>

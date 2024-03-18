@@ -1,55 +1,55 @@
-[class*='flex'] {
+[class*="flex"] {
   display: flex;
 
-  &[class*='cen'] {
-    justify-content: center;
-  }
+  // &[class*="cen"] {
+  //   justify-content: center;
+  // }
 
-  &[class*='ter'] {
+  &[class*="ter"] {
     align-items: center;
   }
 
-  &[class*='aiend'] {
+  &[class*="aiend"] {
     align-items: flex-end;
   }
 
-  &[class*='aistart'] {
+  &[class*="aistart"] {
     align-items: flex-start;
   }
 
-  &[class*='-col'] {
-    flex-direction: column;
-  }
+  // &[class*="-col"] {
+  //   flex-direction: column;
+  // }
 
-  &[class*='-rev'] {
+  &[class*="-rev"] {
     flex-direction: row-reverse;
   }
 
-  &[class*='-colrev'] {
+  &[class*="-colrev"] {
     flex-direction: column-reverse;
   }
 
-  &[class*='-bwn'] {
+  &[class*="-bwn"] {
     justify-content: space-between;
   }
 
-  &[class*='-ard'] {
+  &[class*="-ard"] {
     justify-content: space-around;
   }
 
-  &[class*='-wrap'] {
+  &[class*="-wrap"] {
     flex-wrap: wrap;
   }
 
-  &[class*='-end'] {
+  &[class*="-end"] {
     justify-content: end;
   }
 
-  &[class*='-shk'] {
+  &[class*="-shk"] {
     flex-shrink: 0;
   }
 
-  &[class*='-fdc'] {
+  &[class*="-fdc"] {
     flex-direction: column;
   }
 

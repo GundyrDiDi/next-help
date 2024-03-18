@@ -15,43 +15,50 @@ export enum ENUM_PICK_MAP_TYPE {
     ALL = 3
 }
 
+
+
+
 export enum ENUM_PAGE {
-    /** 登录账号管理 */
-    SETUP_ACCOUNT = '/vip/setupUser',
-    /** 店铺采购管理 */
-    SETUP_SHOP = '/authorized/setupShop',
-    /** 我收藏的商品/店铺 */
-    PRODUCT_COLLECT = '/product/CollectProduct',
-    /** 我买过的商品/店铺 */
-    PRODUCT_AFTER_PURCHASE = '/product/AfterPurchase',
-    /** 我看过的商品/店铺 */
-    PRODUCT_FOOT_PRINT = '/product/FootPrint',
-    /** 我的钱包 */
-    FUND_STORE_FUND = '/fund/StoreFund',
-    /** 帮助 */
-    HELP = '/help',
-    /** 报价信息 */
-    QUOTATION_INFO = '/oem/order/quotationInfo',
-    /** 新增寻源 */
-    ADD_FIND_SOURCE = '/oem/order/addFindSource',
-    /** 寻源单详情 */
-    FIND_SOURCE_DETAIL = '/oem/order/findSourceDetail',
-    /** 寻源单编辑 */
-    EDIT_FIND_SOURCE = '/oem/order/editFindSource',
-    /** 寻源商品列表 */
-    OEM_GOODS_LIST = '/oem/goods/list',
-    /** oem 寻源列表 */
-    OEM_FIND_SOURCE_LIST = '/oem/order/oemSourceList',
-    /** oem 工作台 */
-    WORKER_SPACE = '/user/UserCenter',
-    /** oem 会员中心 */
-    VIP_LEVEL = '/vip/VipLevel',
-    /** oem 推广联盟 */
-    MY_PROMOTION = '/smc/promotion/Index?redirect=MyPromotion&lang=jp',
-    /** oem 购物车 */
-    SHOP_CART = '/shopcart',
-    /** oem 购物车 */
-    INFORMATION = '/vip/Information'
+  /** 登录账号管理 */
+  SETUP_ACCOUNT = '/vip/setupUser',
+  /** 店铺采购管理 */
+  SETUP_SHOP = '/authorized/setupShop',
+  /** 我收藏的商品/店铺 */
+  PRODUCT_COLLECT = '/product/CollectProduct',
+  /** 我买过的商品/店铺 */
+  PRODUCT_AFTER_PURCHASE = '/product/AfterPurchase',
+  /** 我看过的商品/店铺 */
+  PRODUCT_FOOT_PRINT = '/product/FootPrint',
+  /** 我的钱包 */
+  FUND_STORE_FUND = '/fund/StoreFund',
+  /** 帮助 */
+  HELP = '/help',
+  /** 报价信息 */
+  QUOTATION_INFO = '/oem/order/quotationInfo',
+  /** 新增寻源 */
+  ADD_FIND_SOURCE = '/oem/order/addFindSource',
+  /** 寻源单详情 */
+  FIND_SOURCE_DETAIL = '/oem/order/findSourceDetail',
+  /** 寻源单编辑 */
+  EDIT_FIND_SOURCE = '/oem/order/editFindSource',
+  /** 寻源商品列表 */
+  OEM_GOODS_LIST = '/oem/goods/list',
+  /** oem 寻源列表 */
+  OEM_FIND_SOURCE_LIST = '/oem/order/oemSourceList',
+  /** oem 工作台 */
+  WORKER_SPACE = '/user/UserCenter',
+  /** oem 会员中心 */
+  VIP_LEVEL = '/vip/VipLevel',
+  /** oem 推广联盟 */
+  MY_PROMOTION = '/smc/promotion/Index?redirect=MyPromotion&lang=jp',
+  /** oem 购物车 */
+  SHOP_CART = '/shopcart',
+  /** oem 购物车 */
+  INFORMATION = '/vip/Information',
+  /** 登录 */
+  LOGIN = "/login",
+  /** 注册 */
+  REGISTER = "/signup"
 }
 
 /** 系统类型 1-D2C; 2-B2B （后端字段 system_source） */

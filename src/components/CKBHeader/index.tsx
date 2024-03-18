@@ -7,7 +7,7 @@ import { CustomerDetail, Lang } from "@/model";
 import IconHeadSculpture from "@/components/Icon/IconHeadSculpture";
 import { request } from "@/config/request";
 
-import { formatTimeZone, getCookiePlat, isB2B } from "@/utils";
+import { formatTimeZone, getCookiePlat, isB2B, isLogin } from "@/utils";
 import { ENUM_PAGE, ENUM_SYSTEM_SOURCE } from "@/const/enum";
 import { getShopId } from "@/config/request/interceptors";
 import { Site, siteMapAreaName } from "@/const";
@@ -21,11 +21,11 @@ import "./index.scss";
 import { LocalContext, useTranslation } from "@/i18n/client";
 import { myShopIcon } from "@/const/staticURL";
 import platAtom from "@/model/Plat";
-import { useSite2Station } from "@/utils/language";
+import { isJA, useSite2Station } from "@/utils/language";
 import { toTheCkb } from "@/utils/router";
 
 const menuCommonStyle =
-  "flex items-center ml-[20px] hover:text-[color:--color-primary-light] cursor-pointer";
+  "flex items-center ml-[20px] hover:text-[color:--color-primary-light] cursor-pointer flex-row";
 
 interface Props {
   plat?: string;
@@ -38,17 +38,15 @@ const CKBHeader = ({ plat }: Props) => {
     timer: null as unknown as NodeJS.Timer,
   });
   const { t } = useTranslation();
-  const nationCode = useSite2Station();
+  const stationCode = useSite2Station();
 
   const [date, setDate] = useState<string>();
   const [customerDetail] = useAtom(CustomerDetail);
-  const stationCode = customerDetail?.stationCode || "";
   const [isShowShopList, setIsShowShopList] = useState(false);
   const [messageNum, setMessageNum] = useState<number>();
   const [cartNum, setCartNum] = useState<number>();
   const [site, setSite] = useState<string>();
   const membership = customerDetail?.membership;
-  const [userInfo] = useAtom(CustomerDetail);
   const [lang] = useAtom(Lang);
   const systemSource =
     plat === "d2c" ? ENUM_SYSTEM_SOURCE.D2C : ENUM_SYSTEM_SOURCE.B2B;
@@ -58,11 +56,11 @@ const CKBHeader = ({ plat }: Props) => {
     setMessageNum(res.data);
   };
   useEffect(() => {
-    if (userInfo?.customerId) {
+    if (customerDetail?.customerId) {
       getPrivateUnreadCount();
       getCurrentCartList();
     }
-  }, [userInfo?.customerId]);
+  }, [customerDetail?.customerId]);
   useEffect(() => {
     const timer = timerRef.current.timer;
     if (customerDetail?.customerId) {
@@ -121,6 +119,8 @@ const CKBHeader = ({ plat }: Props) => {
     // 英国站不展示
     return false;
   };
+  console.log(stationCode, stationCode === Site.JA, "stationCode");
+
   return (
     <div className="CKBHeader">
       <div className="wrap of-hd viewport">
@@ -175,35 +175,70 @@ const CKBHeader = ({ plat }: Props) => {
                 {t("工作台")}
               </div>
             </div>
-            <div className={menuCommonStyle}>
-              <i className="iconfont icon-gouwuche text-[14px] pr-[2px]" />
-              <Badge count={cartNum} size="small" className="cart-count">
-                <div
-                  className="hover:text-[color:--color-primary-light] mr-[16px] text-[--color-white]"
+            {isLogin() && (
+              <div className={menuCommonStyle}>
+                <i className="iconfont icon-gouwuche text-[14px] pr-[2px]" />
+                <Badge count={cartNum} size="small" className="cart-count">
+                  <div
+                    className="hover:text-[color:--color-primary-light] mr-[16px] text-[--color-white]"
+                    onClick={() => {
+                      toTheCkb(`${lang}${ENUM_PAGE.SHOP_CART}`);
+                    }}
+                  >
+                    <span>{t("购物车")}</span>
+                  </div>
+                </Badge>
+              </div>
+            )}
+            {isLogin() ? (
+              <UserDropDwon customerDetail={customerDetail}>
+                <div className={menuCommonStyle}>
+                  <div className="top-[-1px] relative pr-[2px]">
+                    <div
+                      style={{
+                        borderRadius: "50%",
+                      }}
+                      className="rounded-full border-[1px] border-[color:white]"
+                    >
+                      <IconHeadSculpture width={20} height={20} />
+                    </div>
+                  </div>
+                  <div>{customerDetail?.loginName}</div>
+                  <CaretDownOutlined className="relative top-[2px] ml-[8px]" />
+                </div>
+              </UserDropDwon>
+            ) : (
+              <div className="flex ml-[16px] items-center">
+                <img
+                  src={
+                    isJA()
+                      ? "https://static-jp.theckb.com/static-asset/client/ckbuser.png?t=2024"
+                      : "https://static-s.theckb.com/BusinessMarket/Client/ckbuser.png?t=2024"
+                  }
+                  className="w-[16px] h-[16px] rounded-[50%]"
+                  alt=""
+                />
+                <a
+                  className="light hover:text-[color:--color-primary-light] cursor-pointer"
+                  href="javascript:;"
                   onClick={() => {
-                    toTheCkb(`${lang}${ENUM_PAGE.SHOP_CART}`);
+                    toTheCkb(`${lang}${ENUM_PAGE.LOGIN}`);
                   }}
                 >
-                  <span>{t("购物车")}</span>
-                </div>
-              </Badge>
-            </div>
-            <UserDropDwon customerDetail={customerDetail}>
-              <div className={menuCommonStyle}>
-                <div className="top-[-1px] relative pr-[2px]">
-                  <div
-                    style={{
-                      borderRadius: "50%",
-                    }}
-                    className="rounded-full border-[1px] border-[color:white]"
-                  >
-                    <IconHeadSculpture width={20} height={20} />
-                  </div>
-                </div>
-                <div>{customerDetail?.loginName}</div>
-                <CaretDownOutlined className="relative top-[2px] ml-[8px]" />
+                  {t("请登录")}
+                </a>
+                /
+                <a
+                  className="light hover:text-[color:--color-primary-light] cursor-pointer"
+                  href="javascript:;"
+                  onClick={() => {
+                    toTheCkb(`${lang}${ENUM_PAGE.REGISTER}`);
+                  }}
+                >
+                  {t("免费注册")}
+                </a>
               </div>
-            </UserDropDwon>
+            )}
             <div className={menuCommonStyle}>
               <ShopList
                 t={t}
@@ -330,7 +365,7 @@ const CKBHeader = ({ plat }: Props) => {
                     }}
                   >
                     <img
-                      src={`https://static-s.theckb.com/BusinessMarket/Client/country/flag_${nationCode}_tab.png`}
+                      src={`https://static-s.theckb.com/BusinessMarket/Client/country/flag_${stationCode}_tab.png`}
                       alt=""
                       width={20}
                       height={14}
