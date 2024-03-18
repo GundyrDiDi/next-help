@@ -8,7 +8,7 @@ import {
 } from "../CKBSearch/component/SellerCate/Index";
 import "./Index.scss";
 import { createRef, useMemo } from "react";
-import { menu1Items } from "../CKBSearch/initData";
+import { externalLinks, menu1Items } from "../CKBSearch/initData";
 import { searchParamsAtom } from "../CKBSearch";
 import { lang, useSite2Station } from "@/utils/language";
 import { Site } from "@/const";
@@ -19,6 +19,9 @@ import { toTheCkb } from "@/utils/router";
 import { useToggle } from "ahooks";
 import { Switch } from "antd";
 import MyPopover from "./components/MyPopover/Index";
+import gbk from "gbk-encode";
+
+const { encode } = gbk;
 
 const CKBCategory = () => {
   const fastCates = useAtomValue(fastCatesAtom);
@@ -57,9 +60,21 @@ const CKBCategory = () => {
       };
     });
   };
+
+  // 跳转外链
+  const jumpLinks = (key: string = "") => {
+    const url = externalLinks[selectParams.platformType];
+    const keyword =
+      selectParams.platformType === "AM"
+        ? "keywords=" + encode(key)
+        : "q=" + key;
+    window.open(url + keyword);
+  };
   //跳转列表
   const jump = (i: widthCheckProductCategoryFrontendShortRespDTO) => {
+    // 插件安装不判断
     if (state) {
+      jumpLinks(i.cateNameZh);
     }
     toTheCkb(
       `${lang}/list?productCategoryFrontendId=${i.productCategoryFrontendId}&schannel=2&platformType=${selectParams.platformType}`

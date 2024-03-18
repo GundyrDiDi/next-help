@@ -32,10 +32,10 @@ import { api } from "@/service";
 import Particular, { SearchParams } from "./component/Particular/Index";
 import { isUrl } from "@/utils/util";
 import queryString from "query-string";
-import gbk from "gbk-encode";
 import HotSearch from "./component/HotSearch/Index";
 import { CustomerSearchKeywordHotRespDTO } from "@/service/goods";
 import { CSSTransition } from "react-transition-group";
+import gbk from "gbk-encode";
 
 const { encode } = gbk;
 export interface SelectParams {
@@ -306,7 +306,6 @@ const CKBSearch = () => {
               // setTimeout(() => {
               // }, 100);
               setShowHot(false);
-
             }}
             addonAfter={
               <div className="flex items-center">
@@ -342,7 +341,7 @@ const CKBSearch = () => {
                   className="flex justify-center items-center searchIcon h-[32px]"
                   onClick={(e) => {
                     handleSearch();
-                    setShowHot(false)
+                    setShowHot(false);
                   }}
                 >
                   <SvgSearch className="icon rel text-[18px] text-white ml-[5px]" />
@@ -353,7 +352,12 @@ const CKBSearch = () => {
           <span className="abs icon-down">
             <i className="fa fa-caret-down"></i>
           </span>
-          <CSSTransition nodeRef={nodeRef} in={showHot} timeout={200} classNames="HotSearchTrans">
+          <CSSTransition
+            nodeRef={nodeRef}
+            in={showHot}
+            timeout={200}
+            classNames="HotSearchTrans"
+          >
             <div ref={nodeRef}>
               {showHot && (
                 <HotSearch
