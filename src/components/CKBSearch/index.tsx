@@ -36,6 +36,7 @@ import HotSearch from "./component/HotSearch/Index";
 import { CustomerSearchKeywordHotRespDTO } from "@/service/goods";
 import { CSSTransition } from "react-transition-group";
 import gbk from "gbk-encode";
+import { Local } from "@/i18n/settings";
 
 const { encode } = gbk;
 export interface SelectParams {
@@ -82,21 +83,23 @@ const CKBSearch = () => {
   const options = [
     {
       value: {
-        [Site.JA]: SearchLangType.JA, // 日语
-        [Site.KO]: SearchLangType.KR, // 韩语
-        [Site.EN]: SearchLangType.EN, // 英语
-      }[stationCode],
+        [Local.JA]: SearchLangType.JA, // 日语
+        [Local.KO]: SearchLangType.KR, // 韩语
+        [Local.EN]: SearchLangType.EN, // 英语
+      }[lang],
       label: {
-        [Site.JA]: "日本语入力",
-        [Site.KO]: "한국어 입력",
-        [Site.EN]: "English",
-      }[stationCode],
+        [Local.JA]: "日本语入力",
+        [Local.KO]: "한국어 입력",
+        [Local.EN]: "English",
+      }[lang],
     },
     {
       value: SearchLangType.ZH,
       label: t("请输入中文"),
     },
   ];
+
+  console.log(options, "options");
 
   /** 照片搜素 */
   const choosePic = async (e: ChangeEvent<HTMLInputElement>) => {

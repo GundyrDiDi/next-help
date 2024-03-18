@@ -1,6 +1,7 @@
 import { Local } from "@/i18n/settings";
+import { Lang } from "@/model";
 import { getLangType } from "@/model/Lang";
-import { getDefaultStore } from "jotai";
+import { getDefaultStore, useAtom } from "jotai";
 
 /**
  * 国家及货币单位
@@ -43,10 +44,9 @@ export const isJK = () => {
 
 /** 获取国家站点code */
 export const useSite2Station = ():Site => {
-  const site = lang;
   return {
     [Local.JA]: Site.JA,
     [Local.KO]: Site.KO,
     [Local.EN]: Site.EN
-  }[site]
+  }[lang]
 }

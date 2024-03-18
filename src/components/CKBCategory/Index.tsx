@@ -92,44 +92,42 @@ const CKBCategory = () => {
         <div className="flex-ter fx-1 cate-list">
           {nfastCates.map((i, idx) => {
             return (
-              <CSSTransition key={i.productCategoryFrontendId} timeout={200}>
-                <SecondDrop
-                  className="second-drop flex-1"
-                  ref={i.nodeRef}
-                  options={i.children}
-                  itemChilren={(
-                    j: widthCheckProductCategoryFrontendShortRespDTO
-                  ) => {
-                    if (j.children?.length) {
-                      return (
-                        <ThirdDrop
-                          value={j}
-                          options={j.children}
-                          itemChilren={(third) => (
-                            <div
-                              className="flex line--only third-item cursor-pointer"
-                              onClick={() => jump(third)}
-                            >
-                              {third.label}
-                            </div>
-                          )}
-                        ></ThirdDrop>
-                      );
-                    }
-
+              <SecondDrop
+                key={i.productCategoryFrontendId}
+                className="second-drop flex-1"
+                options={i.children}
+                itemChilren={(
+                  j: widthCheckProductCategoryFrontendShortRespDTO
+                ) => {
+                  if (j.children?.length) {
                     return (
-                      <div
-                        className="flex line--only btn option-item cursor-pointer"
-                        onClick={() => jump(j)}
-                      >
-                        {j?.label}
-                      </div>
+                      <ThirdDrop
+                        value={j}
+                        options={j.children}
+                        itemChilren={(third) => (
+                          <div
+                            className="flex line--only third-item cursor-pointer"
+                            onClick={() => jump(third)}
+                          >
+                            {third.label}
+                          </div>
+                        )}
+                      ></ThirdDrop>
                     );
-                  }}
-                >
-                  <div className="line--only">{i.label}</div>
-                </SecondDrop>
-              </CSSTransition>
+                  }
+
+                  return (
+                    <div
+                      className="flex line--only btn option-item cursor-pointer"
+                      onClick={() => jump(j)}
+                    >
+                      {j?.label}
+                    </div>
+                  );
+                }}
+              >
+                <div className="line--only">{i.label}</div>
+              </SecondDrop>
             );
           })}
         </div>

@@ -36,40 +36,35 @@ export default function Layout({
   params: { lang, initPlat, token },
 }: Props) {
   const [customerDetail, requestCustomerDetail] = useAtom(CustomerDetail);
-  const [curLang, setCurLang] = useAtom(Lang);
-  const setMessages=useSetAtom(MessageAtom)
+  const setCurLang = useSetAtom(Lang);
+  setCurLang(lang);
+
+  const setMessages = useSetAtom(MessageAtom);
   const [plat, setPlat] = useAtom(platAtom);
   const systemSource = customerDetail?.systemSource;
 
-  const {runAsync:getCurrentCartList}=useRequest(api.order.cart.getCurrentCartList,{manual:true})
+  const { runAsync: getCurrentCartList } = useRequest(
+    api.order.cart.getCurrentCartList,
+    { manual: true }
+  );
 
-  useAsyncEffect( async() => {
+  useAsyncEffect(async () => {
     if (!runsOnServerSide) {
-      if(getCookieToken){
-       await requestCustomerDetail();
-       const res= await getCurrentCartList()
-       setMessages((val)=>{
-       return {
-        ...val,
-        carNum:res.data?.cartSummary?.sumCartProductQuantity??0
-       }
-       })
+      if (getCookieToken) {
+        await requestCustomerDetail();
+        const res = await getCurrentCartList();
+        setMessages((val) => {
+          return {
+            ...val,
+            carNum: res.data?.cartSummary?.sumCartProductQuantity ?? 0,
+          };
+        });
       }
       setPlat(getCookiePlat);
-      setCurLang(lang);
     } else {
       setPlat(initPlat);
-      setCurLang(lang);
     }
-  }, [
-    curLang,
-    initPlat,
-    lang,
-    requestCustomerDetail,
-    setCurLang,
-    setPlat,
-    plat,
-  ]);
+  }, [initPlat, lang, requestCustomerDetail, setPlat, plat]);
 
   useEffect(() => {
     togglePlat(
@@ -173,7 +168,7 @@ export default function Layout({
     <ConfigProvider locale={locale} theme={getThemeStyle()}>
       <CKBHeader plat={plat} />
       <CKBSearch />
-      <CKBCategory/>
+      <CKBCategory />
       <FloatToolbar />
       {children}
       <CKBFooter lang={lang} plat={plat} />
