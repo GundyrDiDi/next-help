@@ -36,6 +36,10 @@ export const isJA=()=> {
   return lang === Local.JA;
 }
 
+export const isJK = () => {
+  return ['ko', 'ja'].includes(lang)
+}
+
 
 /** 获取国家站点code */
 export const useSite2Station = ():Site => {

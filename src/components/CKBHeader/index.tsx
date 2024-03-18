@@ -21,7 +21,7 @@ import "./index.scss";
 import { LocalContext, useTranslation } from "@/i18n/client";
 import { myShopIcon } from "@/const/staticURL";
 import platAtom from "@/model/Plat";
-import { isJA, useSite2Station } from "@/utils/language";
+import { isJA, isJK, useSite2Station } from "@/utils/language";
 import { toTheCkb } from "@/utils/router";
 
 const menuCommonStyle =
@@ -66,17 +66,22 @@ const CKBHeader = ({ plat }: Props) => {
     const timer = timerRef.current.timer;
     if (customerDetail?.customerId) {
       setSite(customerDetail?.site);
-      const z = customerDetail?.utcTimeZone
+    }
+    let z: number = 0;
+    if (isJK()) {
+      z = 9;
+    } else {
+      z = customerDetail?.utcTimeZone
         ? Number(customerDetail?.utcTimeZone?.replace("UTC", ""))
         : 0 - new Date().getTimezoneOffset() / 60;
-      clearInterval(+timer);
-      timerRef.current.timer = setInterval(() => {
-        const date = dayjs(`${formatTimeZone(dayjs(new Date()), z)}`).format(
-          "YYYY/MM/DD HH:mm:ss"
-        );
-        setDate(date);
-      }, 1000);
     }
+    clearInterval(+timer);
+    timerRef.current.timer = setInterval(() => {
+      const date = dayjs(`${formatTimeZone(dayjs(new Date()), z)}`).format(
+        "YYYY/MM/DD HH:mm:ss"
+      );
+      setDate(date);
+    }, 1000);
     return () => clearInterval(+timer);
   }, [customerDetail]);
 
@@ -307,9 +312,7 @@ const CKBHeader = ({ plat }: Props) => {
                       style={{
                         padding: "0 8px 0 8px",
                       }}
-                    >{`${t("三菱UFJ銀行TTSレート：")}${getRate(
-                      rate ?? 0
-                    )}`}</div>
+                    >{`${t("三菱UFJ银行TTS汇率：")}${getRate(rate ?? 0)}`}</div>
                     <div
                       style={{
                         display: "flex",
@@ -318,7 +321,7 @@ const CKBHeader = ({ plat }: Props) => {
                       }}
                     >
                       <span>
-                        {`${t("THE直行便の対応レート：")}${getRate(
+                        {`${t("THE CKB的对应汇率：")}${getRate(
                           floatingRate ?? 0
                         )}`}
                       </span>
