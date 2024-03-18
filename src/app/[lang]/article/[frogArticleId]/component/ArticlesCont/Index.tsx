@@ -14,15 +14,17 @@ import { useMount } from "ahooks";
 
 interface Props {
   frogArticle?: FrogArticleDetailRespDTO;
-  querys: { [key: string]: string| undefined },
+  querys: { [key: string]: string | undefined };
 }
-const ArticlesCont = ({ frogArticle,querys }: Props) => {
+const ArticlesCont = ({ frogArticle, querys }: Props) => {
   const [markingShow, setMarkingShow] = useState<boolean>(false);
-  useMount(()=>{
-    if(frogArticle?.frogArticleId){
-      api.customer.frog.articleCount({frogArticleId:frogArticle?.frogArticleId})
+  useMount(() => {
+    if (frogArticle?.frogArticleId) {
+      api.customer.frog.articleCount({
+        frogArticleId: frogArticle?.frogArticleId,
+      });
     }
-  })
+  });
   return (
     <>
       {/* TODO:分类 */}
@@ -30,7 +32,7 @@ const ArticlesCont = ({ frogArticle,querys }: Props) => {
         className={classNames("Article viewport", { readLess: markingShow })}
       >
         <div className="Article-main box-style">
-          <div className="content">
+          <div className="content w-[100%]">
             <div className="content-title">{frogArticle?.frogArticleTitle}</div>
             {frogArticle?.frogArticleId !== 151 && (
               <div className="content-date">
@@ -44,13 +46,17 @@ const ArticlesCont = ({ frogArticle,querys }: Props) => {
               }}
             ></div>
           </div>
-          <ArticleSwitch frogArticleId={frogArticle?.frogArticleId} type={querys.type} source={querys.source} />
+          <ArticleSwitch
+            frogArticleId={frogArticle?.frogArticleId}
+            type={querys.type}
+            source={querys.source}
+          />
         </div>
         <div className="Article-hot box-style">
           <HotArticles showBtn={false} type={querys.type} />
         </div>
       </div>
-      {markingShow&&<Marking/>}
+      {markingShow && <Marking />}
     </>
   );
 };
