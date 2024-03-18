@@ -66,8 +66,8 @@ const reqRate = (
 };
 
 export const useRate = () => {
-    const [customerDetail] = useAtom(atomCustomerDetail);
     const stationCode=useSite2Station()
+    const [customerDetail] = useAtom(atomCustomerDetail);
     const rateInternitalRef = useRef<any>(null);
     /** 源汇率(银行查出来的) */
     const [rate, setRate] = useState<number>();

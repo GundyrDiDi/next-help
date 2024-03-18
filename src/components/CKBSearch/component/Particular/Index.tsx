@@ -43,15 +43,8 @@ const Particular = ({
   const [seletParams, setSelectParams] = useAtom(searchParamsAtom);
 
   useEffect(() => {
-    console.log(seletParams, "seletParams");
-
     form.setFieldsValue(seletParams);
   }, [seletParams, form]);
-  // const platformType = Form.useWatch("platformType", form);
-  // const productCategoryFrontendId = Form.useWatch(
-  //   "productCategoryFrontendId",
-  //   form
-  // );
 
   const sortTypes: SortProps[] = useMemo(() => {
     const list = sortData[seletParams.platformType] || [

@@ -99,8 +99,6 @@ const CKBSearch = () => {
     },
   ];
 
-  console.log(options, "options");
-
   /** 照片搜素 */
   const choosePic = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -255,9 +253,6 @@ const CKBSearch = () => {
     keyword: string,
     item?: CustomerSearchKeywordHotRespDTO
   ) => {
-    console.log(keyword, "keyword");
-
-    setKeyword(keyword);
     if (!item) {
       handleSearch();
     } else {

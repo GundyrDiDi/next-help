@@ -60,7 +60,6 @@ export const uploadAliOSS = (params: FAO) => {
         url: sign.host,
         data: formData
       }).then((res:any) => {
-        console.log(res)
         resolve({ url: `${sign.host}/${key}`, key })
       }).catch((error) => {
         reject(error)

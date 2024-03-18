@@ -21,7 +21,6 @@ export default function FileUtils () {
   const isExcelExt = (fileName: any) => {
     const ext = getExtension(fileName).toLowerCase()
     const result = ext === 'xls' || ext === 'xlsx'
-    console.log('isExcelExt', fileName, ext, result)
     return result
   }
 
@@ -29,14 +28,12 @@ export default function FileUtils () {
    * 判断是否excel文件类型
    */
   const isExcelFile = (fileType: string) => {
-    console.log('>>>>>>>>>>>>fileType', fileType)
     // macOS 返回是空值
     if (!fileType) {
       return true
     }
     const result = fileType === 'application/vnd.ms-excel' ||
       fileType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-    console.log('isExcelFile', fileType, result)
     return result
   }
 
@@ -48,7 +45,6 @@ export default function FileUtils () {
 
   const isImageFile = (fileType: string | string[]) => {
     const result = fileType && fileType.indexOf('image/')
-    console.log('isImageFile', result)
     return +result >= 0
   }
 

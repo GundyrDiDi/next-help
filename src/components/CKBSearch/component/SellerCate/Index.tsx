@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import "./index.scss";
-import { isJA, lang, useSite2Station } from "@/utils/language";
+import { isJA, useSite2Station } from "@/utils/language";
 import { Button, Dropdown, MenuProps } from "antd";
 import { useAsyncEffect, useRequest, useToggle } from "ahooks";
 import { useTranslation } from "@/i18n/client";
@@ -11,9 +11,11 @@ import {
   ProductCategoryFrontendGroupChannelRespDTO,
   ProductCategoryFrontendShortRespDTO,
 } from "@/service/goods";
-import { atom, useAtom, useSetAtom } from "jotai";
+import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { searchParamsAtom } from "../..";
 import { atomWithStorage } from "jotai/utils";
+import { Local } from "@/i18n/settings";
+import { Lang } from "@/model";
 
 interface exProductCategoryFrontendShortRespDTO
   extends ProductCategoryFrontendShortRespDTO {
@@ -50,6 +52,7 @@ const SellerCate = () => {
   const [rotate2, { toggle: rotate2Toggle }] = useToggle();
   const [categoryList, setCateAtom] = useAtom(cateListAtom);
   const [fastCates, setFastCates] = useAtom(fastCatesAtom);
+  const lang = useAtomValue(Lang);
 
   const [seletParams, setSelectParams] = useAtom(searchParamsAtom);
   const { t } = useTranslation();
@@ -79,12 +82,12 @@ const SellerCate = () => {
     );
     return (
       {
-        [Site.JA]: cate?.cateNameJp,
-        [Site.KO]: cate?.cateNameKr,
-        [Site.EN]: cate?.cateNameEn,
-      }[stationCode] || cate?.cateNameJp
+        [Local.JA]: cate?.cateNameJp,
+        [Local.KO]: cate?.cateNameKr,
+        [Local.EN]: cate?.cateNameEn,
+      }[lang] || cate?.cateNameJp
     );
-  }, [categoryList, seletParams.productCategoryFrontendId, stationCode]);
+  }, [categoryList, lang, seletParams.productCategoryFrontendId]);
 
   useAsyncEffect(async () => {
     const res = await productCategoryFrontendTree({ stationCode });
@@ -107,10 +110,10 @@ const SellerCate = () => {
               ...i,
               label:
                 {
-                  [Site.JA]: i?.cateNameJp,
-                  [Site.KO]: i?.cateNameKr,
-                  [Site.EN]: i?.cateNameEn,
-                }[stationCode] || i?.cateNameJp,
+                  [Local.JA]: i?.cateNameJp,
+                  [Local.KO]: i?.cateNameKr,
+                  [Local.EN]: i?.cateNameEn,
+                }[lang] || i?.cateNameJp,
             };
           })
         );
@@ -159,10 +162,10 @@ const SellerCate = () => {
               id: item.productCategoryFrontendId,
               label:
                 {
-                  [Site.JA]: item?.cateNameJp,
-                  [Site.KO]: item?.cateNameKr,
-                  [Site.EN]: item?.cateNameEn,
-                }[stationCode] || item?.cateNameJp,
+                  [Local.JA]: item?.cateNameJp,
+                  [Local.KO]: item?.cateNameKr,
+                  [Local.EN]: item?.cateNameEn,
+                }[lang] || item?.cateNameJp,
               children: transformData(item.children ?? []),
             };
           });
@@ -183,7 +186,7 @@ const SellerCate = () => {
   }, [menu1Items, seletParams.platformType]);
 
   return (
-    <div className={classNames("rel custom-plain", lang)}>
+    <div className={classNames("rel custom-plain flex", lang)}>
       <Dropdown
         className={classNames({ dropdown_categroy: isJA() })}
         placement="bottom"

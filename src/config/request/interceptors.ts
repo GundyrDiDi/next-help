@@ -6,7 +6,7 @@ import { InternalAxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie'
 import {  getCookieToken } from '@/utils/index';
 import { PlatCookie } from '@/config';
-import { useSite2Station } from '@/utils/language';
+// import { useSite2Station } from '@/utils/language';
 const domain =  '.theckb.com'
 // 用户信息
 export interface User {
@@ -54,16 +54,16 @@ apiInstanceList.forEach((item) => {
         config.headers = config.headers ?? {};
         let token = getCookieToken;
         const shopId = getShopId();
-        const stationCode=useSite2Station()
+        // const stationCode=useSite2Station()
         if (token) {
             config.headers['X-Authtoken'] = token;
         }
         if (shopId&&!config.url?.includes('getCustomerDetails')&&token) {
             config.headers['X-Authshopid'] = shopId;
         }
-        if(stationCode){
-            config.headers['X-Stationcode'] = stationCode;
-        }
+        // if(stationCode){
+        //     config.headers['X-Stationcode'] = stationCode;
+        // }
         if (process.env.X_GRAY_TAG) {
             config.headers['X-GRAY-TAG'] = process.env.X_GRAY_TAG;
         }

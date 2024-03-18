@@ -44,6 +44,7 @@ export const isJK = () => {
 
 /** 获取国家站点code */
 export const useSite2Station = ():Site => {
+  const [lang] = useAtom(Lang);
   return {
     [Local.JA]: Site.JA,
     [Local.KO]: Site.KO,
