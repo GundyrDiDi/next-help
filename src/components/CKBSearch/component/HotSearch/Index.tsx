@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { useAsyncEffect, useRequest } from "ahooks";
 import { api } from "@/service";
-import { isEN, isJA, isKO, lang, useSite2Station } from "@/utils/language";
+import { isEN, isJA, isKO, useSite2Station } from "@/utils/language";
 import { CustomerSearchKeywordHotRespDTO } from "@/service/goods";
 import { toTheCkb } from "@/utils/router";
 import { Site } from "@/const";

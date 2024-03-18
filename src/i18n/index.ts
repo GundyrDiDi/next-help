@@ -21,8 +21,3 @@ export async function serveTranslation(lng:Local) {
     i18n: i18nextInstance
   }
 }
-
-// TODO:待完成
-export const  getLang=()=>{
-  return ''
-}

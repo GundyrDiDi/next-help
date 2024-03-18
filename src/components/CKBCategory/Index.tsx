@@ -10,8 +10,6 @@ import "./Index.scss";
 import { createRef, useMemo } from "react";
 import { externalLinks, menu1Items } from "../CKBSearch/initData";
 import { searchParamsAtom } from "../CKBSearch";
-import { lang, useSite2Station } from "@/utils/language";
-import { Site } from "@/const";
 import ThirdDrop from "./components/ThirdDrop/Index";
 import { t } from "i18next";
 import { useTranslation } from "@/i18n/client";

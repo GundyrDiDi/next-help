@@ -1,9 +1,9 @@
 import { useTranslation } from "@/i18n/client";
-import { lang } from "@/utils/language";
 import { Input } from "antd";
 import classNames from "classnames";
 import { useState } from "react";
 import "./Index.scss";
+import { getLang } from "@/utils/language";
 
 export type PriceRangType = {
   max?: string;
@@ -48,7 +48,7 @@ const PriceRange = ({ value, onChange }: Props) => {
   };
 
   return (
-    <div className={classNames("rel flex-ter", lang)}>
+    <div className={classNames("rel flex-ter", getLang())}>
       <Input
         className="w-[80px]"
         onChange={(e) => format(e.target.value, true)}

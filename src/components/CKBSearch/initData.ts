@@ -1,5 +1,5 @@
 import { Site } from "@/const";
-import { getLang } from "@/i18n";
+import { getLang } from "@/utils/language";
 import { useTranslation } from "@/i18n/client";
 import { Lang, Local } from "@/i18n/settings";
 /**

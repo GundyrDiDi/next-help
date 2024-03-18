@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { isJA, lang } from "@/utils/language";
+import { isJA, getLang } from "@/utils/language";
 import { Button, Checkbox, Flex, Form, Input, Radio, Select } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { useTranslation } from "@/i18n/client";
@@ -86,7 +86,7 @@ const Particular = ({
   };
 
   return (
-    <div className={classNames("Particular-content", lang)}>
+    <div className={classNames("Particular-content", getLang())}>
       <Form
         colon={false}
         form={form}
