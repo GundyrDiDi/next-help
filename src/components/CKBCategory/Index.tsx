@@ -28,7 +28,7 @@ const CKBCategory = () => {
   // 站内站外搜素
   const [state, { toggle }] = useToggle(false);
 
-  const firstList: any = useMemo(() => {
+  const firstList: SellerProps[] = useMemo(() => {
     return menu1Items.map((i) => {
       return {
         ...i,
