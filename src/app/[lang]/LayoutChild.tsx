@@ -67,6 +67,15 @@ export default function Layout({
   }, [initPlat, lang, requestCustomerDetail, setPlat, plat]);
 
   useEffect(() => {
+    if (customerDetail?.langcode !== lang && !runsOnServerSide) {
+      location.href = location.href.replace(
+        `/${lang}/`,
+        `/${customerDetail?.langcode}/`
+      );
+    }
+  }, [customerDetail?.langcode, lang]);
+
+  useEffect(() => {
     togglePlat(
       plat === "d2c" ? ENUM_SYSTEM_SOURCE.D2C : ENUM_SYSTEM_SOURCE.B2B
     );

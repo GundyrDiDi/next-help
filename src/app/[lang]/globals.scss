@@ -65,3 +65,23 @@ li {
   white-space: nowrap;
   overflow: hidden;
 }
+
+.ja {
+  font-family: "Noto Sans JP", "NotoSans", PingFang SC,
+    "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+}
+
+.ko {
+  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif,
+    font-extend;
+}
+
+.en {
+  font-family: "OpenSans", "Roboto", "pingfang Hiragino Kaku Gothic ProN",
+    "Hiragino Sans", Meiryo, sans-serif;
+
+  * {
+    word-break: keep-all;
+  }
+}

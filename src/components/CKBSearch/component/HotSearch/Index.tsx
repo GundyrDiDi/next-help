@@ -85,7 +85,6 @@ const HotSearch = ({ hotSearchSelected }: Props) => {
           {isEN() && (
             <div className="valentinesdayTag ">
               <a
-                href="javascript:;"
                 onClick={() => goToList("valentinesday")}
                 className="valentinesday"
               >
@@ -102,11 +101,7 @@ const HotSearch = ({ hotSearchSelected }: Props) => {
           )}
           {isEN() && (
             <div className="tiktokTag ml-[10px]">
-              <a
-                href="javascript:;"
-                onClick={() => goToList("tiktok")}
-                className="tiktok "
-              >
+              <a onClick={() => goToList("tiktok")} className="tiktok ">
                 <div className="flex-cen-ter">
                   Tiktok made me buy it
                   <img
@@ -120,7 +115,7 @@ const HotSearch = ({ hotSearchSelected }: Props) => {
           )}
           {isKO() && (
             <div className="spring-hot-tag">
-              <a href="javascript:;" onClick={() => goToList("springHot")}>
+              <a onClick={() => goToList("springHot")}>
                 <div className="spring-hot-tag-container">
                   <span className="text">2024년 봄 상품 추천</span>
                   <span className="tag">NEW</span>

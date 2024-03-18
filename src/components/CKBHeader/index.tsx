@@ -25,7 +25,7 @@ import { isJA, isJK, useSite2Station } from "@/utils/language";
 import { toTheCkb } from "@/utils/router";
 
 const menuCommonStyle =
-  "flex items-center ml-[20px] hover:text-[color:--color-primary-light] cursor-pointer flex-row";
+  "flex items-center ml-[10px] hover:text-[color:--color-primary-light] cursor-pointer flex-row";
 
 interface Props {
   plat?: string;
