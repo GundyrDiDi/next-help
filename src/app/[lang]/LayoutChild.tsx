@@ -67,13 +67,22 @@ export default function Layout({
   }, [initPlat, lang, requestCustomerDetail, setPlat, plat]);
 
   useEffect(() => {
-    if (customerDetail?.langcode !== lang && !runsOnServerSide) {
+    console.log(customerDetail, "customerDetail");
+
+    // 语言对不上时刷新页面
+    if (
+      customerDetail?.langcode !== lang &&
+      !runsOnServerSide &&
+      customerDetail?.langcode
+    ) {
       location.href = location.href.replace(
         `/${lang}/`,
         `/${customerDetail?.langcode}/`
       );
+
+      // location.href =
     }
-  }, [customerDetail?.langcode, lang]);
+  }, [customerDetail, lang]);
 
   useEffect(() => {
     togglePlat(
