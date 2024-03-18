@@ -3,7 +3,7 @@ import { Badge, Popover, message } from "antd";
 import { CaretDownOutlined } from "@ant-design/icons";
 import { useAtom, useStore } from "jotai";
 import dayjs from "dayjs";
-import { CustomerDetail, Lang } from "@/model";
+import { CustomerDetail, Lang, Plat } from "@/model";
 import IconHeadSculpture from "@/components/Icon/IconHeadSculpture";
 import { request } from "@/config/request";
 
@@ -31,13 +31,13 @@ interface Props {
   plat?: string;
 }
 
-const CKBHeader = ({ plat }: Props) => {
+const CKBHeader = ({}: Props) => {
   const timerRef = useRef<{
     timer: NodeJS.Timer;
   }>({
     timer: null as unknown as NodeJS.Timer,
   });
-  const [lang] = useAtom(Lang);
+  const [plat] = useAtom(Plat);
   const { t } = useTranslation();
   const stationCode = useSite2Station();
   const siteCode = useSite2Code();
@@ -49,6 +49,7 @@ const CKBHeader = ({ plat }: Props) => {
   const [cartNum, setCartNum] = useState<number>();
   const [site, setSite] = useState<string>();
   const membership = customerDetail?.membership;
+
   const systemSource =
     plat === "d2c" ? ENUM_SYSTEM_SOURCE.D2C : ENUM_SYSTEM_SOURCE.B2B;
   // 获取消息未读数量
@@ -375,7 +376,9 @@ const CKBHeader = ({ plat }: Props) => {
                 </div>
               </Popover>
             </a>
-            <TogglePlat systemSource={systemSource} />
+            {customerDetail?.accountType !== 2 && (
+              <TogglePlat systemSource={systemSource} />
+            )}
           </div>
         </div>
       </div>

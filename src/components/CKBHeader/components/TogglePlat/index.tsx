@@ -6,8 +6,9 @@ import { ENUM_SYSTEM_SOURCE } from "@/const/enum";
 import { useAtom } from "jotai";
 import { atomCustomerDetail } from "@/model/CustomerDetail";
 import { togglePlat } from "@/config/request/interceptors";
-import { CustomerDetail } from "@/model";
+import { CustomerDetail, Plat } from "@/model";
 import { toTheCkb } from "@/utils/router";
+import { setCookieShopId, setCookieToken } from "@/utils";
 // import { lang } from "@/utils/language";
 
 interface PlatDTO {
@@ -42,21 +43,14 @@ const TogglePlat = (props: TogglePlatProps) => {
     if (useInfo?.customerId) {
       const res = await request.customer.changeLogin.changeLogin();
       if (res.data?.token) {
+        console.log(res.data?.customerRespDTO, "res.data?.customerRespDTO");
+
         togglePlat(
           res.data?.customerRespDTO?.systemSource ?? ENUM_SYSTEM_SOURCE.D2C
         );
-        window.localStorage.setItem(
-          "production_route/token",
-          JSON.stringify({
-            val: res.data?.token,
-            expire: undefined,
-          })
-        );
+        setCookieToken(res.data?.token);
         const fistShopId = res.data?.customerShopList?.[0].customerShopId;
-        window.localStorage.setItem(
-          "production_route/curShop",
-          String(fistShopId)
-        );
+        setCookieShopId(String(fistShopId));
         window.location.reload();
       }
     } else {

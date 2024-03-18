@@ -27,10 +27,10 @@ export const getShopId = () => {
 };
 
 /** B2B/D2C 主题切换 */
-export const togglePlat = (systemSource: number=ENUM_SYSTEM_SOURCE.D2C) => {
-    const plat = systemSource === ENUM_SYSTEM_SOURCE.D2C ? 'D2C' : 'B2B';
+export const togglePlat = (systemSource: number) => {
+    const plat = systemSource === 1 ? 'D2C' : 'B2B';    
     Cookies.set(PlatCookie,plat.toLocaleLowerCase(),{ path: '/', domain,expires:3 })
-    window.document.documentElement.setAttribute('data-theme', plat);
+    // window.document.documentElement.setAttribute('data-theme', plat);
 };
 
 /**

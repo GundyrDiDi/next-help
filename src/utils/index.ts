@@ -1,7 +1,7 @@
 // import { getRouter } from '@/App';
 import { GetKeyByMap, GetValueByMap } from './type';
 import bwCookie from "js-cookie"
-import { PlatCookie, TokenSignCookie } from '@/config';
+import { PlatCookie, ShopCookie, TokenSignCookie } from '@/config';
 
 import { CustomerDetail } from '@/model';
 import { getUserFn } from './time';
@@ -158,6 +158,14 @@ export const getCookieToken=bwCookie.get(TokenSignCookie)||bwCookie.get(encodeUR
 
 /** 通过 cookie 获取登录信息 */
 export const getCookiePlat=bwCookie.get(PlatCookie)||bwCookie.get(encodeURIComponent(PlatCookie))||'d2c';
+
+/** 通过 cookie 设置信息 */
+export const setCookieToken=(token:string)=>{
+    bwCookie.set(TokenSignCookie,token,{expires:3,path:'/',domain:'.theckb.com'})
+}
+
+export const setCookieShopId=(token:string)=>{
+    bwCookie.set(ShopCookie,token,{expires:3,path:'/',domain:'.theckb.com'})}
 
 export function formatTimeZone(time: any, offset: any) {
     // 创建一个Date对象 time时间 offset 时区  中国为  8

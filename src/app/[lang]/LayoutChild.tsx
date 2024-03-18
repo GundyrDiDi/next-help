@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import ja_JP from "antd/locale/ja_JP";
 import ko_KR from "antd/locale/ko_KR";
 import en_GB from "antd/locale/en_GB";
-import { CustomerDetail, Lang, LoadAtom, MessageAtom } from "@/model";
+import { CustomerDetail, Lang, LoadAtom, MessageAtom, Plat } from "@/model";
 import { useAtom, useSetAtom } from "jotai";
 import { ConfigProvider, Spin } from "antd";
 import { ThemeConfig } from "antd/lib/config-provider";
@@ -36,11 +36,11 @@ export default function Layout({
   params: { lang, initPlat, token },
 }: Props) {
   const [customerDetail, requestCustomerDetail] = useAtom(CustomerDetail);
+  const setMessages = useSetAtom(MessageAtom);
+  const [plat, setPlat] = useAtom(Plat);
   const setCurLang = useSetAtom(Lang);
   setCurLang(lang);
-
-  const setMessages = useSetAtom(MessageAtom);
-  const [plat, setPlat] = useAtom(platAtom);
+  setPlat(initPlat);
   const systemSource = customerDetail?.systemSource;
 
   const { runAsync: getCurrentCartList } = useRequest(
@@ -61,10 +61,11 @@ export default function Layout({
         });
       }
       setPlat(getCookiePlat);
-    } else {
-      setPlat(initPlat);
+      togglePlat(
+        plat === "d2c" ? ENUM_SYSTEM_SOURCE.D2C : ENUM_SYSTEM_SOURCE.B2B
+      );
     }
-  }, [initPlat, lang, requestCustomerDetail, setPlat, plat]);
+  }, [lang, requestCustomerDetail, setPlat]);
 
   useEffect(() => {
     console.log(customerDetail, "customerDetail");
@@ -82,11 +83,12 @@ export default function Layout({
     }
   }, [customerDetail, lang]);
 
-  useEffect(() => {
-    togglePlat(
-      plat === "d2c" ? ENUM_SYSTEM_SOURCE.D2C : ENUM_SYSTEM_SOURCE.B2B
-    );
-  }, [plat]);
+  // useEffect(() => {
+  //   togglePlat(
+  //     plat === "d2c" ? ENUM_SYSTEM_SOURCE.D2C : ENUM_SYSTEM_SOURCE.B2B
+  //   );
+  //   console.log(plat, "plat");
+  // }, [plat]);
 
   const locale = {
     [Local.JA]: ja_JP,

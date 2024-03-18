@@ -18,7 +18,7 @@ export default function RootLayout({
   const token = cookieStore.get(encodeURIComponent(TokenSignCookie))?.value;
 
   return (
-    <html lang={lang}>
+    <html lang={lang} data-theme={String(plat).toUpperCase()}>
       <script
         type="text/javascript"
         src="https://cdn.channel.io/plugin/ch-plugin-web.js"
