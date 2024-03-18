@@ -8,7 +8,7 @@ import { atomCustomerDetail } from "@/model/CustomerDetail";
 import { togglePlat } from "@/config/request/interceptors";
 import { CustomerDetail } from "@/model";
 import { toTheCkb } from "@/utils/router";
-import { lang } from "@/utils/language";
+// import { lang } from "@/utils/language";
 
 interface PlatDTO {
   label: string;
