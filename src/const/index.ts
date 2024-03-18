@@ -1,5 +1,5 @@
 import { Local } from "@/i18n/settings";
-import { getLangType } from "@/model/Lang";
+import { Lang } from "@/model";
 import { getDefaultStore } from "jotai";
 
 /**
@@ -214,10 +214,11 @@ enum TermType {
   oem = 'oem'
 }
 
-const lang=getDefaultStore().get(getLangType)
+const getLang=()=>getDefaultStore().get(Lang)
 
 // 站点转JP KR GB
-export const useSite2Code = (site:Local) => {
+export const useSite2Code = () => {
+  const site=getLang()
   return {
   [Local.JA]: CountriesEnum.Japan,
   [Local.KO]: CountriesEnum.Korea,

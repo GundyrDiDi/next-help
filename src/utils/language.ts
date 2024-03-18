@@ -22,29 +22,29 @@ enum Site {
 }
 
 
-export const lang=getDefaultStore().get(getLangType)
+export const getLang=()=>getDefaultStore().get(Lang)
 
 
 export const isEN=()=> {
-  return lang === Local.EN;
+  return getLang() === Local.EN;
 }
 
 export const isKO=()=> {
-  return lang === Local.KO;
+  return getLang() === Local.KO;
 }
 
 export const isJA=()=> {
-  return lang === Local.JA;
+  return getLang() === Local.JA;
 }
 
 export const isJK = () => {
-  return ['ko', 'ja'].includes(lang)
+  return ['ko', 'ja'].includes(getLang())
 }
 
 
 /** 获取国家站点code */
 export const useSite2Station = ():Site => {
-  const [lang] = useAtom(Lang);
+  const lang=getLang()
   return {
     [Local.JA]: Site.JA,
     [Local.KO]: Site.KO,

@@ -42,7 +42,7 @@ const MyPopover = () => {
     <div className="MyPopover">
       <Popover
         title={
-          <div className="tip text-ct text-[#606266] px-[5px]">
+          <div className="tip text-ct text-[#606266] px-[5px] w-[240px]">
             {t("请选择你经常使用的类目")}
           </div>
         }

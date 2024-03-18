@@ -40,7 +40,7 @@ const CKBHeader = ({ plat }: Props) => {
   const [lang] = useAtom(Lang);
   const { t } = useTranslation();
   const stationCode = useSite2Station();
-  const siteCode = useSite2Code(lang);
+  const siteCode = useSite2Code();
 
   const [date, setDate] = useState<string>();
   const [customerDetail] = useAtom(CustomerDetail);

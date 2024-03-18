@@ -365,9 +365,6 @@ const CKBSearch = () => {
               )}
             </div>
           </CSSTransition>
-          {/* { && (
-            
-          )} */}
         </div>
         <div className="fx-1 search-btn flex">
           <Button
