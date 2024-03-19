@@ -315,7 +315,7 @@ const CKBSearch = () => {
 
   return (
     <div id="search">
-      <div className="flex viewport flex-center">
+      <div className="flex flex-center h-[84px]">
         <div className="fx-1 flex-end">
           <div className={classNames("mr-[30px] SellerCate")}>
             <SellerCate />

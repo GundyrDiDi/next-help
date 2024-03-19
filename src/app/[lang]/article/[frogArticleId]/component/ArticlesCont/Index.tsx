@@ -29,10 +29,10 @@ const ArticlesCont = ({ frogArticle, querys }: Props) => {
     <>
       {/* TODO:分类 */}
       <div
-        className={classNames("Article viewport", { readLess: markingShow })}
+        className={classNames("Article w-[100%]", { readLess: markingShow })}
       >
         <div className="Article-main box-style">
-          <div className="content w-[100%]">
+          <div className="content w-[1200px] mx-auto">
             <div className="content-title">{frogArticle?.frogArticleTitle}</div>
             {frogArticle?.frogArticleId !== 151 && (
               <div className="content-date">
