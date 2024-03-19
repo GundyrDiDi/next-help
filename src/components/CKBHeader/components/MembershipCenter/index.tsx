@@ -61,7 +61,6 @@ const vipLevelImg: { [key: number]: string } = {
 
 const membershipLevel = (props: MembershipProps) => {
   const { membership, newMemberActivity, t } = props;
-  console.log(membership, "membership");
 
   const membershipExplain = [
     t("能够在中国找到丰富的供应商"),
