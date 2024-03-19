@@ -37,6 +37,7 @@ import { CustomerSearchKeywordHotRespDTO } from "@/service/goods";
 import { CSSTransition } from "react-transition-group";
 import gbk from "gbk-encode";
 import { Local } from "@/i18n/settings";
+import { flushSync } from "react-dom";
 
 const { encode } = gbk;
 export interface SelectParams {
@@ -192,6 +193,8 @@ const CKBSearch = () => {
   /** 开始搜索 */
   const handleSearch = async (formData: SearchParams = {}) => {
     const kw = keyword.trim();
+    console.log("kw", kw);
+
     if (kw) {
       let query: any = { schannel: 2 };
       if (isUrl(kw)) {
@@ -253,6 +256,7 @@ const CKBSearch = () => {
     keyword: string,
     item?: CustomerSearchKeywordHotRespDTO
   ) => {
+    setKeyword(keyword);
     if (!item) {
       handleSearch();
     } else {
@@ -302,9 +306,9 @@ const CKBSearch = () => {
               setShowHot(true);
             }}
             onBlur={() => {
-              // setTimeout(() => {
-              // }, 100);
-              setShowHot(false);
+              setTimeout(() => {
+                setShowHot(false);
+              }, 100);
             }}
             addonAfter={
               <div className="flex items-center">
@@ -357,13 +361,11 @@ const CKBSearch = () => {
             timeout={200}
             classNames="HotSearchTrans"
           >
-            <div ref={nodeRef}>
-              {showHot && (
-                <HotSearch
-                  hotSearchSelected={hotSearchSelected}
-                  keyword={keyword}
-                />
-              )}
+            <div ref={nodeRef} hidden={!showHot}>
+              <HotSearch
+                hotSearchSelected={hotSearchSelected}
+                keyword={keyword}
+              />
             </div>
           </CSSTransition>
         </div>
