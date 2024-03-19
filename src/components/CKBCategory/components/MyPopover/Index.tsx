@@ -1,4 +1,7 @@
-import { fastCatesAtom } from "@/components/CKBSearch/component/SellerCate/Index";
+import {
+  fastCatesAtom,
+  widthCheckProductCategoryFrontendShortRespDTO,
+} from "@/components/CKBSearch/component/SellerCate/Index";
 import { Popover } from "antd";
 import classNames from "classnames";
 import { useAtom } from "jotai";
@@ -6,7 +9,11 @@ import { ReactSortable } from "react-sortablejs";
 import "./Index.scss";
 import { useTranslation } from "@/i18n/client";
 
-const MyPopover = () => {
+interface Props {
+  toggle: (v: widthCheckProductCategoryFrontendShortRespDTO) => void;
+}
+
+const MyPopover = ({ toggle }: Props) => {
   const [fastCates, setFastCates] = useAtom(fastCatesAtom);
   const { t } = useTranslation();
   const dragContent = () => (
@@ -18,7 +25,10 @@ const MyPopover = () => {
             <span className="handle">
               <i className="fa fa-bars"></i>
             </span>
-            <div className={classNames("btn flex-bwn flex-1 items-center")}>
+            <div
+              onClick={() => toggle(item)}
+              className={classNames("btn flex-bwn flex-1 items-center")}
+            >
               {item.label}
               {item.check ? (
                 <i className="fa check-icon fa-check-square"></i>

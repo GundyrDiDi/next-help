@@ -18,11 +18,12 @@ import { useToggle } from "ahooks";
 import { Switch } from "antd";
 import MyPopover from "./components/MyPopover/Index";
 import gbk from "gbk-encode";
+import { message } from "antd";
 
 const { encode } = gbk;
 
 const CKBCategory = () => {
-  const fastCates = useAtomValue(fastCatesAtom);
+  const [fastCates, setFastCates] = useAtom(fastCatesAtom);
   const [seletParams, setSelectParams] = useAtom(searchParamsAtom);
   const selectParams = useAtomValue(searchParamsAtom);
   const { t } = useTranslation();
@@ -77,6 +78,27 @@ const CKBCategory = () => {
     toTheCkb(
       `/list?productCategoryFrontendId=${i.productCategoryFrontendId}&schannel=2&platformType=${selectParams.platformType}`
     );
+  };
+
+  const toggleFastCates = (
+    v: widthCheckProductCategoryFrontendShortRespDTO
+  ) => {
+    const reverse = !v.check;
+    const item = fastCates.find(
+      (i) => i.productCategoryFrontendId === v.productCategoryFrontendId
+    );
+    console.log(item, fastCates);
+
+    if (item) {
+      item.check = reverse;
+    }
+    if (reverse) {
+      const len = fastCates.filter((val) => val.check).length;
+      if (len >= 8) {
+        return t("最多可选择X个", { X: 8 });
+      }
+    }
+    setFastCates(fastCates);
   };
 
   return (
@@ -138,7 +160,7 @@ const CKBCategory = () => {
             unCheckedChildren="O"
           />
         </div>
-        <MyPopover />
+        <MyPopover toggle={toggleFastCates} />
       </div>
     </div>
   );

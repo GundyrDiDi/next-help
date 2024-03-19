@@ -333,7 +333,7 @@ const CKBSearch = () => {
           <Input
             variant="borderless"
             className={classNames("rel", { "null-trigger": nullTrigger })}
-            placeholder={t("请输入主营类目、品牌名称或风格")}
+            placeholder={t("商品链接或商品名")}
             maxLength={500}
             height={32}
             ref={InputRef}

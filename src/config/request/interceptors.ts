@@ -1,12 +1,13 @@
 import { message } from 'antd';
 import { api, apiInstanceList } from '@/service';
-import { ENUM_SYSTEM_SOURCE } from '@/const/enum';
+import { ENUM_PAGE, ENUM_SYSTEM_SOURCE } from '@/const/enum';
 import Code from '@/i18n/locales/code.json';
 import { InternalAxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie'
-import {  getCookieShop, getCookieToken } from '@/utils/index';
+import {  getCookieShop, getCookieToken, setCookieShopId, setCookieToken } from '@/utils/index';
 import { PlatCookie } from '@/config';
 import { useSite2Station } from '@/utils/language';
+import { toTheCkb } from '@/utils/router';
 
 const domain =  '.theckb.com'
 // 用户信息
@@ -72,9 +73,15 @@ apiInstanceList.forEach((item) => {
     // 返回拦截
     item.instance.instance.interceptors.response.use(
         function (response) {
+            const data=response.data;
             if (response.data?.code === '0' && response.data.success === true) {
                 return response;
             }
+            if (data.code === '24010062' || data.code === '10000000' || data.code === '24010061') {
+                setCookieToken('')
+                setCookieShopId('')
+                toTheCkb(ENUM_PAGE.LOGIN,false)
+              }
             message.error(response.data.code);
             return Promise.reject(response.data.code);
         },
