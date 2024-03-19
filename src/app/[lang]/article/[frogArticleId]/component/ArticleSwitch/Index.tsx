@@ -9,6 +9,8 @@ import "./Index.scss";
 // import { lang } from "@/utils/language";
 import { useAtom } from "jotai";
 import { Lang } from "@/model";
+import { toTheCkb } from "@/utils/router";
+import { ENUM_PAGE } from "@/const/enum";
 
 interface Props {
   frogArticleId?: number;
@@ -38,7 +40,7 @@ const ArticleSwitch = ({ frogArticleId, type, source }: Props) => {
   }, []);
 
   const toKaerumedia = () => {
-    window.history.go(-1);
+    toTheCkb(ENUM_PAGE.HOME);
   };
 
   return (
