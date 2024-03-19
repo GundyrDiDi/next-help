@@ -4,10 +4,10 @@ import { ENUM_SYSTEM_SOURCE } from '@/const/enum';
 import Code from '@/i18n/locales/code.json';
 import { InternalAxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie'
-import {  getCookieToken } from '@/utils/index';
+import {  getCookieShop, getCookieToken } from '@/utils/index';
 import { PlatCookie } from '@/config';
 import { useSite2Station } from '@/utils/language';
-// import { useSite2Station } from '@/utils/language';
+
 const domain =  '.theckb.com'
 // 用户信息
 export interface User {
@@ -22,7 +22,7 @@ export interface User {
 
 // 获取店铺id
 export const getShopId = () => {
-    const shopStr = window.localStorage.getItem('production_route/curShop');
+    const shopStr = getCookieShop;
     if (shopStr) return shopStr;
 };
 
@@ -30,7 +30,6 @@ export const getShopId = () => {
 export const togglePlat = (systemSource: number) => {
     const plat = systemSource === 1 ? 'D2C' : 'B2B';    
     Cookies.set(PlatCookie,plat.toLocaleLowerCase(),{ path: '/', domain,expires:3 })
-    // window.document.documentElement.setAttribute('data-theme', plat);
 };
 
 /**
