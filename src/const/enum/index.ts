@@ -19,6 +19,7 @@ export enum ENUM_PICK_MAP_TYPE {
 
 
 export enum ENUM_PAGE {
+    HOME="/index/pure",
   /** 登录账号管理 */
   SETUP_ACCOUNT = '/vip/setupUser',
   /** 店铺采购管理 */

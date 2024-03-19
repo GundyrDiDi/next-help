@@ -24,8 +24,6 @@ const myShopIcon: { [key: number]: string } = {
 };
 interface ShopListProps {
   children?: React.ReactNode;
-  isShowShopList?: boolean;
-  setIsShowShopList?: Dispatch<SetStateAction<boolean>>;
   t: (key: string) => string;
 }
 const b2b = [
@@ -34,12 +32,7 @@ const b2b = [
 ];
 
 const imgs = [...b2b];
-const ShopList = ({
-  children,
-  isShowShopList,
-  setIsShowShopList,
-  t,
-}: ShopListProps) => {
+const ShopList = ({ children, t }: ShopListProps) => {
   const [isOpen, action] = useBoolean(false);
   const [isCreateShopTipOpen, createShopTipOpen] = useBoolean(false);
   const [userInfo, getCustomerDetail] = useAtom(CustomerDetail);

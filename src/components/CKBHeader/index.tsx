@@ -242,11 +242,7 @@ const CKBHeader = ({}: Props) => {
               </div>
             )}
             <div className={menuCommonStyle}>
-              <ShopList
-                t={t}
-                isShowShopList={isShowShopList}
-                setIsShowShopList={setIsShowShopList}
-              >
+              <ShopList t={t}>
                 <div>
                   {customerDetail?.customerShopList?.length ? (
                     <div
@@ -273,6 +269,7 @@ const CKBHeader = ({}: Props) => {
                           )?.customerShopName
                         }
                       </span>
+                      <CaretDownOutlined className="relative top-[2px] ml-[8px]" />
                     </div>
                   ) : null}
                 </div>

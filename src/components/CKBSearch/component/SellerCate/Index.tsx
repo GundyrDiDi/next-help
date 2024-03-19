@@ -221,7 +221,9 @@ const SellerCate = () => {
             alt=""
             className={classNames("regularTagImg", lang)}
           />
-          {seller?.label}
+          <span className="text-[12px] color: rgba(0, 0, 0, 0.88);">
+            {seller?.label}
+          </span>
           <i
             className="fa fa-caret-down"
             style={{ transform: `scaleY(${rotate1 ? -1 : 1})` }}
@@ -249,7 +251,9 @@ const SellerCate = () => {
                   }}
                   className="drop-item"
                 >
-                  {i.label}
+                  <span className="text-[12px] color: rgba(0, 0, 0, 0.88);">
+                    {seller?.label}
+                  </span>
                 </div>
               ),
               key: i.productCategoryFrontendId!,
