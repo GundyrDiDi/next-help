@@ -386,8 +386,8 @@ const CKBSearch = () => {
           >
             <span className="iconfont icon-gouwuche text-[15px] mr-[4px] inline-block align-bottom"></span>
             {t("购物车")}
-            {!messages?.carNum && (
-              <span className="abs cart-num ">
+            {!!messages?.carNum && (
+              <span className="abs cart-num min-w-[22px] text-center">
                 {messages?.carNum > 99 ? "99+" : messages?.carNum}
               </span>
             )}

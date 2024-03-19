@@ -23,16 +23,15 @@
   }
 }
 
-
 .search-input {
   width: 600px;
   height: 32px;
   background: #f6f6f6;
   box-shadow: 0 0 4px 0 transparent;
   border-radius: 32px;
-    .ant-select-arrow{
-      display: none !important;
-    }
+  .ant-select-arrow {
+    display: none !important;
+  }
 }
 
 @keyframes flash {
@@ -83,11 +82,11 @@
     background: var(--home-btn-active);
   }
 }
-.SellerCate{
-  border-radius:17px;
-  box-shadow: 0px 2px 10px 0px rgba(242,245,247,0.5);
+.SellerCate {
+  border-radius: 17px;
+  box-shadow: 0px 2px 10px 0px rgba(242, 245, 247, 0.5);
 }
-.icon-down{
+.icon-down {
   left: 78px;
   top: 6px;
   color: var(--el-input-text-color, var(--el-text-color-regular));
@@ -102,7 +101,7 @@
 }
 
 #search .el-input {
-  &.null-trigger> input {
+  &.null-trigger > input {
     animation: flash 1.5s linear;
   }
 
@@ -242,19 +241,21 @@
     padding-top: 1px;
     color: #fff;
     height: 16px;
+    line-height: 16px;
     right: 0px;
     top: -5px;
     border-radius: 8px;
     padding: 2px 4px;
     font-size: 12px;
+    text-align: center;
     display: flex;
+    justify-content: center;
     align-items: center;
   }
 }
 
-.el-popover.particular{
+.el-popover.particular {
   border-radius: 12px;
-
 }
 
 .ico-btn {
@@ -265,7 +266,6 @@
     color: var(--fcolor) !important;
   }
 }
-
 
 .HotSearchTrans-enter {
   opacity: 0;
