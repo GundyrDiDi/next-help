@@ -166,8 +166,8 @@ export const setCookieToken=(token:string)=>{
     bwCookie.set(TokenSignCookie,token,{expires:3,path:'/',domain:'.theckb.com'})
 }
 
-export const setCookieShopId=(token:string)=>{
-    bwCookie.set(ShopCookie,token,{expires:3,path:'/',domain:'.theckb.com'})}
+export const setCookieShopId=(id:string)=>{
+    bwCookie.set(ShopCookie,id,{expires:3,path:'/',domain:'.theckb.com'})}
 
 export function formatTimeZone(time: any, offset: any) {
     // 创建一个Date对象 time时间 offset 时区  中国为  8

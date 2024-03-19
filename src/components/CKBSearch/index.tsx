@@ -154,7 +154,6 @@ const CKBSearch = () => {
       setPluginShow(true);
       return;
     }
-    // TODO:省略插件安装逻辑
     const arr: any = [];
     const {
       platformType = "AM",
