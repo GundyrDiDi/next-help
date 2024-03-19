@@ -71,6 +71,7 @@ const UserDropDwon: React.FC<UserDropDwonProps> = (props) => {
           return (
             <li
               onClick={() => {
+                toTheCkb(path);
                 // jumpPage(path, {
                 //     query,
                 //     isOtherSystem: true
