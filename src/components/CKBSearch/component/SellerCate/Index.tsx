@@ -80,6 +80,8 @@ const SellerCate = () => {
         String(i.productCategoryFrontendId) ===
         seletParams.productCategoryFrontendId
     );
+    console.log(cate, "cate");
+
     return (
       {
         [Local.JA]: cate?.cateNameJp,
@@ -252,7 +254,7 @@ const SellerCate = () => {
                   className="drop-item"
                 >
                   <span className="text-[12px] color: rgba(0, 0, 0, 0.88);">
-                    {seller?.label}
+                    {i?.label}
                   </span>
                 </div>
               ),

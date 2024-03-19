@@ -49,7 +49,7 @@ export interface SelectParams {
 }
 
 export const searchParamsAtom = atom<SelectParams>({
-  platformType: "",
+  platformType: "AM",
   productCategoryFrontendId: "",
   productCategoryFrontendIdNameZh: "",
 });
@@ -140,11 +140,18 @@ const CKBSearch = () => {
   const handleJump = async (formData: SearchParams = {}) => {
     // TODO:省略插件安装逻辑
     const arr: any = [];
-    const { platformType, sortType, sellPrice, other = [] } = formData;
+    const {
+      platformType = "AM",
+      sortType = "",
+      sellPrice,
+      other = [],
+    } = formData;
     const startPrice = sellPrice?.min ?? "";
     const endPrice = sellPrice?.max ?? "";
     const url = externalLinks[platformType ?? ""];
     const key = platformType === "AM" ? "keywords=" : "q=";
+    console.log(platformType);
+    debugger;
     if (platformType === "TB") {
       arr.push(
         "sort=" + sortType,
@@ -224,7 +231,7 @@ const CKBSearch = () => {
           productCategoryFrontendId: seletParams.productCategoryFrontendId,
           langType,
           schannel: 2,
-          sortType: formData.sortType,
+          sortType: formData.sortType || "",
           sellPriceStart: formData.sellPrice?.min,
           sellPriceEnd: formData.sellPrice?.max,
           _t: Date.now(),
@@ -328,7 +335,10 @@ const CKBSearch = () => {
                   placement="bottom"
                   content={
                     <Particular
-                      setKeyword={setKeyword}
+                      setKeyword={(e) => {
+                        console.log(e);
+                        setKeyword(e);
+                      }}
                       keyword={keyword}
                       handleSearch={handleSearch}
                       handleJump={handleJump}

@@ -85,6 +85,10 @@ const Particular = ({
     handleJump(form.getFieldsValue());
   };
 
+  useEffect(() => {
+    form.setFieldValue("keyword", keyword);
+  }, [form, keyword]);
+
   return (
     <div className={classNames("Particular-content", getLang())}>
       <Form
