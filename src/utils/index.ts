@@ -156,7 +156,7 @@ export const getLocalStorageByKey = <K extends keyof LocalStorageData, T>(
 /** 通过 cookie 获取登录信息 */
 export const getCookieToken=bwCookie.get(TokenSignCookie)||bwCookie.get(encodeURIComponent(TokenSignCookie));
 
-export const getCookieShop=bwCookie.get(ShopCookie)||bwCookie.get(encodeURIComponent(ShopCookie));
+export const getCookieShop=()=>bwCookie.get(ShopCookie)||bwCookie.get(encodeURIComponent(ShopCookie));
 
 /** 通过 cookie 获取登录信息 */
 export const getCookiePlat=bwCookie.get(PlatCookie)||bwCookie.get(encodeURIComponent(PlatCookie))||'d2c';

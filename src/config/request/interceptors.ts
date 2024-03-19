@@ -22,7 +22,7 @@ export interface User {
 
 // 获取店铺id
 export const getShopId = () => {
-    const shopStr = getCookieShop;
+    const shopStr = getCookieShop();
     if (shopStr) return shopStr;
 };
 

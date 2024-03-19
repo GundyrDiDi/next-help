@@ -60,10 +60,7 @@ const ShopList = ({ children, t }: ShopListProps) => {
           <div
             className="leading-[34px] px-[20px] flex items-center"
             onClick={() => {
-              window.localStorage.setItem(
-                "production_route/curShop",
-                String(item.customerShopId)
-              );
+              setCookieShopId(String(item.customerShopId));
               window.location.reload();
             }}
           >
@@ -154,7 +151,7 @@ const ShopList = ({ children, t }: ShopListProps) => {
               key={index}
               onClick={() => {
                 setShopPlatform(item.value);
-                setCookieShopId(String(item.value));
+                // setCookieShopId(String(item.value));
               }}
             >
               {shopPlatform === item.value ? (

@@ -14,7 +14,7 @@ import { Local } from "@/i18n/settings";
 import { LocalContext, runsOnServerSide } from "@/i18n/client";
 import platAtom from "@/model/Plat";
 import { getCookiePlat, getCookieToken } from "@/utils";
-import { togglePlat } from "@/config/request/interceptors";
+import { getShopId, togglePlat } from "@/config/request/interceptors";
 import { ENUM_SYSTEM_SOURCE } from "@/const/enum";
 import CKBSearch from "@/components/CKBSearch";
 import { TokenSignCookie } from "@/config";
@@ -52,13 +52,15 @@ export default function Layout({
     if (!runsOnServerSide) {
       if (getCookieToken) {
         await requestCustomerDetail();
-        const res = await getCurrentCartList();
-        setMessages((val) => {
-          return {
-            ...val,
-            carNum: res.data?.cartSummary?.sumCartProductQuantity ?? 0,
-          };
-        });
+        if (getShopId()) {
+          const res = await getCurrentCartList();
+          setMessages((val) => {
+            return {
+              ...val,
+              carNum: res.data?.cartSummary?.sumCartProductQuantity ?? 0,
+            };
+          });
+        }
       }
       setPlat(getCookiePlat);
       togglePlat(
