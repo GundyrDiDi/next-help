@@ -358,10 +358,9 @@ const CKBHeader = ({}: Props) => {
                     <img
                       src={`https://static-s.theckb.com/BusinessMarket/Client/country/flag_${siteCode}_tab.png`}
                       alt=""
-                      width={20}
-                      height={14}
                       style={{
                         marginRight: 4,
+                        width: "14px",
                       }}
                     />
                   </div>

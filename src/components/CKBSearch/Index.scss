@@ -95,9 +95,9 @@
 #search .flash-trigget {
   border-color: var(--fcolor);
 
-  :deep(.el-dropdown .el-button) {
-    animation: flash2 3s linear;
-  }
+  // :deep(.el-dropdown .el-button) {
+  //   animation: flash2 3s linear;
+  // }
 }
 
 #search .el-input {

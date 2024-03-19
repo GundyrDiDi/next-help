@@ -105,6 +105,7 @@ export default function Layout({
         colorPrimary: "#008060",
         borderRadius: 4,
         controlOutlineWidth: 0,
+        fontSize: 12,
       },
       components: {
         Badge: {
@@ -130,6 +131,10 @@ export default function Layout({
           controlOutlineWidth: 0,
           motionEaseInOutCirc: "cubic-dezier(0,0,0,0)",
           defaultActiveColor: "transparent",
+          fontSize: 12,
+        },
+        Select: {
+          fontSize: 12,
         },
         Wave: {
           motionEaseInOutCirc: "cubic-dezier(0,0,0,0)",
@@ -146,6 +151,7 @@ export default function Layout({
           colorPrimary: "#2e4968",
           borderRadius: 4,
           controlOutlineWidth: 0,
+          fontSize: 12,
         },
         components: {
           Badge: {

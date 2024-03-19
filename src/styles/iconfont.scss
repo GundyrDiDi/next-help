@@ -1,15 +1,19 @@
 @font-face {
   font-family: "iconfont";
   /* Project id 2944199 */
-  src: url('https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/iconfont.woff2?t=1692324841799') format('woff2'),
-    url('https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/iconfont.woff?t=1692324841799') format('woff'),
-    url('https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/iconfont.ttf?t=1692324841799') format('truetype'),
-    url('https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/iconfont.svg?t=1692324841799#iconfont') format('svg');
+  src: url("https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/iconfont.woff2?t=1692324841799")
+      format("woff2"),
+    url("https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/iconfont.woff?t=1692324841799")
+      format("woff"),
+    url("https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/iconfont.ttf?t=1692324841799")
+      format("truetype"),
+    url("https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/iconfont.svg?t=1692324841799#iconfont")
+      format("svg");
 }
 
 .iconfont {
   font-family: "iconfont" !important;
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

@@ -31,8 +31,8 @@ const ArticlesCont = ({ frogArticle, querys }: Props) => {
       <div
         className={classNames("Article w-[100%]", { readLess: markingShow })}
       >
-        <div className="Article-main box-style">
-          <div className="content w-[1200px] mx-auto">
+        <div className="Article-main box-style viewport">
+          <div className="content">
             <div className="content-title">{frogArticle?.frogArticleTitle}</div>
             {frogArticle?.frogArticleId !== 151 && (
               <div className="content-date">

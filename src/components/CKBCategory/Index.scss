@@ -7,112 +7,115 @@
   line-height: 30px;
   background: var(--fcolor);
   color: #fff;
-}
-
-.seller {
-  width: 160px;
-}
-
-// 类目列表
-.cate-list {
-  width: 880px;
-}
-
-.second-drop {
-  &::before {
-    content: "";
-    display: flex;
-    position: absolute;
-    left: -0.5%;
-    top: 10%;
-    height: 80%;
-    width: 1px;
-    background: var(--f5color);
-    transform: scale(0.8, 0.4);
+  .seller {
+    width: 160px;
   }
 
-  width: 60px;
-  max-width: 220px;
-
-  &:hover {
-    width: 220px;
-    flex-basis: 220px;
+  // 类目列表
+  .cate-list {
+    width: 880px;
   }
 
-  .second-item {
-    width: 100%;
-    white-space: nowrap;
-    font-weight: 500;
+  .second-drop {
+    &::before {
+      content: "";
+      display: flex;
+      position: absolute;
+      left: -0.5%;
+      top: 10%;
+      height: 80%;
+      width: 1px;
+      background: var(--f5color);
+      transform: scale(0.8, 0.4);
+    }
+
+    width: 60px;
+    max-width: 220px;
 
     &:hover {
-      background: #f7f7f7;
+      width: 220px;
+      flex-basis: 220px;
+    }
+
+    .second-item {
+      width: 100%;
+      white-space: nowrap;
+      font-weight: 500;
+
+      &:hover {
+        background: #f7f7f7;
+      }
     }
   }
-}
 
-.third-item {
-  display: flex;
-  flex-wrap: nowrap;
-  width: 100%;
-  white-space: nowrap;
-  padding: 12px 10px;
-  font-weight: 500;
-  color: #666;
-
-  &:hover {
-    color: var(--fcolor);
-  }
-}
-
-//
-.toggle {
-  // width: 110px;
-  font-size: 12px;
-  padding: 0 8px;
-  margin-right: -20px;
-
-  &::before {
-    content: "";
+  .third-item {
     display: flex;
-    position: absolute;
-    left: -0.5%;
-    top: 10%;
-    height: 80%;
-    width: 1px;
-    background: var(--linecolor);
-    transform: scale(0.8, 0.6);
+    flex-wrap: nowrap;
+    width: 100%;
+    white-space: nowrap;
+    padding: 12px 10px;
+    font-weight: 500;
+    color: #666;
+
+    &:hover {
+      color: var(--fcolor);
+    }
   }
 
-  &::after {
-    content: "";
-    display: flex;
-    position: absolute;
-    left: 100%;
-    top: 10%;
-    height: 80%;
-    width: 1px;
-    background: var(--linecolor);
-    transform: scale(0.8, 0.6);
+  //
+  .toggle {
+    // width: 110px;
+    font-size: 12px;
+    padding: 0 8px;
+    margin-right: -20px;
+
+    &::before {
+      content: "";
+      display: flex;
+      position: absolute;
+      left: -0.5%;
+      top: 10%;
+      height: 80%;
+      width: 1px;
+      background: var(--linecolor);
+      transform: scale(0.8, 0.6);
+    }
+
+    &::after {
+      content: "";
+      display: flex;
+      position: absolute;
+      left: 100%;
+      top: 10%;
+      height: 80%;
+      width: 1px;
+      background: var(--linecolor);
+      transform: scale(0.8, 0.6);
+    }
   }
-}
 
-.my-switch {
-  margin-left: 4px;
-  transform: translateY(-1px);
-}
+  .my-switch {
+    margin-left: 4px;
+    transform: translateY(-1px);
+  }
 
-:deep(.el-tooltip__trigger) {
-  padding-left: 12px;
-}
+  :deep(.el-tooltip__trigger) {
+    padding-left: 12px;
+  }
 
-.tip {
-  font-size: 12px;
-  font-weight: 600;
-  padding: 8px 0;
-  border-bottom: 1px solid #eee;
-}
+  .tip {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+  }
 
-.ant-switch.ant-switch-checked {
-  border-color: rgb(229, 229, 229);
-  background-color: rgb(229, 229, 229);
+  .ant-switch {
+    border-color: rgb(229, 229, 229);
+    background-color: rgb(229, 229, 229);
+  }
+  .ant-switch.ant-switch-checked {
+    border-color: var(--dcolor);
+    background-color: var(--dcolor);
+  }
 }

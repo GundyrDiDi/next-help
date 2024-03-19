@@ -264,7 +264,7 @@ const SellerCate = () => {
         }}
       >
         <Button shape="round" className="xl-btn rt-btn">
-          <div className="line--only w-[60px] align-bottom">
+          <div className="line--only text-[12px] w-[60px] align-bottom">
             {showDrapText2}
           </div>
           <i
