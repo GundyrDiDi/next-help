@@ -4,6 +4,12 @@ import { cookies } from "next/headers";
 import { PlatCookie, TokenSignCookie } from "@/config";
 import "./globals.scss";
 
+export const metadata = {
+  icons: {
+    icon: "/favicon.ico",
+  },
+};
+
 export default function RootLayout({
   children,
   params: { lang },

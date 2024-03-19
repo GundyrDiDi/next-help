@@ -9,11 +9,6 @@ import { useTranslation } from "@/i18n/client";
 const MyPopover = () => {
   const [fastCates, setFastCates] = useAtom(fastCatesAtom);
   const { t } = useTranslation();
-  // const [state, setState] = useState<ItemType[]>([
-  //   { id: 1, name: "shrek" },
-  //   { id: 2, name: "fiona" },
-  // ]);
-
   const dragContent = () => (
     <div className="w-[240px]">
       {/* @ts-ignore-next-line */}

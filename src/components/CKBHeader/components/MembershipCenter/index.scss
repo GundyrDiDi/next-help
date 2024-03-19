@@ -3,41 +3,45 @@
   box-shadow: none;
 }
 
-
-.newMemberInfo{
+.newMemberInfo {
   top: 20px;
   left: 15px;
 
-  span{
+  span {
     font-size: 20px;
     font-weight: 800;
-    color: #FFFFFF;
+    color: #ffffff;
     line-height: 27px;
-    background: linear-gradient(180deg, #FE8300 0%, #EC5300 100%);
+    background: linear-gradient(180deg, #fe8300 0%, #ec5300 100%);
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
   }
 
-  .numBack{
+  .numBack {
     min-width: 20px;
     padding: 0 6px;
     height: 30px;
-    background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, #FFFFFF 47%, rgba(255,255,255,0.1) 100%);
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      #ffffff 47%,
+      rgba(255, 255, 255, 0.1) 100%
+    );
 
-    span{
+    span {
       font-size: 26px;
       font-weight: 800;
-      color: #FFFFFF;
+      color: #ffffff;
       line-height: 30px;
-      background: linear-gradient(180deg, #FE8300 0%, #EC5300 100%);
+      background: linear-gradient(180deg, #fe8300 0%, #ec5300 100%);
       -webkit-text-fill-color: transparent;
       -webkit-background-clip: text;
     }
 
-    .symbol{
+    .symbol {
       font-size: 12px;
       position: relative;
-      bottom: -4px;;
+      bottom: -4px;
     }
   }
 }
@@ -50,20 +54,20 @@
 //   cursor: pointer;
 // }
 
-.membershipExpire{
+.membershipExpire {
   // background-image: url(https://static-s.theckb.com/BusinessMarket/OEM/home_tab_nonvip%402x.png);
   // background-size: 100% 100%;
   // background-repeat: no-repeat;
   // width: 300px;
   // height: 350px;
-  .content{
+  .content {
     padding: 15px;
-    .member-status{
+    .member-status {
       font-size: 20px;
       font-weight: bold;
       color: #3c3c3c;
     }
-    .member-tips{
+    .member-tips {
       font-size: 12px;
       font-weight: 500;
       color: #794a02;
@@ -109,10 +113,14 @@
       font-weight: 500;
       color: #794a02;
       margin-top: 10px;
-      &:hover{
-        background: #EFD2A8;
-        color: #9D702A;
+      &:hover {
+        background: #efd2a8;
+        color: #9d702a;
       }
     }
   }
+}
+
+.isSpecial {
+  background: hsla(0, 0%, 100%, 0.1);
 }

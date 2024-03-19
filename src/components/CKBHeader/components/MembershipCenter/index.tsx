@@ -14,6 +14,7 @@ import "./index.scss";
 import IconVIPLogo from "@/components/Icon/IconVIPLogo";
 import { ENUM_PAGE } from "@/const/enum";
 import { isLogin } from "@/utils";
+import classNames from "classnames";
 // import { jumpPage } from '@/utils';
 // import { useRequest } from 'ahooks';
 interface MembershipTrialActivityComboReqDTOS {
@@ -54,10 +55,13 @@ const vipLevelImg: { [key: number]: string } = {
   2: "https://static-s.theckb.com/BusinessMarket/OEM/home_tab_standard%402x.png",
   3: "https://s.theckb.com/img/home_tab_bussines@2x.bafef553.png",
   4: "https://static-s.theckb.com/BusinessMarket/OEM/home_tab_first%402x.png",
+  5: "https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/home_tab_special@2x.png",
 };
 
 const membershipLevel = (props: MembershipProps) => {
   const { membership, newMemberActivity, t } = props;
+  console.log(membership, "membership");
+
   const membershipExplain = [
     t("能够在中国找到丰富的供应商"),
     t("按照日本质量标准进行检验（隶属于日本公司）"),
@@ -71,7 +75,12 @@ const membershipLevel = (props: MembershipProps) => {
       return (
         <div className="w-[300px] pt-[9px]">
           <div className="flex">
-            <div className="w-[80px] text-center bg-[color:#1d1d1d] rounded-tl-[10px] rounded-br-[10px] text-[#e5bf88]">
+            <div
+              className={classNames(
+                "w-[80px] text-center bg-[color:#1d1d1d] rounded-tl-[10px] rounded-br-[10px] text-[#e5bf88]",
+                { isSpecial: membership?.templateLevel === 5 }
+              )}
+            >
               {t("我的会员")}
             </div>
           </div>
@@ -145,7 +154,12 @@ const membershipLevel = (props: MembershipProps) => {
       return (
         <div className="w-[300px] pt-[9px] membershipExpire">
           <div className="flex">
-            <div className="w-[80px] text-center bg-[color:#1d1d1d] rounded-tl-[10px] rounded-br-[10px] text-[#e5bf88]">
+            <div
+              className={classNames(
+                "w-[80px] text-center bg-[color:#1d1d1d] rounded-tl-[10px] rounded-br-[10px] text-[#e5bf88]",
+                { isSpecial: membership?.templateLevel === 5 }
+              )}
+            >
               {t("我的会员")}
             </div>
           </div>
@@ -199,6 +213,7 @@ const membershipLevel = (props: MembershipProps) => {
   return (
     <div className="membershipCenter">
       <Popover
+        open
         content={popverContent()?.domTag}
         style={{
           padding: 0,
