@@ -98,7 +98,7 @@ const CKBCategory = () => {
         return t("最多可选择X个", { X: 8 });
       }
     }
-    setFastCates(fastCates);
+    setFastCates([...fastCates]);
   };
 
   return (
