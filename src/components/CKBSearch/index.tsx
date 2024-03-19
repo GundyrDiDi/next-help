@@ -3,6 +3,7 @@ import {
   Form,
   Input,
   InputProps,
+  Modal,
   Popover,
   Select,
   Space,
@@ -10,13 +11,20 @@ import {
 } from "antd";
 import "./Index.scss";
 import classNames from "classnames";
-import { ChangeEvent, MutableRefObject, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  MutableRefObject,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useTranslation } from "@/i18n/client";
 import {
   SearchLangType,
   externalLinks,
   getSearchLangType,
+  pluginImg,
   useLangOptions,
 } from "./initData";
 import { Lang, MessageAtom } from "@/model";
@@ -55,6 +63,8 @@ export const searchParamsAtom = atom<SelectParams>({
 });
 let timer: string | number | NodeJS.Timeout | null | undefined = null;
 
+export const isInstallAtom = atom(false);
+
 const CKBSearch = () => {
   const [t] = useTranslation();
   const [lang] = useAtom(Lang);
@@ -66,6 +76,8 @@ const CKBSearch = () => {
   const setSelectParams = useSetAtom(searchParamsAtom);
   const [categoryList] = useAtom(cateListAtom);
   const nodeRef = useRef(null);
+  const [isInstall, setIsInstall] = useAtom(isInstallAtom);
+  const [pluginShow, setPluginShow] = useState(false);
 
   // 空词输入框触发效果
   const [nullTrigger, setNullTrigger] = useState(false);
@@ -138,6 +150,10 @@ const CKBSearch = () => {
 
   // 搜索跳转
   const handleJump = async (formData: SearchParams = {}) => {
+    if (!isInstall) {
+      setPluginShow(true);
+      return;
+    }
     // TODO:省略插件安装逻辑
     const arr: any = [];
     const {
@@ -256,6 +272,23 @@ const CKBSearch = () => {
     toTheCkb(`/shopcart`);
   };
 
+  useEffect(() => {
+    const fn = (res: any) => {
+      const { isInstall } = res.data ?? {};
+      if (isInstall) {
+        setIsInstall(isInstall || false);
+        window.postMessage(
+          {
+            cmd: "transferLang",
+            lang,
+          },
+          "*"
+        );
+      }
+    };
+    window.addEventListener("message", fn);
+  }, [lang, setIsInstall]);
+
   // 热词选择
   const hotSearchSelected = (
     keyword: string,
@@ -278,6 +311,8 @@ const CKBSearch = () => {
     }
     setShowHot(false);
   };
+
+  const pluginImgs = pluginImg[lang];
 
   return (
     <div id="search">
@@ -405,6 +440,28 @@ const CKBSearch = () => {
           </Button>
         </div>
       </div>
+      <Modal
+        title={null}
+        open={pluginShow}
+        wrapClassName="plugin-model"
+        footer={null}
+        onCancel={() => {
+          setPluginShow(false);
+        }}
+      >
+        <img
+          referrerPolicy="no-referrer"
+          className="bg"
+          src={pluginImgs.plugin1}
+          alt=""
+        />
+        <img
+          referrerPolicy="no-referrer"
+          className="plu-btn"
+          src={pluginImgs.footer}
+          alt=""
+        />
+      </Modal>
       <Spin spinning={loading} fullscreen />
     </div>
   );

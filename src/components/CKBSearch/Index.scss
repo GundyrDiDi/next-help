@@ -281,3 +281,76 @@
   opacity: 0;
   transition: opacity 200ms;
 }
+
+.plugin-model .ant-modal .ant-modal-content {
+  background-color: transparent;
+  box-shadow: none;
+  .ant-modal-body {
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+
+  .bg {
+    height: 400px;
+    width: 400px;
+  }
+
+  .plu-btn {
+    position: absolute;
+    bottom: 82px;
+    left: 160px;
+    animation: rotate 0.7s linear infinite;
+    cursor: pointer;
+    &.en {
+      height: 40px;
+      left: 141px;
+    }
+  }
+
+  .shadow {
+    display: block;
+    height: 8px;
+    width: 115px;
+    background: #000;
+    opacity: 0.2;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 61px;
+    left: 143px;
+    animation: shadow 0.7s linear infinite;
+  }
+
+  @keyframes shadow {
+    0%,
+    100% {
+      transform: scaleX(1);
+    }
+
+    50% {
+      transform: scaleX(1.2);
+    }
+  }
+
+  @keyframes rotate {
+    0% {
+      transform: translateY(0);
+    }
+
+    25% {
+      transform: translateY(7px);
+    }
+
+    50% {
+      transform: translateY(14px) scale(1.1, 0.8);
+    }
+
+    75% {
+      ransform: translateY(7px);
+    }
+
+    100% {
+      transform: translateY(0);
+    }
+  }
+}

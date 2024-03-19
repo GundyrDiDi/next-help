@@ -199,3 +199,21 @@ export const menu1Items = [
   { label: "淘宝", key: "TB" },
   { label: "Tmall", key: "TM" },
 ];
+
+export const pluginImg={
+  [Local.JA]:{
+    plugin1:'https://static-s.theckb.com/BusinessMarket/Client/plugin/plugin1.png',
+    plugin2:'https://static-s.theckb.com/BusinessMarket/Client/plugin/plugin2.png',
+    footer:'https://static-s.theckb.com/BusinessMarket/Client/plugin/plugin-btn.png'
+  },
+  [Local.EN]:{
+    plugin1:'https://static-s.theckb.com/BusinessMarket/Client/plugin/en-plugin1.png',
+    plugin2:'https://static-s.theckb.com/BusinessMarket/Client/plugin/en-plugin2.png',
+    footer:'https://static-s.theckb.com/BusinessMarket/Client/plugin/en-plugin-btn.png',
+  },
+  [Local.KO]:{
+    plugin1:'https://static-s.theckb.com/BusinessMarket/Client/plugin/Kr-plugin1.png',
+    plugin2:'https://static-s.theckb.com/BusinessMarket/Client/plugin/Kr-plugin2.png',
+    footer:'https://static-s.theckb.com/BusinessMarket/Client/plugin/Kr-plugin-btn.png',
+  }
+}
