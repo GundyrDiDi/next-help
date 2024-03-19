@@ -2,7 +2,7 @@ import { atom } from 'jotai';
 import { request } from '@/config/request';
 import { CustomerDetailRespDTO, CustomerMembershipResDTO } from '@/service/customer';
 import {  Site } from '@/const';
-import { getCookieToken, setCookieShopId } from '@/utils';
+import { getCookieShop, getCookieToken, setCookieShopId } from '@/utils';
 import cookie from 'js-cookie'
 import { TokenSignCookie } from '@/config';
 
@@ -37,7 +37,14 @@ const atomRequestCustomerDetail = atom(
             };
             set(atomCustomerDetail, res as CustomerDetailRespDTO2);
             const fistShopId = response.data?.customerShopList?.[0].customerShopId||'';
+           const shopId=  getCookieShop||'';
+           const index =response.data?.customerShopList?.findIndex(i=>String(i?.customerShopId)===shopId)||-1;
+           if(index>-1){
+            setCookieShopId(shopId!)
+           }else{
             setCookieShopId(String(fistShopId))
+           }
+         
             }
            
         } catch {

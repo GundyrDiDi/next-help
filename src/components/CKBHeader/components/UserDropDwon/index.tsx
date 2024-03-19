@@ -72,10 +72,6 @@ const UserDropDwon: React.FC<UserDropDwonProps> = (props) => {
             <li
               onClick={() => {
                 toTheCkb(path);
-                // jumpPage(path, {
-                //     query,
-                //     isOtherSystem: true
-                // });
               }}
               key={path}
               className="hover:text-[color:--color-primary] hover:bg-[color:--color-primary-light-bg] cursor-pointer px-[16px] leading-[40px]"
