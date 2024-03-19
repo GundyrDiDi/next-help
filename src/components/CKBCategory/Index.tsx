@@ -83,22 +83,25 @@ const CKBCategory = () => {
   const toggleFastCates = (
     v: widthCheckProductCategoryFrontendShortRespDTO
   ) => {
-    const reverse = !v.check;
     const item = fastCates.find(
       (i) => i.productCategoryFrontendId === v.productCategoryFrontendId
     );
-    console.log(item, fastCates);
-
-    if (item) {
+    if (!item) {
+      return;
+    }
+    const reverse = !v.check;
+    if (!reverse) {
       item.check = reverse;
+      setFastCates([...fastCates]);
+      return;
     }
-    if (reverse) {
-      const len = fastCates.filter((val) => val.check).length;
-      if (len >= 8) {
-        return t("最多可选择X个", { X: 8 });
-      }
+    const len = fastCates.filter((val) => val.check).length;
+    if (len >= 8) {
+      return message.warning(t("最多可选择X个", { X: 8 }));
+    } else {
+      item.check = reverse;
+      setFastCates([...fastCates]);
     }
-    setFastCates([...fastCates]);
   };
 
   return (
