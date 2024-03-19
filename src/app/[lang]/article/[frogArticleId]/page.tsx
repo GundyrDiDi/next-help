@@ -20,3 +20,31 @@ export default async function Page({ params, searchParams }: Props) {
   const article = await getData(frogArticleId);
   return <ArticlesCont frogArticle={article} querys={searchParams} />;
 }
+
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const frogArticleId = +params.frogArticleId;
+  const article = await getData(frogArticleId);
+  const title = article?.frogArticleTitle;
+  return {
+    metadataBase: new URL("https://s.theckb.com/"),
+    alternates: {
+      canonical: "/",
+      languages: {
+        en: "/en",
+        ko: "/ko",
+        ja: "/ja",
+      },
+    },
+    title,
+    description: article.seoDescription || article.frogArticleTitle,
+    openGraph: {
+      siteName: "THE CKB",
+      images: "https://static-s.theckb.com/BusinessMarket/Client/favicon.ico",
+      title,
+      description: article.seoDescription || article.frogArticleTitle,
+    },
+  };
+}
