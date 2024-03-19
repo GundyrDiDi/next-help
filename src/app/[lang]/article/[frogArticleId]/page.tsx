@@ -38,7 +38,6 @@ export async function generateMetadata(
         ja: "/ja",
       },
     },
-    title,
     description: article.seoDescription || article.frogArticleTitle,
     openGraph: {
       siteName: "THE CKB",
