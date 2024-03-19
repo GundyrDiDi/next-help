@@ -44,7 +44,7 @@ const ArticleSwitch = ({ frogArticleId, type, source }: Props) => {
   };
 
   return (
-    <div className="ArticleSwitch">
+    <div className="ArticleSwitch viewport">
       <div
         onClick={() => articleSwitch(lastNextMsg?.prepArticleId)}
         className="ArticleSwitch-last"

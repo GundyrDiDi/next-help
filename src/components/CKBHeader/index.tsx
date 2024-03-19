@@ -143,7 +143,7 @@ const CKBHeader = ({}: Props) => {
   return (
     <div className="CKBHeader">
       <div className="wrap of-hd viewport">
-        <div className="auto-width flex justify-between">
+        <div className="auto-width flex justify-between w-[1220px]">
           <div
             className="logo flex items-center cursor-pointer"
             onClick={() => linkToPure()}

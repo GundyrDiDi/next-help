@@ -14,9 +14,9 @@ interface Props {
   title?: string;
   // 是否显示右侧按钮
   showBtn: boolean;
-  type?:string;
+  type?: string;
 }
-const HotArticles = ({ title = "热门文章", showBtn,type }: Props) => {
+const HotArticles = ({ title = "热门文章", showBtn, type }: Props) => {
   const { t } = useTranslation();
   const [list, setList] = useState<FrogArticleRespDTO[]>([]);
   const stationCode = useSite2Station();
@@ -40,7 +40,7 @@ const HotArticles = ({ title = "热门文章", showBtn,type }: Props) => {
   }, []);
 
   return (
-    <div className="HotArticles">
+    <div className="HotArticles viewport">
       <div className="HotArticles-header">
         <div className="HotArticles-header-title">{t(title)}</div>
         <div className="HotArticles-header-btn">
@@ -56,17 +56,19 @@ const HotArticles = ({ title = "热门文章", showBtn,type }: Props) => {
         </div>
       </div>
       <div className="HotArticles-list">
-          {!!list.length ? (
-            list.map((i) => {
-              return <ArticleItem type={type} article={i} key={i.frogArticleId} />;
-            })
-          ) : (
-            <Empty
-              className="HotArticles-list-empty"
-              description={t("没有更多了")}
-            />
-          )}
-        </div>
+        {!!list.length ? (
+          list.map((i) => {
+            return (
+              <ArticleItem type={type} article={i} key={i.frogArticleId} />
+            );
+          })
+        ) : (
+          <Empty
+            className="HotArticles-list-empty"
+            description={t("没有更多了")}
+          />
+        )}
+      </div>
     </div>
   );
 };

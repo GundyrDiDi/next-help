@@ -14,10 +14,12 @@ $hover-text-color: var(--hfccolor);
       font-size: 16px;
     }
   }
-  &-last, &-next {
+  &-last,
+  &-next {
     cursor: pointer;
     &:hover {
-      .action-text, .article-title {
+      .action-text,
+      .article-title {
         color: $hover-text-color;
       }
     }
@@ -31,7 +33,7 @@ $hover-text-color: var(--hfccolor);
       font-size: 14px;
       line-height: 22px;
       margin-top: 2px;
-      overflow:hidden;
+      overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
