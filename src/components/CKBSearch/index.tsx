@@ -166,7 +166,6 @@ const CKBSearch = () => {
         ...other
       );
     }
-    debugger;
     if (["1", "3", "4"].includes(langType) && keyword.trim()) {
       const formData = {
         from: lang,
