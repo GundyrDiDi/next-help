@@ -151,7 +151,6 @@ const CKBSearch = () => {
     const url = externalLinks[platformType ?? ""];
     const key = platformType === "AM" ? "keywords=" : "q=";
     console.log(platformType);
-    debugger;
     if (platformType === "TB") {
       arr.push(
         "sort=" + sortType,
