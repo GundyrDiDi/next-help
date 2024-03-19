@@ -16,6 +16,7 @@ import { togglePlat } from "@/config/request/interceptors";
 import { Site } from "@/const";
 import { useAtom } from "jotai";
 import { CustomerDetail } from "@/model";
+import { setCookieShopId } from "@/utils";
 const myShopIcon: { [key: number]: string } = {
   1: "https://static-s.theckb.com/BusinessMarket/OEM/shopIcon_base.png",
   4: "https://static-s.theckb.com/BusinessMarket/OEM/shopIcon_amazon.png",
@@ -151,7 +152,10 @@ const ShopList = ({ children, t }: ShopListProps) => {
                 shopPlatform === item.value ? "radio-item-active" : null,
               ].join(" ")}
               key={index}
-              onClick={() => setShopPlatform(item.value)}
+              onClick={() => {
+                setShopPlatform(item.value);
+                setCookieShopId(String(item.value));
+              }}
             >
               {shopPlatform === item.value ? (
                 <img
