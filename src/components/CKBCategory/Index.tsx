@@ -7,7 +7,7 @@ import {
   widthCheckProductCategoryFrontendShortRespDTO,
 } from "../CKBSearch/component/SellerCate/Index";
 import "./Index.scss";
-import { createRef, useMemo } from "react";
+import { createRef, useMemo, useState } from "react";
 import { externalLinks, menu1Items } from "../CKBSearch/initData";
 import { searchParamsAtom } from "../CKBSearch";
 import ThirdDrop from "./components/ThirdDrop/Index";
@@ -24,9 +24,10 @@ const { encode } = gbk;
 
 const CKBCategory = () => {
   const [fastCates, setFastCates] = useAtom(fastCatesAtom);
-  const [seletParams, setSelectParams] = useAtom(searchParamsAtom);
+  // const [seletParams, setSelectParams] = useAtom(searchParamsAtom);
   const selectParams = useAtomValue(searchParamsAtom);
   const { t } = useTranslation();
+  const [platformType, setPlatformType] = useState("");
   // 站内站外搜素
   const [state, { toggle }] = useToggle(false);
 
@@ -39,8 +40,8 @@ const CKBCategory = () => {
     });
   }, [t]);
   const firstValue = useMemo(() => {
-    return firstList?.find((i) => i.key === seletParams.platformType) || {};
-  }, [firstList, seletParams.platformType]);
+    return firstList?.find((i) => i.key === platformType) || {};
+  }, [firstList, platformType]);
 
   const nfastCates = fastCates
     .map((i) => {
@@ -52,12 +53,7 @@ const CKBCategory = () => {
     .filter((i) => i.check);
 
   const changeParams = (i: SellerProps) => {
-    setSelectParams((val) => {
-      return {
-        ...val,
-        platformType: i.key ?? "",
-      };
-    });
+    setPlatformType(i?.key || "");
   };
 
   // 跳转外链
