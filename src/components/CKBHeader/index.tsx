@@ -31,6 +31,9 @@ interface Props {
   plat?: string;
 }
 
+// getSmcBlackApi().then((res) => {
+//   canUseSmc.value = !res.data
+// })
 const CKBHeader = ({}: Props) => {
   const timerRef = useRef<{
     timer: NodeJS.Timer;
@@ -49,6 +52,7 @@ const CKBHeader = ({}: Props) => {
   const [cartNum, setCartNum] = useState<number>();
   const [site, setSite] = useState<string>();
   const membership = customerDetail?.membership;
+  const [canUseSmc, setCanUseSmc] = useState(false);
 
   const systemSource =
     plat === "d2c" ? ENUM_SYSTEM_SOURCE.D2C : ENUM_SYSTEM_SOURCE.B2B;
@@ -57,10 +61,19 @@ const CKBHeader = ({}: Props) => {
     const res = await request.customer.notify.getPrivateUnreadCount();
     setMessageNum(res.data);
   };
+  // 是否是推广联盟黑户
+  const getSmcCanUser = async () => {
+    const res = await request.customer.checkSmcBlack.checkSmcBlack();
+    setCanUseSmc(Boolean(res.data));
+  };
+
   useEffect(() => {
     if (customerDetail?.customerId) {
       getPrivateUnreadCount();
       getCurrentCartList();
+      getSmcCanUser();
+    } else {
+      setCanUseSmc(true);
     }
   }, [customerDetail?.customerId]);
   useEffect(() => {
@@ -142,7 +155,7 @@ const CKBHeader = ({}: Props) => {
             />
           </div>
           <div className="pl-[10px] flex items-center">
-            {stationCode === Site.JA && (
+            {canUseSmc && (
               <div className={menuCommonStyle}>
                 <img
                   src="https://static-s.theckb.com/BusinessMarket/OEM/new_tag.png"
