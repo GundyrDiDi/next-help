@@ -15,6 +15,7 @@ import IconVIPLogo from "@/components/Icon/IconVIPLogo";
 import { ENUM_PAGE } from "@/const/enum";
 import { isLogin } from "@/utils";
 import classNames from "classnames";
+import { toTheCkb } from "@/utils/router";
 // import { jumpPage } from '@/utils';
 // import { useRequest } from 'ahooks';
 interface MembershipTrialActivityComboReqDTOS {
@@ -223,7 +224,12 @@ const membershipLevel = (props: MembershipProps) => {
         overlayInnerStyle={popverContent()?.style}
         id="membershipCenter"
       >
-        <div className="flex items-center">
+        <div
+          className="flex items-center"
+          onClick={() => {
+            toTheCkb(ENUM_PAGE.VIP_LEVEL);
+          }}
+        >
           <div className="top-[-1px] relative pr-[2px]">
             <IconVIPLogo />
           </div>

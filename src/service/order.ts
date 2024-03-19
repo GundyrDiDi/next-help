@@ -98,6 +98,7 @@ export interface AbnormalOrder {
   shopProductSku?: string;
   /** @format int32 */
   sourceType?: number;
+  stationCode?: string;
   systemOrderNo?: string;
   /** @format int32 */
   systemSource?: number;
@@ -300,6 +301,8 @@ export interface AbnormalOrderRespDTO {
   remark?: string;
   /** 店铺商品SKU(店铺商品库) */
   shopProductSku?: string;
+  /** 日本:JapanStation,韩国:KoreaStation,英国:UkStation */
+  stationCode?: string;
   /**
    * 系统来源: 1-D2C; 2-B2B
    * @format int32
@@ -3211,6 +3214,8 @@ export interface DeliveryBoxDetailRespDTO {
   modifier?: number;
   /** @format int32 */
   nums?: number;
+  /** @format int32 */
+  pkgAmount?: number;
   productImg?: string;
   productName?: string;
   productSku?: string;
@@ -3432,6 +3437,8 @@ export interface DeliveryDetailCreateDTO {
 export interface DeliveryPkgDTO {
   /** @format int32 */
   inNums?: number;
+  /** @format int32 */
+  pkgAmount?: number;
   pkgCode?: string;
   productImg?: string;
   productName?: string;
@@ -5477,6 +5484,8 @@ export interface OrderItemSpecialCheckEditReqDTO {
   customerOrderNo?: string;
   /** @format int64 */
   customerShopId?: number;
+  /** @format int32 */
+  followOperation?: number;
   /** @format int64 */
   operatorId?: number;
   operatorName?: string;
@@ -7382,6 +7391,8 @@ export interface SearchSourceOrder {
   groceriesQuestionHaveStylebook?: string;
   /** 杂货问题-初步需求【问题1：请问你对本次杂货oem的初步需求是怎样的？】A-杂货1类; B-杂货2类; C-杂货3类 */
   groceriesQuestionInitialRequirement?: string;
+  /** 毛利率 */
+  grossProfitRate?: number;
   /**
    * 客户组别id
    * @format int64
@@ -7642,6 +7653,8 @@ export interface SearchSourceOrder {
   searchSourceTypeId?: number;
   /** 寻源种类名字 */
   searchSourceTypeName?: string;
+  /** 贩卖价格 */
+  sellPrice?: number;
   /** 尺寸名字 */
   size?: string;
   /** 尺寸图片 */
@@ -7842,6 +7855,8 @@ export interface SearchSourceOrderCreateVO {
   groceriesQuestionHaveStylebook?: string;
   /** 杂货问题-初步需求【问题1：请问你对本次杂货oem的初步需求是怎样的？】A-杂货1类; B-杂货2类; C-杂货3类 */
   groceriesQuestionInitialRequirement?: string;
+  /** 毛利率 */
+  grossProfitRate?: number;
   /**
    * 客户组别id
    * @format int64
@@ -8104,6 +8119,8 @@ export interface SearchSourceOrderCreateVO {
   searchSourceTypeId?: number;
   /** 寻源种类名字 */
   searchSourceTypeName?: string;
+  /** 贩卖价格 */
+  sellPrice?: number;
   /** 尺寸名字 */
   size?: string;
   /** 尺寸图片 */
@@ -17649,6 +17666,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         refundProgress?: number;
         /** @format int32 */
         startIndex?: number;
+        /** 站点代码(日本:JapanStation,韩国:KoreaStation,英国:UkStation) */
+        stationCode?: string;
         /**
          * 系统来源: 1-D2C; 2-B2B
          * @format int32

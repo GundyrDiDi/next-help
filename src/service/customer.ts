@@ -147,6 +147,8 @@ export interface AddFrogArticleReqDTO {
    * @format int32
    */
   noMembershipRestriction?: number;
+  /** SEO 描述 */
+  seoDescription?: string;
   stationCode?: string;
 }
 
@@ -1596,6 +1598,8 @@ export interface FrogArticleDetailRespDTO {
    * @format int32
    */
   noMembershipRestriction?: number;
+  /** SEO 描述 */
+  seoDescription?: string;
   stationCode?: string;
   /** @format int64 */
   viewNum?: number;
@@ -1636,6 +1640,8 @@ export interface FrogArticleRespDTO {
    * @format int32
    */
   noMembershipRestriction?: number;
+  /** SEO 描述 */
+  seoDescription?: string;
   stationCode?: string;
   /** @format int64 */
   viewNum?: number;
@@ -2205,6 +2211,8 @@ export interface ManageFrogArticleRespDTO {
    * @format int32
    */
   noMembershipRestriction?: number;
+  /** SEO 描述 */
+  seoDescription?: string;
   stationCode?: string;
 }
 
@@ -3365,6 +3373,8 @@ export interface SupportCenterContentDTO {
   modifier?: number;
   /** @format int64 */
   parentSupportCenterSubjectId?: number;
+  /** SEO 描述 */
+  seoDescription?: string;
   /**
    * 排序
    * @format int32
@@ -3403,6 +3413,8 @@ export interface SupportCenterContentUpdateBackendDTO {
   contentType?: string;
   /** 描述 */
   description?: string;
+  /** SEO 描述 */
+  seoDescription?: string;
   /**
    * 排序
    * @format int32
@@ -3786,6 +3798,8 @@ export interface UpdateFrogArticleReqDTO {
    * @format int32
    */
   noMembershipRestriction?: number;
+  /** SEO 描述 */
+  seoDescription?: string;
   stationCode?: string;
 }
 
@@ -10995,6 +11009,32 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         ...params,
       }),
   };
+  loginFeign = {
+    /**
+     * No description
+     *
+     * @tags D2C&&B2B-前台用户登录注册
+     * @name LoginFeign
+     * @summary loginFeign
+     * @request GET:/loginFeign
+     */
+    loginFeign: (
+      query: {
+        /**
+         * customerId
+         * @format int64
+         */
+        customerId: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseCustomerLoginRespDTO, any>({
+        path: `/loginFeign`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+  };
   logout = {
     /**
      * No description
@@ -12207,6 +12247,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
   };
   shop = {
+    /**
+     * No description
+     *
+     * @tags customer-shop-feign-api-impl
+     * @name AddCustomerShop
+     * @summary addCustomerShop
+     * @request POST:/shop/addCustomerShop
+     */
+    addCustomerShop: (addShopDTO: AddCustomerShopReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseLong, any>({
+        path: `/shop/addCustomerShop`,
+        method: "POST",
+        body: addShopDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
     /**
      * No description
      *

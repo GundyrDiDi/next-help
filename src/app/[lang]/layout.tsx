@@ -3,11 +3,13 @@ import LayoutChild from "./LayoutChild";
 import { cookies } from "next/headers";
 import { PlatCookie, TokenSignCookie } from "@/config";
 import "./globals.scss";
+import { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
   },
+  title: "THE CKBー中国輸入代行・THE CKBなら丸投げOK!",
 };
 
 export default function RootLayout({

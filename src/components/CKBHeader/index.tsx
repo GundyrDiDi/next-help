@@ -179,21 +179,6 @@ const CKBHeader = ({}: Props) => {
                 {t("工作台")}
               </div>
             </div>
-            {/* {isLogin() && (
-              <div className={menuCommonStyle}>
-                <i className="iconfont icon-gouwuche text-[14px] pr-[2px]" />
-                <Badge count={cartNum} size="small" className="cart-count">
-                  <div
-                    className="hover:text-[color:--color-primary-light] mr-[16px] text-[--color-white]"
-                    onClick={() => {
-                      toTheCkb(`${ENUM_PAGE.SHOP_CART}`);
-                    }}
-                  >
-                    <span>{t("购物车")}</span>
-                  </div>
-                </Badge>
-              </div>
-            )} */}
             {isLogin() ? (
               <UserDropDwon customerDetail={customerDetail}>
                 <div className={menuCommonStyle}>

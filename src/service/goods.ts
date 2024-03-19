@@ -7061,6 +7061,8 @@ export interface SupplierSettlementRespDTO {
   createTime?: string;
   /** @format int64 */
   id?: number;
+  /** 分期付款额度百分比，共三期 */
+  installmentPercentage?: number[];
   /** 支付方式 */
   payMethod?: string;
   /** 优惠方式:1-改价,2-返金 */
@@ -7068,7 +7070,7 @@ export interface SupplierSettlementRespDTO {
   /** 优惠备注 */
   promotionRemark?: string;
   /**
-   * 结算方式:1-按采购单,2-按账期
+   * 结算方式:1-按采购单,2-按账期,3-分期付款
    * @format int32
    */
   settlementMethod?: number;
