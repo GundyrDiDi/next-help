@@ -25,7 +25,7 @@ import { isJA, isJK, useSite2Station } from "@/utils/language";
 import { toTheCkb } from "@/utils/router";
 
 const menuCommonStyle =
-  "flex items-center ml-[10px] hover:text-[color:--color-primary-light] cursor-pointer flex-row";
+  "flex items-center ml-[20px] hover:text-[color:--color-primary-light] cursor-pointer flex-row";
 
 interface Props {
   plat?: string;
@@ -141,7 +141,7 @@ const CKBHeader = ({}: Props) => {
               alt=""
             />
           </div>
-          <div className="pl-10 flex items-center">
+          <div className="pl-[10px] flex items-center">
             {stationCode === Site.JA && (
               <div className={menuCommonStyle}>
                 <img
@@ -179,7 +179,7 @@ const CKBHeader = ({}: Props) => {
                 {t("工作台")}
               </div>
             </div>
-            {isLogin() && (
+            {/* {isLogin() && (
               <div className={menuCommonStyle}>
                 <i className="iconfont icon-gouwuche text-[14px] pr-[2px]" />
                 <Badge count={cartNum} size="small" className="cart-count">
@@ -193,7 +193,7 @@ const CKBHeader = ({}: Props) => {
                   </div>
                 </Badge>
               </div>
-            )}
+            )} */}
             {isLogin() ? (
               <UserDropDwon customerDetail={customerDetail}>
                 <div className={menuCommonStyle}>

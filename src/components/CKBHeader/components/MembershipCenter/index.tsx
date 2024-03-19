@@ -213,7 +213,6 @@ const membershipLevel = (props: MembershipProps) => {
   return (
     <div className="membershipCenter">
       <Popover
-        open
         content={popverContent()?.domTag}
         style={{
           padding: 0,
