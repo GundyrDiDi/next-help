@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { Badge, Popover, message } from "antd";
 import { CaretDownOutlined } from "@ant-design/icons";
-import { useAtom, useStore } from "jotai";
+import { useAtom, useAtomValue, useStore } from "jotai";
 import dayjs from "dayjs";
 import { CustomerDetail, Lang, Plat } from "@/model";
 import IconHeadSculpture from "@/components/Icon/IconHeadSculpture";
@@ -23,6 +23,7 @@ import { myShopIcon } from "@/const/staticURL";
 import platAtom from "@/model/Plat";
 import { isJA, isJK, useSite2Station } from "@/utils/language";
 import { toTheCkb } from "@/utils/router";
+import langType from "@/model/Lang";
 
 const menuCommonStyle =
   "flex items-center ml-[20px] hover:text-[color:--color-primary-light] cursor-pointer flex-row";
@@ -44,6 +45,7 @@ const CKBHeader = ({}: Props) => {
   const { t } = useTranslation();
   const stationCode = useSite2Station();
   const siteCode = useSite2Code();
+  const lang = useAtomValue(Lang);
 
   const [date, setDate] = useState<string>();
   const [customerDetail] = useAtom(CustomerDetail);
@@ -168,10 +170,11 @@ const CKBHeader = ({}: Props) => {
                   <div
                     className="ml-[2px]"
                     onClick={() => {
-                      toTheCkb(
-                        `/smc/promotion/Index?redirect=MyPromotion`,
-                        false
-                      );
+                      if (!isLogin()) {
+                        toTheCkb(ENUM_PAGE.LOGIN, false);
+                        return;
+                      }
+                      toTheCkb(ENUM_PAGE.LOGIN);
                     }}
                   >
                     {t("推广联盟")}
@@ -189,7 +192,15 @@ const CKBHeader = ({}: Props) => {
               <div
                 className="ml-[2px]"
                 onClick={() => {
-                  toTheCkb(`${ENUM_PAGE.WORKER_SPACE}`);
+                  if (!isLogin()) {
+                    toTheCkb(ENUM_PAGE.LOGIN, false);
+                    return;
+                  }
+                  toTheCkb(
+                    `/smc/promotion/index?redirect=MyPromotion&lang=${lang}`,
+                    false
+                  );
+                  // https://s.theckb.com/smc/promotion/index?redirect=MyPromotion&lang=ko
                 }}
               >
                 {t("工作台")}
@@ -287,6 +298,10 @@ const CKBHeader = ({}: Props) => {
                 <div
                   className="hover:text-[color:--color-primary-light] mr-[16px] text-[--color-white]"
                   onClick={() => {
+                    if (!isLogin()) {
+                      toTheCkb(ENUM_PAGE.LOGIN, false);
+                      return;
+                    }
                     toTheCkb(`${ENUM_PAGE.INFORMATION}`);
                   }}
                 >
