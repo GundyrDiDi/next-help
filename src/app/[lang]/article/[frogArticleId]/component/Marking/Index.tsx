@@ -10,17 +10,11 @@ import { ENUM_PAGE } from "@/const/enum";
 
 const Marking = () => {
   const { t } = useTranslation();
-  const [lang] = useAtom(Lang);
   const hasLogin = isLogin();
 
   const vipLoginClick = () => {
     toTheCkb(ENUM_PAGE.VIP_LEVEL);
   };
-
-  const loginClick = () => {
-    toLogin();
-  };
-  const registClick = () => {};
 
   return (
     <div className="marking">
@@ -44,10 +38,20 @@ const Marking = () => {
             <>
               <p>{t("注册或登录以查看更多信息")}</p>
               <div style={{ display: "flex" }}>
-                <Button className="btn" onClick={loginClick}>
+                <Button
+                  className="btn"
+                  onClick={() => {
+                    toTheCkb(ENUM_PAGE.LOGIN, false);
+                  }}
+                >
                   {t("登录")}
                 </Button>
-                <Button onClick={registClick} className="signBtn btn ml-[30px]">
+                <Button
+                  onClick={() => {
+                    toTheCkb(ENUM_PAGE.REGISTER, false);
+                  }}
+                  className="signBtn btn ml-[30px]"
+                >
                   {t("注册")}
                 </Button>
               </div>

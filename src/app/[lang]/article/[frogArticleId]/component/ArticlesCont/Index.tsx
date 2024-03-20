@@ -11,6 +11,9 @@ import Marking from "../Marking/Index";
 import queryString from "query-string";
 import { api } from "@/service";
 import { useMount } from "ahooks";
+import { useAtom, useAtomValue } from "jotai";
+import { CustomerDetail } from "@/model";
+import { isLogin } from "@/utils";
 
 interface Props {
   frogArticle?: FrogArticleDetailRespDTO;
@@ -18,12 +21,36 @@ interface Props {
 }
 const ArticlesCont = ({ frogArticle, querys }: Props) => {
   const [markingShow, setMarkingShow] = useState<boolean>(false);
+  const userInfo = useAtomValue(CustomerDetail);
   useMount(() => {
     if (frogArticle?.frogArticleId) {
       api.customer.frog.articleCount({
         frogArticleId: frogArticle?.frogArticleId,
       });
+      if (
+        frogArticle.noMembershipRestriction === 2 &&
+        userInfo?.membership?.templateLevel &&
+        userInfo?.membership?.templateLevel > 1
+      ) {
+        setMarkingShow(false);
+        return;
+      }
+      if (frogArticle.noMembershipRestriction === 1) {
+        if (frogArticle.noLoginRestriction === 1) {
+          setMarkingShow(false);
+          return;
+        }
+        if (frogArticle.noLoginRestriction === 2 && isLogin()) {
+          setMarkingShow(false);
+          return;
+        }
+        if (frogArticle.noLoginRestriction === 3) {
+          setMarkingShow(false);
+          return;
+        }
+      }
     }
+    setMarkingShow(true);
   });
   return (
     <>
