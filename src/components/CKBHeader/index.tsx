@@ -64,7 +64,7 @@ const CKBHeader = ({}: Props) => {
   // 是否是推广联盟黑户
   const getSmcCanUser = async () => {
     const res = await request.customer.checkSmcBlack.checkSmcBlack();
-    setCanUseSmc(Boolean(res.data));
+    setCanUseSmc(!res.data);
   };
 
   useEffect(() => {
