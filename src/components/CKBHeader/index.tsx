@@ -168,7 +168,10 @@ const CKBHeader = ({}: Props) => {
                   <div
                     className="ml-[2px]"
                     onClick={() => {
-                      toTheCkb(`/smc/promotion/Index?redirect=MyPromotion`);
+                      toTheCkb(
+                        `/smc/promotion/Index?redirect=MyPromotion`,
+                        false
+                      );
                     }}
                   >
                     {t("推广联盟")}
