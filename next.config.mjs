@@ -1,14 +1,20 @@
 /** @type {import('next').NextConfig} */
 const { SERVER_ENV } = process.env;
+import Analyzer from "@next/bundle-analyzer";
+
+const withBundleAnalyzer = Analyzer({
+  enabled: process.env.ANALYZE === "true",
+});
 
 const nextConfig = {
+  compress: true,
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
-      use: '@svgr/webpack',
-    })
-    return config
+      use: "@svgr/webpack",
+    });
+    return config;
   },
 };
 
-export default nextConfig;
+export default withBundleAnalyzer(nextConfig);
