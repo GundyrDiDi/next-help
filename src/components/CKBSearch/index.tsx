@@ -456,7 +456,7 @@ const CKBSearch = () => {
         />
         <img
           referrerPolicy="no-referrer"
-          className="plu-btn"
+          className={classNames("plu-btn", lang)}
           src={pluginImgs.footer}
           alt=""
         />

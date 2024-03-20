@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 4000",
+    "dev": "cross-env BUILD_ENV=test next dev -p 4000",
     "api": "npx @snifftest/api-gen config hu  && npx eslint ./src/service --fix",
     "build": "next build",
     "build:test": "cross-env BUILD_ENV=test next build",
