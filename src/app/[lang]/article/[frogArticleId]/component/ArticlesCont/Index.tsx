@@ -20,7 +20,7 @@ interface Props {
   querys: { [key: string]: string | undefined };
 }
 const ArticlesCont = ({ frogArticle, querys }: Props) => {
-  const [markingShow, setMarkingShow] = useState<boolean>(true);
+  const [markingShow, setMarkingShow] = useState<boolean>(false);
   const userInfo = useAtomValue(CustomerDetail);
   useMount(() => {
     if (frogArticle?.frogArticleId) {
@@ -33,19 +33,24 @@ const ArticlesCont = ({ frogArticle, querys }: Props) => {
         userInfo?.membership?.templateLevel > 1
       ) {
         setMarkingShow(false);
+        return;
       }
       if (frogArticle.noMembershipRestriction === 1) {
         if (frogArticle.noLoginRestriction === 1) {
           setMarkingShow(false);
+          return;
         }
         if (frogArticle.noLoginRestriction === 2 && isLogin()) {
           setMarkingShow(false);
+          return;
         }
         if (frogArticle.noLoginRestriction === 3) {
           setMarkingShow(false);
+          return;
         }
       }
     }
+    setMarkingShow(true);
   });
   return (
     <>
