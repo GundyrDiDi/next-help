@@ -200,7 +200,6 @@ const CKBHeader = ({}: Props) => {
                     `/smc/promotion/index?redirect=MyPromotion&lang=${lang}`,
                     false
                   );
-                  // https://s.theckb.com/smc/promotion/index?redirect=MyPromotion&lang=ko
                 }}
               >
                 {t("工作台")}

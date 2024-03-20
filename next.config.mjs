@@ -3,7 +3,7 @@ const { SERVER_ENV } = process.env;
 import Analyzer from "@next/bundle-analyzer";
 
 const withBundleAnalyzer = Analyzer({
-  enabled: process.env.ANALYZE === "true",
+  enabled: false,
 });
 
 const nextConfig = {
