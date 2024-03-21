@@ -6,7 +6,8 @@ import dayjs from "dayjs";
 import { CustomerDetail, Lang, Plat } from "@/model";
 import IconHeadSculpture from "@/components/Icon/IconHeadSculpture";
 import { request } from "@/config/request";
-
+import Cookie from "js-cookie";
+import { ShopCookie, TokenSignCookie } from "@/config";
 import { formatTimeZone, getCookiePlat, isB2B, isLogin } from "@/utils";
 import { ENUM_PAGE, ENUM_SYSTEM_SOURCE } from "@/const/enum";
 import { getShopId } from "@/config/request/interceptors";
@@ -56,6 +57,7 @@ const CKBHeader = ({}: Props) => {
   const [site, setSite] = useState<string>();
   const membership = customerDetail?.membership;
   const [canUseSmc, setCanUseSmc] = useState(false);
+  const [loginMenu, setLoginMenu] = useState(false);
 
   const systemSource =
     plat === "d2c" ? ENUM_SYSTEM_SOURCE.D2C : ENUM_SYSTEM_SOURCE.B2B;
@@ -146,7 +148,56 @@ const CKBHeader = ({}: Props) => {
   return (
     <div className="CKBHeader">
       <div className="wrap of-hd viewport">
-        <div className="auto-width flex justify-between">
+        {loginMenu && (
+          <div className="loginMenu">
+            {isLogin() ? (
+              <>
+                <div
+                  onClick={() => {
+                    Cookie.remove(TokenSignCookie, {
+                      domain: ".theckb.com",
+                    });
+                    Cookie.remove(ShopCookie, {
+                      domain: ".theckb.com",
+                    });
+                    toTheCkb(ENUM_PAGE.HOME);
+                  }}
+                  className="item"
+                >
+                  {t("退出登录")}
+                </div>
+              </>
+            ) : (
+              <>
+                <div
+                  onClick={() => {
+                    toTheCkb(ENUM_PAGE.LOGIN, false);
+                  }}
+                  className="item"
+                >
+                  {t("请登录")}
+                </div>
+                <div
+                  onClick={() => {
+                    toTheCkb(ENUM_PAGE.REGISTER, false);
+                  }}
+                  className="item"
+                >
+                  {t("免费注册")}
+                </div>
+              </>
+            )}
+          </div>
+        )}
+        <div className="auto-width rel flex justify-between">
+          <div className="operate" onClick={() => setLoginMenu(!loginMenu)}>
+            {!loginMenu ? (
+              <i className="fa fa-bars"></i>
+            ) : (
+              <i className="fa fa-close"></i>
+            )}
+          </div>
+
           <div
             className="logo flex items-center cursor-pointer"
             onClick={() => linkToPure()}
@@ -208,54 +259,56 @@ const CKBHeader = ({}: Props) => {
                 {t("工作台")}
               </div>
             </div>
-            {isLogin() ? (
-              <UserDropDwon customerDetail={customerDetail}>
-                <div className={menuCommonStyle}>
-                  <div className="top-[-1px] relative pr-[2px]">
-                    <div
-                      style={{
-                        borderRadius: "50%",
-                      }}
-                      className="rounded-full border-[1px] border-[color:white]"
-                    >
-                      <IconHeadSculpture width={20} height={20} />
+            <div className="part-User">
+              {isLogin() ? (
+                <UserDropDwon customerDetail={customerDetail}>
+                  <div className={menuCommonStyle}>
+                    <div className="top-[-1px] relative pr-[2px]">
+                      <div
+                        style={{
+                          borderRadius: "50%",
+                        }}
+                        className="rounded-full border-[1px] border-[color:white]"
+                      >
+                        <IconHeadSculpture width={20} height={20} />
+                      </div>
                     </div>
+                    <div>{customerDetail?.loginName}</div>
+                    <CaretDownOutlined className="relative top-[2px] ml-[8px]" />
                   </div>
-                  <div>{customerDetail?.loginName}</div>
-                  <CaretDownOutlined className="relative top-[2px] ml-[8px]" />
+                </UserDropDwon>
+              ) : (
+                <div className="flex ml-[16px] items-center">
+                  <img
+                    src={
+                      isJA()
+                        ? "https://static-jp.theckb.com/static-asset/client/ckbuser.png?t=2024"
+                        : "https://static-s.theckb.com/BusinessMarket/Client/ckbuser.png?t=2024"
+                    }
+                    className="w-[16px] h-[16px] rounded-[50%] mr-[4px]"
+                    alt=""
+                  />
+                  <a
+                    className="light hover:text-[color:--color-primary-light] cursor-pointer"
+                    onClick={() => {
+                      toTheCkb(`${ENUM_PAGE.LOGIN}`, false);
+                    }}
+                  >
+                    {t("请登录")}
+                  </a>
+                  /
+                  <a
+                    className="light hover:text-[color:--color-primary-light] cursor-pointer"
+                    onClick={() => {
+                      toTheCkb(`${ENUM_PAGE.REGISTER}`, false);
+                    }}
+                  >
+                    {t("免费注册")}
+                  </a>
                 </div>
-              </UserDropDwon>
-            ) : (
-              <div className="flex ml-[16px] items-center">
-                <img
-                  src={
-                    isJA()
-                      ? "https://static-jp.theckb.com/static-asset/client/ckbuser.png?t=2024"
-                      : "https://static-s.theckb.com/BusinessMarket/Client/ckbuser.png?t=2024"
-                  }
-                  className="w-[16px] h-[16px] rounded-[50%] mr-[4px]"
-                  alt=""
-                />
-                <a
-                  className="light hover:text-[color:--color-primary-light] cursor-pointer"
-                  onClick={() => {
-                    toTheCkb(`${ENUM_PAGE.LOGIN}`, false);
-                  }}
-                >
-                  {t("请登录")}
-                </a>
-                /
-                <a
-                  className="light hover:text-[color:--color-primary-light] cursor-pointer"
-                  onClick={() => {
-                    toTheCkb(`${ENUM_PAGE.REGISTER}`, false);
-                  }}
-                >
-                  {t("免费注册")}
-                </a>
-              </div>
-            )}
-            <div className={menuCommonStyle}>
+              )}
+            </div>
+            <div className={classNames(menuCommonStyle, "part-Shop")}>
               <ShopList t={t}>
                 <div>
                   {customerDetail?.customerShopList?.length ? (
@@ -290,7 +343,7 @@ const CKBHeader = ({}: Props) => {
               </ShopList>
             </div>
             <div
-              className={menuCommonStyle}
+              className={classNames(menuCommonStyle, "part-Msg")}
               style={{
                 marginRight: 20,
               }}
@@ -312,7 +365,10 @@ const CKBHeader = ({}: Props) => {
               </Badge>
             </div>
             <a
-              className="flex items-center ml-[32px] hover:text-[color:--color-primary-light] cursor-pointer bg-[#333] leading-[20px] pl-[16px] pr-[16px] rounded-[10px] text-[--color-white]"
+              className={classNames(
+                "flex items-center ml-[32px] hover:text-[color:--color-primary-light] cursor-pointer bg-[#333] leading-[20px] pl-[16px] pr-[16px] rounded-[10px] text-[--color-white]",
+                "part-Rate"
+              )}
               href="http://www.murc-kawasesouba.jp/fx/index.php"
               style={{
                 textDecoration: "none",
