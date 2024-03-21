@@ -37,6 +37,19 @@ const nextConfig = {
   env: {
     ...env,
   },
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          {
+            key: "x-time",
+            value: new Date().toLocaleString(),
+          },
+        ],
+      },
+    ];
+  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
