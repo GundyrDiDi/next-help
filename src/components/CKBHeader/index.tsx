@@ -148,45 +148,48 @@ const CKBHeader = ({}: Props) => {
     <div className="CKBHeader">
       <div className="wrap of-hd viewport">
         {loginMenu && (
-          <div className="loginMenu">
-            {isLogin() ? (
-              <>
-                <div
-                  onClick={() => {
-                    Cookie.remove(TokenSignCookie, {
-                      domain: ".theckb.com",
-                    });
-                    Cookie.remove(ShopCookie, {
-                      domain: ".theckb.com",
-                    });
-                    toTheCkb(ENUM_PAGE.HOME);
-                  }}
-                  className="item"
-                >
-                  {t("退出登录")}
-                </div>
-              </>
-            ) : (
-              <>
-                <div
-                  onClick={() => {
-                    toTheCkb(ENUM_PAGE.LOGIN, false);
-                  }}
-                  className="item"
-                >
-                  {t("请登录")}
-                </div>
-                <div
-                  onClick={() => {
-                    toTheCkb(ENUM_PAGE.REGISTER, false);
-                  }}
-                  className="item"
-                >
-                  {t("免费注册")}
-                </div>
-              </>
-            )}
-          </div>
+          <>
+            <div className="cover"></div>
+            <div className="loginMenu">
+              {isLogin() ? (
+                <>
+                  <div
+                    onClick={() => {
+                      Cookie.remove(TokenSignCookie, {
+                        domain: ".theckb.com",
+                      });
+                      Cookie.remove(ShopCookie, {
+                        domain: ".theckb.com",
+                      });
+                      toTheCkb(ENUM_PAGE.HOME);
+                    }}
+                    className="item"
+                  >
+                    {t("退出登录")}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div
+                    onClick={() => {
+                      toTheCkb(ENUM_PAGE.LOGIN, false);
+                    }}
+                    className="item"
+                  >
+                    {t("请登录")}
+                  </div>
+                  <div
+                    onClick={() => {
+                      toTheCkb(ENUM_PAGE.REGISTER, false);
+                    }}
+                    className="item"
+                  >
+                    {t("免费注册")}
+                  </div>
+                </>
+              )}
+            </div>
+          </>
         )}
         <div className="auto-width rel flex justify-between">
           <div className="operate" onClick={() => setLoginMenu(!loginMenu)}>

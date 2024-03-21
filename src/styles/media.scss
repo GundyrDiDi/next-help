@@ -92,7 +92,19 @@
         justify-content: left;
         font-size: 20px;
       }
+      .cover {
+        content: "";
+        left: 0;
+        position: absolute;
+        top: 32px;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.1);
+      }
       .loginMenu {
+        // &::before {
+
+        // }
         position: absolute;
         width: 100%;
         top: 32px;
@@ -106,6 +118,7 @@
           padding: 16px 10px;
           color: var(--color-primary);
           text-align: center;
+          font-size: 14px;
         }
       }
       .part-User {
