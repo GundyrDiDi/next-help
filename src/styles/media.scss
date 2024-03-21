@@ -1,0 +1,181 @@
+// and (min-width: 840px) and
+@media screen and (max-width: 1200px) {
+  #app.page_layout {
+    min-width: 100%;
+    .viewport {
+      width: 100%;
+    }
+    #search {
+      display: none;
+    }
+    #category {
+      display: none;
+    }
+    :root {
+      --max-width: 100% !important;
+    }
+
+    .CKBHeader {
+      .wrap {
+        padding: 0 20px;
+      }
+      .part-smc {
+        display: none;
+      }
+      .part-MembershipLevel {
+        display: none;
+      }
+      .part-WorkeSpace {
+        display: none;
+      }
+    }
+    .Kaerumedia-mainBox {
+      position: relative;
+      .Nav {
+        position: sticky;
+        top: 31px;
+        overflow-y: scroll;
+        z-index: 1;
+        width: 100%;
+        .navmain {
+          width: 1200px;
+        }
+      }
+      .Kaerumedia-main-recom {
+        display: none;
+      }
+      .Kaerumedia-main-list {
+        margin: 0 auto;
+        width: 100%;
+      }
+      .ArticleItem-main-text {
+        flex: 1;
+        padding-left: 16px;
+      }
+      .ArticleList-pagination {
+        padding-right: 20px;
+      }
+    }
+    // .Kaerumedia-banner {
+    //   height: auto;
+    //   img {
+    //     height: auto;
+    //     width: 180%;
+    //   }
+    // }
+    .Article {
+      .Article-hot {
+        display: none;
+      }
+      .content-html p {
+        word-break: break-all;
+      }
+    }
+
+    .Footer {
+      .Footer-main {
+        padding-right: 20px;
+        padding-left: 20px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 840px) {
+  #app.page_layout {
+    .CKBHeader {
+      .operate {
+        position: relative;
+        display: flex;
+        width: 80px;
+        align-items: center;
+        justify-content: left;
+        font-size: 20px;
+      }
+
+      .cover {
+        content: "";
+        left: 0;
+        position: absolute;
+        top: 32px;
+        width: 100vw;
+        height: 100vh;
+
+        background: rgba(0, 0, 0, 0.45);
+      }
+      .loginMenu {
+        position: absolute;
+        width: 100%;
+        top: 32px;
+        left: 0;
+        background-color: #fff;
+        z-index: 2;
+        .item {
+          &:first-child {
+            border-bottom: 0.5px solid #e6eaf0;
+          }
+          padding: 16px 10px;
+          color: var(--color-primary);
+          text-align: center;
+          font-size: 14px;
+        }
+      }
+      .part-User {
+        display: none;
+      }
+      .part-Shop {
+        display: none;
+      }
+      .part-Msg {
+        display: none;
+      }
+      .part-Rate {
+        display: none;
+      }
+    }
+    .Kaerumedia-banner {
+      height: auto;
+      overflow: hidden;
+      img {
+        height: auto;
+        width: 200%;
+      }
+    }
+    .ArticleList {
+      .ArticleItem {
+        height: auto;
+        .article-body {
+          display: none;
+        }
+        .article-msg {
+          margin-top: 20px;
+        }
+        .ArticleItem-main {
+          flex-direction: column;
+          .ArticleItem-main-pic {
+            width: auto;
+          }
+          .ArticleItem-main-text {
+            padding-left: 0;
+            width: 100%;
+          }
+        }
+      }
+      .ArticleList-pagination {
+        display: none;
+      }
+    }
+    .Footer {
+      display: none;
+    }
+    .content-html {
+      img {
+        max-width: 100%;
+        height: auto !important;
+      }
+    }
+    .ArticleSwitch {
+      display: none;
+    }
+  }
+}

@@ -1,11 +1,7 @@
-
 .Nav {
   height: 50px;
-  display: flex;
-  justify-content: center;
   background-color: var(--pcolor);
   .navmain {
-    width: var(--width);
     height: 100%;
     display: flex;
     &-item {
@@ -16,6 +12,10 @@
       text-align: center;
       font-size: 18px;
       color: #fff;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      overflow: hidden;
       cursor: pointer;
       &:first-child {
         border-left: 1px solid rgba(255, 255, 255, 0.4);
@@ -25,7 +25,7 @@
         position: relative;
         background-color: var(--dcolor);
         &::before {
-          content: '';
+          content: "";
           width: 1px;
           height: 100%;
           background-color: var(--dcolor);
@@ -35,7 +35,7 @@
           margin-left: -1px;
         }
         &::after {
-          content: '';
+          content: "";
           position: absolute;
           bottom: 0;
           left: 50%;

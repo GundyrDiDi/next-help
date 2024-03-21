@@ -1,5 +1,4 @@
 .Kaerumedia {
-  padding-bottom: 154px;
   &-banner {
     height: 264px;
     background-color: var(--pcolor);
@@ -10,6 +9,9 @@
     img {
       height: 272px;
     }
+  }
+  &-mainBox {
+    padding-bottom: 150px;
   }
   &-main {
     display: flex;

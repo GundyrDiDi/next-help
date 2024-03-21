@@ -3,14 +3,30 @@ import LayoutChild from "./LayoutChild";
 import { cookies } from "next/headers";
 import { PlatCookie, TokenSignCookie } from "@/config";
 import "./globals.scss";
-import { Metadata } from "next";
+import { Metadata, ResolvingMetadata } from "next";
+import classNames from "classnames";
+interface Props {
+  params: {
+    lang: Local;
+    initPlat: string;
+    token?: string;
+  };
+}
 
-export const metadata: Metadata = {
-  icons: {
-    icon: "/favicon.ico",
-  },
-  title: "THE CKBー中国輸入代行・THE CKBなら丸投げOK!",
-};
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  return {
+    icons: {
+      icon: "/favicon.ico",
+    },
+    title:
+      params.lang === "ja"
+        ? "THE CKBー中国輸入代行・THE CKBなら丸投げOK!"
+        : "THE CKB",
+  };
+}
 
 export default function RootLayout({
   children,
@@ -33,7 +49,7 @@ export default function RootLayout({
         async
       ></script>
       <body>
-        <div id="app" className={lang}>
+        <div id="app" className={classNames("page_layout", lang)}>
           <LayoutChild params={{ lang, initPlat: plat, token }}>
             {children}
           </LayoutChild>

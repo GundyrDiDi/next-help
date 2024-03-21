@@ -2,6 +2,7 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 @import "@/styles/index";
+@import "@/styles/media";
 
 :root {
   --max-width: 1200px;
@@ -9,7 +10,6 @@
 
 #app {
   min-width: 1200px;
-  overflow: auto;
   position: relative;
   display: flex;
   flex-direction: column;

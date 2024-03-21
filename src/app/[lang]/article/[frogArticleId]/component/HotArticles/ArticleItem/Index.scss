@@ -3,7 +3,6 @@ $hover-text-color: var(--hfccolor);
 .ArticleItem {
   cursor: pointer;
   box-shadow: 0px 2px 10px 0px rgba(242, 245, 247, 0.5);
-
   &:hover {
     .ArticleItem {
       &-title,
@@ -15,13 +14,11 @@ $hover-text-color: var(--hfccolor);
 
   &.d2c {
     &:hover {
-  
     }
   }
 
   &.b2b {
     &:hover {
-
     }
   }
 
@@ -65,7 +62,8 @@ $hover-text-color: var(--hfccolor);
         width: 15px;
         height: 9px;
         display: inline-block;
-        background: url('https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/read.png') no-repeat;
+        background: url("https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/read.png")
+          no-repeat;
         background-size: 100%;
       }
     }

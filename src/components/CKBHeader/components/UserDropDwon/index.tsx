@@ -5,7 +5,6 @@ import IconHeadSculpture from "@/components/Icon/IconHeadSculpture";
 import { ENUM_PAGE } from "@/const/enum";
 // import { jumpPage } from '@/utils';
 import { CustomerDetailRespDTO } from "@/service/customer";
-// eslint-disable-next-line no-duplicate-imports
 import { ShopCookie, TokenSignCookie } from "@/config";
 import styles from "./index.scss";
 import { LocalContext, useTranslation } from "@/i18n/client";
