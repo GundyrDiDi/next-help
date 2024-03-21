@@ -43,11 +43,13 @@ export async function generateMetadata(
         ja: "/ja",
       },
     },
-    title: `${article.frogArticleTitle}${{
-      [Local.JA]: "| 中国輸入代行THE CKB",
-      [Local.KO]: "| 중국수입대행 THE CKB",
-      [Local.EN]: "THE CKB-The Biggest Sourcing Agency in China",
-    }}`,
+    title: `${article.frogArticleTitle}${
+      {
+        [Local.JA]: "| 中国輸入代行THE CKB",
+        [Local.KO]: "| 중국수입대행 THE CKB",
+        [Local.EN]: "THE CKB-The Biggest Sourcing Agency in China",
+      }[params.lang] || ""
+    }`,
     description: article.seoDescription || article.frogArticleTitle,
     openGraph: {
       siteName: "THE CKB",
