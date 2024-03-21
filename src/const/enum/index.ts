@@ -88,34 +88,6 @@ export interface PageConfig {
             id: number;
         };
     };
-    /** 报价信息 */
-    [ENUM_PAGE.QUOTATION_INFO]: {
-        query?: {
-            rowItem?: string;
-        };
-    };
-    /** 添加寻源单 */
-    [ENUM_PAGE.ADD_FIND_SOURCE]: {
-        query?: {
-            searchSourceOrderId?: number;
-        };
-    };
-    /** 寻源单详情 */
-    [ENUM_PAGE.FIND_SOURCE_DETAIL]: {
-        query?: {
-            searchSourceOrderId?: number;
-        };
-    };
-    /** 编辑寻源单 */
-    [ENUM_PAGE.EDIT_FIND_SOURCE]: {
-        query?: {
-            searchSourceOrderId?: number;
-        };
-    };
-    /** 寻源商品列表 */
-    [ENUM_PAGE.OEM_GOODS_LIST]: {};
-    /** oem 寻源列表 */
-    [ENUM_PAGE.OEM_FIND_SOURCE_LIST]: {};
     /** oem 工作台 */
     [ENUM_PAGE.WORKER_SPACE]: {};
     /** oem 会员中心 */
