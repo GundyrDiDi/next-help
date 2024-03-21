@@ -80,7 +80,6 @@ const SellerCate = () => {
         String(i.productCategoryFrontendId) ===
         seletParams.productCategoryFrontendId
     );
-    console.log(cate, "cate");
 
     return (
       {

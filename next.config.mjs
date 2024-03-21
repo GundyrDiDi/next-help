@@ -8,6 +8,10 @@ const withBundleAnalyzer = Analyzer({
 
 const nextConfig = {
   compress: true,
+  env: {
+    BUILD_ENV: process.env.BUILD_ENV || "prod",
+    buildTime: new Date().toLocaleString(),
+  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,

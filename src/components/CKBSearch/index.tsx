@@ -165,7 +165,6 @@ const CKBSearch = () => {
     const endPrice = sellPrice?.max ?? "";
     const url = externalLinks[platformType ?? ""];
     const key = platformType === "AM" ? "keywords=" : "q=";
-    console.log(platformType);
     if (platformType === "TB") {
       arr.push(
         "sort=" + sortType,
@@ -213,8 +212,6 @@ const CKBSearch = () => {
   /** 开始搜索 */
   const handleSearch = async (formData: SearchParams = {}) => {
     const kw = keyword.trim();
-    console.log("kw", kw);
-
     if (kw) {
       let query: any = { schannel: 2 };
       if (isUrl(kw)) {
@@ -369,7 +366,6 @@ const CKBSearch = () => {
                   content={
                     <Particular
                       setKeyword={(e) => {
-                        console.log(e);
                         setKeyword(e);
                       }}
                       keyword={keyword}

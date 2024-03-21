@@ -43,8 +43,6 @@ const TogglePlat = (props: TogglePlatProps) => {
     if (useInfo?.customerId) {
       const res = await request.customer.changeLogin.changeLogin();
       if (res.data?.token) {
-        console.log(res.data?.customerRespDTO, "res.data?.customerRespDTO");
-
         togglePlat(
           res.data?.customerRespDTO?.systemSource ?? ENUM_SYSTEM_SOURCE.D2C
         );

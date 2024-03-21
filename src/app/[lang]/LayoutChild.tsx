@@ -70,8 +70,6 @@ export default function Layout({
   }, [lang, requestCustomerDetail, setPlat]);
 
   useEffect(() => {
-    console.log(customerDetail, "customerDetail");
-
     // 语言对不上时刷新页面
     if (
       customerDetail?.langcode !== lang &&
@@ -84,13 +82,6 @@ export default function Layout({
       );
     }
   }, [customerDetail, lang]);
-
-  // useEffect(() => {
-  //   togglePlat(
-  //     plat === "d2c" ? ENUM_SYSTEM_SOURCE.D2C : ENUM_SYSTEM_SOURCE.B2B
-  //   );
-  //   console.log(plat, "plat");
-  // }, [plat]);
 
   const locale = {
     [Local.JA]: ja_JP,
