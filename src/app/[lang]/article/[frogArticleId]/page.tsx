@@ -3,6 +3,7 @@ import type { Metadata, ResolvingMetadata } from "next";
 import ArticlesCont from "./component/ArticlesCont/Index";
 import { Local } from "@/i18n/settings";
 import { serveTranslation } from "@/i18n";
+import { Lang } from "@/model";
 
 type Props = {
   params: { frogArticleId: string; lang: Local };
@@ -43,7 +44,12 @@ export async function generateMetadata(
       },
     },
     title: `${article.frogArticleTitle}${
-      params.lang === Local.JA ? "| 中国輸入代行THE CKB" : "| THE CKB"
+      {
+        [Local.JA]: "| 中国輸入代行THE CKB",
+        [Local.KO]: "| 중국수입대행 THE CKB",
+        [Local.EN]: "THE CKB-The Biggest Sourcing Agency in China",
+      }
+      // params.lang === Local.JA ? "| 中国輸入代行THE CKB" : "| THE CKB"
     }`,
     description: article.seoDescription || article.frogArticleTitle,
     openGraph: {
