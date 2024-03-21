@@ -141,7 +141,6 @@ const CKBHeader = ({}: Props) => {
     if (!floatExchangeRate) return false;
     if (customerDetail?.isJA) return floatExchangeRate < 1;
     if (customerDetail?.isKO) return floatExchangeRate < 10;
-    // 英国站不展示
     return false;
   };
 
