@@ -1,3 +1,8 @@
+@media screen and (max-width: 1200px) {
+  .m-tool-bar {
+    display: none;
+  }
+}
 .m-tool-bar {
   pointer-events: none;
   position: fixed;
@@ -8,9 +13,10 @@
   text-align: center;
   border-radius: 8px;
   ul {
-  padding-top: 12px;
-  li a,.tool-bar-menu{
-      cursor: pointer!important;
+    padding-top: 12px;
+    li a,
+    .tool-bar-menu {
+      cursor: pointer !important;
       display: block;
       float: right;
       height: 58px;
@@ -27,25 +33,27 @@
         margin-top: 4px;
         color: #333333;
         font-size: 11px;
-        transform: scale(0.9)
+        transform: scale(0.9);
       }
     }
 
-    .tool-bar-service{
-      img{
+    .tool-bar-service {
+      img {
         width: 28px;
-        height:27px
+        height: 27px;
       }
     }
-    .tool-bar-line{
-      a {margin-bottom: 0;}
-      img{
+    .tool-bar-line {
+      a {
+        margin-bottom: 0;
+      }
+      img {
         width: 26px;
-        height:24px
+        height: 24px;
       }
     }
-    .tool-bar-menu{
-      height:50px;
+    .tool-bar-menu {
+      height: 50px;
       width: 50px;
       border-radius: 8px;
       background: #fff;
@@ -53,7 +61,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      .tool-bar-icon-menu{
+      .tool-bar-icon-menu {
         width: 24px;
         height: 20px;
         margin-left: 4px;
@@ -62,23 +70,25 @@
     }
   }
 }
-li a:after, .m-tool-bar li>div:after {
-background: #D8D8D8;
-bottom: 0;
-content: "";
-height: 1px;
-position: absolute;
-right: 10px;
-width: 28px;
-margin-top: 5px;
+li a:after,
+.m-tool-bar li > div:after {
+  background: #d8d8d8;
+  bottom: 0;
+  content: "";
+  height: 1px;
+  position: absolute;
+  right: 10px;
+  width: 28px;
+  margin-top: 5px;
 }
 
-.tool-bar-show, .tool-bar-show>ul {
-pointer-events: all;
+.tool-bar-show,
+.tool-bar-show > ul {
+  pointer-events: all;
 }
 .tool-bar-show li:not(.tool-bar-menu) {
-opacity: 1;
-// transform: translateX(0);
+  opacity: 1;
+  // transform: translateX(0);
 }
 .m-tool-bar li:first-child {
   transition-delay: 0ms;
@@ -88,7 +98,7 @@ opacity: 1;
   width: 28px;
   height: 28px;
 }
-.msg-count{
+.msg-count {
   min-width: 20px;
   background-color: #e94e58;
   // padding:4px;
@@ -104,55 +114,55 @@ opacity: 1;
 }
 
 .tool-bar-icon-cart {
-  background-position: 0 0
+  background-position: 0 0;
 }
 
 .tool-bar-icon-pkg {
-  background-position: -26px 0
+  background-position: -26px 0;
 }
 
 .tool-bar-icon-online {
-  background-position: -52px 0
+  background-position: -52px 0;
 }
 
 .tool-bar-icon-advice {
-  background-position: -78px 0
+  background-position: -78px 0;
 }
 
 .tool-bar-icon-top {
-  background-position: -130px 0
+  background-position: -130px 0;
 }
 
 .tool-bar-icon-menu-active {
-  background-position: -156px 0
+  background-position: -156px 0;
 }
 
 .tool-bar-icon-app {
-  background-position: -182px 0
+  background-position: -182px 0;
 }
 
 .tool-bar-icon-tools {
-  background-position: -212px 1px
+  background-position: -212px 1px;
 }
 .tool-bar-menu .tool-bar-icon-menu {
-  background-position: -237px 0
+  background-position: -237px 0;
 }
 
 .tool-bar-show .tool-bar-icon-menu {
-  background-position: -104px 0!important
+  background-position: -104px 0 !important;
 }
 
 .m-tool-bar * {
-  font-family: muliBold
+  font-family: muliBold;
 }
 
 .m-tool-bar ul {
-  filter: drop-shadow(2px 2px 10px rgba(0,0,0,.1));
-  pointer-events: none
+  filter: drop-shadow(2px 2px 10px rgba(0, 0, 0, 0.1));
+  pointer-events: none;
 }
 
 .m-tool-bar ul .tool-bar-menu {
-  pointer-events: all
+  pointer-events: all;
 }
 
 .m-tool-bar .clearfix:before {
@@ -160,26 +170,29 @@ opacity: 1;
   content: "";
   display: block;
   height: 0;
-  visibility: hidden
+  visibility: hidden;
 }
 
-.m-tool-bar .clearfix,.m-tool-bar ul {
-  *zoom:1}
+.m-tool-bar .clearfix,
+.m-tool-bar ul {
+  *zoom: 1;
+}
 
 .m-tool-bar ul:after {
   clear: both;
   content: ".";
   display: block;
   height: 0;
-  visibility: hidden
+  visibility: hidden;
 }
 
 .m-tool-bar li {
-  *zoom:1;cursor: pointer;
+  *zoom: 1;
+  cursor: pointer;
   margin-left: 0;
   opacity: 0;
   transform: translateX(100%);
-  transition: all .2s cubic-bezier(.645,.045,.355,1)
+  transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 .m-tool-bar li:after {
@@ -187,53 +200,54 @@ opacity: 1;
   content: ".";
   display: block;
   height: 0;
-  visibility: hidden
+  visibility: hidden;
 }
 
 .m-tool-bar li:last-child a:after {
-  display: none
+  display: none;
 }
 
-.m-tool-bar li>div {
-  display: inline-block
+.m-tool-bar li > div {
+  display: inline-block;
 }
 
 .m-tool-bar li:first-child {
-  transition-delay: 0ms
+  transition-delay: 0ms;
 }
 
 .m-tool-bar li:nth-child(2) {
-  transition-delay: 35ms
+  transition-delay: 35ms;
 }
 
 .m-tool-bar li:nth-child(3) {
-  transition-delay: 70ms
+  transition-delay: 70ms;
 }
 
 .m-tool-bar li:nth-child(4) {
-  transition-delay: 105ms
+  transition-delay: 105ms;
 }
 
 .m-tool-bar .tool-bar-menu {
   opacity: 1;
-  transform: translateX(0)
+  transform: translateX(0);
 }
 
 .m-tool-bar .tool-bar-menu a {
   background: #fff;
-  border-radius: 8px
+  border-radius: 8px;
 }
-.tool-bar-show,.tool-bar-show>ul {
-  pointer-events: all
+.tool-bar-show,
+.tool-bar-show > ul {
+  pointer-events: all;
 }
 
-.tool-bar-show>ul {
+.tool-bar-show > ul {
   background: #fff;
   border-radius: 8px;
-  filter: drop-shadow(2px 2px 10px rgba(0,0,0,.1))
+  filter: drop-shadow(2px 2px 10px rgba(0, 0, 0, 0.1));
 }
 
 .tool-bar-show li:not(.tool-bar-menu) {
   opacity: 1;
-  transform: translateX(0)
+  transform: translateX(0);
 }

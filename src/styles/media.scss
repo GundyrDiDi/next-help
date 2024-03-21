@@ -1,0 +1,52 @@
+// and (min-width: 840px) and
+@media screen and (max-width: 1200px) {
+  #app.page_layout {
+    min-width: 100%;
+  }
+  #search {
+    display: none;
+  }
+  #category {
+    display: none;
+  }
+  :root {
+    --max-width: 100% !important;
+  }
+
+  .CKBHeader {
+    .wrap {
+      padding: 0 20px;
+    }
+    .part-smc {
+      display: none;
+    }
+    .part-MembershipLevel {
+      display: none;
+    }
+    .part-WorkeSpace {
+      display: none;
+    }
+  }
+  .Kaerumedia {
+    .Kaerumedia-main-recom {
+      display: none;
+    }
+    .Kaerumedia-main-list {
+      margin: 0 auto;
+      width: 100%;
+    }
+    .ArticleItem-main-text {
+      flex: 1;
+      padding-left: 16px;
+    }
+    .ArticleList-pagination {
+      padding-right: 20px;
+    }
+  }
+  .Footer {
+    .Footer-main {
+      padding-right: 20px;
+      padding-left: 20px;
+    }
+  }
+}

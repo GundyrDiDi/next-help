@@ -34,18 +34,6 @@ export enum ENUM_PAGE {
   FUND_STORE_FUND = '/fund/StoreFund',
   /** 帮助 */
   HELP = '/help',
-  /** 报价信息 */
-  QUOTATION_INFO = '/oem/order/quotationInfo',
-  /** 新增寻源 */
-  ADD_FIND_SOURCE = '/oem/order/addFindSource',
-  /** 寻源单详情 */
-  FIND_SOURCE_DETAIL = '/oem/order/findSourceDetail',
-  /** 寻源单编辑 */
-  EDIT_FIND_SOURCE = '/oem/order/editFindSource',
-  /** 寻源商品列表 */
-  OEM_GOODS_LIST = '/oem/goods/list',
-  /** oem 寻源列表 */
-  OEM_FIND_SOURCE_LIST = '/oem/order/oemSourceList',
   /** oem 工作台 */
   WORKER_SPACE = '/user/UserCenter',
   /** oem 会员中心 */

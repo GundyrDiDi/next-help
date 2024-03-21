@@ -24,6 +24,7 @@ import platAtom from "@/model/Plat";
 import { isJA, isJK, useSite2Station } from "@/utils/language";
 import { toTheCkb } from "@/utils/router";
 import langType from "@/model/Lang";
+import classNames from "classnames";
 
 const menuCommonStyle =
   "flex items-center ml-[20px] hover:text-[color:--color-primary-light] cursor-pointer flex-row";
@@ -145,7 +146,7 @@ const CKBHeader = ({}: Props) => {
   return (
     <div className="CKBHeader">
       <div className="wrap of-hd viewport">
-        <div className="auto-width flex justify-between w-[1220px]">
+        <div className="auto-width flex justify-between">
           <div
             className="logo flex items-center cursor-pointer"
             onClick={() => linkToPure()}
@@ -158,7 +159,7 @@ const CKBHeader = ({}: Props) => {
           </div>
           <div className="pl-[10px] flex items-center">
             {canUseSmc && (
-              <div className={menuCommonStyle}>
+              <div className={classNames(menuCommonStyle, "part-smc")}>
                 <img
                   src="https://static-s.theckb.com/BusinessMarket/OEM/new_tag.png"
                   alt=""
@@ -174,7 +175,10 @@ const CKBHeader = ({}: Props) => {
                         toTheCkb(ENUM_PAGE.LOGIN, false);
                         return;
                       }
-                      toTheCkb(ENUM_PAGE.LOGIN);
+                      toTheCkb(
+                        `/smc/promotion/index?redirect=MyPromotion&lang=${lang}`,
+                        false
+                      );
                     }}
                   >
                     {t("推广联盟")}
@@ -182,12 +186,14 @@ const CKBHeader = ({}: Props) => {
                 </div>
               </div>
             )}
-            <div className={menuCommonStyle}>
+            <div
+              className={classNames(menuCommonStyle, "part-MembershipLevel")}
+            >
               <div>
                 <MembershipLevel t={t} membership={membership} />
               </div>
             </div>
-            <div className={menuCommonStyle}>
+            <div className={classNames(menuCommonStyle, "part-WorkeSpace")}>
               <i className="iconfont icon-gongzuotai text-[12px] pr-[2px]" />
               <div
                 className="ml-[2px]"
@@ -196,10 +202,7 @@ const CKBHeader = ({}: Props) => {
                     toTheCkb(ENUM_PAGE.LOGIN, false);
                     return;
                   }
-                  toTheCkb(
-                    `/smc/promotion/index?redirect=MyPromotion&lang=${lang}`,
-                    false
-                  );
+                  toTheCkb(ENUM_PAGE.WORKER_SPACE);
                 }}
               >
                 {t("工作台")}

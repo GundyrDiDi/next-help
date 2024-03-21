@@ -5,7 +5,8 @@ $hover-text-color: var(--hfccolor);
   &.d2c {
     &:hover {
       .article-msg-read-icon {
-        background: url('https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/read-active.png') no-repeat;
+        background: url("https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/read-active.png")
+          no-repeat;
         background-size: 100%;
       }
     }
@@ -13,7 +14,8 @@ $hover-text-color: var(--hfccolor);
   &.b2b {
     &:hover {
       .article-msg-read-icon {
-        background: url('https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/read-active-b2b.png') no-repeat;
+        background: url("https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/read-active-b2b.png")
+          no-repeat;
         background-size: 100%;
       }
     }
@@ -25,7 +27,10 @@ $hover-text-color: var(--hfccolor);
     cursor: pointer;
     &:hover {
       .article {
-        &-title, &-body, &-msg, &-msg-read{
+        &-title,
+        &-body,
+        &-msg,
+        &-msg-read {
           color: $hover-text-color;
         }
       }
@@ -59,7 +64,7 @@ $hover-text-color: var(--hfccolor);
           line-height: 1.4;
         }
         &-body {
-          height: 120px;
+          height: 76px;
           color: #666;
           font-size: 14px;
           margin-top: 14px;
@@ -71,7 +76,6 @@ $hover-text-color: var(--hfccolor);
         }
         &-msg {
           width: 100%;
-          position: absolute;
           bottom: 0;
           display: flex;
           justify-content: space-between;
@@ -83,7 +87,8 @@ $hover-text-color: var(--hfccolor);
               width: 15px;
               height: 9px;
               display: inline-block;
-              background: url('https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/read.png') no-repeat;
+              background: url("https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/read.png")
+                no-repeat;
               background-size: 100%;
             }
           }

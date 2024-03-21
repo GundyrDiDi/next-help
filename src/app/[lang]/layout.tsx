@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { PlatCookie, TokenSignCookie } from "@/config";
 import "./globals.scss";
 import { Metadata } from "next";
+import classNames from "classnames";
 
 export const metadata: Metadata = {
   icons: {
@@ -33,7 +34,7 @@ export default function RootLayout({
         async
       ></script>
       <body>
-        <div id="app" className={lang}>
+        <div id="app" className={classNames("page_layout", lang)}>
           <LayoutChild params={{ lang, initPlat: plat, token }}>
             {children}
           </LayoutChild>
