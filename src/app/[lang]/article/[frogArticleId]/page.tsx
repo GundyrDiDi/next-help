@@ -1,16 +1,19 @@
 import { FrogArticleDetailRespDTO } from "@/service/customer";
 import type { Metadata, ResolvingMetadata } from "next";
 import ArticlesCont from "./component/ArticlesCont/Index";
+import { Local } from "@/i18n/settings";
+import { serveTranslation } from "@/i18n";
 
 type Props = {
-  params: { frogArticleId: string };
+  params: { frogArticleId: string; lang: Local };
   searchParams: { [key: string]: string | undefined };
 };
 
 /** 获取数据 */
 const getData = async (frogArticleId: number) => {
   const article = await fetch(
-    `${process.env.NEXT_PUBLIC_THE_CKB_API_URL}/customer/frog/article/detail?frogArticleId=${frogArticleId}`
+    `${process.env.NEXT_PUBLIC_THE_CKB_API_URL}/customer/frog/article/detail?frogArticleId=${frogArticleId}`,
+    { cache: "no-cache" }
   ).then((res) => res.json());
   return article.data as FrogArticleDetailRespDTO;
 };
@@ -25,6 +28,7 @@ export async function generateMetadata(
   { params, searchParams }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
+  const { t } = await serveTranslation(params.lang);
   const frogArticleId = +params.frogArticleId;
   const article = await getData(frogArticleId);
   const title = article?.frogArticleTitle;
@@ -38,6 +42,7 @@ export async function generateMetadata(
         ja: "/ja",
       },
     },
+    title: `${article.frogArticleTitle}`,
     description: article.seoDescription || article.frogArticleTitle,
     openGraph: {
       siteName: "THE CKB",
