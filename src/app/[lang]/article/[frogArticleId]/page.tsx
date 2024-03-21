@@ -42,7 +42,9 @@ export async function generateMetadata(
         ja: "/ja",
       },
     },
-    title: `${article.frogArticleTitle}`,
+    title: `${article.frogArticleTitle}${
+      params.lang === Local.JA ? "| 中国輸入代行THE CKB" : "| THE CKB"
+    }`,
     description: article.seoDescription || article.frogArticleTitle,
     openGraph: {
       siteName: "THE CKB",

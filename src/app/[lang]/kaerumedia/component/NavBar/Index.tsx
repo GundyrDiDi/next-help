@@ -16,12 +16,12 @@ const NavBar = ({ navList, changeType }: Props) => {
   const [querys] = useAtom(QueryParams);
   return (
     <div className="Nav">
-      <div className="navmain">
+      <div className="navmain viewport flex-nowrap">
         {navList?.map((nav) => (
           <div
             onClick={() => changeType(nav.value)}
             key={nav.value}
-            className={classNames("navmain-item", {
+            className={classNames("navmain-item one-line", {
               active: querys.tab === nav.value,
             })}
           >

@@ -37,20 +37,22 @@ export default function Page({ params: {} }: Props) {
   };
 
   return (
-    <div className="Kaerumedia">
+    <>
       <div className="Kaerumedia-banner">
         <img src={banner} alt="" />
       </div>
-      <NavBar navList={navList} changeType={changeNav} />
-      <div className="Kaerumedia-main viewport">
-        <div className="Kaerumedia-main-list">
-          <ArticleList />
-        </div>
-        <div className="Kaerumedia-main-recom">
-          <HotArticlesList />
-          <ArticleDateFilter />
+      <div className="Kaerumedia-mainBox">
+        <NavBar navList={navList} changeType={changeNav} />
+        <div className="Kaerumedia-main viewport">
+          <div className="Kaerumedia-main-list">
+            <ArticleList />
+          </div>
+          <div className="Kaerumedia-main-recom">
+            <HotArticlesList />
+            <ArticleDateFilter />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

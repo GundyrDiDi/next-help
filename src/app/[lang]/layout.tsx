@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { PlatCookie, TokenSignCookie } from "@/config";
 import "./globals.scss";
 import { Metadata, ResolvingMetadata } from "next";
+import classNames from "classnames";
 interface Props {
   params: {
     lang: Local;

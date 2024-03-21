@@ -40,7 +40,7 @@ const ArticleItem = ({ article }: Props) => {
       !isLogin() &&
       article.noLoginRestriction === NO_LOGIN_RESTRICTION_TYPE.CHECK_DISABLE
     ) {
-      toLogin();
+      toTheCkb(ENUM_PAGE.LOGIN);
       return;
     }
     if (
