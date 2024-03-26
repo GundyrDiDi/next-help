@@ -250,16 +250,6 @@ const CKBSearch = () => {
         toTheCkb(`/list?${queryString.stringify(params)}`);
       }
     }
-    // TODO:没有单词的光效
-    // else {
-    //   setNullTrigger(true)
-    //   timer&&clearTimeout(timer)
-    //   timer= setTimeout(() => {
-    //     InputRef.current&&InputRef.current?.focus()
-    //     PopoverRef1.current&&PopoverRef1.current?.close()
-    //     setNullTrigger(false)
-    //   }, 1500)
-    // }
   };
 
   // 去购物车
@@ -447,13 +437,13 @@ const CKBSearch = () => {
         <img
           referrerPolicy="no-referrer"
           className="bg"
-          src={pluginImgs.plugin1}
+          src={pluginImgs?.plugin1}
           alt=""
         />
         <img
           referrerPolicy="no-referrer"
           className={classNames("plu-btn", lang)}
-          src={pluginImgs.footer}
+          src={pluginImgs?.footer}
           alt=""
         />
       </Modal>

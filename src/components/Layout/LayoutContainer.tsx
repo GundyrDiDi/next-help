@@ -12,12 +12,10 @@ import CKBHeader from "@/components/CKBHeader";
 import FloatToolbar from "@/components/FloatToolbar";
 import { Local } from "@/i18n/settings";
 import { LocalContext, runsOnServerSide } from "@/i18n/client";
-import platAtom from "@/model/Plat";
 import { getCookiePlat, getCookieToken } from "@/utils";
 import { getShopId, togglePlat } from "@/config/request/interceptors";
 import { ENUM_SYSTEM_SOURCE } from "@/const/enum";
 import CKBSearch from "@/components/CKBSearch";
-import { TokenSignCookie } from "@/config";
 import { useAsyncEffect, useRequest } from "ahooks";
 import { api } from "@/service";
 import CKBCategory from "@/components/CKBCategory/Index";
@@ -50,6 +48,8 @@ export default function Layout({
 
   useAsyncEffect(async () => {
     if (!runsOnServerSide) {
+      // 初始化语言
+      document.documentElement.lang=lang
       if (getCookieToken) {
         await requestCustomerDetail();
         if (getShopId()) {
