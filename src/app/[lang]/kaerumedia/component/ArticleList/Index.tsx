@@ -20,10 +20,17 @@ type Params = Omit<
   "pageNum" | "pageSize"
 >;
 
-const ArticleList = () => {
+interface Props{
+  initListArticle:FrogArticleRespDTO[]
+}
+
+const ArticleList = ({initListArticle}:Props) => {
+  console.log(initListArticle);
+  
   const stationCode = useSite2Station();
   const [querys] = useAtom(QueryParams);
   const { t } = useTranslation();
+  const [list,setList]=useState(initListArticle??[])
   const {
     data: articleRes,
     loading,
@@ -59,6 +66,7 @@ const ArticleList = () => {
   );
 
   useEffect(() => {
+   if(initListArticle?.length){
     articlePage(
       { pageSize: 10, current: 1 },
       {
@@ -68,14 +76,23 @@ const ArticleList = () => {
         frogArticleMonth: querys.month ? String(querys.month) : "",
       }
     );
-  }, [articlePage, querys.month, querys.tab, querys.year, stationCode]);
+   }
+  }, [articlePage, querys.month, querys.tab, querys.year, stationCode,initListArticle]);
+
+  useEffect(()=>{
+   if(pagination.current!==1){
+     setList(articleRes?.list??[])
+   }else{
+    setList(initListArticle)
+   }
+  },[articleRes?.list, initListArticle, pagination])
 
   return (
     <div className="ArticleList">
       <div className="ArticleList-main">
-        <Spin spinning={loading}>
-          {articleRes?.list?.length ? (
-            articleRes.list.map((item: FrogArticleRespDTO) => {
+        <Spin spinning={loading&&pagination.current!==1}>
+          {list.length ? (
+            list.map((item: FrogArticleRespDTO) => {
               return <ArticleItem key={item.frogArticleId} article={item} />;
             })
           ) : (
@@ -83,7 +100,7 @@ const ArticleList = () => {
           )}
         </Spin>
       </div>
-      {!!articleRes?.list?.length && (
+      {!!list.length && (
         <div className="ArticleList-pagination">
           <Pagination
             onChange={pagination.onChange}

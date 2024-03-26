@@ -43,8 +43,7 @@ export const isJK = () => {
 
 
 /** 获取国家站点code */
-export const useSite2Station = ():Site => {
-  const lang=getLang()
+export const useSite2Station = (lang:Local =getLang()):Site => {
   return {
     [Local.JA]: Site.JA,
     [Local.KO]: Site.KO,

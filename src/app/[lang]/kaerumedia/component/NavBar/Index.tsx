@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { NavItem } from "../../configData";
+import { NavItem } from "../configData";
 import { useContext } from "react";
 import { LocalContext, useTranslation } from "@/i18n/client";
 import "./Index.scss";

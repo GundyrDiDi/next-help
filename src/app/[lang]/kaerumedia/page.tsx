@@ -1,14 +1,7 @@
-"use client";
 import { Local } from "@/i18n/settings";
-import { useEffect, useState } from "react";
-import { bannerData, navList } from "./configData";
-import "./index.scss";
-import NavBar from "./component/NavBar/Index";
-import ArticleList from "./component/ArticleList/Index";
-import { atom, useAtom } from "jotai";
-import HotArticlesList from "./component/HotArticlesList/Index";
-import ArticleDateFilter from "./component/ArticleDateFilter/Index";
-import { Lang, Plat, QueryParams } from "@/model";
+import Kaerumedia from "./component/Index"
+import { useSite2Station } from "@/utils/language";
+import { BizResponsePageFrogArticleRespDTO, PageFrogArticleRespDTO } from "@/service/customer";
 
 interface Props {
   params: {
@@ -16,43 +9,34 @@ interface Props {
   };
 }
 
+// querys.month, querys.tab, querys.year
 // 顶部navbar
-export default function Page({ params: {} }: Props) {
-  const [lang] = useAtom(Lang);
-  const [plat] = useAtom(Plat);
-  const [banner, setBaner] = useState<string>("");
-  const [, setQuerys] = useAtom(QueryParams);
-
-  useEffect(() => {
-    setBaner(bannerData[lang][plat.toUpperCase() as "B2B" | "D2C"]);
-  }, [lang, plat]);
-
-  const changeNav = (index: number) => {
-    setQuerys((value) => {
-      return {
-        ...value,
-        tab: index,
-      };
-    });
-  };
-
+export default async function Page({ params }:Props) {
+  const stationCode = useSite2Station(params.lang);
+  const url=`${process.env.NEXT_PUBLIC_THE_CKB_API_URL}/customer/frog/article/page`
+  const res:BizResponsePageFrogArticleRespDTO = await fetch(url ,
+    { cache: "no-cache" ,
+    method:'POST',
+    body:JSON.stringify({
+      pageNum: 1,
+      pageSize: 10,
+      stationCode: stationCode,
+      "frogArticleYear":"",
+      "frogArticleMonth":""
+    }),
+    headers:{
+      "X-Stationcode":stationCode,
+      "Content-Type": "application/json",
+    }
+  }
+  ).then((res) => res.json());
+  console.log(res,url);
+  
   return (
     <>
-      <div className="Kaerumedia-banner">
-        <img src={banner} alt="" />
-      </div>
-      <div className="Kaerumedia-mainBox">
-        <NavBar navList={navList} changeType={changeNav} />
-        <div className="Kaerumedia-main viewport">
-          <div className="Kaerumedia-main-list">
-            <ArticleList />
-          </div>
-          <div className="Kaerumedia-main-recom">
-            <HotArticlesList />
-            <ArticleDateFilter />
-          </div>
-        </div>
-      </div>
+    <Kaerumedia  initListArticle={res?.data?.records??[]}/>
     </>
   );
 }
+
+
