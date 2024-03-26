@@ -48,6 +48,7 @@ export default function RootLayout({
         src="https://cdn.channel.io/plugin/ch-plugin-web.js"
         async
       ></script>
+      <meta name="google-site-verification" content="1DIor1BkSq1vf_uf4-m5WRiVIyeWGmckG9hD2VLb3eM" />
       <body>
         <div id="app" className={classNames("page_layout", lang)}>
           <LayoutChild params={{ lang, initPlat: plat, token }}>
