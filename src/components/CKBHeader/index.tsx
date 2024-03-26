@@ -26,6 +26,7 @@ import { isJA, isJK, useSite2Station } from "@/utils/language";
 import { toTheCkb } from "@/utils/router";
 import langType from "@/model/Lang";
 import classNames from "classnames";
+import { Local } from "@/i18n/settings";
 
 const menuCommonStyle =
   "flex items-center ml-[20px] hover:text-[color:--color-primary-light] cursor-pointer flex-row";
@@ -371,7 +372,11 @@ const CKBHeader = ({}: Props) => {
                 "flex items-center ml-[32px] hover:text-[color:--color-primary-light] cursor-pointer bg-[#333] leading-[20px] pl-[16px] pr-[16px] rounded-[10px] text-[--color-white]",
                 "part-Rate"
               )}
-              href="http://www.murc-kawasesouba.jp/fx/index.php"
+             onClick={()=>{
+              if(lang===Local.JA){
+               window.open("http://www.murc-kawasesouba.jp/fx/index.php")
+              }
+             }}
               style={{
                 textDecoration: "none",
               }}

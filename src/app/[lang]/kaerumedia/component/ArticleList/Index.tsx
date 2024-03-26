@@ -25,8 +25,6 @@ interface Props{
 }
 
 const ArticleList = ({initListArticle}:Props) => {
-  console.log(initListArticle);
-  
   const stationCode = useSite2Station();
   const [querys] = useAtom(QueryParams);
   const { t } = useTranslation();

@@ -30,8 +30,6 @@ export default async function Page({ params }:Props) {
     }
   }
   ).then((res) => res.json());
-  console.log(res,url);
-  
   return (
     <>
     <Kaerumedia  initListArticle={res?.data?.records??[]}/>
