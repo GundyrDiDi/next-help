@@ -45,7 +45,6 @@ import { CustomerSearchKeywordHotRespDTO } from "@/service/goods";
 import { CSSTransition } from "react-transition-group";
 import gbk from "gbk-encode";
 import { Local } from "@/i18n/settings";
-import { flushSync } from "react-dom";
 
 const { encode } = gbk;
 export interface SelectParams {
@@ -397,7 +396,7 @@ const CKBSearch = () => {
             </div>
           </CSSTransition>
         </div>
-        <div className="fx-1 search-btn flex">
+        <div className="fx-1 search-btn flex items-center">
           <Button
             className="ml-10 ico-btn guide-btn"
             id="guideBtn"

@@ -215,7 +215,7 @@ const SellerCate = () => {
         }}
         onOpenChange={rotate1Toggle}
       >
-        <Button shape="round" className="xl-btn lf-btn v-line w-[150px]">
+        <Button style={{border:'none'}} shape="round" className="xl-btn lf-btn v-line w-[150px] border-none">
           <img
             hidden={seller?.key !== "AM"}
             src={`https://static-s.theckb.com/BusinessMarket/icon/1688selected/home-selected-tips-${lang}.png`}
@@ -262,7 +262,7 @@ const SellerCate = () => {
           })!,
         }}
       >
-        <Button shape="round" className="xl-btn rt-btn">
+        <Button style={{border:'none'}} shape="round" className="xl-btn rt-btn">
           <div className="line--only text-[12px] w-[60px] align-bottom">
             {showDrapText2}
           </div>

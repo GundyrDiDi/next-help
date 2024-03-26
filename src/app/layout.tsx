@@ -4,6 +4,7 @@ import { PlatCookie, TokenSignCookie } from "@/config";
 import "./globals.scss";
 import { Metadata, ResolvingMetadata } from "next";
 import {  GoogleTagManager } from '@next/third-parties/google'
+import { AntdRegistry } from '@ant-design/nextjs-registry';
 
 interface Props {
   params: {
@@ -51,7 +52,10 @@ export default function RootLayout({
       <GoogleTagManager gtmId="GTM-W9HSLNKD" />
       <body>
         <div id="app" className="page_layout">
-            {children}
+          <AntdRegistry>
+          {children}
+          </AntdRegistry>
+           
         </div>
       </body>
     </html>
