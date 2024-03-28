@@ -5,6 +5,12 @@ import "./globals.scss";
 import { Metadata, ResolvingMetadata } from "next";
 import {  GoogleTagManager } from '@next/third-parties/google'
 import { AntdRegistry } from '@ant-design/nextjs-registry';
+// import localFont from 'next/font/local'
+
+// const myFont = localFont({
+//   src: 'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap',
+//   display: 'swap',
+// })
 
 interface Props {
   params: {
@@ -42,13 +48,14 @@ export default function RootLayout({
   const plat = cookieStore.get(encodeURIComponent(PlatCookie))?.value || "d2c";
   const token = cookieStore.get(encodeURIComponent(TokenSignCookie))?.value;
   return (
-    <html lang={lang} data-theme={String(plat).toUpperCase()}>
+    <html lang={lang} data-theme={String(plat).toUpperCase()} className={lang}>
       <script
         type="text/javascript"
         src="https://cdn.channel.io/plugin/ch-plugin-web.js"
         async
       ></script>
       <meta name="google-site-verification" content="1DIor1BkSq1vf_uf4-m5WRiVIyeWGmckG9hD2VLb3eM" />
+
       <GoogleTagManager gtmId="GTM-W9HSLNKD" />
       <body>
         <div id="app" className="page_layout">

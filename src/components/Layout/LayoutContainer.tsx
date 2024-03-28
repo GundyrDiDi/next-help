@@ -50,6 +50,7 @@ export default function Layout({
     if (!runsOnServerSide) {
       // 初始化语言
       document.documentElement.lang=lang
+      document.documentElement.classList.add(lang)
       if (getCookieToken) {
         await requestCustomerDetail();
         if (getShopId()) {
