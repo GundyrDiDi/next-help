@@ -31,7 +31,7 @@ const swaggerList = [
 
 const config = {
   swaggerList,
-  requestEnv: "20240301-client-seo",
+  requestEnv: "",
 };
 
 module.exports = config;

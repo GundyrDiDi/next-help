@@ -10,7 +10,7 @@ import { TokenSignCookie } from '@/config';
 interface MembershipDTO extends CustomerMembershipResDTO {
     templateLevel:number;
 }
-interface CustomerDetailRespDTO2 extends CustomerDetailRespDTO {
+export interface CustomerDetailRespDTO2 extends CustomerDetailRespDTO {
     membership?: MembershipDTO;
     site?: string;
     isKO?: boolean;

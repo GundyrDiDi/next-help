@@ -1671,6 +1671,11 @@ export interface CustomerFavoriteProductRespDTO {
   favoriteFlag?: number;
   /** @format int32 */
   isCkbDiscount?: number;
+  /**
+   * 1-上架;0-下架;
+   * @format int32
+   */
+  isOnline?: number;
   jxhyPrice?: number;
   originalPrice?: number;
   platformType?: string;
@@ -2171,6 +2176,12 @@ export interface DiscountInfoUpdateVO {
   discount?: number;
   /** sku列表 */
   productSkuList?: string[];
+  /** 优惠方式:1-改价,2-返金 */
+  promotionMethod?: string;
+  /** 优惠方式:1-立减,2-折扣 */
+  promotionType?: string;
+  /** 立减金额 */
+  reductionAmount?: string;
 }
 
 /** EngineResult */
@@ -2734,6 +2745,7 @@ export interface Product {
   sortNum?: number;
   supplierSpu?: string;
   thirdProductCateCode?: string;
+  transportationAttrCode?: string;
   /** @format date-time */
   updateTime?: string;
   /** @format int64 */
@@ -3457,6 +3469,23 @@ export interface ProductCustomsFormReqDTO {
   stationCode?: string;
 }
 
+/** ProductCustomsHsCodeCrawlReqDTO */
+export interface ProductCustomsHsCodeCrawlReqDTO {
+  /** HS CODE 列表详情 */
+  productCustomsHsCodeReqDTOList?: ProductHsCodeKeywordReqDTO[];
+  /** 报关中文品名(站点语种) */
+  productItemCateLanguage?: string;
+  /** 报关中文品名 */
+  productItemCategoryZh?: string;
+  /**
+   * 来源
+   * @format int32
+   */
+  source?: number;
+  /** 站点code */
+  stationCode?: string;
+}
+
 /** ProductCustomsPageReqDTO */
 export interface ProductCustomsPageReqDTO {
   /** @format int32 */
@@ -3606,6 +3635,8 @@ export interface ProductDetailParamReqDTO {
 export interface ProductDetailReqDTO {
   /** @format int64 */
   customerId?: number;
+  /** 忽略上下架 */
+  ignoreIsOnline?: boolean;
   /** @format int32 */
   isOnline?: number;
   productCode?: string;
@@ -3616,6 +3647,7 @@ export interface ProductDetailReqDTO {
 
 /** ProductDetailRequVO */
 export interface ProductDetailRequVO {
+  ignoreBlack?: boolean;
   platform?: string;
   productCode: string;
   stationCode?: string;
@@ -3942,6 +3974,11 @@ export interface ProductDetailVo {
   channel?: number;
   consignPrice?: number;
   consignPriceMax?: number;
+  /**
+   * 高，单位cm
+   * @format double
+   */
+  height?: number;
   /** 完整层级类目代码 */
   intactCateCode?: string;
   /** 完整层级类目名称 */
@@ -3952,6 +3989,11 @@ export interface ProductDetailVo {
    * @format int32
    */
   isOnline?: number;
+  /**
+   * 长，单位cm
+   * @format double
+   */
+  length?: number;
   /** 英文材质 */
   materialInfoEn?: string;
   /** 日文材质 */
@@ -4018,12 +4060,144 @@ export interface ProductDetailVo {
   supplierName?: string;
   /** 供应商spu */
   supplierSpu?: string;
+  /** 运输属性 */
+  transportationAttrCodeList?: string[];
+  /**
+   * 重，单位g
+   * @format int64
+   */
+  weight?: number;
+  /**
+   * 宽，单位cm
+   * @format double
+   */
+  width?: number;
 }
 
 /** ProductEditReqDTO */
 export interface ProductEditReqDTO {
   productCode?: string;
   productStallNumber?: string;
+}
+
+/** ProductHsCodeKeywordDeleteReqDTO */
+export interface ProductHsCodeKeywordDeleteReqDTO {
+  /**
+   * 报关名称与hsCode映射关系
+   * @format int64
+   */
+  id?: number;
+  /** 站点code */
+  stationCode?: string;
+}
+
+/** ProductHsCodeKeywordMappingPageReqDTO */
+export interface ProductHsCodeKeywordMappingPageReqDTO {
+  /** hsCode */
+  hsCode?: string;
+  /** @format int32 */
+  pageNum?: number;
+  /** @format int32 */
+  pageSize?: number;
+  /** 报关中文品名 */
+  productHsCodeKeywordZh?: string;
+  /** @format int32 */
+  startIndex?: number;
+  /** 站点code */
+  stationCode?: string;
+  /** 税率 */
+  taxRate?: number;
+}
+
+/** ProductHsCodeKeywordMappingRespDTO */
+export interface ProductHsCodeKeywordMappingRespDTO {
+  /** 描述 */
+  description?: string;
+  /** 描述(站点多语言) */
+  descriptionLanguage?: string;
+  /** hsCode */
+  hsCode?: string;
+  /**
+   * 品名与hsCode映射id
+   * @format int64
+   */
+  id?: number;
+  /**
+   * 商品HSCODE关键字id
+   * @format int64
+   */
+  productHsCodeKeywordId?: number;
+  /** 申报中文品名 */
+  productHsCodeKeywordZh?: string;
+  /** 站点code */
+  stationCode?: string;
+  /** 税率 */
+  taxRate?: number;
+}
+
+/** ProductHsCodeKeywordPageReqDTO */
+export interface ProductHsCodeKeywordPageReqDTO {
+  /** @format int32 */
+  pageNum?: number;
+  /** @format int32 */
+  pageSize?: number;
+  /**
+   * hsCode关键字Id
+   * @format int64
+   */
+  productHsCodeKeywordId?: number;
+  /** 报关中文品名 */
+  productHsCodeKeywordZh?: string;
+  /** @format int32 */
+  startIndex?: number;
+}
+
+/** ProductHsCodeKeywordReqDTO */
+export interface ProductHsCodeKeywordReqDTO {
+  /** 描述 */
+  description?: string;
+  /** 描述（站点语种） */
+  descriptionLanguage?: string;
+  /** hsCode */
+  hsCode?: string;
+  /**
+   * 报关名称与hsCode映射关系
+   * @format int64
+   */
+  id?: number;
+  /**
+   * hsCode关键字Id
+   * @format int64
+   */
+  productHsCodeKeywordId?: number;
+  /** 报关中文品名 */
+  productHsCodeKeywordZh?: string;
+  /**
+   * 来源
+   * @format int32
+   */
+  source?: number;
+  /** 站点code */
+  stationCode?: string;
+  /** 税率 */
+  taxRate?: number;
+}
+
+/** ProductHsCodeKeywordRespDTO */
+export interface ProductHsCodeKeywordRespDTO {
+  /**
+   * 中文品名id
+   * @format int64
+   */
+  id?: number;
+  /** hsCode关键字（日文） */
+  productHsCodeKeywordJp?: string;
+  /** hsCode关键字（韩文） */
+  productHsCodeKeywordKr?: string;
+  /** hsCode关键字（英文） */
+  productHsCodeKeywordUk?: string;
+  /** hsCode关键字(中文) */
+  productHsCodeKeywordZh?: string;
 }
 
 /**
@@ -4055,6 +4229,11 @@ export interface ProductImageUrlDTO {
 export interface ProductInfo {
   /** @format int32 */
   countryProductTag?: number;
+  /**
+   * 高，单位cm
+   * @format double
+   */
+  height?: number;
   /** 完整层级类目名称 */
   intactCateName?: string;
   /**
@@ -4062,6 +4241,11 @@ export interface ProductInfo {
    * @format int32
    */
   isOnline?: number;
+  /**
+   * 长，单位cm
+   * @format double
+   */
+  length?: number;
   /**
    * 直营商城标识
    * @format int32
@@ -4096,6 +4280,18 @@ export interface ProductInfo {
   supplierName?: string;
   /** 供应商款式编码 */
   supplierSpu?: string;
+  /** 运输属性 */
+  transportationAttrCode?: string;
+  /**
+   * 重，单位kg
+   * @format int64
+   */
+  weight?: number;
+  /**
+   * 宽，单位cm
+   * @format double
+   */
+  width?: number;
 }
 
 /** ProductItemCategoryZhUpdateVO */
@@ -4470,6 +4666,146 @@ export interface ProductQueryDTO {
   url?: string;
 }
 
+/** ProductReferenceEditReqDTO */
+export interface ProductReferenceEditReqDTO {
+  /** 后台类目 */
+  cateCode?: string;
+  /** 高，单位cm */
+  height?: number;
+  /**
+   * 参考库id
+   * @format int64
+   */
+  id?: number;
+  /** 长，单位cm */
+  length?: number;
+  /** 参考分类名称（英语） */
+  referenceCategoryEn?: string;
+  /** 参考分类名称（日语） */
+  referenceCategoryJp?: string;
+  /** 参考分类名称（韩文） */
+  referenceCategoryKr?: string;
+  /** 参考分类名称（中文） */
+  referenceCategoryZh?: string;
+  /** 商品图片 */
+  referenceProductImg?: string;
+  /** 参考商品简称（英语） */
+  referenceProductNameEn?: string;
+  /** 参考商品简称（日语） */
+  referenceProductNameJp?: string;
+  /** 参考商品简称（韩文） */
+  referenceProductNameKr?: string;
+  /** 参考商品简称（中文） */
+  referenceProductNameZh?: string;
+  /**
+   * 体总（单位：g）
+   * @format int64
+   */
+  weight?: number;
+  /** 宽，单位cm */
+  width?: number;
+}
+
+/** ProductReferencePageReqDTO */
+export interface ProductReferencePageReqDTO {
+  /** 后台类目 */
+  cateCode?: string;
+  /** @format int32 */
+  pageNum?: number;
+  /** @format int32 */
+  pageSize?: number;
+  /** 类目分类 */
+  referenceCategoryZh?: string;
+  /** @format int32 */
+  startIndex?: number;
+}
+
+/** ProductReferenceRespDTO */
+export interface ProductReferenceRespDTO {
+  /** 分类编码 */
+  cateCode?: string;
+  /** 分类名称 */
+  cateName?: string;
+  /**
+   * 高，单位cm
+   * @format double
+   */
+  height?: number;
+  /**
+   * 品名与HSCODE映射id
+   * @format int64
+   */
+  id?: number;
+  /**
+   * 长，单位cm
+   * @format double
+   */
+  length?: number;
+  /** 参考分类名称（英语） */
+  referenceCategoryEn?: string;
+  /** 参考分类名称（日语） */
+  referenceCategoryJp?: string;
+  /** 参考分类名称（韩文） */
+  referenceCategoryKr?: string;
+  /** 参考分类名称（中文） */
+  referenceCategoryZh?: string;
+  /** 商品图片 */
+  referenceProductImg?: string;
+  /** 参考商品简称（英语） */
+  referenceProductNameEn?: string;
+  /** 参考商品简称（日语） */
+  referenceProductNameJp?: string;
+  /** 参考商品简称（韩文） */
+  referenceProductNameKr?: string;
+  /** 参考商品简称（中文） */
+  referenceProductNameZh?: string;
+  /**
+   * 体总（单位：g）
+   * @format int32
+   */
+  weight?: number;
+  /**
+   * 宽，单位cm
+   * @format double
+   */
+  width?: number;
+}
+
+/** ProductReferenceSaveReqDTO */
+export interface ProductReferenceSaveReqDTO {
+  /** 后台类目 */
+  cateCode?: string;
+  /** 高，单位cm */
+  height?: number;
+  /** 长，单位cm */
+  length?: number;
+  /** 参考分类名称（英语） */
+  referenceCategoryEn?: string;
+  /** 参考分类名称（日语） */
+  referenceCategoryJp?: string;
+  /** 参考分类名称（韩文） */
+  referenceCategoryKr?: string;
+  /** 参考分类名称（中文） */
+  referenceCategoryZh?: string;
+  /** 商品图片 */
+  referenceProductImg?: string;
+  /** 参考商品简称（英语） */
+  referenceProductNameEn?: string;
+  /** 参考商品简称（日语） */
+  referenceProductNameJp?: string;
+  /** 参考商品简称（韩文） */
+  referenceProductNameKr?: string;
+  /** 参考商品简称（中文） */
+  referenceProductNameZh?: string;
+  /**
+   * 体总（单位：g）
+   * @format int64
+   */
+  weight?: number;
+  /** 宽，单位cm */
+  width?: number;
+}
+
 /** ProductReq */
 export interface ProductReq {
   /**
@@ -4477,6 +4813,11 @@ export interface ProductReq {
    * @format int32
    */
   channel?: number;
+  /**
+   * 高，单位cm
+   * @format double
+   */
+  height?: number;
   intactCateCode?: string;
   intactCateName?: string;
   /**
@@ -4484,6 +4825,11 @@ export interface ProductReq {
    * @format int32
    */
   isOnline?: number;
+  /**
+   * 长，单位cm
+   * @format double
+   */
+  length?: number;
   /** 英文材质 */
   materialInfoEn?: string;
   /** 日文材质 */
@@ -4550,6 +4896,18 @@ export interface ProductReq {
   supplierName?: string;
   /** 供应商spu */
   supplierSpu?: string;
+  /** 运输属性 */
+  transportationAttrCodeList?: string[];
+  /**
+   * 重，单位g
+   * @format int64
+   */
+  weight?: number;
+  /**
+   * 宽，单位cm
+   * @format double
+   */
+  width?: number;
 }
 
 /** ProductResourceRespDTO */
@@ -4625,12 +4983,22 @@ export interface ProductRespDTO {
    * @format int32
    */
   favoriteFlag?: number;
+  /**
+   * 高，单位cm
+   * @format double
+   */
+  height?: number;
   /** @format int32 */
   isCkbDiscount?: number;
   isOnePsale?: boolean;
   /** @format int32 */
   isOnline?: number;
   jxhyPrice?: number;
+  /**
+   * 长，单位cm
+   * @format double
+   */
+  length?: number;
   /** 材质信息-日文（注意：订单使用） */
   materialInfoJa?: string;
   /** 材质信息-中文（注意：订单使用） */
@@ -4819,6 +5187,20 @@ export interface ProductRespDTO {
   /** 商品sku信息 */
   skuList?: SkuRespDTO[];
   stationCode?: string;
+  /** 运输属性列表 */
+  transportationAttrCodeList?: string[];
+  /** 运输属性(多个逗号隔开) */
+  transportationAttrNameStr?: string;
+  /**
+   * 重，单位kg
+   * @format int64
+   */
+  weight?: number;
+  /**
+   * 宽，单位cm
+   * @format double
+   */
+  width?: number;
 }
 
 /** ProductSameStylePutInRespVO */
@@ -5138,6 +5520,34 @@ export interface ProductStallNumberUpdateVO {
   productCode?: string;
   /** 档口货号 */
   productStallNumber?: string;
+}
+
+/** ProductTransAndStoragePropertyDTO */
+export interface ProductTransAndStoragePropertyDTO {
+  /**
+   * 高，单位cm
+   * @format double
+   */
+  height?: number;
+  /**
+   * 长，单位cm
+   * @format double
+   */
+  length?: number;
+  /** 商品编码 */
+  productCode?: string;
+  /** 运输属性 */
+  transportationAttrCodeList?: string[];
+  /**
+   * 重，单位kg
+   * @format int64
+   */
+  weight?: number;
+  /**
+   * 宽，单位cm
+   * @format double
+   */
+  width?: number;
 }
 
 /** PurchaseMallReqDTO */
@@ -5951,12 +6361,16 @@ export interface Sku {
   productStockQuantity?: number;
   /** @format int32 */
   productTag?: number;
+  promotionMethod?: string;
+  promotionType?: string;
   purchasePrice?: number;
   recommendProductSku?: string;
+  reductionAmount?: string;
   skuId?: string;
   specId?: string;
   stallProductSellPrice?: number;
   supplierSku?: string;
+  transportationAttrCode?: string;
   /** @format date-time */
   updateTime?: string;
   /** @format int64 */
@@ -6014,6 +6428,12 @@ export interface SkuOperatorLogVO {
   shopCode?: string;
   /** @format int32 */
   startIndex?: number;
+}
+
+/** SkuProductSimpleRespDTO */
+export interface SkuProductSimpleRespDTO {
+  productSimpleRespDTO?: ProductSimpleRespDTO;
+  skuRespDTO?: SkuRespDTO;
 }
 
 /** SkuReqDTO */
@@ -6126,8 +6546,11 @@ export interface SkuRespDTO {
   productTitleEn?: string;
   productTitleJp?: string;
   productTitleKr?: string;
+  promotionMethod?: string;
+  promotionType?: string;
   purchasePrice?: number;
   recommendProductSku?: string;
+  reductionAmount?: string;
   shopCode?: string;
   /** @format int32 */
   shopIsBlack?: number;
@@ -6206,9 +6629,12 @@ export interface SkuRespVO {
   productTitleEn?: string;
   productTitleJp?: string;
   productTitleKr?: string;
+  promotionMethod?: string;
+  promotionType?: string;
   purchasePrice?: number;
   /** 推荐商品SKU */
   recommendProductSku?: string;
+  reductionAmount?: string;
   shopCode?: string;
   /** @format int32 */
   shopIsBlack?: number;
@@ -6216,6 +6642,14 @@ export interface SkuRespVO {
   stallProductSellPrice?: number;
   stationCode?: string;
   supplierSku?: string;
+}
+
+/** SkuTransPropertyBatchEditDTO */
+export interface SkuTransPropertyBatchEditDTO {
+  /** sku编码列表 */
+  productSkuList?: string[];
+  /** 运输属性code列表 */
+  transportationAttrCodeList?: string[];
 }
 
 /** StallProductSellPriceUpdateVO */
@@ -6835,9 +7269,12 @@ export interface SupplierManageListVO {
    * @format int32
    */
   productTag?: number;
+  promotionMethod?: string;
+  promotionType?: string;
   purchasePrice?: number;
   /** 推荐商品SKU */
   recommendProductSku?: string;
+  reductionAmount?: string;
   skuId?: string;
   /** 商品沉淀数据 */
   skuKpi?: SkuKpiInfo;
@@ -6846,9 +7283,17 @@ export interface SupplierManageListVO {
   /** 供应商信息 */
   supplier?: SupplierInfo;
   supplierSku?: string;
+  transportationAttrCode?: string;
+  /** 运输属性code列表 */
+  transportationAttrCodeList?: string[];
+  /** 运输属性名称 */
+  transportationAttrName?: string;
   /** @format date-time */
   updateTime?: string;
-  /** @format int64 */
+  /**
+   * 重，单位kg
+   * @format int64
+   */
   weight?: number;
   /** @format double */
   width?: number;
@@ -7809,6 +8254,14 @@ export interface BizResponseListPurchaseMallRespDTO {
   success?: boolean;
 }
 
+/** BizResponse«List«SkuProductSimpleRespDTO»» */
+export interface BizResponseListSkuProductSimpleRespDTO {
+  code?: string;
+  data?: SkuProductSimpleRespDTO[];
+  msg?: string;
+  success?: boolean;
+}
+
 /** BizResponse«List«SkuRespDTO»» */
 export interface BizResponseListSkuRespDTO {
   code?: string;
@@ -7869,6 +8322,14 @@ export interface BizResponseMapStringBoolean {
 export interface BizResponseOnlineManageDetailVO {
   code?: string;
   data?: OnlineManageDetailVO;
+  msg?: string;
+  success?: boolean;
+}
+
+/** BizResponse«PageResult«ProductHsCodeKeywordRespDTO»» */
+export interface BizResponsePageResultProductHsCodeKeywordRespDTO {
+  code?: string;
+  data?: PageResultProductHsCodeKeywordRespDTO;
   msg?: string;
   success?: boolean;
 }
@@ -8041,6 +8502,14 @@ export interface BizResponsePageProductCustomsRespDTO {
   success?: boolean;
 }
 
+/** BizResponse«Page«ProductHsCodeKeywordMappingRespDTO»» */
+export interface BizResponsePageProductHsCodeKeywordMappingRespDTO {
+  code?: string;
+  data?: PageProductHsCodeKeywordMappingRespDTO;
+  msg?: string;
+  success?: boolean;
+}
+
 /** BizResponse«Page«ProductOperatorLogVo»» */
 export interface BizResponsePageProductOperatorLogVo {
   code?: string;
@@ -8053,6 +8522,14 @@ export interface BizResponsePageProductOperatorLogVo {
 export interface BizResponsePageProductPopularMallRespDTO {
   code?: string;
   data?: PageProductPopularMallRespDTO;
+  msg?: string;
+  success?: boolean;
+}
+
+/** BizResponse«Page«ProductReferenceRespDTO»» */
+export interface BizResponsePageProductReferenceRespDTO {
+  code?: string;
+  data?: PageProductReferenceRespDTO;
   msg?: string;
   success?: boolean;
 }
@@ -8189,6 +8666,22 @@ export interface BizResponseProductDetailResponse {
 export interface BizResponseProductDetailVo {
   code?: string;
   data?: ProductDetailVo;
+  msg?: string;
+  success?: boolean;
+}
+
+/** BizResponse«ProductHsCodeKeywordMappingRespDTO» */
+export interface BizResponseProductHsCodeKeywordMappingRespDTO {
+  code?: string;
+  data?: ProductHsCodeKeywordMappingRespDTO;
+  msg?: string;
+  success?: boolean;
+}
+
+/** BizResponse«ProductReferenceRespDTO» */
+export interface BizResponseProductReferenceRespDTO {
+  code?: string;
+  data?: ProductReferenceRespDTO;
   msg?: string;
   success?: boolean;
 }
@@ -8409,6 +8902,19 @@ export type MapStringBoolean = Record<string, boolean>;
 
 /** Map«string,object» */
 export type MapStringObject = Record<string, object>;
+
+/** PageResult«ProductHsCodeKeywordRespDTO» */
+export interface PageResultProductHsCodeKeywordRespDTO {
+  /** @format int64 */
+  current?: number;
+  records?: ProductHsCodeKeywordRespDTO[];
+  /** @format int64 */
+  size?: number;
+  /** @format int64 */
+  total?: number;
+  /** @format int64 */
+  totalPage?: number;
+}
 
 /** Page«BrandItemDTO» */
 export interface PageBrandItemDTO {
@@ -8830,6 +9336,26 @@ export interface PageProductCustomsRespDTO {
   total?: number;
 }
 
+/** Page«ProductHsCodeKeywordMappingRespDTO» */
+export interface PageProductHsCodeKeywordMappingRespDTO {
+  countId?: string;
+  /** @format int64 */
+  current?: number;
+  hitCount?: boolean;
+  /** @format int64 */
+  maxLimit?: number;
+  optimizeCountSql?: boolean;
+  orders?: OrderItem[];
+  /** @format int64 */
+  pages?: number;
+  records?: ProductHsCodeKeywordMappingRespDTO[];
+  searchCount?: boolean;
+  /** @format int64 */
+  size?: number;
+  /** @format int64 */
+  total?: number;
+}
+
 /** Page«ProductOperatorLogVo» */
 export interface PageProductOperatorLogVo {
   countId?: string;
@@ -8863,6 +9389,26 @@ export interface PageProductPopularMallRespDTO {
   /** @format int64 */
   pages?: number;
   records?: ProductPopularMallRespDTO[];
+  searchCount?: boolean;
+  /** @format int64 */
+  size?: number;
+  /** @format int64 */
+  total?: number;
+}
+
+/** Page«ProductReferenceRespDTO» */
+export interface PageProductReferenceRespDTO {
+  countId?: string;
+  /** @format int64 */
+  current?: number;
+  hitCount?: boolean;
+  /** @format int64 */
+  maxLimit?: number;
+  optimizeCountSql?: boolean;
+  orders?: OrderItem[];
+  /** @format int64 */
+  pages?: number;
+  records?: ProductReferenceRespDTO[];
   searchCount?: boolean;
   /** @format int64 */
   size?: number;
@@ -11364,6 +11910,134 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         ...params,
       }),
   };
+  hscode = {
+    /**
+     * No description
+     *
+     * @tags 平台报文HsCode映射
+     * @name Crawl
+     * @summary 爬虫Hs Code入库
+     * @request POST:/hscode/crawl
+     */
+    crawl: (productCustomsHsCodeCrawlReqDTO: ProductCustomsHsCodeCrawlReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseBoolean, any>({
+        path: `/hscode/crawl`,
+        method: "POST",
+        body: productCustomsHsCodeCrawlReqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 平台报文HsCode映射
+     * @name Delete
+     * @summary 删除
+     * @request POST:/hscode/delete
+     */
+    delete: (productHsCodeKeywordDeleteReqDTO: ProductHsCodeKeywordDeleteReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseBoolean, any>({
+        path: `/hscode/delete`,
+        method: "POST",
+        body: productHsCodeKeywordDeleteReqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 平台报文HsCode映射
+     * @name Detail
+     * @summary 详情
+     * @request GET:/hscode/detail
+     */
+    detail: (
+      query: {
+        /**
+         * id
+         * @format int64
+         */
+        id: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseProductHsCodeKeywordMappingRespDTO, any>({
+        path: `/hscode/detail`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 平台报文HsCode映射
+     * @name Edit
+     * @summary 编辑
+     * @request POST:/hscode/edit
+     */
+    edit: (productHsCodeKeyReqDTO: ProductHsCodeKeywordReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseBoolean, any>({
+        path: `/hscode/edit`,
+        method: "POST",
+        body: productHsCodeKeyReqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 平台报文HsCode映射
+     * @name KeywordPage
+     * @summary HsCode关键字列表
+     * @request POST:/hscode/keyword/page
+     */
+    keywordPage: (productHsCodeKeywordPageReqDTO: ProductHsCodeKeywordPageReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponsePageResultProductHsCodeKeywordRespDTO, any>({
+        path: `/hscode/keyword/page`,
+        method: "POST",
+        body: productHsCodeKeywordPageReqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 平台报文HsCode映射
+     * @name Page
+     * @summary 分页查询
+     * @request POST:/hscode/page
+     */
+    page: (hsCodePageReqDTO: ProductHsCodeKeywordMappingPageReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponsePageProductHsCodeKeywordMappingRespDTO, any>({
+        path: `/hscode/page`,
+        method: "POST",
+        body: hsCodePageReqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 平台报文HsCode映射
+     * @name Save
+     * @summary 新增
+     * @request POST:/hscode/save
+     */
+    save: (hsCodeSaveReqDTO: ProductHsCodeKeywordReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseBoolean, any>({
+        path: `/hscode/save`,
+        method: "POST",
+        body: hsCodeSaveReqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+  };
   image = {
     /**
      * No description
@@ -12149,6 +12823,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags 商品
+     * @name DetailIgnoreBlack
+     * @summary 商品详情忽略黑名单
+     * @request POST:/product/detail/ignoreBlack
+     */
+    detailIgnoreBlack: (vo: ProductDetailRequVO, params: RequestParams = {}) =>
+      this.request<BizResponseProductRespDTO, any>({
+        path: `/product/detail/ignoreBlack`,
+        method: "POST",
+        body: vo,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 商品
      * @name DetailListFeign
      * @summary productDetailList
      * @request POST:/product/detail/list/feign
@@ -12248,6 +12939,26 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/product/detailSpiderByUrlWithoutToken`,
         method: "POST",
         body: reqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 商品
+     * @name EditShippingAndVolumeWeight
+     * @summary 编辑商品运输体积重量
+     * @request POST:/product/editShippingAndVolumeWeight
+     */
+    editShippingAndVolumeWeight: (
+      productTransAndStoragePropertyDTO: ProductTransAndStoragePropertyDTO,
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseBoolean, any>({
+        path: `/product/editShippingAndVolumeWeight`,
+        method: "POST",
+        body: productTransAndStoragePropertyDTO,
         type: ContentType.Json,
         ...params,
       }),
@@ -12897,6 +13608,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/product/sku/item/category/zh/update`,
         method: "POST",
         body: skuEditReqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 商品
+     * @name SkuListBySku
+     * @summary listBySku
+     * @request POST:/product/sku/listBySku
+     */
+    skuListBySku: (productSkuList: string[], params: RequestParams = {}) =>
+      this.request<BizResponseListSkuProductSimpleRespDTO, any>({
+        path: `/product/sku/listBySku`,
+        method: "POST",
+        body: productSkuList,
         type: ContentType.Json,
         ...params,
       }),
@@ -14031,6 +14759,109 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         ...params,
       }),
   };
+  reference = {
+    /**
+     * No description
+     *
+     * @tags 商品参考库
+     * @name Delete
+     * @summary 删除
+     * @request GET:/reference/delete
+     */
+    delete: (
+      query: {
+        /**
+         * id
+         * @format int64
+         */
+        id: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseBoolean, any>({
+        path: `/reference/delete`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 商品参考库
+     * @name Detail
+     * @summary 详情
+     * @request POST:/reference/detail
+     */
+    detail: (
+      query: {
+        /**
+         * id
+         * @format int64
+         */
+        id: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseProductReferenceRespDTO, any>({
+        path: `/reference/detail`,
+        method: "POST",
+        query: query,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 商品参考库
+     * @name Edit
+     * @summary 编辑
+     * @request POST:/reference/edit
+     */
+    edit: (productReferenceEditReqDTO: ProductReferenceEditReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseBoolean, any>({
+        path: `/reference/edit`,
+        method: "POST",
+        body: productReferenceEditReqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 商品参考库
+     * @name Page
+     * @summary 分页查询
+     * @request POST:/reference/page
+     */
+    page: (productReferencePageReqDTO: ProductReferencePageReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponsePageProductReferenceRespDTO, any>({
+        path: `/reference/page`,
+        method: "POST",
+        body: productReferencePageReqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 商品参考库
+     * @name Save
+     * @summary 新增
+     * @request POST:/reference/save
+     */
+    save: (productReferenceSaveReqDTO: ProductReferenceSaveReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseBoolean, any>({
+        path: `/reference/save`,
+        method: "POST",
+        body: productReferenceSaveReqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+  };
   search = {
     /**
      * No description
@@ -14689,112 +15520,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags 供应商管理
      * @name ManageProductExcelExport
      * @summary sku导出
-     * @request GET:/supplier/manage/product/excel/export
+     * @request POST:/supplier/manage/product/excel/export
      */
-    manageProductExcelExport: (
-      query?: {
-        /**
-         * 黑名单标记
-         * @format int32
-         */
-        blackTag?: number;
-        bought?: boolean;
-        /** @format int32 */
-        channel?: number;
-        /**
-         * 首次加购或关联结束时间
-         * @format date-time
-         */
-        firstCartOrApiTimeEnd?: string;
-        /**
-         * 首次加购或关联开始时间
-         * @format date-time
-         */
-        firstCartOrApiTimeStart?: string;
-        /**
-         * 首次下单结束时间
-         * @format date-time
-         */
-        firstOrderTimeEnd?: string;
-        /**
-         * 首次下单开始时间
-         * @format date-time
-         */
-        firstOrderTimeStart?: string;
-        isOnePsale?: boolean;
-        /** @format int32 */
-        isOnline?: number;
-        /** 待补充英文材质 */
-        materialInfoEnIsEmptyString?: boolean;
-        materialInfoJaIsEmptyString?: boolean;
-        /** 待补充韩文材质 */
-        materialInfoKrIsEmptyString?: boolean;
-        materialInfoZhIsEmptyString?: boolean;
-        /**
-         * 最近下单结束时间
-         * @format date-time
-         */
-        newOrderTimeEnd?: string;
-        /**
-         * 最近下单开始时间
-         * @format date-time
-         */
-        newOrderTimeStart?: string;
-        /**
-         * 线下商品直营标识 0-普通 1-直营
-         * @format int32
-         */
-        offlineDirectSaleFlag?: number;
-        /** @format int32 */
-        pageNum?: number;
-        /**
-         * 第几页结束
-         * @format int32
-         */
-        pageNumEnd?: number;
-        /**
-         * 第几页开始
-         * @format int32
-         */
-        pageNumStart?: number;
-        /** @format int32 */
-        pageSize?: number;
-        platformType?: string;
-        productCode?: string;
-        productCodeList?: string[];
-        productItemCategoryZhIsNull?: boolean;
-        productSku?: string;
-        /** 商品SKU批量搜索 */
-        productSkuList?: string[];
-        /**
-         * 商品标签 1 精选货源
-         * @format int32
-         */
-        productTag?: number;
-        /** 商品名称 */
-        productTitle?: string;
-        /** 商品采购链接 */
-        productUrl?: string;
-        /** 推荐商品sku */
-        recommendProductSku?: string;
-        /** 待补充推荐商品sku */
-        recommendProductSkuIsEmptyString?: boolean;
-        /** 推荐商品sku批量搜索 */
-        recommendProductSkuList?: string[];
-        /** @format int32 */
-        startIndex?: number;
-        stationCode?: string;
-        /** 供应商id */
-        supplierId?: string;
-        /** 供应商名称 */
-        supplierName?: string;
-      },
-      params: RequestParams = {},
-    ) =>
+    manageProductExcelExport: (queryVO: SupplierManageListQueryVO, params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/supplier/manage/product/excel/export`,
-        method: "GET",
-        query: query,
+        method: "POST",
+        body: queryVO,
+        type: ContentType.Json,
         ...params,
       }),
 
@@ -14978,6 +15711,26 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/supplier/manage/refresh`,
         method: "GET",
         query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 供应商管理
+     * @name ManageSkuBatchModifyTransProperty
+     * @summary 更新推荐商品SKU
+     * @request POST:/supplier/manage/sku/batchModifyTransProperty
+     */
+    manageSkuBatchModifyTransProperty: (
+      skuTransPropertyBatchEditDTO: SkuTransPropertyBatchEditDTO,
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseBoolean, any>({
+        path: `/supplier/manage/sku/batchModifyTransProperty`,
+        method: "POST",
+        body: skuTransPropertyBatchEditDTO,
+        type: ContentType.Json,
         ...params,
       }),
 

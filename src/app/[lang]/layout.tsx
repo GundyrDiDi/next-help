@@ -3,7 +3,7 @@ import { PlatCookie, TokenSignCookie } from "@/config";
 import { Local } from "@/i18n/settings";
 import { cookies } from "next/headers";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params: { lang },
 }: Readonly<{
@@ -15,6 +15,7 @@ export default function RootLayout({
   const cookieStore = cookies();
   const plat = cookieStore.get(encodeURIComponent(PlatCookie))?.value || "d2c";
   const token = cookieStore.get(encodeURIComponent(TokenSignCookie))?.value;
+  
   return (
     <LayoutContainer params={{ lang, initPlat: plat, token }}>
      {children}

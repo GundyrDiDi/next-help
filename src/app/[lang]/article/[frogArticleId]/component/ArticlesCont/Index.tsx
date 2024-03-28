@@ -1,5 +1,5 @@
 "use client";
-import { FrogArticleDetailRespDTO } from "@/service/customer";
+import { CustomerDetailRespDTO, FrogArticleDetailRespDTO } from "@/service/customer";
 import { setStationTime } from "@/utils/time";
 import { Spin } from "antd";
 import classNames from "classnames";
@@ -13,29 +13,33 @@ import { api } from "@/service";
 import { useMount } from "ahooks";
 import { useAtom, useAtomValue } from "jotai";
 import { CustomerDetail } from "@/model";
-import { isLogin } from "@/utils";
+import { getCookieToken, isLogin } from "@/utils";
 import { useLink } from "@/utils/router";
 import { flushSync } from "react-dom";
+import { CustomerDetailRespDTO2 } from "@/model/CustomerDetail";
 
 interface Props {
   frogArticle?: FrogArticleDetailRespDTO;
   querys: { [key: string]: string | undefined };
+  userInfo?:CustomerDetailRespDTO2;
 }
-const ArticlesCont = ({ frogArticle, querys }: Props) => {
+const ArticlesCont = ({ frogArticle, querys,userInfo }: Props) => {
   const [markingShow, setMarkingShow] = useState<boolean>(true);
-  const userInfo = useAtomValue(CustomerDetail);
   const href = useLink(`kaerumedia`);
+  console.log(userInfo);
+  
   useMount(() => {
     if (frogArticle?.frogArticleId) {
       api.customer.frog.articleCount({
         frogArticleId: frogArticle?.frogArticleId,
       });
-      if (!isLogin() && frogArticle.noLoginRestriction === 3) {
+
+      if (!getCookieToken&& frogArticle.noLoginRestriction === 3) {
         location.href=href
         return
       }
       if (frogArticle.noMembershipRestriction === 3) {
-        if (!isLogin() || !userInfo?.membership?.templateLevel) {
+        if (!getCookieToken || !userInfo?.membership?.templateLevel) {
           location.href=href
           return
         }

@@ -266,20 +266,27 @@ export interface AdditionConfigReqDTO {
   /** @format int32 */
   actualDeductionNode?: number;
   additionCode?: string;
+  additionConfigIdList?: number[];
   /** @format int32 */
   additionId?: number;
   /** @format int32 */
   additionScene?: number;
   /** @format int32 */
   calculateConfigId?: number;
+  /** @format int64 */
+  customerId?: number;
   /** @format int32 */
   deductionNode?: number;
   /** @format date-time */
   endDate?: string;
+  /** @format int64 */
+  membershipId?: number;
   /** @format int32 */
   pageNum?: number;
   /** @format int32 */
   pageSize?: number;
+  /** @format int32 */
+  priceException?: number;
   sorts?: ISortFieldEnum[];
   /** @format date-time */
   startDate?: string;
@@ -290,6 +297,7 @@ export interface AdditionConfigReqDTO {
   status?: number;
   /** @format int32 */
   systemSource?: number;
+  unificationCustomerFullName?: string;
 }
 
 /** AdditionConfigRespDTO */
@@ -332,10 +340,12 @@ export interface AdditionConfigRespDTO {
   extraStatus?: number;
   firstCateCode?: string;
   firstCateName?: string;
-  membershipReqDTOList?: ConfigMembershipReqDTO[];
+  membershipReqDTOList?: ConfigMembershipRespDTO[];
   /** @format int32 */
   orderType?: number;
   priceData?: string;
+  /** @format int32 */
+  priceException?: number;
   /** @format int32 */
   priceType?: number;
   /** @format int32 */
@@ -362,7 +372,7 @@ export interface AdditionConfigRespDTO {
   /** @format int64 */
   userId?: number;
   userName?: string;
-  userReqDTOList?: ConfigUserReqDTO[];
+  userReqDTOList?: ConfigUserRespDTO[];
 }
 
 /** AdditionConfigSellingPriceImportDTO */
@@ -2248,10 +2258,29 @@ export interface ConfigMembershipReqDTO {
   membershipName?: string;
 }
 
+/** ConfigMembershipRespDTO */
+export interface ConfigMembershipRespDTO {
+  /** @format int64 */
+  membershipId?: number;
+  membershipName?: string;
+}
+
 /** ConfigUserReqDTO */
 export interface ConfigUserReqDTO {
   /** @format int64 */
   customerId?: number;
+  unificationCustomerFullName?: string;
+}
+
+/** ConfigUserRespDTO */
+export interface ConfigUserRespDTO {
+  /** @format int64 */
+  customerId?: number;
+  /** @format int64 */
+  membershipTemplateId?: number;
+  membershipTemplateName?: string;
+  /** @format int32 */
+  templateLevel?: number;
   unificationCustomerFullName?: string;
 }
 
@@ -3710,6 +3739,14 @@ export interface DeductValuationDiffReqDTO {
   intShipTieredDiffId?: number;
 }
 
+/** DeliveryDayRangeDTO */
+export interface DeliveryDayRangeDTO {
+  /** @format int32 */
+  deliveryDayEnd?: number;
+  /** @format int32 */
+  deliveryDayStart?: number;
+}
+
 /** DestinationTemplateDTO */
 export interface DestinationTemplateDTO {
   area?: boolean;
@@ -4326,12 +4363,18 @@ export interface InsertIntShipConfigReqDTO {
   /** @format int64 */
   baseLogisticsId?: number;
   contentReqDTOList?: IntShipContentReqDTO[];
+  deliveryDayRange?: DeliveryDayRangeDTO;
   distribution?: string;
   forwarderIds?: number[];
+  logisticsFeature?: string;
+  logo?: string;
   membershipIdList?: number[];
+  officialWebsiteLink?: string;
   stationCode?: string;
   /** @format int32 */
   systemSource?: number;
+  /** @format int32 */
+  transportType?: number;
 }
 
 /** IntAreaResp */
@@ -4656,14 +4699,21 @@ export interface IntShipConfigInfoRespDTO {
   baseLogisticsId?: number;
   /** @format date-time */
   createTime?: string;
+  deliveryDayRange?: DeliveryDayRangeDTO;
   distribution?: string;
   forwarderIds?: number[];
   /** @format int64 */
   intShipConfigId?: number;
   intShipContentList?: IntShipContentRespDTO[];
+  logisticsFeature?: string;
+  logo?: string;
   membershipIds?: string[];
+  officialWebsiteLink?: string;
   /** @format int32 */
   sort?: number;
+  /** @format int32 */
+  transportType?: number;
+  transportTypeName?: string;
   /** @format date-time */
   updateTime?: string;
 }
@@ -4695,23 +4745,32 @@ export interface IntShipConfigQuery {
   stationCode?: string;
   /** @format int32 */
   systemSource?: number;
+  /** @format int32 */
+  transportType?: number;
 }
 
 /** IntShipConfigRespDTO */
 export interface IntShipConfigRespDTO {
   /** @format date-time */
   createTime?: string;
+  deliveryDayRange?: DeliveryDayRangeDTO;
   distribution?: string;
   forwarderName?: string[];
   /** @format int64 */
   intShipConfigId?: number;
+  logisticsFeature?: string;
+  logo?: string;
   membershipName?: string[];
+  officialWebsiteLink?: string;
   /** @format int32 */
   sort?: number;
   /** @format int32 */
   status?: number;
   /** @format int32 */
   systemSource?: number;
+  /** @format int32 */
+  transportType?: number;
+  transportTypeName?: string;
   /** @format date-time */
   updateTime?: string;
 }
@@ -4763,6 +4822,7 @@ export interface IntShipContentRespDTO {
   logisticsDescription?: string;
   peakSeasonPrice?: number;
   sendableAddress?: string[];
+  sendableAddressDesc?: string[];
   /** @format date-time */
   startTime?: string;
   /** @format int32 */
@@ -6117,50 +6177,6 @@ export interface MembershipTemplatePrice {
   validPeriod?: number;
   /** 有效期的单位：1-日；2-周；3-月；4-年 */
   validPeriodUnit?: string;
-}
-
-/**
- * MembershipTemplatePriceInsertVO
- * 结算中心-配置项-会员配置-会员套餐插入
- */
-export interface MembershipTemplatePriceInsertVO {
-  /** 基础套餐标志 */
-  basicFlag?: boolean;
-  /** 实际支付价格 */
-  discountActualPrice?: number;
-  /** 划线价，日元 */
-  discountPrice?: number;
-  /**
-   * 会员模板表id
-   * @format int64
-   */
-  membershipTemplateId?: number;
-  /** 会员身份收费名称 */
-  priceName?: string;
-  /**
-   * 会员类型:0-普通,1-特殊
-   * @format int32
-   */
-  specialType?: number;
-  /** 试用折扣:0-9 */
-  trialDiscount?: number;
-  /**
-   * 试用标志:0-不是,1是
-   * @format int32
-   */
-  trialFlag?: number;
-  /**
-   * 试用期:天
-   * @format int32
-   */
-  trialPeriod?: number;
-  /** 试用价格 */
-  trialPrice?: number;
-  /**
-   * 有效期(天)
-   * @format int32
-   */
-  validPeriod?: number;
 }
 
 /**
@@ -8319,6 +8335,17 @@ export interface SpotCheckConfigDTO {
   startQuantity?: number;
 }
 
+/** TransportModeRespDTO */
+export interface TransportModeRespDTO {
+  /** 运输方式名称 */
+  transportModeName?: string;
+  /**
+   * 运输方式
+   * @format int32
+   */
+  transportType?: number;
+}
+
 /** TransportationAttributesPageDTO */
 export interface TransportationAttributesPageDTO {
   /** @format int32 */
@@ -8560,14 +8587,20 @@ export interface UpdateIntShipConfigReqDTO {
   /** @format int64 */
   baseLogisticsId?: number;
   contentReqDTOList?: IntShipContentReqDTO[];
+  deliveryDayRange?: DeliveryDayRangeDTO;
   distribution?: string;
   forwarderIds?: number[];
   /** @format int64 */
   intShipConfigId?: number;
+  logisticsFeature?: string;
+  logo?: string;
   membershipIdList?: number[];
   nationCode?: string;
   nationName?: string;
+  officialWebsiteLink?: string;
   stationCode?: string;
+  /** @format int32 */
+  transportType?: number;
 }
 
 /**
@@ -11062,6 +11095,14 @@ export interface BizResponseListSellingPriceMembershipRateRespDTO {
 export interface BizResponseListSettlementExpressRespDTO {
   code?: string;
   data?: SettlementExpressRespDTO[];
+  msg?: string;
+  success?: boolean;
+}
+
+/** BizResponse«List«TransportModeRespDTO»» */
+export interface BizResponseListTransportModeRespDTO {
+  code?: string;
+  data?: TransportModeRespDTO[];
   msg?: string;
   success?: boolean;
 }
@@ -15241,6 +15282,21 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags int-ship-config-controller
+     * @name ListModeOfTransport
+     * @summary 运输
+     * @request GET:/intShipConfig/listModeOfTransport
+     */
+    listModeOfTransport: (params: RequestParams = {}) =>
+      this.request<BizResponseListTransportModeRespDTO, any>({
+        path: `/intShipConfig/listModeOfTransport`,
+        method: "GET",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags int-ship-config-controller
      * @name Page
      * @summary pageIntShipConfig
      * @request POST:/intShipConfig/page
@@ -15996,7 +16052,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary 会员配置-会员套餐-插入
      * @request POST:/membership/configure/template/price/insert
      */
-    configureTemplatePriceInsert: (insertVO: MembershipTemplatePriceInsertVO, params: RequestParams = {}) =>
+    configureTemplatePriceInsert: (insertVO: MembershipTemplatePriceUpdateVO, params: RequestParams = {}) =>
       this.request<BizResponseBoolean, any>({
         path: `/membership/configure/template/price/insert`,
         method: "POST",

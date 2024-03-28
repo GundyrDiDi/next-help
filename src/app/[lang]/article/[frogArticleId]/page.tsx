@@ -1,9 +1,11 @@
-import { FrogArticleDetailRespDTO } from "@/service/customer";
+import { BizResponseCustomerDetailRespDTO, FrogArticleDetailRespDTO } from "@/service/customer";
 import type { Metadata, ResolvingMetadata } from "next";
 import ArticlesCont from "./component/ArticlesCont/Index";
 import { Local } from "@/i18n/settings";
 import { serveTranslation } from "@/i18n";
 import { Lang } from "@/model";
+import { cookies } from "next/headers";
+import { TokenSignCookie } from "@/config";
 
 type Props = {
   params: { frogArticleId: string; lang: Local };
@@ -22,17 +24,28 @@ const getData = async (frogArticleId: number) => {
 export default async function Page({ params, searchParams }: Props) {
   const frogArticleId = +params.frogArticleId;
   const article = await getData(frogArticleId);
-  return <ArticlesCont frogArticle={article} querys={searchParams} />;
+  const cookieStore = cookies();
+  const token = cookieStore.get(encodeURIComponent(TokenSignCookie))?.value;
+  const res:BizResponseCustomerDetailRespDTO=await fetch(
+    `${process.env.NEXT_PUBLIC_THE_CKB_API_URL}/customer/getCustomerDetails`,
+    { 
+        cache: "no-cache",
+        headers:{
+        'X-Authtoken':token||''
+    } 
+  }
+  ).then((res) => res.json());
+  return <ArticlesCont userInfo={res.data} frogArticle={article} querys={searchParams} />;
 }
 
 export async function generateMetadata(
   { params, searchParams }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const { t } = await serveTranslation(params.lang);
   const frogArticleId = +params.frogArticleId;
   const article = await getData(frogArticleId);
   const title = article?.frogArticleTitle;
+
   return {
     metadataBase: new URL("https://s.theckb.com/"),
     alternates: {
