@@ -14,19 +14,34 @@ import { useMount } from "ahooks";
 import { useAtom, useAtomValue } from "jotai";
 import { CustomerDetail } from "@/model";
 import { isLogin } from "@/utils";
+import { useLink } from "@/utils/router";
+import { flushSync } from "react-dom";
 
 interface Props {
   frogArticle?: FrogArticleDetailRespDTO;
   querys: { [key: string]: string | undefined };
 }
 const ArticlesCont = ({ frogArticle, querys }: Props) => {
-  const [markingShow, setMarkingShow] = useState<boolean>(false);
+  const [markingShow, setMarkingShow] = useState<boolean>(true);
   const userInfo = useAtomValue(CustomerDetail);
+  const href = useLink(`kaerumedia`);
   useMount(() => {
     if (frogArticle?.frogArticleId) {
       api.customer.frog.articleCount({
         frogArticleId: frogArticle?.frogArticleId,
       });
+      if (!isLogin() && frogArticle.noLoginRestriction === 3) {
+        location.href=href
+        return
+      }
+      if (frogArticle.noMembershipRestriction === 3) {
+        if (!isLogin() || !userInfo?.membership?.templateLevel) {
+          location.href=href
+          return
+        }
+        setMarkingShow(false);
+      }
+
       if (
         frogArticle.noMembershipRestriction === 2 &&
         userInfo?.membership?.templateLevel &&
@@ -50,7 +65,17 @@ const ArticlesCont = ({ frogArticle, querys }: Props) => {
         }
       }
     }
-    setMarkingShow(true);
+    flushSync(()=>{
+      const imgList = document.getElementById('content-html')?.querySelectorAll('img')
+      imgList?.forEach((item: any) => {
+        if (item.dataset.href && item.dataset.href !== '') {
+          item.onclick = () => {
+            window.open(item.dataset.href)
+          }
+          item.style.cursor = 'pointer'
+        }
+      })
+    })
   });
   return (
     <>
@@ -67,6 +92,7 @@ const ArticlesCont = ({ frogArticle, querys }: Props) => {
             )}
             <div
               className="content-html"
+              id="content-html"
               dangerouslySetInnerHTML={{
                 __html: frogArticle?.frogArticleContent!,
               }}

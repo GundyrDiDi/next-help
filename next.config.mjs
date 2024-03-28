@@ -10,7 +10,7 @@ const getEnv = () => {
     return {
       NEXT_PUBLIC_ENV: "test",
       buildTime: new Date().toLocaleString(),
-      NEXT_PUBLIC_THE_CKB_LINK: "https://20240301-client-seo-s.theckb.com",
+      NEXT_PUBLIC_THE_CKB_LINK: "https://master-s.theckb.com",
       NEXT_PUBLIC_THE_CKB_API_URL: "https://master-gateway.theckb.com",
     };
   } else if (SERVER_ENV === "prod") {
