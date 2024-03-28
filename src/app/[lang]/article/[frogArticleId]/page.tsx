@@ -6,6 +6,7 @@ import { serveTranslation } from "@/i18n";
 import { Lang } from "@/model";
 import { cookies } from "next/headers";
 import { TokenSignCookie } from "@/config";
+import { CustomerDetailRespDTO2 } from "@/model/CustomerDetail";
 
 type Props = {
   params: { frogArticleId: string; lang: Local };
@@ -26,7 +27,7 @@ export default async function Page({ params, searchParams }: Props) {
   const article = await getData(frogArticleId);
   const cookieStore = cookies();
   const token = cookieStore.get(encodeURIComponent(TokenSignCookie))?.value;
-  const res:BizResponseCustomerDetailRespDTO=await fetch(
+  const {data}:{data:CustomerDetailRespDTO2}=await fetch(
     `${process.env.NEXT_PUBLIC_THE_CKB_API_URL}/customer/getCustomerDetails`,
     { 
         cache: "no-cache",
@@ -35,7 +36,7 @@ export default async function Page({ params, searchParams }: Props) {
     } 
   }
   ).then((res) => res.json());
-  return <ArticlesCont userInfo={res.data} frogArticle={article} querys={searchParams} />;
+  return <ArticlesCont userInfo={data} frogArticle={article} querys={searchParams} />;
 }
 
 export async function generateMetadata(
