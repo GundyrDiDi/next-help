@@ -48,7 +48,7 @@ const ArticleItem = ({ article }: Props) => {
         NO_MEMBERSHIP_RESTRICTION_TYPE.CHECK_DISABLE &&
       !userInfo?.membership?.templateLevel
     ) {
-      toTheCkb(ENUM_PAGE.VIP_LEVEL);
+    return toTheCkb(ENUM_PAGE.VIP_LEVEL);
     }
 
     location.href = href;

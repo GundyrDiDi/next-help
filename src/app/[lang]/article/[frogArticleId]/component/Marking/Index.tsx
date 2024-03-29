@@ -1,7 +1,7 @@
 import { useTranslation } from "@/i18n/client";
 import "./index.scss";
-import { useAtom } from "jotai";
-import { Lang } from "@/model";
+import { useAtom, useAtomValue } from "jotai";
+import { CustomerDetail, Lang } from "@/model";
 import { isKO } from "@/utils/language";
 import { isLogin } from "@/utils";
 import { Button } from "antd";
@@ -10,8 +10,7 @@ import { ENUM_PAGE } from "@/const/enum";
 
 const Marking = () => {
   const { t } = useTranslation();
-  const hasLogin = isLogin();
-
+  const useInfo =useAtomValue(CustomerDetail)
   const vipLoginClick = () => {
     toTheCkb(ENUM_PAGE.VIP_LEVEL);
   };
@@ -27,7 +26,7 @@ const Marking = () => {
         style={{ bottom: isKO() ? "172px" : "280px" }}
       >
         <div className="marking-content">
-          {hasLogin ? (
+          { useInfo?.customerId ? (
             <>
               <p>{t("加入CKB 会员计划以查看更多信息")}</p>
               <div onClick={vipLoginClick} className="join">
