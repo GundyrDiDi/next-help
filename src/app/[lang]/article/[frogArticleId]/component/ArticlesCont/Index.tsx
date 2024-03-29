@@ -33,12 +33,12 @@ const ArticlesCont = ({ frogArticle, querys,userInfo }: Props) => {
         frogArticleId: frogArticle?.frogArticleId,
       });
 
-      if (!getCookieToken&& frogArticle.noLoginRestriction === 3) {
+      if (!userInfo?.customerId&& frogArticle.noLoginRestriction === 3) {
         location.href=href
         return
       }
       if (frogArticle.noMembershipRestriction === 3) {
-        if (!getCookieToken || !userInfo?.membership?.templateLevel) {
+        if (!userInfo?.customerId || !userInfo?.membership?.templateLevel) {
           location.href=href
           return
         }
@@ -58,7 +58,7 @@ const ArticlesCont = ({ frogArticle, querys,userInfo }: Props) => {
           setMarkingShow(false);
           return;
         }
-        if (frogArticle.noLoginRestriction === 2 && isLogin()) {
+        if (frogArticle.noLoginRestriction === 2 && userInfo?.customerId) {
           setMarkingShow(false);
           return;
         }
