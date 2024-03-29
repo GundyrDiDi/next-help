@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { bannerData, navList } from "./configData";
 import NavBar from "./NavBar/Index";
 import ArticleList from "./ArticleList/Index";
-import { atom, useAtom } from "jotai";
+import { atom, useAtom, useSetAtom } from "jotai";
 import HotArticlesList from "./HotArticlesList/Index";
 import ArticleDateFilter from "./ArticleDateFilter/Index";
 import { Lang, Plat, QueryParams } from "@/model";
@@ -20,13 +20,15 @@ export default function Page({ initListArticle }: Props) {
   const [lang] = useAtom(Lang);
   const [plat] = useAtom(Plat);
   const [banner, setBaner] = useState<string>("");
-  const [, setQuerys] = useAtom(QueryParams);
+  const setQuerys = useSetAtom(QueryParams);
 
   useEffect(() => {
     setBaner(bannerData[lang][plat.toUpperCase() as "B2B" | "D2C"]);
   }, [lang, plat]);
 
   const changeNav = (index: number) => {
+    console.log(index,'index');
+    
     setQuerys((value) => {
       return {
         ...value,

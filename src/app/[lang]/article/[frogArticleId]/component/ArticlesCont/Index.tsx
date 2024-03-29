@@ -26,7 +26,6 @@ interface Props {
 const ArticlesCont = ({ frogArticle, querys,userInfo }: Props) => {
   const [markingShow, setMarkingShow] = useState<boolean>(true);
   const href = useLink(`kaerumedia`);
-  console.log(userInfo);
   
   useMount(() => {
     if (frogArticle?.frogArticleId) {

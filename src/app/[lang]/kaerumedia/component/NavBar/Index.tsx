@@ -14,12 +14,16 @@ interface Props {
 const NavBar = ({ navList, changeType }: Props) => {
   const { t } = useTranslation();
   const [querys] = useAtom(QueryParams);
+  console.log(111);
+  
   return (
     <div className="Nav">
       <div className="navmain viewport flex-nowrap">
         {navList?.map((nav) => (
           <div
-            onClick={() => changeType(nav.value)}
+            onClick={() => {
+              changeType(nav.value)
+            }}
             key={nav.value}
             className={classNames("navmain-item one-line", {
               active: querys.tab === nav.value,

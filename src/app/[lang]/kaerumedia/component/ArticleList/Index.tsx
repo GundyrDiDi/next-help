@@ -64,6 +64,8 @@ const ArticleList = ({initListArticle}:Props) => {
   );
 
   useEffect(() => {
+    console.log("querys.tab", querys.tab);
+    
    if(initListArticle?.length){
     articlePage(
       { pageSize: 10, current: 1 },
@@ -78,12 +80,12 @@ const ArticleList = ({initListArticle}:Props) => {
   }, [articlePage, querys.month, querys.tab, querys.year, stationCode,initListArticle]);
 
   useEffect(()=>{
-   if(pagination.current!==1){
-     setList(articleRes?.list??[])
-   }else{
+   if(querys.tab==-1&&pagination.current==1){
     setList(initListArticle)
+   }else{
+    setList(articleRes?.list??[])
    }
-  },[articleRes?.list, initListArticle, pagination])
+  },[articleRes?.list, initListArticle, pagination, querys.tab])
 
   return (
     <div className="ArticleList">
