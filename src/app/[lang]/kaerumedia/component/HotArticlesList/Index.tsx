@@ -33,7 +33,7 @@ const HotArticlesList = () => {
   // 跳转文章详情
   const toArticle = (article: HotFrogArticleRespDTO) => {
     if (!isLogin() && article.noLoginRestriction === 3) {
-      toLogin();
+      toTheCkb(ENUM_PAGE.LOGIN,false);
       return;
     }
     if (
