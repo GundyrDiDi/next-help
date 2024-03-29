@@ -74,14 +74,14 @@ const CKBHeader = ({}: Props) => {
   };
 
   useEffect(() => {
-    if (customerDetail?.customerId) {
+    if (customerDetail?.customerId&&customerDetail?.customerShopList?.length) {
       getPrivateUnreadCount();
       getCurrentCartList();
       getSmcCanUser();
     } else {
       setCanUseSmc(true);
     }
-  }, [customerDetail?.customerId]);
+  }, [customerDetail?.customerId, customerDetail?.customerShopList?.length]);
   useEffect(() => {
     const timer = timerRef.current.timer;
     if (customerDetail?.customerId) {

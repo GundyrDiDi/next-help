@@ -39,7 +39,7 @@ export default function Layout({
   const setCurLang = useSetAtom(Lang);
   setCurLang(lang);
   setPlat(initPlat);
-  const systemSource = customerDetail?.systemSource;
+  // const systemSource = customerDetail?.systemSource;
 
   const { runAsync: getCurrentCartList } = useRequest(
     api.order.cart.getCurrentCartList,
@@ -137,7 +137,7 @@ export default function Layout({
         },
       },
     };
-    if ( plat === "b2b" ) {
+    if ( initPlat === "b2b" ) {
       obj = {
         token: {
           colorPrimary: "#2e4968",
@@ -180,7 +180,8 @@ export default function Layout({
       };
     }
     return obj;
-  }, [plat]);
+  }, [initPlat]);
+console.log(getThemeStyle(),plat,'plat');
 
   return (
     <ConfigProvider locale={locale} theme={getThemeStyle()}>

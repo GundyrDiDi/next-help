@@ -36,7 +36,7 @@ const atomRequestCustomerDetail = atom(
                 isEN: response.data?.stationCode === Site.EN
             };
             set(atomCustomerDetail, res as CustomerDetailRespDTO2);
-            const fistShopId = response.data?.customerShopList?.[0].customerShopId||'';
+            const fistShopId = response.data?.customerShopList?.[0]?.customerShopId||'';
            const shopId=  getCookieShop()||'';
            const index =response.data?.customerShopList?.findIndex(i=>String(i?.customerShopId)===shopId)||-1;
            if(index>-1){

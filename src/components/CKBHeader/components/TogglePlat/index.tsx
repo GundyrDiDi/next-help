@@ -47,7 +47,7 @@ const TogglePlat = (props: TogglePlatProps) => {
           res.data?.customerRespDTO?.systemSource ?? ENUM_SYSTEM_SOURCE.D2C
         );
         setCookieToken(res.data?.token);
-        const fistShopId = res.data?.customerShopList?.[0].customerShopId;
+        const fistShopId = res.data?.customerShopList?.[0]?.customerShopId;
         setCookieShopId(String(fistShopId));
         window.location.reload();
       }
