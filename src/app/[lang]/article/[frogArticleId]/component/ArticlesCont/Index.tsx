@@ -15,7 +15,6 @@ import { useAtom, useAtomValue } from "jotai";
 import { CustomerDetail } from "@/model";
 import { getCookieToken, isLogin } from "@/utils";
 import { useLink } from "@/utils/router";
-import { flushSync } from "react-dom";
 import { CustomerDetailRespDTO2 } from "@/model/CustomerDetail";
 
 interface Props {
@@ -28,6 +27,16 @@ const ArticlesCont = ({ frogArticle, querys,userInfo }: Props) => {
   const href = useLink(`kaerumedia`);
   
   useMount(() => {
+    const imgList = document.getElementById('content-html')?.querySelectorAll('img')
+    console.log(imgList,'imgList');
+    imgList?.forEach((item: any) => {
+      if (item.dataset.href && item.dataset.href !== '') {
+        item.onclick = () => {
+          window.open(item.dataset.href)
+        }
+        item.style.cursor = 'pointer'
+      }
+    })
     if (frogArticle?.frogArticleId) {
       api.customer.frog.articleCount({
         frogArticleId: frogArticle?.frogArticleId,
@@ -68,17 +77,7 @@ const ArticlesCont = ({ frogArticle, querys,userInfo }: Props) => {
         }
       }
     }
-    flushSync(()=>{
-      const imgList = document.getElementById('content-html')?.querySelectorAll('img')
-      imgList?.forEach((item: any) => {
-        if (item.dataset.href && item.dataset.href !== '') {
-          item.onclick = () => {
-            window.open(item.dataset.href)
-          }
-          item.style.cursor = 'pointer'
-        }
-      })
-    })
+     
   });
   return (
     <>
