@@ -137,7 +137,7 @@ export default function Layout({
         },
       },
     };
-    if (systemSource === ENUM_SYSTEM_SOURCE.B2B) {
+    if ( plat === "b2b" ) {
       obj = {
         token: {
           colorPrimary: "#2e4968",
@@ -180,7 +180,7 @@ export default function Layout({
       };
     }
     return obj;
-  }, [systemSource]);
+  }, [plat]);
 
   return (
     <ConfigProvider locale={locale} theme={getThemeStyle()}>
