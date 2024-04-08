@@ -33,7 +33,7 @@ const ArticleItem = ({ article }: Props) => {
     }
   }, [querys.tab]);
 
-  const href = useLink(`article/${article.frogArticleId}`, { type });
+  const href = useLink(`article/${article.frogArticleId}`);
   // 点击跳转文章线详情
   const goArticle = () => {
     if (

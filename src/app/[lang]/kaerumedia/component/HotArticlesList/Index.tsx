@@ -45,7 +45,7 @@ const HotArticlesList = () => {
     }
     window.location.href = `/${lang}/article/${
       article?.frogArticleId
-    }?type=${2}`;
+    }`;
   };
 
   return (

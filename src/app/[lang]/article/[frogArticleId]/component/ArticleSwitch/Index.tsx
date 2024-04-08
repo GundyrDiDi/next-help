@@ -28,13 +28,13 @@ const ArticleSwitch = ({ frogArticleId, type, source }: Props) => {
     { manual: true }
   );
   const articleSwitch = (id?: number) => {
-    location.href = `/${lang}/article/${id}?type=${type}`;
+    location.href = `/${lang}/article/${id}`;
   };
 
   useAsyncEffect(async () => {
     const res = await articleGetPrepAndNext({
       frogArticleId,
-      type: type ? Number(type) : undefined,
+      // type: type ? Number(type) : undefined,
     });
     setLastNextMsg(res.data);
   }, []);

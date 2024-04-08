@@ -13,6 +13,13 @@ const getEnv = () => {
       NEXT_PUBLIC_THE_CKB_LINK: "https://master-s.theckb.com",
       NEXT_PUBLIC_THE_CKB_API_URL: "https://master-gateway.theckb.com",
     };
+  } else if (SERVER_ENV === "pre") {
+    return {
+      NEXT_PUBLIC_ENV: "pre",
+      buildTime: new Date().toLocaleString(),
+      NEXT_PUBLIC_THE_CKB_LINK: "https://pre-s.theckb.com",
+      NEXT_PUBLIC_THE_CKB_API_URL: "https://pre-gateway.theckb.com",
+    };
   } else if (SERVER_ENV === "prod") {
     return {
       NEXT_PUBLIC_ENV: "prod",
