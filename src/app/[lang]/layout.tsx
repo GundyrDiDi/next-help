@@ -15,7 +15,7 @@ export default async function RootLayout({
   const cookieStore = cookies();
   const plat = cookieStore.get(encodeURIComponent(PlatCookie))?.value || "d2c";
   const token = cookieStore.get(encodeURIComponent(TokenSignCookie))?.value;
-  
+    
   return (
     <LayoutContainer params={{ lang, initPlat: plat, token }}>
      {children}

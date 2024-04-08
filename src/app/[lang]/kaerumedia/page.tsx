@@ -25,7 +25,7 @@ export default async function Page({ params }:Props) {
       "frogArticleMonth":""
     }),
     headers:{
-      "X-Stationcode":stationCode,
+      "X-Stationcode": stationCode,
       "Content-Type": "application/json",
     }
   }

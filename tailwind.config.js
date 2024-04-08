@@ -1,3 +1,10 @@
+/*
+ * @Author: shiguang
+ * @Date: 2024-03-21 16:38:31
+ * @LastEditors: shiguang
+ * @LastEditTime: 2024-04-08 13:47:04
+ * @Description: 
+ */
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -10,6 +17,14 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    screens: {
+      // 手机端
+      'mo': {'max': '840px'},
+      // pad 端
+      'pad': {'min': '841px', 'max': '1200px'},
+      // pc 端
+      'pc': {'min': '1201px'},
+    }
   },
   plugins: [],
 }
