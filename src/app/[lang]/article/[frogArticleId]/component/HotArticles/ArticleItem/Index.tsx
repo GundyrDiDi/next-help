@@ -28,7 +28,7 @@ const ArticleItem = ({ article, type }: Props) => {
     ) {
       toTheCkb(ENUM_PAGE.VIP_LEVEL);
     }
-    window.location.href = `/${lang}/article/${article?.frogArticleId}?type=${type}`;
+    window.location.href = `/${lang}/article/${article?.frogArticleId}`;
   };
 
   return (

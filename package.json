@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "cross-env SERVER_ENV=test next dev -p 4000",
+    "pre": "cross-env SERVER_ENV=pre next dev -p 4000",
     "api": "npx @snifftest/api-gen config hu  && npx eslint ./src/service --fix",
     "build": "next build",
     "build:test": "cross-env SERVER_ENV=test next build",
