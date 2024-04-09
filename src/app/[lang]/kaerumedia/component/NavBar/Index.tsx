@@ -1,3 +1,10 @@
+/*
+ * @Author: shiguang
+ * @Date: 2024-04-08 11:30:20
+ * @LastEditors: shiguang
+ * @LastEditTime: 2024-04-09 11:11:27
+ * @Description: 
+ */
 import classNames from "classnames";
 import { NavItem } from "../configData";
 import { useContext } from "react";
@@ -14,7 +21,7 @@ interface Props {
 const NavBar = ({ navList, changeType }: Props) => {
   const { t } = useTranslation();
   const [querys] = useAtom(QueryParams);
-  console.log(111);
+  // console.log(111);
   
   return (
     <div className="Nav">

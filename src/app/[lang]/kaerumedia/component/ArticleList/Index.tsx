@@ -64,7 +64,7 @@ const ArticleList = ({initListArticle}:Props) => {
   );
 
   useEffect(() => {
-    console.log("querys.tab", querys.tab);
+    // console.log("querys.tab", querys.tab);
     
    if(initListArticle?.length){
     articlePage(

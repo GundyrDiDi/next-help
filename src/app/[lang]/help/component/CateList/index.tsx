@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 11:47:37
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-08 16:22:23
+ * @LastEditTime: 2024-04-09 16:23:10
  * @Description: 
  */
 interface CateListProps{
@@ -13,6 +13,7 @@ interface CateListProps{
 }
 
 const FirstCate = (props: CateListProps) => {
+    console.log(props.label, 9999)
     return <div className="p-[32px] bg-white" >
         <div className="flex h-[24px] items-center mb-[32px]" >
             <div className="w-[5px] h-[24px] bg-[#008060] mr-[8px]" ></div> 
@@ -33,12 +34,12 @@ interface SecondCateProps extends CateListProps {
 }
 
 const SecondCate = (props: SecondCateProps) => {
-    const {className} = props;
+    const {className, label, value} = props;
     return <div className={className} >
         <div className="flex h-[24px] text-[20px] hover:text-[#008060] text-[#000000]/[.88] cursor-pointer" >
             <div className="bg-[#008060] w-[6px] h-[6px] rounded-[50%] mr-[6px]" />
             <span>
-                注文管理
+                {label}
             </span>
         </div>
     </div>

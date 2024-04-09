@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import ja_JP from "antd/locale/ja_JP";
 import ko_KR from "antd/locale/ko_KR";
 import en_GB from "antd/locale/en_GB";
@@ -19,6 +19,7 @@ import CKBSearch from "@/components/CKBSearch";
 import { useAsyncEffect, useRequest } from "ahooks";
 import { api } from "@/service";
 import CKBCategory from "@/components/CKBCategory/Index";
+import { useRouter, usePathname } from "next/navigation";
 
 interface Props {
   children: React.ReactNode;
@@ -26,13 +27,16 @@ interface Props {
     lang: Local;
     initPlat: string;
     token?: string;
+
   };
 }
 
 export default function Layout({
   children,
-  params: { lang, initPlat, token },
+  params,
 }: Props) {
+  const { lang, initPlat, token } = params;
+  console.log(typeof window, 33333)
   const [customerDetail, requestCustomerDetail] = useAtom(CustomerDetail);
   const setMessages = useSetAtom(MessageAtom);
   const [plat, setPlat] = useAtom(Plat);
@@ -45,11 +49,11 @@ export default function Layout({
     api.order.cart.getCurrentCartList,
     { manual: true }
   );
-
+  const currentPath = usePathname();
   useAsyncEffect(async () => {
     if (!runsOnServerSide) {
       // 初始化语言
-      document.documentElement.lang=lang
+      document.documentElement.lang = lang
       document.documentElement.classList.add(lang)
       if (getCookieToken) {
         await requestCustomerDetail();
@@ -137,7 +141,7 @@ export default function Layout({
         },
       },
     };
-    if ( initPlat === "b2b" ) {
+    if (initPlat === "b2b") {
       obj = {
         token: {
           colorPrimary: "#2e4968",
@@ -181,16 +185,20 @@ export default function Layout({
     }
     return obj;
   }, [initPlat]);
-console.log(getThemeStyle(),plat,'plat');
-
+  console.log(getThemeStyle(), plat, 'plat');
+  const isHelpPage = currentPath.includes('/help')
   return (
     <ConfigProvider locale={locale} theme={getThemeStyle()}>
       <CKBHeader plat={plat} />
-      <CKBSearch />
-      <CKBCategory />
+      {isHelpPage ? null : <>
+        <CKBSearch />
+        <CKBCategory />
+      </> }
       <FloatToolbar />
       {children}
-      <CKBFooter lang={lang} plat={plat} />
+      {
+        !isHelpPage && <CKBFooter lang={lang} plat={plat} />
+      }
     </ConfigProvider>
   );
 }

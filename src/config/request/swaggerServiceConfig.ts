@@ -1,5 +1,3 @@
-'use client'
-
 const getRquestBaseUrlByEnv = () => {
     const env=process.env.NEXT_PUBLIC_ENV;
     const prodUrl = 'https://gateway-prod.theckb.com';

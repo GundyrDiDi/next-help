@@ -1,4 +1,4 @@
-import { Menu } from 'antd';
+import { request } from '@/config/request';
 import CateList from './component/CateList';
 import Search from './component/Search'
 
@@ -31,30 +31,27 @@ const mock = {
 }
 const mockList = [mock,mock,mock,mock]
 
-const Page = () => {
+const Page = async () => {
+    // https://master-gateway.theckb.com/customer/base/supportCenter/subject/contentList?subjectId=6
+    const res = await request.customer.base.supportCenterSubjectContentList({
+        subjectId: 6
+    })
+    const contentList = (res.data ?? []).map((item) => {
+        return {
+            label: item.title!,
+            value: item.contentUrl!
+        }
+    });
+    const mockList = [
+        { label: '测试1', childrenCateList: contentList, value: '测试1'},
+        { label: '测试2', childrenCateList: contentList, value: '测试2'},
+        { label: '测试3', childrenCateList: contentList, value: '测试3'},
+    ]
+    console.log(mockList, 3333)
+
     return (
         <div className="flex justify-center" >
             <div className="pc:w-[1200px]" >
-                <Menu
-                    style={{ width: 256 }}
-                    defaultSelectedKeys={['1']}
-                    defaultOpenKeys={['sub1']}
-                    mode="inline"
-                    items={[
-                        {
-                            label: 'qqq',
-                            key: 88
-                        },
-                        {
-                            label: 'qqq',
-                            key: 888543
-                        },
-                        {
-                            label: 'qqqf',
-                            key: 885436
-                        }
-                    ]}
-                />
                 <Search className="mb-[16px]" />
                 {mockList.map((item, key) => {
                     return <CateList
