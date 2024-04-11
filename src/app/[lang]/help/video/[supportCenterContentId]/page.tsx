@@ -2,9 +2,10 @@
  * @Author: shiguang
  * @Date: 2024-04-09 16:28:24
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-09 18:32:45
+ * @LastEditTime: 2024-04-10 16:20:50
  * @Description: 
  */
+import { request } from "@/config/request";
 interface PageProps {
     params: {
         supportCenterContentId: string
@@ -15,20 +16,16 @@ interface PageProps {
 
 const Page = async (props: PageProps) => {
     const { params } = props;
+    const res = await request.customer.base.supportCenterQueryGetSupportCenterContentById({
+        contentId: params.supportCenterContentId as unknown as number
+    })
+    console.log(3333, res)
+
+    const videoUrl = res.data?.contentUrl
     return <div>
-        <video controls  className="h-[calc(100vh-32px)] w-[100%] bg-black" >
-  {/* <source src="/media/cc0-videos/flower.webm" type="video/webm" /> */}
-
-  <source src="https://theckbstest-oss.theckbs.com/transfer/1699350478000%E5%8D%A1%E4%BA%86.mp4" />
-
-  {/* Download the
-  <a href="/media/cc0-videos/flower.webm">WEBM</a>
-  or
-  <a href="/media/cc0-videos/flower.mp4">MP4</a>
-  video. */}
-</video>
-        {/* <video className="h-[calc(100vh-32px)] w-[100%]" src="https://theckbstest-oss.theckbs.com/transfer/1699350478000%E5%8D%A1%E4%BA%86.mp4"></video> */}
+        <video controls className="h-[calc(100vh-32px)] w-[100%] bg-[#262626]" >
+            {!!videoUrl && <source src={videoUrl} />}
+        </video>
     </div>
 }
-
 export default Page;

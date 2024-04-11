@@ -6180,6 +6180,50 @@ export interface MembershipTemplatePrice {
 }
 
 /**
+ * MembershipTemplatePriceInsertVO
+ * 结算中心-配置项-会员配置-会员套餐插入
+ */
+export interface MembershipTemplatePriceInsertVO {
+  /** 基础套餐标志 */
+  basicFlag?: boolean;
+  /** 实际支付价格 */
+  discountActualPrice?: number;
+  /** 划线价，日元 */
+  discountPrice?: number;
+  /**
+   * 会员模板表id
+   * @format int64
+   */
+  membershipTemplateId?: number;
+  /** 会员身份收费名称 */
+  priceName?: string;
+  /**
+   * 会员类型:0-普通,1-特殊
+   * @format int32
+   */
+  specialType?: number;
+  /** 试用折扣:0-9 */
+  trialDiscount?: number;
+  /**
+   * 试用标志:0-不是,1是
+   * @format int32
+   */
+  trialFlag?: number;
+  /**
+   * 试用期:天
+   * @format int32
+   */
+  trialPeriod?: number;
+  /** 试用价格 */
+  trialPrice?: number;
+  /**
+   * 有效期(天)
+   * @format int32
+   */
+  validPeriod?: number;
+}
+
+/**
  * MembershipTemplatePriceListVO
  * 会员配置-会员套餐查询
  */
@@ -10781,6 +10825,14 @@ export interface BizResponseListAdditionConfigPublic {
   success?: boolean;
 }
 
+/** BizResponse«List«AdditionConfigRespDTO»» */
+export interface BizResponseListAdditionConfigRespDTO {
+  code?: string;
+  data?: AdditionConfigRespDTO[];
+  msg?: string;
+  success?: boolean;
+}
+
 /** BizResponse«List«AdditionConfigSellingPriceSettingLog»» */
 export interface BizResponseListAdditionConfigSellingPriceSettingLog {
   code?: string;
@@ -12909,6 +12961,28 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     ) =>
       this.request<BizResponseAdditionConfigRespDTO, any>({
         path: `/addition/getAdditionConfig`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags addition-controller
+     * @name GetAdditionConfigList
+     * @summary getAdditionConfigList
+     * @request GET:/addition/getAdditionConfigList
+     */
+    getAdditionConfigList: (
+      query: {
+        /** additionConfigIdList */
+        additionConfigIdList: number[];
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseListAdditionConfigRespDTO, any>({
+        path: `/addition/getAdditionConfigList`,
         method: "GET",
         query: query,
         ...params,
@@ -16052,7 +16126,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary 会员配置-会员套餐-插入
      * @request POST:/membership/configure/template/price/insert
      */
-    configureTemplatePriceInsert: (insertVO: MembershipTemplatePriceUpdateVO, params: RequestParams = {}) =>
+    configureTemplatePriceInsert: (insertVO: MembershipTemplatePriceInsertVO, params: RequestParams = {}) =>
       this.request<BizResponseBoolean, any>({
         path: `/membership/configure/template/price/insert`,
         method: "POST",

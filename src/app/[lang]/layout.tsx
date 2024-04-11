@@ -1,8 +1,7 @@
 import LayoutContainer from "@/components/Layout/LayoutContainer";
 import { PlatCookie, TokenSignCookie } from "@/config";
 import { Local } from "@/i18n/settings";
-import { cookies, headers } from "next/headers";
-import { NextApiRequest } from "next";
+import { cookies } from "next/headers";
 type Props = Readonly<{
   children: React.ReactNode;
   params: {

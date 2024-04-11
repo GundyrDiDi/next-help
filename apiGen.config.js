@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2023-07-06 14:08:00
  * @LastEditors: shiguang
- * @LastEditTime: 2023-07-06 15:28:59
+ * @LastEditTime: 2024-04-10 10:01:47
  * @Description: description
  */
 
@@ -31,7 +31,7 @@ const swaggerList = [
 
 const config = {
   swaggerList,
-  requestEnv: "",
+  requestEnv: "20240408-seo",
 };
 
 module.exports = config;
