@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { PlatCookie, TokenSignCookie } from "@/config";
 import "./globals.scss";
 import { Metadata, ResolvingMetadata } from "next";
-import {  GoogleTagManager } from '@next/third-parties/google'
+import {  GoogleTagManager,GoogleAnalytics } from '@next/third-parties/google'
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 // import localFont from 'next/font/local'
 
@@ -54,9 +54,10 @@ export default function RootLayout({
         src="https://cdn.channel.io/plugin/ch-plugin-web.js"
         async
       ></script>
-      <meta name="google-site-verification" content="1DIor1BkSq1vf_uf4-m5WRiVIyeWGmckG9hD2VLb3eM" />
-
+      {/* <meta name="google-site-verification" content="1DIor1BkSq1vf_uf4-m5WRiVIyeWGmckG9hD2VLb3eM" /> */}
+      <meta name="google-site-verification" content="oahwUkqmAScewSrtx4M7_EaH_ci5PvH-N9FAHIda1gk" />
       <GoogleTagManager gtmId="GTM-W9HSLNKD" />
+      {/* <GoogleAnalytics gaId="GTM-W9HSLNKD" /> */}
       <body>
         <div id="app" className="page_layout">
           <AntdRegistry>
