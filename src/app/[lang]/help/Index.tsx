@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-11 11:30:19
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-12 10:42:10
+ * @LastEditTime: 2024-04-12 15:09:35
  * @Description: 
  */
 'use client'
@@ -19,6 +19,8 @@ import { Plat } from '@/model';
 import { useAtom } from 'jotai';
 import { ENUM_PLATE } from '@/model/Plat';
 import { Site } from '@/const';
+import { useParams } from 'next/navigation';
+import { Local } from '@/i18n/settings';
 
 interface HelpProps{
     supportCenterSubjectList: SupportCenterSubjectDTO[];
@@ -27,13 +29,14 @@ interface HelpProps{
 }
 
 const Help = (props: HelpProps) => {
-    const { supportCenterSubjectList: _supportCenterSubjectList, siteStation } = props;
+    const { supportCenterSubjectList: _supportCenterSubjectList } = props;
     const [searchKeywords, setSearchKeywords] = useState<string>()
     const [isShowSearchResult, setIsShowSearchResult] = useState(false);
     const [searchResList, setSearchResList] = useState<SupportCenterContentDTO[]>();
     const [supportCenterSubjectList, setSupportCenterSubjectList] = useState(_supportCenterSubjectList);
-
+    const { lang } = useParams();
     const [plat] = useAtom(Plat);
+    const siteStation = getSiteStation(lang as Local)
 
     useEffect(() => {
         (async() => {
@@ -41,11 +44,14 @@ const Help = (props: HelpProps) => {
                 bizType: plat === ENUM_PLATE.b2b ? SupportCenterbizType.B : SupportCenterbizType.C,
                 stationCode: siteStation,
             });
-            setSearchResList(res.data ?? [])
+            setSupportCenterSubjectList(res.data ?? [])
         })();
     }, [plat, siteStation])
     return (
         <div className="flex justify-center" >
+            {lang === 'ja' ?  <h1 className="hidden" >
+                THE CKBヘルプガイド
+            </h1> : null}
             <div className="pc:w-[1200px] mo:w-[100%] pad:w-[100%]" >
                 <Search 
                     className="mb-[16px] mo:mb-0"

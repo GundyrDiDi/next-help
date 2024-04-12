@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 11:47:09
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-12 10:56:41
+ * @LastEditTime: 2024-04-12 11:27:51
  * @Description: 
  */
 'use client'
@@ -25,14 +25,12 @@ interface SearchProps {
 const Search = (props: SearchProps) => {
   const { value, onChange, onSearch } = props;
   const [plat] = useAtom(Plat);
-  console.log(3333123, plat)
-  
-
   return (
     <div
       className={`
-      pc:w-[1200px] pc:h-[300px] pad:h-[300px] mo:h-[120px] bg-contain
-      flex justify-center items-center ${props.className ?? ''} 
+      pc:w-[1200px] pc:h-[300px] pad:h-[300px] mo:h-[120px] bg-cover
+      flex justify-center items-center ${props.className ?? ''}
+       bg-no-repeat
       ${ plat === ENUM_PLATE.b2b ? `bg-[url('https://static-s.theckb.com/BusinessMarket/helpCenter/image/help-bg-b2b.f7536f71.png')]` : `bg-[url('https://page-client.theckb.com/client-prod/present/img/help-bg.3398f88f.png')]`}
       `}
     >

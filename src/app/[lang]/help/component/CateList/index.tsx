@@ -4,7 +4,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 11:47:37
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-11 14:59:44
+ * @LastEditTime: 2024-04-12 15:04:43
  * @Description: 
  */
 
@@ -23,9 +23,9 @@ const FirstCate = (props: CateListProps) => {
     return <div className="p-[32px] bg-white" >
         <div className="flex h-[24px] items-center mb-[32px]" >
             <div className="w-[5px] h-[24px] bg-[var(--fcolor)] mr-[8px]" ></div>
-            <div className="text-[24px]" >
+            <h2 className="text-[24px]" >
                 {props.label}
-            </div>
+            </h2>
         </div>
         <div className="flex flex-wrap pb-[-16px]" >
             {props.childrenCateList?.map((item, key) => {
@@ -42,13 +42,13 @@ interface SecondCateProps extends CateListProps {
 const JumpHelpDetailLink = (props: { contentType: 'text' | 'video' | 'search'; lang: string; value: string; children: React.ReactNode; }) => {
     const { contentType, lang, value, children } = props;
     const getHref = () => {
-        if(contentType === 'video'){
+        if (contentType === 'video') {
             return `/${lang}/help/video/${value}`
         }
-        if(contentType === 'text'){
+        if (contentType === 'text') {
             return `/${lang}/help/${value}`
         }
-        if(contentType === 'search'){
+        if (contentType === 'search') {
             return `/${lang}/help/search?keywords=${value}`
         }
         const other: never = contentType
@@ -65,13 +65,13 @@ export const SecondCate = (props: SecondCateProps) => {
     const { lang } = useParams()
     const { className, label, value, contentType } = props;
     return <div className={className} >
-        <div className="flex h-[24px] text-[20px] hover:text-[var(--fcolor)] text-[#000000]/[.88] cursor-pointer" >
+        <div className="flex h-[24px] text-[20px] items-center" >
             <div className="bg-[var(--fcolor)] w-[6px] h-[6px] rounded-[50%] mr-[6px] shrink-0 " />
-            <span>
+            <h3 className="font-normal text-[20px] hover:text-[var(--fcolor)] text-[#000000]/[.88] cursor-pointer" >
                 <JumpHelpDetailLink contentType={contentType} lang={lang as string} value={value} >
                     {label}
                 </JumpHelpDetailLink>
-            </span>
+            </h3>
         </div>
     </div>
 }
@@ -86,7 +86,7 @@ const CateList = (props: CateListProps) => {
         <div className="pc:hidden pad:hidden mb-[16px]" >
             <div className="flex items-center h-[40px]" >
                 <div className="w-[4px] h-[14px] bg-[var(--fcolor)] mr-[4px]" />
-                <div className="text-[14px] font-bold" >{label}</div>
+                <h2 className="text-[14px] font-bold" >{label}</h2>
             </div>
             <div>
                 {childrenCateList?.map((item, key) => {
@@ -95,11 +95,11 @@ const CateList = (props: CateListProps) => {
                             key={key}
                             className="flex items-center h-[40px] hover:text-[var(--fcolor)] hover:bg-[rgba(var(--fcolor-rgb),0.10)] rounded-[4px]"
                         >
-                            <div className="text-[14px] ml-[16px] text-[#000]/[.45]  " >
+                            <h3 className="text-[14px] ml-[16px] text-[#000]/[.45] font-normal" >
                                 <JumpHelpDetailLink contentType={item.contentType} lang={lang as string} value={item.value} >
                                     {item.label}
                                 </JumpHelpDetailLink>
-                            </div>
+                            </h3>
                         </div>
                     );
                 })}

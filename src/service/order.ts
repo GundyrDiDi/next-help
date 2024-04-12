@@ -5528,6 +5528,8 @@ export interface OperateLogVO {
 export interface OrderAndSkuDetailRespDTO {
   color?: string;
   colorZh?: string;
+  /** 商品图片 */
+  productImg?: string;
   /** 中文品名 */
   productItemCategoryZh?: string;
   productName?: string;
@@ -10661,6 +10663,12 @@ export interface UpdateSearchSourceOrderVO {
   searchSourceOrder?: SearchSourceOrder;
   /** 寻源单SKU列表 */
   searchSourceOrderSkuList?: SearchSourceOrderSku[];
+}
+
+/** UpdateSearchSourceSkuProductItemCategoryZhReqDTO */
+export interface UpdateSearchSourceSkuProductItemCategoryZhReqDTO {
+  productItemCategoryZh?: string;
+  productSku?: string;
 }
 
 /** UpdateShopProductSkuConditionDTO */
@@ -18918,6 +18926,26 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/oem/repurchase/order/sample/update/sellPrice/product/list`,
         method: "POST",
         body: vo,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags oem-search-source-order-feign-api-impl
+     * @name UpdateSearchSourceOrderSkuProductItemCategoryZh
+     * @summary updateSearchSourceOrderSkuProductItemCategoryZh
+     * @request POST:/oem/updateSearchSourceOrderSkuProductItemCategoryZh
+     */
+    updateSearchSourceOrderSkuProductItemCategoryZh: (
+      dto: UpdateSearchSourceSkuProductItemCategoryZhReqDTO,
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseVoid, any>({
+        path: `/oem/updateSearchSourceOrderSkuProductItemCategoryZh`,
+        method: "POST",
+        body: dto,
         type: ContentType.Json,
         ...params,
       }),

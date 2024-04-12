@@ -1,8 +1,17 @@
+/*
+ * @Author: shiguang
+ * @Date: 2024-04-08 19:54:03
+ * @LastEditors: shiguang
+ * @LastEditTime: 2024-04-12 15:24:24
+ * @Description: 
+ */
 'use client'
 import { useState } from "react"
 import Breadcrumb from "../component/Breadcrumb";
 import { useParams } from "next/navigation";
 import './index.scss';
+import { useTranslation } from "react-i18next";
+// import { t } from "i18next";
 
 interface Props {
     contentList: {
@@ -10,12 +19,14 @@ interface Props {
         value: string;
     }[];
     isSearchPage?: boolean;
+    title?: string;
 }
 
 const Index = (props: Props) => {
-    const { contentList, isSearchPage } = props
+    const { contentList, isSearchPage, title } = props
     const [activeValue, setActiveValue] = useState(contentList[0].value);
     const { lang } = useParams();
+    const { t } = useTranslation();
 
     return <div className="flex justify-center pad:px-[20px] mo:px-[0px]" >
         {/* <div className="pc:w-[1200px]" > */}
@@ -26,15 +37,15 @@ const Index = (props: Props) => {
                     className="mo:py-[16px] mo:px-[12px]"
                     dataSource={[
                         { title: 'TOP', href: 'https://s.theckb.com' },
-                        { title: '帮助中心', href: `/${lang}/help` },
-                        { title:  isSearchPage ? '搜索结果' : '注文关联TODO'},
+                        { title: t('帮助中心'), href: `/${lang}/help` },
+                        { title:  isSearchPage ? t('搜索结果') : title ?? ''},
                     ]}
                 />
             </div>
             {isSearchPage ? <div className="mt-[24px] mo:mt-0" /> :
             <div className="my-[24px] mo:my-[8px] flex items-center mo:px-[12px]" >
                 <div className="mr-[8px] mo:mr-[4px] w-[4px] h-[24px] bg-[var(--fcolor)]" />
-                <div className="font-bold text-[24px] mo:text-[16px]" >FAQ</div>
+                <h1 className="font-bold text-[24px] mo:text-[16px] my-0" >{title}</h1>
             </div>}
             <div className="text-[14px] text-[#000] mb-[16px] overflow-hidden" >
                 {/* 上边 */}
@@ -60,9 +71,9 @@ const Index = (props: Props) => {
                         return (
                             <div className="help-artical-content grow bg-white p-[20px] relative mo:p-[0px] mo:bg-[#FAFAFA]" key={index}>
                                 <div className="absolute top-[-40px]" id={String(index+1)}  />
-                                <div className="font-bold text-[24px] mo:text-[16px] text-[#000] mo:py-[12px] mo:leading-normal ">
+                                <h2 className="m-0 p-0 font-bold text-[24px] mo:text-[16px] text-[#000] mo:py-[12px] mo:leading-normal ">
                                     {item.label}
-                                </div>
+                                </h2>
                                 <div style={{ borderBottom: '1px solid #E6EAF0' }} className="mt-[20px] mb-[20px] mo:my-[0px]" />
                                 <div className="text-[#000]/[.65]" dangerouslySetInnerHTML={{ __html: item.value ?? '' }} />
                             </div>

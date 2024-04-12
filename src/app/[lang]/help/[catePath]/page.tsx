@@ -2,18 +2,77 @@
  * @Author: shiguang
  * @Date: 2024-04-08 17:04:47
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-12 10:22:37
+ * @LastEditTime: 2024-04-12 15:18:09
  * @Description: 
  */
 import { request } from "@/config/request"
 import Container from "./Index"
 import axios from "axios";
+import { Metadata } from "next";
+import { Local } from "@/i18n/settings";
+
 
 interface HelpCatePageProps{
     params?: {
-        catePath: string
+        catePath: string;
+        lang: Local;
     }    
 }
+
+const getMetaConf = async (params: Required<HelpCatePageProps>['params']) => {
+    const { lang } = params;
+    const _ = await request.customer.base.supportCenterQueryByPath({
+        // subjectId: params?.catePath as unknown as number
+        path: params?.catePath
+        
+    })
+    
+    const description = _.data?.description ?? '';
+    const conf: Record<Local, Metadata> = {
+        [Local.JA]: {
+            title: "二级目录标题 |中国輸入代行・THE CKBなら丸投げOK！",
+            description,
+        },
+        [Local.KO]: {
+            title: undefined,
+            description,
+        },
+        [Local.EN]: {
+            title: undefined,
+            description,
+        }
+    };
+    return conf[lang]
+}
+
+export async function generateMetadata(
+    { params }: { params: Required<HelpCatePageProps>['params'] },
+
+): Promise<Metadata> {
+    const metaConf = await getMetaConf(params)
+    const title =  metaConf?.title ?? 'THE CKB';
+    const description =  metaConf?.description ?? 'THE CKB';
+    return {
+        metadataBase: new URL("https://s.theckb.com/"),
+        alternates: {
+            canonical: "/",
+            languages: {
+                en: "/en",
+                ko: "/ko",
+                ja: "/ja",
+            },
+        },
+        title: title,
+        description,
+        openGraph: {
+            siteName: "THE CKB",
+            images: "https://static-s.theckb.com/BusinessMarket/Client/favicon.ico",
+            title,
+            description,
+        },
+    };
+}
+
 
 /**
  * 查询页面和分类页面公用的页面
@@ -56,7 +115,7 @@ async function Page(props: HelpCatePageProps) {
         }
     })
 
-    return contentList.length ? <Container contentList={contentList} isSearchPage={false} /> : null;
+    return contentList.length ? <Container title={_.data?.subject} contentList={contentList} isSearchPage={false} /> : null;
 }
 
 export default Page;

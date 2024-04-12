@@ -3563,6 +3563,8 @@ export interface SupportCenterSubjectDTO {
    * @format int64
    */
   creator?: number;
+  /** 描述 */
+  description?: string;
   /**
    * 修改者id
    * @format int64
@@ -3600,6 +3602,8 @@ export interface SupportCenterSubjectDTO {
 export interface SupportCenterSubjectUpdateBackendDTO {
   /** 业务类型: 2B, 2C */
   bizType?: string;
+  /** 描述 */
+  description?: string;
   /**
    * 父级分类id
    * @format int64
