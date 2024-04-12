@@ -20,12 +20,13 @@ import { useAsyncEffect, useRequest } from "ahooks";
 import { api } from "@/service";
 import CKBCategory from "@/components/CKBCategory/Index";
 import { useRouter, usePathname } from "next/navigation";
+import { ENUM_PLATE } from "@/model/Plat";
 
 interface Props {
   children: React.ReactNode;
   params: {
     lang: Local;
-    initPlat: string;
+    initPlat: ENUM_PLATE;
     token?: string;
 
   };
