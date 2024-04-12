@@ -4795,9 +4795,9 @@ const en = {
     "Days in Stock is calculated in days, less than 1 day is counted as 1 day.",
   总计天数: "Total days",
   需计费天数: "Billed days",
-  帮助中心: "帮助中心??",
-  搜索结果: "搜索结果??",
-  返回首页: "返回首页??",
+  帮助中心: "Help Center",
+  搜索结果: "Search Results",
+  返回首页: "Back to Homepage",
   "三菱UFJ银行TTS汇率：": "BOC Exchange Rate：",
   "THE CKB的对应汇率：": "THE CKB Exchange Rate：",
 };
