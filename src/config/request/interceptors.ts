@@ -81,10 +81,9 @@ async function requestInterceptorOnServer(config: InternalAxiosRequestConfig) {
     if (siteStation) {
         config.headers['X-Stationcode'] = siteStation;
     }
-    // if (process.env.X_GRAY_TAG) {
-    //     config.headers['X-GRAY-TAG'] = process.env.X_GRAY_TAG;
-    // }
-    config.headers['X-GRAY-TAG'] = '20240408-seo';
+    if (process.env.NEXT_PUBLIC_X_GRAY_TAG) {
+        config.headers['X-GRAY-TAG'] = process.env.NEXT_PUBLIC_X_GRAY_TAG;
+    }
     return config;
 }
 
