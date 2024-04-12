@@ -7,7 +7,7 @@
  */
 import axios from 'axios';
 import { request } from '@/config/request';
-import CatePage from '../[cate]/Index'
+import CatePage from '../[catePath]/Index'
 import { getCommonDataByCookie } from '@/utils/server';
 import { getSiteStation } from '@/utils/language';
 import { SupportCenterbizType } from '../utils';

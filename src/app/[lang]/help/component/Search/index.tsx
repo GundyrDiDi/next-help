@@ -2,13 +2,16 @@
  * @Author: shiguang
  * @Date: 2024-04-08 11:47:09
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-11 14:31:10
+ * @LastEditTime: 2024-04-12 10:56:41
  * @Description: 
  */
 'use client'
+import { Plat } from "@/model";
+import { ENUM_PLATE } from "@/model/Plat";
 import { isB2B } from "@/utils";
 import { Button, Input, Space } from "antd"
 import { t } from "i18next"
+import { useAtom } from "jotai";
 
 interface SearchProps {
   className?: string;
@@ -21,12 +24,16 @@ interface SearchProps {
 
 const Search = (props: SearchProps) => {
   const { value, onChange, onSearch } = props;
+  const [plat] = useAtom(Plat);
+  console.log(3333123, plat)
+  
+
   return (
     <div
       className={`
       pc:w-[1200px] pc:h-[300px] pad:h-[300px] mo:h-[120px] bg-contain
       flex justify-center items-center ${props.className ?? ''} 
-      ${ isB2B() ? `bg-[url('https://static-s.theckb.com/BusinessMarket/helpCenter/image/help-bg-b2b.f7536f71.png')]` : `bg-[url('https://page-client.theckb.com/client-prod/present/img/help-bg.3398f88f.png')]`}
+      ${ plat === ENUM_PLATE.b2b ? `bg-[url('https://static-s.theckb.com/BusinessMarket/helpCenter/image/help-bg-b2b.f7536f71.png')]` : `bg-[url('https://page-client.theckb.com/client-prod/present/img/help-bg.3398f88f.png')]`}
       `}
     >
       <Space.Compact className="pc:w-[480px] pad:w-[480px] pc:h-[40px] pad:h-[40px] mo:w-[100%] mo:mx-[12px]">
