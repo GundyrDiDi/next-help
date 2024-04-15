@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 17:04:47
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-12 15:18:09
+ * @LastEditTime: 2024-04-15 11:19:38
  * @Description: 
  */
 import { request } from "@/config/request"
@@ -85,12 +85,20 @@ async function Page(props: HelpCatePageProps) {
     //     subjectId: params?.catePath as unknown as number
     // })
     // /customer/base/supportCenter/query/byPath
-    console.log(params?.catePath, 232323)
-    const _ = await request.customer.base.supportCenterQueryByPath({
-        // subjectId: params?.catePath as unknown as number
-        path: params?.catePath
-        
-    })
+    let errmsg: string = '';
+    const _ = await (async () => {
+        try {
+            const res = await request.customer.base.supportCenterQueryByPath({
+                // subjectId: params?.catePath as unknown as number
+                path: params?.catePath
+                
+            })
+            return res
+        } catch (error) {
+            errmsg = String(error);
+            return undefined;
+        }
+    })()
     const resList =  _?.data?.contentList ?? [];
 
     let contentList = resList.map((item) => {
@@ -114,7 +122,9 @@ async function Page(props: HelpCatePageProps) {
             value: textRes.data.replaceAll('&nbsp;', ' '),
         }
     })
-
+    if(errmsg){
+        return <div>request.customer.base.supportCenterQueryByPath {errmsg}</div>
+    }
     return contentList.length ? <Container title={_.data?.subject} contentList={contentList} isSearchPage={false} /> : null;
 }
 
