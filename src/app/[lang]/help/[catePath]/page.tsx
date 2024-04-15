@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 17:04:47
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-15 12:36:28
+ * @LastEditTime: 2024-04-15 12:40:57
  * @Description: 
  */
 import axios from "axios";
@@ -105,8 +105,10 @@ async function Page(props: HelpCatePageProps) {
     })()
     console.log(22222222)
     console.log(22222222)
+    console.log('errmsg', errmsg)
     console.log(22222222)
     console.log(22222222)
+
     const resList =  _?.data?.contentList ?? [];
 
     let contentList = resList.map((item) => {
