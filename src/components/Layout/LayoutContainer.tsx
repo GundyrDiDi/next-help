@@ -197,9 +197,10 @@ export default function Layout({
       </> }
       <FloatToolbar />
       {children}
-      {
+      {/* {
         !isHelpPage && <CKBFooter lang={lang} plat={plat} />
-      }
+      } */}
+      <CKBFooter lang={lang} plat={plat} />
     </ConfigProvider>
   );
 }
