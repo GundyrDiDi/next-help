@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-11 11:30:19
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-15 19:50:55
+ * @LastEditTime: 2024-04-15 20:49:29
  * @Description: 
  */
 'use client'
@@ -21,6 +21,8 @@ import { ENUM_PLATE } from '@/model/Plat';
 import { Site } from '@/const';
 import { useParams } from 'next/navigation';
 import { Local } from '@/i18n/settings';
+import Breadcrumb from './component/Breadcrumb';
+import { useTranslation } from 'react-i18next';
 
 interface HelpProps{
     supportCenterSubjectList: SupportCenterSubjectDTO[];
@@ -37,6 +39,8 @@ const Help = (props: HelpProps) => {
     const { lang } = useParams();
     const siteStation = getSiteStation(lang as Local)
     const [plat] = useAtom(Plat);
+    const { t } = useTranslation();
+
 
     useEffect(() => {
         (async() => {
@@ -53,6 +57,15 @@ const Help = (props: HelpProps) => {
                 THE CKBヘルプガイド
             </h1> : null}
             <div className="pc:w-[1200px] mo:w-[100%] pad:w-[100%]" >
+            <div className="mo:bg-white pc:mt-[16px] pad:mt-[16px] pc:mb-[16px] pad:mb-[16px] mo:!py-[0px]" >
+                <Breadcrumb
+                    className="mo:py-[8px] mo:px-[12px]"
+                    dataSource={[
+                        { title: 'TOP', href: 'https://s.theckb.com' },
+                        { title: t('帮助中心'), href: `/${lang}/help` },
+                    ]}
+                />
+            </div>
                 <Search 
                     className="mb-[16px] mo:mb-0"
                     value={searchKeywords} 
