@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 19:54:03
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-15 11:39:30
+ * @LastEditTime: 2024-04-15 15:03:24
  * @Description: 
  */
 'use client'
@@ -11,6 +11,7 @@ import Breadcrumb from "../component/Breadcrumb";
 import { useParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import './index.scss';
+import ScrollTop from "./components/ScrollTop";
 // import { t } from "i18next";
 
 interface Props {
@@ -24,11 +25,12 @@ interface Props {
 
 const Index = (props: Props) => {
     const { contentList, isSearchPage, title } = props
-    const [activeValue, setActiveValue] = useState(contentList[0].value);
+    const [activeIndex, setActiveIndex] = useState(0);
     const { lang } = useParams();
     const { t } = useTranslation();
 
     return <div className="flex justify-center pad:px-[20px] mo:px-[0px]" >
+        <ScrollTop />
         {/* <div className="pc:w-[1200px]" > */}
         {/* pc:px-[12px] pad:px-[12px] */}
         <div className="mo:w-[100%] pc:w-[1200px]" >
@@ -53,11 +55,11 @@ const Index = (props: Props) => {
                     <div className={`bg-white p-[20px] ${isSearchPage ? 'mo:py-[0px]' : 'mo:py-[12px]' }  mo:px-[12px] mb-[8px]`} >
                         {contentList.map((item, index) => {
                             return <div
-                                className={`3333 mo:mx-[12px] font-bold rounded-[4px] h-[40px] box-border px-[8px] leading-[40px] hover:text-[var(--fcolor)] hover:bg-[rgba(var(--fcolor-rgb),0.10)] line-clamp-1 hover:cursor-pointer ${activeValue === item.value ? 'text-[var(--fcolor)] bg-[rgba(var(--fcolor-rgb),0.10)]' : ''}`}
-                                key={item.value}
+                                className={`3333 mo:mx-[12px] font-bold rounded-[4px] h-[40px] box-border px-[8px] leading-[40px] hover:text-[var(--fcolor)] hover:bg-[rgba(var(--fcolor-rgb),0.10)] line-clamp-1 hover:cursor-pointer ${index === activeIndex ? 'text-[var(--fcolor)] bg-[rgba(var(--fcolor-rgb),0.10)]' : ''}`}
+                                key={index}
                                 onClick={() => {
                                     window.location.hash = String(index+1)
-                                    setActiveValue(item.value)
+                                    setActiveIndex(index)
                                 }}
                             >
                                 {item.label}

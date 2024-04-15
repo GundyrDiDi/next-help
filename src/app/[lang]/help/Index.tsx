@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-11 11:30:19
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-15 10:44:26
+ * @LastEditTime: 2024-04-15 14:45:00
  * @Description: 
  */
 'use client'
@@ -35,8 +35,8 @@ const Help = (props: HelpProps) => {
     const [searchResList, setSearchResList] = useState<SupportCenterContentDTO[]>();
     const [supportCenterSubjectList, setSupportCenterSubjectList] = useState(_supportCenterSubjectList);
     const { lang } = useParams();
-    const [plat] = useAtom(Plat);
     const siteStation = getSiteStation(lang as Local)
+    const [plat] = useAtom(Plat);
 
     useEffect(() => {
         (async() => {

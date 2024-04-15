@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 11:47:37
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-15 13:45:44
+ * @LastEditTime: 2024-04-15 15:33:38
  * @Description: 
  */
 'use client'
@@ -82,6 +82,8 @@ export const SecondCate = (props: SecondCateProps) => {
 const CateList = (props: CateListProps) => {
     const { label, childrenCateList } = props
     const { lang } = useParams()
+    const { t } = useTranslation();
+
     return <div>
         <div className={`${props.className} mo:hidden`} >
             <FirstCate {...props} />
@@ -89,7 +91,7 @@ const CateList = (props: CateListProps) => {
         <div className="pc:hidden pad:hidden mb-[16px]" >
             <div className="flex items-center h-[40px]" >
                 <div className="w-[4px] h-[14px] bg-[var(--fcolor)] mr-[4px]" />
-                <h2 className="text-[14px] font-bold" >{label}</h2>
+                <h2 className="text-[14px] font-bold" >{t(label)}</h2>
             </div>
             <div>
                 {childrenCateList?.map((item, key) => {
