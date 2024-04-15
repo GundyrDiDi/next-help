@@ -2,14 +2,14 @@
  * @Author: shiguang
  * @Date: 2024-04-08 17:04:47
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-15 11:23:14
+ * @LastEditTime: 2024-04-15 12:31:53
  * @Description: 
  */
-import { request } from "@/config/request"
-import Container from "./Index"
 import axios from "axios";
 import { Metadata } from "next";
+import { request } from "@/config/request"
 import { Local } from "@/i18n/settings";
+import Container from "./Index"
 
 
 interface HelpCatePageProps{
@@ -85,6 +85,9 @@ async function Page(props: HelpCatePageProps) {
     //     subjectId: params?.catePath as unknown as number
     // })
     // /customer/base/supportCenter/query/byPath
+    console.log(11111111)
+    console.log(11111111)
+    console.log(11111111)
     let errmsg: string = '';
     const _ = await (async () => {
         try {
@@ -100,6 +103,10 @@ async function Page(props: HelpCatePageProps) {
             return undefined;
         }
     })()
+    console.log(22222222)
+    console.log(22222222)
+    console.log(22222222)
+    console.log(22222222)
     const resList =  _?.data?.contentList ?? [];
 
     let contentList = resList.map((item) => {
@@ -123,6 +130,11 @@ async function Page(props: HelpCatePageProps) {
             value: textRes.data.replaceAll('&nbsp;', ' '),
         }
     })
+    console.log(3333333)
+    console.log(3333333)
+    console.log(3333333)
+    console.log(3333333)
+
     if(errmsg){
         return <div>request.customer.base.supportCenterQueryByPath {errmsg}</div>
     }
