@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-15 14:36:26
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-15 16:00:10
+ * @LastEditTime: 2024-04-15 20:26:35
  * @Description: 
  */
 import { useEffect, useState } from "react"
@@ -33,7 +33,7 @@ const ScrollTop = () => {
     })
     if (!show) return null;
     return (
-        <div className="fixed z-10 w-[100%] bottom-[280px] flex justify-center mo:!hidden pad:!hidden" >
+        <div className="fixed z-10 w-[100%] bottom-[16px] flex justify-center mo:!hidden pad:!hidden" >
             <div className="w-[100%] pc:w-[1200px] flex justify-end" >
                 <div
                     onClick={scrollTop}
