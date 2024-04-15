@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 19:54:03
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-15 15:03:24
+ * @LastEditTime: 2024-04-15 19:54:21
  * @Description: 
  */
 'use client'
@@ -55,7 +55,7 @@ const Index = (props: Props) => {
                     <div className={`bg-white p-[20px] ${isSearchPage ? 'mo:py-[0px]' : 'mo:py-[12px]' }  mo:px-[12px] mb-[8px]`} >
                         {contentList.map((item, index) => {
                             return <div
-                                className={`3333 mo:mx-[12px] font-bold rounded-[4px] h-[40px] box-border px-[8px] leading-[40px] hover:text-[var(--fcolor)] hover:bg-[rgba(var(--fcolor-rgb),0.10)] line-clamp-1 hover:cursor-pointer ${index === activeIndex ? 'text-[var(--fcolor)] bg-[rgba(var(--fcolor-rgb),0.10)]' : ''}`}
+                                className={`mo:mx-[12px] rounded-[4px] h-[40px] box-border px-[8px] leading-[40px] hover:text-[var(--fcolor)] text-[var(--fcolor)] hover:bg-[rgba(var(--fcolor-rgb),0.10)] line-clamp-1 hover:cursor-pointer ${index === activeIndex ? 'bg-[rgba(var(--fcolor-rgb),0.10)] font-bold' : ''}`}
                                 key={index}
                                 onClick={() => {
                                     window.location.hash = String(index+1)
@@ -73,7 +73,7 @@ const Index = (props: Props) => {
                         return (
                             <div className="help-artical-content grow bg-white p-[20px] relative mo:p-[0px] mo:bg-[#FAFAFA]" key={index}>
                                 <div className="absolute top-[-40px]" id={String(index+1)}  />
-                                <h2 className="m-0 p-0 font-bold text-[24px] mo:text-[16px] text-[#000] mo:py-[12px] mo:leading-normal ">
+                                <h2 className="m-0 p-0 font-bold pc:text-[20px] pad:text-[20px] mo:text-[16px] text-[#000] mo:py-[12px] mo:leading-normal ">
                                     {item.label}
                                 </h2>
                                 <div style={{ borderBottom: '1px solid #E6EAF0' }} className="mt-[20px] mb-[20px] mo:my-[0px]" />

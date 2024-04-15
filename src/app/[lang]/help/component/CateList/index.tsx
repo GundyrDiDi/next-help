@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 11:47:37
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-15 15:33:38
+ * @LastEditTime: 2024-04-15 20:17:17
  * @Description: 
  */
 'use client'
@@ -21,8 +21,8 @@ interface CateListProps {
 }
 
 const FirstCate = (props: CateListProps) => {
-  const { t } = useTranslation();
-    
+    const { t } = useTranslation();
+
     return <div className="p-[32px] bg-white" >
         <div className="flex h-[24px] items-center mb-[32px]" >
             <div className="w-[5px] h-[24px] bg-[var(--fcolor)] mr-[8px]" ></div>
@@ -84,33 +84,35 @@ const CateList = (props: CateListProps) => {
     const { lang } = useParams()
     const { t } = useTranslation();
 
-    return <div>
-        <div className={`${props.className} mo:hidden`} >
-            <FirstCate {...props} />
-        </div>
-        <div className="pc:hidden pad:hidden mb-[16px]" >
-            <div className="flex items-center h-[40px]" >
-                <div className="w-[4px] h-[14px] bg-[var(--fcolor)] mr-[4px]" />
-                <h2 className="text-[14px] font-bold" >{t(label)}</h2>
+    return (
+        <div>
+            <div className={`${props.className} mo:hidden`} >
+                <FirstCate {...props} />
             </div>
-            <div>
-                {childrenCateList?.map((item, key) => {
-                    return (
-                        <div
-                            key={key}
-                            className="flex items-center h-[40px] hover:text-[var(--fcolor)] hover:bg-[rgba(var(--fcolor-rgb),0.10)] rounded-[4px]"
-                        >
-                            <h3 className="text-[14px] ml-[16px] text-[#000]/[.45] font-normal" >
-                                <JumpHelpDetailLink contentType={item.contentType} lang={lang as string} value={item.value} >
-                                    {item.label}
-                                </JumpHelpDetailLink>
-                            </h3>
-                        </div>
-                    );
-                })}
+            <div className="pc:hidden pad:hidden mb-[16px]" >
+                <div className="flex items-center h-[40px] mo:ml-[12px]" >
+                    <div className="w-[4px] h-[14px] bg-[var(--fcolor)] mr-[4px]" />
+                    <h2 className="text-[14px] font-bold" >{t(label)}</h2>
+                </div>
+                <div>
+                    {childrenCateList?.map((item, key) => {
+                        return (
+                            <div
+                                key={key}
+                                className="flex items-center h-[40px] hover:text-[var(--fcolor)] hover:bg-[rgba(var(--fcolor-rgb),0.10)] rounded-[4px]"
+                            >
+                                <h3 className="text-[14px] ml-[16px] text-[#000]/[.45] font-normal" >
+                                    <JumpHelpDetailLink contentType={item.contentType} lang={lang as string} value={item.value} >
+                                        {item.label}
+                                    </JumpHelpDetailLink>
+                                </h3>
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
         </div>
-    </div>
+    );
 }
 
 export default CateList;

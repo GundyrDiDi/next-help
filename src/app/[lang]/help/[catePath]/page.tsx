@@ -10,6 +10,7 @@ import { Metadata } from "next";
 import { request } from "@/config/request"
 import { Local } from "@/i18n/settings";
 import Container from "./Index"
+import Empty from "./components/Empty";
 
 
 interface HelpCatePageProps{
@@ -141,7 +142,7 @@ async function Page(props: HelpCatePageProps) {
     if(errmsg){
         return <div>request.customer.base.supportCenterQueryByPath {errmsg}</div>
     }
-    return contentList.length ? <Container title={_?.data?.subject} contentList={contentList} isSearchPage={false} /> : null;
+    return contentList.length ? <Container title={_?.data?.subject} contentList={contentList} isSearchPage={false} /> : <Empty/>;
 }
 
 export default Page;
