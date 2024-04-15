@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-11 11:30:19
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-12 15:09:35
+ * @LastEditTime: 2024-04-15 10:44:26
  * @Description: 
  */
 'use client'
@@ -93,7 +93,8 @@ const Help = (props: HelpProps) => {
                                     return (item.childrenList ?? []) .map(it => {
                                         return {
                                             label: it.subject!,
-                                            value: it.supportCenterSubjectId! as unknown as string,
+                                            // value: it.supportCenterSubjectId! as unknown as string,
+                                            value: it.path! as unknown as string,
                                             contentType: item.contentType as any
                                         }
                                     })
