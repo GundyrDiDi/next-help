@@ -1,3 +1,10 @@
+/*
+ * @Author: shiguang
+ * @Date: 2024-04-08 21:06:55
+ * @LastEditors: shiguang
+ * @LastEditTime: 2024-04-15 12:56:24
+ * @Description: 
+ */
 /** @type {import('next').NextConfig} */
 const { SERVER_ENV } = process.env;
 import Analyzer from "@next/bundle-analyzer";
@@ -12,6 +19,10 @@ const getEnv = () => {
       buildTime: new Date().toLocaleString(),
       NEXT_PUBLIC_THE_CKB_LINK: "https://master-s.theckb.com",
       NEXT_PUBLIC_THE_CKB_API_URL: "https://master-gateway.theckb.com",
+      // # 测试环境帮助中心地址
+      NEXT_PUBLIC_HELP_CENTER_URL: 'https://test-client-help.theckb.com',
+      // # 测试环境帮助中心地址
+      NEXT_PUBLIC_X_GRAY_TAG: '20240408-seo',
     };
   } else if (SERVER_ENV === "pre") {
     return {
@@ -19,6 +30,7 @@ const getEnv = () => {
       buildTime: new Date().toLocaleString(),
       NEXT_PUBLIC_THE_CKB_LINK: "https://pre-s.theckb.com",
       NEXT_PUBLIC_THE_CKB_API_URL: "https://pre-gateway.theckb.com",
+
     };
   } else if (SERVER_ENV === "prod") {
     return {
@@ -26,6 +38,8 @@ const getEnv = () => {
       buildTime: new Date().toLocaleString(),
       NEXT_PUBLIC_THE_CKB_LINK: "https://s.theckb.com",
       NEXT_PUBLIC_THE_CKB_API_URL: "https://gateway-prod.theckb.com",
+      // # 正式环境帮助中心地址
+      NEXT_PUBLIC_HELP_CENTER_URL: 'https://help.theckb.com'
     };
   } else {
     return {
