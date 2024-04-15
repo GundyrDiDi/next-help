@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-10 22:25:44
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-11 14:59:57
+ * @LastEditTime: 2024-04-15 13:48:13
  * @Description: 
  */
 import { SupportCenterContentDTO } from "@/service/customer";
@@ -11,6 +11,7 @@ import LeftArrowIcon from "../LeftArrowIcon";
 import { useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { useTranslation } from "react-i18next";
 interface SearchResultProps {
     onCloseSearch?: () => void;
     searchResList: SupportCenterContentDTO[];
@@ -19,6 +20,7 @@ interface SearchResultProps {
 
 const SearchResult = (props: SearchResultProps) => {
     const { onCloseSearch, searchResList, searchKeywords } = props;
+    const { t } = useTranslation();
     const [activeIdx, setActiveIdx] = useState(0);
     const { lang } = useParams()
 
@@ -27,7 +29,7 @@ const SearchResult = (props: SearchResultProps) => {
             <div className="flex mo:mb-[4px]" >
                 <div className="flex items-center py-[32px] mo:py-[8px]  cursor-pointer">
                     <LeftArrowIcon />
-                    <span className="pl-[8px] font-bold mo:pl-[4px]" onClick={() => onCloseSearch?.()} >返回首页</span>
+                    <span className="pl-[8px] font-bold mo:pl-[4px]" onClick={() => onCloseSearch?.()} > {t('返回首页')} </span>
                 </div>
             </div>
             <div className="mo:hidden" >

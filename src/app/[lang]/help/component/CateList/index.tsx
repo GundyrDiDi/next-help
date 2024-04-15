@@ -1,15 +1,16 @@
-'use client'
-
 /*
  * @Author: shiguang
  * @Date: 2024-04-08 11:47:37
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-12 15:04:43
+ * @LastEditTime: 2024-04-15 13:45:44
  * @Description: 
  */
+'use client'
+
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 interface CateListProps {
     contentType: 'text' | 'video' | 'search';
@@ -20,11 +21,13 @@ interface CateListProps {
 }
 
 const FirstCate = (props: CateListProps) => {
+  const { t } = useTranslation();
+    
     return <div className="p-[32px] bg-white" >
         <div className="flex h-[24px] items-center mb-[32px]" >
             <div className="w-[5px] h-[24px] bg-[var(--fcolor)] mr-[8px]" ></div>
             <h2 className="text-[24px]" >
-                {props.label}
+                {t(props.label)}
             </h2>
         </div>
         <div className="flex flex-wrap pb-[-16px]" >
