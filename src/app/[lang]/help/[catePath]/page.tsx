@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 17:04:47
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-15 11:19:38
+ * @LastEditTime: 2024-04-15 11:21:36
  * @Description: 
  */
 import { request } from "@/config/request"
@@ -125,7 +125,7 @@ async function Page(props: HelpCatePageProps) {
     if(errmsg){
         return <div>request.customer.base.supportCenterQueryByPath {errmsg}</div>
     }
-    return contentList.length ? <Container title={_.data?.subject} contentList={contentList} isSearchPage={false} /> : null;
+    return contentList.length ? <Container title={_?.data?.subject} contentList={contentList} isSearchPage={false} /> : null;
 }
 
 export default Page;
