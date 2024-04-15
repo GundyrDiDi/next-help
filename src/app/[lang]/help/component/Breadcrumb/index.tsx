@@ -2,9 +2,10 @@
  * @Author: shiguang
  * @Date: 2024-04-10 16:48:00
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-10 21:18:56
+ * @LastEditTime: 2024-04-15 11:38:50
  * @Description: 
  */
+'use client'
 import Link from "next/link";
 import { Fragment } from "react";
 

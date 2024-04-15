@@ -2,15 +2,15 @@
  * @Author: shiguang
  * @Date: 2024-04-08 19:54:03
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-12 15:24:24
+ * @LastEditTime: 2024-04-15 11:39:30
  * @Description: 
  */
 'use client'
 import { useState } from "react"
 import Breadcrumb from "../component/Breadcrumb";
 import { useParams } from "next/navigation";
-import './index.scss';
 import { useTranslation } from "react-i18next";
+import './index.scss';
 // import { t } from "i18next";
 
 interface Props {

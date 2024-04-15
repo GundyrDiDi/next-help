@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 17:04:47
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-15 11:21:36
+ * @LastEditTime: 2024-04-15 11:23:14
  * @Description: 
  */
 import { request } from "@/config/request"
@@ -95,6 +95,7 @@ async function Page(props: HelpCatePageProps) {
             })
             return res
         } catch (error) {
+            console.log(error);
             errmsg = String(error);
             return undefined;
         }
