@@ -118,12 +118,13 @@ apiInstanceList.forEach((item) => {
     item.instance.instance.interceptors.response.use(
         getIsServer() ? responseInterceptorOnServer : responseInterceptorOnClient,
         // getIsServer() ? responseInterceptorOnServer : responseInterceptorOnClient,
-        function (error) {
-            if(typeof window){
-                message.error(String(error));
-            }
+        getIsServer() ? (error) => {
+            return Promise.reject(error)
+        } : function (error) {
+            message.error(String(error));
             return Promise.reject(error);
         }
+        
     );
 });
 
