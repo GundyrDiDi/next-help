@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 17:04:47
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-15 12:31:53
+ * @LastEditTime: 2024-04-15 12:36:28
  * @Description: 
  */
 import axios from "axios";
@@ -130,6 +130,7 @@ async function Page(props: HelpCatePageProps) {
             value: textRes.data.replaceAll('&nbsp;', ' '),
         }
     })
+    console.log(contentList)
     console.log(3333333)
     console.log(3333333)
     console.log(3333333)
