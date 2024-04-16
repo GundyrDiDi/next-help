@@ -188,6 +188,7 @@ export default function Layout({
   }, [initPlat]);
   console.log(getThemeStyle(), plat, 'plat');
   const isHelpPage = currentPath.includes('/help')
+  const isVideoPage = currentPath.includes('/video/')
   return (
     <ConfigProvider locale={locale} theme={getThemeStyle()}>
       <CKBHeader plat={plat} />
@@ -197,10 +198,9 @@ export default function Layout({
       </> }
       <FloatToolbar />
       {children}
-      {/* {
-        !isHelpPage && <CKBFooter lang={lang} plat={plat} />
-      } */}
-      <CKBFooter lang={lang} plat={plat} />
+      {
+        !isVideoPage && <CKBFooter lang={lang} plat={plat} />
+      }
     </ConfigProvider>
   );
 }
