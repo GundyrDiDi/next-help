@@ -14,7 +14,7 @@
     "build:test": "cross-env SERVER_ENV=test next build",
     "build:pre": "cross-env SERVER_ENV=pre NEXT_PUBLIC_ENV=pre next build",
     "build:prod": "cross-env SERVER_ENV=prod next build",
-    "start": "next start -p 3000",
+    "start": "cross-env SERVER_ENV=pre && next start -p 3000",
     "analyze": "cross-env ANALYZE=true next build",
     "lint": "next lint"
   },
