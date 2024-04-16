@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-11 11:30:19
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-16 11:33:49
+ * @LastEditTime: 2024-04-16 23:02:23
  * @Description: 
  */
 'use client'
@@ -40,15 +40,22 @@ const Help = (props: HelpProps) => {
     const siteStation = getSiteStation(lang as Local)
     const [plat] = useAtom(Plat);
     const { t } = useTranslation();
-
-
+    
+    // 第一次进来还是会重新请求，但是期待如果数据没变化就不请求了
     useEffect(() => {
         (async () => {
             const res = await request.customer.base.supportCenterTree({
                 bizType: plat === ENUM_PLATE.b2b ? SupportCenterbizType.B : SupportCenterbizType.C,
                 stationCode: siteStation,
             });
-            setSupportCenterSubjectList(res.data ?? [])
+            setSupportCenterSubjectList((preData) => {
+                const newData = res.data ?? [];
+                if(JSON.stringify(newData) === JSON.stringify(preData)){
+                    debugger
+                    return preData;
+                }
+                return newData;
+            })
         })();
     }, [plat, siteStation])
     return (

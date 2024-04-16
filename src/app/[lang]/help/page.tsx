@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 11:36:34
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-12 14:48:20
+ * @LastEditTime: 2024-04-16 22:50:52
  * @Description: 
  */
 import { Metadata, ResolvingMetadata } from 'next';
@@ -56,10 +56,16 @@ export async function generateMetadata(
         },
     };
 }
-
-const Page = async () => {
+interface HelpPageProps{
+    params: { 
+        lang: string;
+    }
+}
+const Page = async (props: HelpPageProps) => {
+    const { params } = props;
+    const { lang } = params;
     const { plat } = getCommonDataByCookie()
-    const siteStation = getSiteStation()
+    const siteStation = getSiteStation(lang as Local)
     const res = await request.customer.base.supportCenterTree({
         bizType: plat === 'b2b' ? SupportCenterbizType.B : SupportCenterbizType.C,
         stationCode: siteStation,
