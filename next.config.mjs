@@ -2,12 +2,13 @@
  * @Author: shiguang
  * @Date: 2024-04-08 21:06:55
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-16 11:00:26
+ * @LastEditTime: 2024-04-16 11:48:25
  * @Description: 
  */
 /** @type {import('next').NextConfig} */
-const { SERVER_ENV } = process.env;
 import Analyzer from "@next/bundle-analyzer";
+const { SERVER_ENV: _SERVER_ENV } = process.env;
+const SERVER_ENV = _SERVER_ENV || process.env.NEXT_PUBLIC_ENV;
 
 const withBundleAnalyzer = Analyzer({
   enabled: false,
