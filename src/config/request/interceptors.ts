@@ -53,6 +53,7 @@ const getIsServer = () => typeof window === 'undefined';
 async function requestInterceptorOnClient(config: InternalAxiosRequestConfig) {
     config.headers = config.headers ?? {};
     let token = getCookieToken;
+    
     const shopId = getShopId();
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const stationCode = useSite2Station()
@@ -65,8 +66,8 @@ async function requestInterceptorOnClient(config: InternalAxiosRequestConfig) {
     if (stationCode) {
         config.headers['X-Stationcode'] = stationCode;
     }
-    if (process.env.X_GRAY_TAG) {
-        config.headers['X-GRAY-TAG'] = process.env.X_GRAY_TAG;
+    if (process.env.NEXT_PUBLIC_X_GRAY_TAG) {
+        config.headers['X-GRAY-TAG'] = process.env.NEXT_PUBLIC_X_GRAY_TAG;
     }
     return config;
 }
@@ -81,6 +82,7 @@ async function requestInterceptorOnServer(config: InternalAxiosRequestConfig) {
     if (siteStation) {
         config.headers['X-Stationcode'] = siteStation;
     }
+   
     if (process.env.NEXT_PUBLIC_X_GRAY_TAG) {
         config.headers['X-GRAY-TAG'] = process.env.NEXT_PUBLIC_X_GRAY_TAG;
     }
