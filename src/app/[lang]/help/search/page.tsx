@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 17:04:47
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-15 14:49:08
+ * @LastEditTime: 2024-04-16 19:24:49
  * @Description:
  */
 import axios from 'axios';
@@ -39,17 +39,19 @@ const Page = async (props: SearchProps) => {
             value: '',
         }
     });
-    const data = await Promise.all(
-        resList.map(item => axios({
-            url: item.contentUrl,
-            method: 'get'
+    const _data = await Promise.all(
+        resList.map(item => request.customer.base.supportCenterQueryGetSupportCenterContentById({
+            contentId: item.supportCenterContentId
         }))
     )
+    const data = _data.map((item: any) => {
+        return item.data.content
+    })
     contentList = contentList.map((item, index) => {
         const textRes = data[index];
         return {
             label: item.label!,
-            value: textRes.data.replaceAll('&nbsp;', ' '),
+            value: (textRes ?? '') .replaceAll('&nbsp;', ' '),
         }
     })
     return <div>
