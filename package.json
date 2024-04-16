@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "cross-env SERVER_ENV=test next dev -p 4000",
     "test": "cross-env SERVER_ENV=test next start -p 3000",
+    "jenkins_test": "cross-env SERVER_ENV=test next start -p 3000",
+    "jenkins_pre": "cross-env SERVER_ENV=pre next start -p 3000",
     "pre": "cross-env SERVER_ENV=pre next dev -p 4000",
     "api": "npx @snifftest/api-gen config hu  && npx eslint ./src/service --fix",
     "kill-test": "kill $(lsof -i :3000 | awk 'NR==2 {print $2}')",
