@@ -3455,6 +3455,8 @@ export interface SignUpRespDTO {
 export interface SupportCenterContentDTO {
   /** 业务类型: 2B, 2C */
   bizType?: string;
+  /** content */
+  content?: string;
   /** 内容类型: text, video */
   contentType?: string;
   /** 内容url */
