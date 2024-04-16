@@ -12,9 +12,10 @@
     "kill-test": "kill $(lsof -i :3000 | awk 'NR==2 {print $2}')",
     "build": "next build",
     "build:test": "cross-env SERVER_ENV=test next build",
+    "testEcho": "echo 999 > x.txt",
     "build:pre": "cross-env SERVER_ENV=pre NEXT_PUBLIC_ENV=pre next build",
     "build:prod": "cross-env SERVER_ENV=prod next build",
-    "start": "cross-env SERVER_ENV=pre && next start -p 3000",
+    "start": "npm run testEcho && cross-env SERVER_ENV=pre next start -p 3000",
     "analyze": "cross-env ANALYZE=true next build",
     "lint": "next lint"
   },
