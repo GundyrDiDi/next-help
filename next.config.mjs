@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 21:06:55
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-15 12:56:24
+ * @LastEditTime: 2024-04-16 11:00:26
  * @Description: 
  */
 /** @type {import('next').NextConfig} */
@@ -30,6 +30,7 @@ const getEnv = () => {
       buildTime: new Date().toLocaleString(),
       NEXT_PUBLIC_THE_CKB_LINK: "https://pre-s.theckb.com",
       NEXT_PUBLIC_THE_CKB_API_URL: "https://pre-gateway.theckb.com",
+      NEXT_PUBLIC_X_GRAY_TAG: '20240408-seo',
 
     };
   } else if (SERVER_ENV === "prod") {
