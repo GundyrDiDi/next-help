@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-11 11:30:19
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-15 20:49:29
+ * @LastEditTime: 2024-04-16 11:33:49
  * @Description: 
  */
 'use client'
@@ -24,7 +24,7 @@ import { Local } from '@/i18n/settings';
 import Breadcrumb from './component/Breadcrumb';
 import { useTranslation } from 'react-i18next';
 
-interface HelpProps{
+interface HelpProps {
     supportCenterSubjectList: SupportCenterSubjectDTO[];
     siteStation: Site;
     // onChangePlate: (plat: ENUM_PLATE) => void;
@@ -43,7 +43,7 @@ const Help = (props: HelpProps) => {
 
 
     useEffect(() => {
-        (async() => {
+        (async () => {
             const res = await request.customer.base.supportCenterTree({
                 bizType: plat === ENUM_PLATE.b2b ? SupportCenterbizType.B : SupportCenterbizType.C,
                 stationCode: siteStation,
@@ -53,25 +53,33 @@ const Help = (props: HelpProps) => {
     }, [plat, siteStation])
     return (
         <div className="flex justify-center" >
-            {lang === 'ja' ?  <h1 className="hidden" >
+            <div className="hidden" >
+                <div>
+                    NEXT_PUBLIC_ENV{process.env.NEXT_PUBLIC_ENV}
+                </div>
+                <div>
+                    SERVER_ENV: {process.env.SERVER_ENV}
+                </div>
+            </div>
+            {lang === 'ja' ? <h1 className="hidden" >
                 THE CKBヘルプガイド
             </h1> : null}
             <div className="pc:w-[1200px] mo:w-[100%] pad:w-[100%]" >
-            <div className="mo:bg-white pc:mt-[16px] pad:mt-[16px] pc:mb-[16px] pad:mb-[16px] mo:!py-[0px]" >
-                <Breadcrumb
-                    className="mo:py-[8px] mo:px-[12px]"
-                    dataSource={[
-                        { title: 'TOP', href: 'https://s.theckb.com' },
-                        { title: t('帮助中心'), href: `/${lang}/help` },
-                    ]}
-                />
-            </div>
-                <Search 
+                <div className="mo:bg-white pc:mt-[16px] pad:mt-[16px] pc:mb-[16px] pad:mb-[16px] mo:!py-[0px]" >
+                    <Breadcrumb
+                        className="mo:py-[8px] mo:px-[12px]"
+                        dataSource={[
+                            { title: 'TOP', href: 'https://s.theckb.com' },
+                            { title: t('帮助中心'), href: `/${lang}/help` },
+                        ]}
+                    />
+                </div>
+                <Search
                     className="mb-[16px] mo:mb-0"
-                    value={searchKeywords} 
-                    onChange={setSearchKeywords} 
-                    onSearch={async() => {
-                        if(!searchKeywords){
+                    value={searchKeywords}
+                    onChange={setSearchKeywords}
+                    onSearch={async () => {
+                        if (!searchKeywords) {
                             return setSearchResList(undefined)
                         }
                         const res = await request.customer.base.supportCenterContentQuery({
@@ -93,8 +101,8 @@ const Help = (props: HelpProps) => {
                             contentType={item.contentType as any}
                             childrenCateList={
                                 (() => {
-                                    if(item?.contentList?.length){
-                                        return (item.contentList ?? []) .map(it => {
+                                    if (item?.contentList?.length) {
+                                        return (item.contentList ?? []).map(it => {
                                             return {
                                                 label: it.title!,
                                                 // value: it.contentUrl!,
@@ -103,7 +111,7 @@ const Help = (props: HelpProps) => {
                                             }
                                         })
                                     }
-                                    return (item.childrenList ?? []) .map(it => {
+                                    return (item.childrenList ?? []).map(it => {
                                         return {
                                             label: it.subject!,
                                             // value: it.supportCenterSubjectId! as unknown as string,
@@ -117,8 +125,8 @@ const Help = (props: HelpProps) => {
                         />
                     })}
                 </div>}
-                
-                
+
+
             </div>
         </div>
     )
