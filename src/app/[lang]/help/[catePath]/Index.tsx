@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 19:54:03
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-15 19:54:21
+ * @LastEditTime: 2024-04-16 14:55:39
  * @Description: 
  */
 'use client'
@@ -73,7 +73,7 @@ const Index = (props: Props) => {
                         return (
                             <div className="help-artical-content grow bg-white p-[20px] relative mo:p-[0px] mo:bg-[#FAFAFA]" key={index}>
                                 <div className="absolute top-[-40px]" id={String(index+1)}  />
-                                <h2 className="m-0 p-0 font-bold pc:text-[20px] pad:text-[20px] mo:text-[16px] text-[#000] mo:py-[12px] mo:leading-normal ">
+                                <h2 className="m-0 p-0 font-bold pc:text-[20px] pad:text-[20px] mo:text-[16px] text-[#000] mo:py-[12px] mo:leading-normal break-all">
                                     {item.label}
                                 </h2>
                                 <div style={{ borderBottom: '1px solid #E6EAF0' }} className="mt-[20px] mb-[20px] mo:my-[0px]" />
