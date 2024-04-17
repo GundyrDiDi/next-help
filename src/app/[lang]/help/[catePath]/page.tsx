@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 17:04:47
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-16 19:22:00
+ * @LastEditTime: 2024-04-17 20:35:26
  * @Description: 
  */
 import axios from "axios";
@@ -29,9 +29,10 @@ const getMetaConf = async (params: Required<HelpCatePageProps>['params']) => {
     })
     
     const description = _.data?.description ?? '';
+    const subject = _.data?.subject ?? 'THE CKB';
     const conf: Record<Local, Metadata> = {
         [Local.JA]: {
-            title: "二级目录标题 |中国輸入代行・THE CKBなら丸投げOK！",
+            title: `${subject}|中国輸入代行・THE CKBなら丸投げOK！`,
             description,
         },
         [Local.KO]: {

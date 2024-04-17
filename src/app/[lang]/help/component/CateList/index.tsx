@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 11:47:37
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-15 20:17:17
+ * @LastEditTime: 2024-04-17 20:30:47
  * @Description: 
  */
 'use client'
@@ -11,6 +11,7 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
+import MoCateList from "../MoCateList";
 
 interface CateListProps {
     contentType: 'text' | 'video' | 'search';
@@ -26,9 +27,9 @@ const FirstCate = (props: CateListProps) => {
     return <div className="p-[32px] bg-white" >
         <div className="flex h-[24px] items-center mb-[32px]" >
             <div className="w-[5px] h-[24px] bg-[var(--fcolor)] mr-[8px]" ></div>
-            <h2 className="text-[24px]" >
+            <div className="text-[24px]" >
                 {t(props.label)}
-            </h2>
+            </div>
         </div>
         <div className="flex flex-wrap pb-[-16px]" >
             {props.childrenCateList?.map((item, key) => {
@@ -70,11 +71,11 @@ export const SecondCate = (props: SecondCateProps) => {
     return <div className={className} >
         <div className="flex h-[24px] text-[20px] items-center" >
             <div className="bg-[var(--fcolor)] w-[6px] h-[6px] rounded-[50%] mr-[6px] shrink-0 " />
-            <h3 className="font-normal text-[20px] hover:text-[var(--fcolor)] text-[#000000]/[.88] cursor-pointer" >
+            <div className="font-normal text-[20px] hover:text-[var(--fcolor)] text-[#000000]/[.88] cursor-pointer" >
                 <JumpHelpDetailLink contentType={contentType} lang={lang as string} value={value} >
                     {label}
                 </JumpHelpDetailLink>
-            </h3>
+            </div>
         </div>
     </div>
 }
@@ -89,10 +90,14 @@ const CateList = (props: CateListProps) => {
             <div className={`${props.className} mo:hidden`} >
                 <FirstCate {...props} />
             </div>
-            <div className="pc:hidden pad:hidden mb-[16px]" >
+            <MoCateList {...props} />
+            <div className="hidden" >
+                <MoCateList {...props} isShowHTag />
+            </div>
+            {/* <div className="pc:hidden pad:hidden mb-[16px]" >
                 <div className="flex items-center h-[40px] mo:ml-[12px]" >
                     <div className="w-[4px] h-[14px] bg-[var(--fcolor)] mr-[4px]" />
-                    <h2 className="text-[14px] font-bold" >{t(label)}</h2>
+                    <div className="text-[14px] font-bold" >{t(label)}</div>
                 </div>
                 <div>
                     {childrenCateList?.map((item, key) => {
@@ -110,7 +115,7 @@ const CateList = (props: CateListProps) => {
                         );
                     })}
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 }

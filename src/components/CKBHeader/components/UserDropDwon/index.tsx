@@ -5,20 +5,25 @@ import IconHeadSculpture from "@/components/Icon/IconHeadSculpture";
 import { ENUM_PAGE } from "@/const/enum";
 // import { jumpPage } from '@/utils';
 import { CustomerDetailRespDTO } from "@/service/customer";
-import { ShopCookie, TokenSignCookie } from "@/config";
+import { NEXT_PUBLIC_HELP_CENTER_URL, ShopCookie, TokenSignCookie } from "@/config";
 import styles from "./index.scss";
 import { LocalContext, useTranslation } from "@/i18n/client";
 import { toTheCkb } from "@/utils/router";
+import { Local } from "@/i18n/settings";
+import { useParams } from "next/navigation";
 interface UserDropDwonProps {
   children?: React.ReactNode;
   className?: string | undefined;
   customerDetail?: CustomerDetailRespDTO;
 }
-
+const toHelp = (lang: Local) => {
+  window.location.href = `${NEXT_PUBLIC_HELP_CENTER_URL}/${lang}/help`
+}
 // hover:text-[color:--color-primary-light]
 const UserDropDwon: React.FC<UserDropDwonProps> = (props) => {
   const { children, className, customerDetail } = props;
   const { t } = useTranslation();
+  const { lang } : { lang: Local } = useParams();
 
   const DROP_DWON_LIST = [
     [t("登录账号管理"), ENUM_PAGE.SETUP_ACCOUNT],
@@ -70,6 +75,10 @@ const UserDropDwon: React.FC<UserDropDwonProps> = (props) => {
           return (
             <li
               onClick={() => {
+                if(path === ENUM_PAGE.HELP){
+                  toHelp(lang);
+                  return;
+                }
                 toTheCkb(path);
               }}
               key={path}

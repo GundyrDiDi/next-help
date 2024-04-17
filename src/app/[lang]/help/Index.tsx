@@ -51,7 +51,6 @@ const Help = (props: HelpProps) => {
             setSupportCenterSubjectList((preData) => {
                 const newData = res.data ?? [];
                 if(JSON.stringify(newData) === JSON.stringify(preData)){
-                    debugger
                     return preData;
                 }
                 return newData;
