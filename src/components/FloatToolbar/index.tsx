@@ -1,12 +1,16 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import './index.scss';
 import { useAtom } from 'jotai';
 import { CDN_HOST } from '@/const/staticURL/index';
 import { atomCustomerDetail } from '@/model/CustomerDetail';
-import { LocalContext, useTranslation } from '@/i18n/client';
+import { useTranslation } from '@/i18n/client';
+import { useParams } from 'next/navigation';
+import { NEXT_PUBLIC_HELP_CENTER_URL } from '@/config';
+import './index.scss';
+
 const FloatToolbar = () => {
-    const {t}=useTranslation()
-    
+    const { t } = useTranslation()
+    const { lang } = useParams()
+
     const [isExpand, setIsExpand] = useState(true);
     const [msgCount, setMsgCount] = useState<number>(0);
     const [useInfo] = useAtom(atomCustomerDetail);
@@ -44,10 +48,12 @@ const FloatToolbar = () => {
         <aside className={`m-tool-bar ${isExpand ? 'tool-bar-show' : ''}`}>
             <ul>
                 <li className="tool-bar-helpCenter">
-                    <a className={isExpand ? 'bg-white' : ''}>
+                    <a
+                        className={isExpand ? 'bg-white' : ''}
+                        href={`${NEXT_PUBLIC_HELP_CENTER_URL}/${lang}/help`}
+                    >
                         <img
                             src={`${CDN_HOST}/BusinessMarket/icon/icon_help%402x.png`}
-                            
                             alt=''
                         />
                         <span>{t('帮助')}</span>
@@ -134,5 +140,3 @@ const FloatToolbar = () => {
     );
 };
 export default FloatToolbar;
-
-

@@ -1,6 +1,7 @@
-'use client'
-
 const getRquestBaseUrlByEnv = () => {
+    if(typeof window ===  'undefined'){
+        return process.env.NEXT_PUBLIC_THE_CKB_API_URL;
+    }
     const env=process.env.NEXT_PUBLIC_ENV;
     const prodUrl = 'https://gateway-prod.theckb.com';
     const preUrl = 'https://pre-gateway.theckb.com';

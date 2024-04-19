@@ -2167,6 +2167,23 @@ export interface DirectImageSearchReqDTO {
   startIndex?: number;
 }
 
+/** DiscountInfoUpdateDTO */
+export interface DiscountInfoUpdateDTO {
+  /**
+   * 让利折扣比例:%
+   * @format double
+   */
+  discount?: number;
+  /** sku */
+  productSku?: string;
+  /** 优惠方式:1-改价,2-返金 */
+  promotionMethod?: string;
+  /** 优惠方式:1-立减,2-折扣 */
+  promotionType?: string;
+  /** 立减金额 */
+  reductionAmount?: string;
+}
+
 /** DiscountInfoUpdateVO */
 export interface DiscountInfoUpdateVO {
   /**
@@ -2399,6 +2416,14 @@ export interface ManageBannerRespDTO {
   systemSource?: number;
 }
 
+/** MaterialDTO */
+export interface MaterialDTO {
+  content?: string;
+  name?: string;
+  /** @format int32 */
+  percentFlag?: number;
+}
+
 /** MaterialInfoUpdateVO */
 export interface MaterialInfoUpdateVO {
   /** 材质英文 */
@@ -2415,6 +2440,78 @@ export interface MaterialInfoUpdateVO {
   productSkuList?: string[];
   /** 站点code */
   stationCode?: string;
+}
+
+/** MaterialParseReqDTO */
+export interface MaterialParseReqDTO {
+  /** 中文材质 */
+  materialZh?: string;
+  /** 平台类型 */
+  platformType?: string;
+  /** 第三方平台类目代码（最底层） */
+  thirdCateCode?: string;
+}
+
+/** MaterialQueryReqDTO */
+export interface MaterialQueryReqDTO {
+  /** 三级类目 */
+  cateCode?: string;
+  /** 韩文材质 */
+  materialJp?: string;
+  /** 韩文材质 */
+  materialKr?: string;
+  /** 中文材质 */
+  materialZh?: string;
+  /** @format int32 */
+  pageNum?: number;
+  /** @format int32 */
+  pageSize?: number;
+  /** @format int32 */
+  startIndex?: number;
+}
+
+/** MaterialReqDTO */
+export interface MaterialReqDTO {
+  /**
+   * 唯一id
+   * @format int32
+   */
+  id?: number;
+  /** 日文材质 */
+  materialJp?: string;
+  /** 韩文材质 */
+  materialKr?: string;
+  /** 英文材质 */
+  materialUk?: string;
+  /** 中文材质 */
+  materialZh?: string;
+  /**
+   * 百分比限制 0:否 1：是
+   * @format int32
+   */
+  percentFlag?: number;
+}
+
+/** MaterialRespDTO */
+export interface MaterialRespDTO {
+  /**
+   * 唯一id
+   * @format int32
+   */
+  id?: number;
+  /** 日文材质 */
+  materialJp?: string;
+  /** 韩文材质 */
+  materialKr?: string;
+  /** 英文材质 */
+  materialUk?: string;
+  /** 中文材质 */
+  materialZh?: string;
+  /**
+   * 百分比限制 0:否 1：是
+   * @format int32
+   */
+  percentFlag?: number;
 }
 
 /** NameValueDict */
@@ -3484,6 +3581,11 @@ export interface ProductCustomsHsCodeCrawlReqDTO {
   source?: number;
   /** 站点code */
   stationCode?: string;
+}
+
+/** ProductCustomsListReqDTO */
+export interface ProductCustomsListReqDTO {
+  productItemCategoryZhs?: string[];
 }
 
 /** ProductCustomsPageReqDTO */
@@ -6330,9 +6432,13 @@ export interface Sku {
   /** @format date-time */
   mantainTime?: string;
   materialInfoEn?: string;
+  materialInfoEnJson?: string;
   materialInfoJa?: string;
+  materialInfoJaJson?: string;
   materialInfoKr?: string;
+  materialInfoKrJson?: string;
   materialInfoZh?: string;
+  materialInfoZhJson?: string;
   /** @format date-time */
   newOrderTime?: string;
   /** @format int32 */
@@ -6410,6 +6516,30 @@ export interface SkuKpiInfo {
    * @format int32
    */
   totalPurchaseQty?: number;
+}
+
+/** SkuMaterialInfoVO */
+export interface SkuMaterialInfoVO {
+  /** 说明 */
+  instr?: string;
+  /** 材质信息(英) */
+  materialEns?: MaterialDTO[];
+  /** 材质信息（日） */
+  materialJas?: MaterialDTO[];
+  /** 材质信息（韩） */
+  materialKrs?: MaterialDTO[];
+  /** 材质信息（中） */
+  materialZhs?: MaterialDTO[];
+}
+
+/** SkuMaterialUpdateVO */
+export interface SkuMaterialUpdateVO {
+  /** 材质信息集合 */
+  productMaterials?: SkuMaterialInfoVO[];
+  /** SkuCode */
+  productSku?: string;
+  /** 站点信息 */
+  stationCode?: string;
 }
 
 /** SkuOperatorLogVO */
@@ -7067,6 +7197,8 @@ export interface SupplierManageListQueryVO {
   bought?: boolean;
   /** @format int32 */
   channel?: number;
+  /** excludeProductSku */
+  excludeProductSku?: string;
   /**
    * 首次加购或关联结束时间
    * @format date-time
@@ -7217,12 +7349,16 @@ export interface SupplierManageListVO {
   mantainTime?: string;
   /** 材质信息英文 */
   materialInfoEn?: string;
+  materialInfoEnJson?: string;
   /** 材质信息日文 */
   materialInfoJa?: string;
+  materialInfoJaJson?: string;
   /** 材质信息韩文 */
   materialInfoKr?: string;
+  materialInfoKrJson?: string;
   /** 材质信息中文 */
   materialInfoZh?: string;
+  materialInfoZhJson?: string;
   /**
    * 最近下单时间
    * @format date-time
@@ -7245,6 +7381,8 @@ export interface SupplierManageListVO {
   productCustomsId?: number;
   /** 中文品名 */
   productItemCategoryZh?: string;
+  /** 材质信息集合 */
+  productMaterials?: SkuMaterialInfoVO[];
   productOriginSellPrice?: number;
   productProperties?: string;
   /** 属性名称 */
@@ -8318,10 +8456,26 @@ export interface BizResponseMapStringBoolean {
   success?: boolean;
 }
 
+/** BizResponse«Map«string,string»» */
+export interface BizResponseMapStringString {
+  code?: string;
+  data?: Record<string, string>;
+  msg?: string;
+  success?: boolean;
+}
+
 /** BizResponse«OnlineManageDetailVO» */
 export interface BizResponseOnlineManageDetailVO {
   code?: string;
   data?: OnlineManageDetailVO;
+  msg?: string;
+  success?: boolean;
+}
+
+/** BizResponse«PageResult«MaterialRespDTO»» */
+export interface BizResponsePageResultMaterialRespDTO {
+  code?: string;
+  data?: PageResultMaterialRespDTO;
   msg?: string;
   success?: boolean;
 }
@@ -8902,6 +9056,22 @@ export type MapStringBoolean = Record<string, boolean>;
 
 /** Map«string,object» */
 export type MapStringObject = Record<string, object>;
+
+/** Map«string,string» */
+export type MapStringString = Record<string, string>;
+
+/** PageResult«MaterialRespDTO» */
+export interface PageResultMaterialRespDTO {
+  /** @format int64 */
+  current?: number;
+  records?: MaterialRespDTO[];
+  /** @format int64 */
+  size?: number;
+  /** @format int64 */
+  total?: number;
+  /** @format int64 */
+  totalPage?: number;
+}
 
 /** PageResult«ProductHsCodeKeywordRespDTO» */
 export interface PageResultProductHsCodeKeywordRespDTO {
@@ -12328,6 +12498,92 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         ...params,
       }),
   };
+  material = {
+    /**
+     * No description
+     *
+     * @tags 商品材质管理
+     * @name Delete
+     * @summary 删除
+     * @request POST:/material/delete
+     */
+    delete: (materialReqDTO: MaterialReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseBoolean, any>({
+        path: `/material/delete`,
+        method: "POST",
+        body: materialReqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 商品材质管理
+     * @name Edit
+     * @summary 编辑
+     * @request POST:/material/edit
+     */
+    edit: (materialReqDTO: MaterialReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseBoolean, any>({
+        path: `/material/edit`,
+        method: "POST",
+        body: materialReqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 商品材质管理
+     * @name GetLegalMaterial
+     * @summary 获取合规材质
+     * @request POST:/material/getLegalMaterial
+     */
+    getLegalMaterial: (materialParseReqDTO: MaterialParseReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseMapStringString, any>({
+        path: `/material/getLegalMaterial`,
+        method: "POST",
+        body: materialParseReqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 商品材质管理
+     * @name Page
+     * @summary 分页查询
+     * @request POST:/material/page
+     */
+    page: (queryReqDTO: MaterialQueryReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponsePageResultMaterialRespDTO, any>({
+        path: `/material/page`,
+        method: "POST",
+        body: queryReqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 商品材质管理
+     * @name Save
+     * @summary 新增
+     * @request POST:/material/save
+     */
+    save: (materialReqDTO: MaterialReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseBoolean, any>({
+        path: `/material/save`,
+        method: "POST",
+        body: materialReqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+  };
   online = {
     /**
      * No description
@@ -12580,6 +12836,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       this.request<BizResponseListCustomerFocusProductRespDTO, any>({
         path: `/product/customerSubscriptionGoodsPriceRemind`,
         method: "POST",
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 商品报关
+     * @name CustomsCustomsList
+     * @summary customsList
+     * @request POST:/product/customs/customsList
+     */
+    customsCustomsList: (reqDTO: ProductCustomsListReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseListProductCustomsRespDTO, any>({
+        path: `/product/customs/customsList`,
+        method: "POST",
+        body: reqDTO,
         type: ContentType.Json,
         ...params,
       }),
@@ -13201,6 +13474,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         bought?: boolean;
         /** @format int32 */
         channel?: number;
+        /** excludeProductSku */
+        excludeProductSku?: string;
         /**
          * 首次加购或关联结束时间
          * @format date-time
@@ -15431,6 +15706,60 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags 供应商管理
+     * @name ManageBatchUpdateDiscountInfo
+     * @summary 批量更新折扣信息
+     * @request POST:/supplier/manage/batchUpdateDiscountInfo
+     */
+    manageBatchUpdateDiscountInfo: (discountInfoUpdateDTOS: DiscountInfoUpdateDTO[], params: RequestParams = {}) =>
+      this.request<BizResponseBoolean, any>({
+        path: `/supplier/manage/batchUpdateDiscountInfo`,
+        method: "POST",
+        body: discountInfoUpdateDTOS,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 供应商管理
+     * @name ManageBatchUpdateMaterialInfo
+     * @summary 批量更新材质信息
+     * @request POST:/supplier/manage/batchUpdateMaterialInfo
+     */
+    manageBatchUpdateMaterialInfo: (skuMaterialUpdateVOS: SkuMaterialUpdateVO[], params: RequestParams = {}) =>
+      this.request<BizResponseBoolean, any>({
+        path: `/supplier/manage/batchUpdateMaterialInfo`,
+        method: "POST",
+        body: skuMaterialUpdateVOS,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 供应商管理
+     * @name ManageBatchUpdateProductItemCategoryZh
+     * @summary 批量更新中文品名
+     * @request POST:/supplier/manage/batchUpdateProductItemCategoryZh
+     */
+    manageBatchUpdateProductItemCategoryZh: (
+      updateVOList: ProductItemCategoryZhUpdateVO[],
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseBoolean, any>({
+        path: `/supplier/manage/batchUpdateProductItemCategoryZh`,
+        method: "POST",
+        body: updateVOList,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 供应商管理
      * @name ManageDeleteErrorColumn
      * @summary 批量删除商品的列
      * @request POST:/supplier/manage/deleteErrorColumn
@@ -15617,6 +15946,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         bought?: boolean;
         /** @format int32 */
         channel?: number;
+        /** excludeProductSku */
+        excludeProductSku?: string;
         /**
          * 首次加购或关联结束时间
          * @format date-time
@@ -15719,7 +16050,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags 供应商管理
      * @name ManageSkuBatchModifyTransProperty
-     * @summary 更新推荐商品SKU
+     * @summary 批量更新运输属性
      * @request POST:/supplier/manage/sku/batchModifyTransProperty
      */
     manageSkuBatchModifyTransProperty: (

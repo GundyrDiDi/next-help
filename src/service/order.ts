@@ -479,7 +479,9 @@ export interface AdditionEventDTO {
     | "RECHARGE_WF_AUDIT"
     | "PROMOTION_RECHARGE"
     | "MULTI_FREEZE"
-    | "COMBINATION_SERVICE_FREEZE_CHARGE";
+    | "COMBINATION_SERVICE_FREEZE_CHARGE"
+    | "INV_AGE_FEE"
+    | "PKG_STAND_FEE";
   checkMaxRemakeNum?: boolean;
   /** @format int64 */
   customerShopId?: number;
@@ -1094,6 +1096,8 @@ export interface CartAdditionReqDTO {
   /** @format int32 */
   additionConfigId?: number;
   additionExtraName?: string;
+  /** @format int32 */
+  additionId?: number;
   ingredientsSku?: string;
   /** @format int32 */
   spotCheckFlag?: number;
@@ -4633,6 +4637,14 @@ export interface InternationalityLogisticsInfoDetailRespDTO {
   weight?: number;
 }
 
+/** ItemDiscountReqDTO */
+export interface ItemDiscountReqDTO {
+  /** @format int64 */
+  platformOrderItemId?: number;
+  productSku?: string;
+  systemOrderNo?: string;
+}
+
 /** KuaiDiTrackItemRespDTO */
 export interface KuaiDiTrackItemRespDTO {
   context?: string;
@@ -5001,6 +5013,8 @@ export interface MyInventoryQueryPageReqDTO {
   /** @format int32 */
   startUnableProcessDefectiveProducts?: number;
   stockTable?: string;
+  /** 体积：（XS、S、M、L、XL） */
+  volume?: string;
 }
 
 /** MyInventoryRespDTO */
@@ -5150,6 +5164,8 @@ export interface MyInventoryRespDTO {
   updateTime?: string;
   /** @format int32 */
   uploadFlag?: number;
+  /** 体积：（XS、S、M、L、XL） */
+  volume?: string;
   /** @format int32 */
   waitPurchaseNum?: number;
 }
@@ -5407,6 +5423,17 @@ export interface OemProductDetailDTO {
   totalSellPrice?: number;
 }
 
+/** OemSkuProductCustomsResp */
+export interface OemSkuProductCustomsResp {
+  compilationMethod?: string;
+  productCategoryEnglishName?: string;
+  /** @format int64 */
+  productCustomsId?: number;
+  productDeclarationCode?: string;
+  productItemCategoryZh?: string;
+  productSku?: string;
+}
+
 /** OemSkuUpdateVO */
 export interface OemSkuUpdateVO {
   /** 英文品名 */
@@ -5501,6 +5528,8 @@ export interface OperateLogVO {
 export interface OrderAndSkuDetailRespDTO {
   color?: string;
   colorZh?: string;
+  /** 商品图片 */
+  productImg?: string;
   /** 中文品名 */
   productItemCategoryZh?: string;
   productName?: string;
@@ -6344,6 +6373,17 @@ export interface PlatformOrderItemDTO {
   waitPurchaeQuantity?: number;
   wareCode?: string;
   wareName?: string;
+}
+
+/** PlatformOrderItemDiscountDTO */
+export interface PlatformOrderItemDiscountDTO {
+  discountPrice?: number;
+  /** @format int32 */
+  discountType?: number;
+  /** @format int64 */
+  platformOrderItemId?: number;
+  productSku?: string;
+  systemOrderNo?: string;
 }
 
 /** PlatformOrderItemLogInfoDTO */
@@ -10625,6 +10665,12 @@ export interface UpdateSearchSourceOrderVO {
   searchSourceOrderSkuList?: SearchSourceOrderSku[];
 }
 
+/** UpdateSearchSourceSkuProductItemCategoryZhReqDTO */
+export interface UpdateSearchSourceSkuProductItemCategoryZhReqDTO {
+  productItemCategoryZh?: string;
+  productSku?: string;
+}
+
 /** UpdateShopProductSkuConditionDTO */
 export interface UpdateShopProductSkuConditionDTO {
   customerProductMsku?: string;
@@ -10663,6 +10709,16 @@ export interface UpdateSynLogisticsNoReqDTO {
   newStatus?: number;
   /** @format int64 */
   platformOrderId?: number;
+}
+
+/** UpdateVolumeReqDTO */
+export interface UpdateVolumeReqDTO {
+  /** 平台商品sku */
+  productSku?: string;
+  /** 店铺sku列表 */
+  shopProductSkus?: string[];
+  /** 体积：（XS、S、M、L、XL） */
+  volume?: string;
 }
 
 /** UserApplyCancelReqDTO */
@@ -10733,7 +10789,9 @@ export interface WalletChangeEventDTO {
     | "RECHARGE_WF_AUDIT"
     | "PROMOTION_RECHARGE"
     | "MULTI_FREEZE"
-    | "COMBINATION_SERVICE_FREEZE_CHARGE";
+    | "COMBINATION_SERVICE_FREEZE_CHARGE"
+    | "INV_AGE_FEE"
+    | "PKG_STAND_FEE";
   changeAmount?: number;
   changeAmountJpy?: number;
   /** @format int32 */
@@ -10744,6 +10802,8 @@ export interface WalletChangeEventDTO {
   customerWalletDTO?: CustomerWalletDTO;
   data?: string;
   deliverOrderNo?: string;
+  exchangeRate?: number;
+  exchangeRateFloat?: number;
   fundFlowType?:
     | "RECHARGE"
     | "WITHDRAW"
@@ -10779,6 +10839,8 @@ export interface WalletChangeEventDTO {
   mainCustomerId?: number;
   messageId?: string;
   needAsyncCallBack?: boolean;
+  originChangeAmount?: number;
+  originCurrencyCode?: string;
   originalNo?: string;
   platformOrderNo?: string;
   stationCode?: string;
@@ -11236,6 +11298,14 @@ export interface BizResponseListOemProductClassification {
   success?: boolean;
 }
 
+/** BizResponse«List«OemSkuProductCustomsResp»» */
+export interface BizResponseListOemSkuProductCustomsResp {
+  code?: string;
+  data?: OemSkuProductCustomsResp[];
+  msg?: string;
+  success?: boolean;
+}
+
 /** BizResponse«List«OperateLogVO»» */
 export interface BizResponseListOperateLogVO {
   code?: string;
@@ -11264,6 +11334,14 @@ export interface BizResponseListPendingBadQuantityRespDTO {
 export interface BizResponseListPlatformOrderDeliveryAddressRespDTO {
   code?: string;
   data?: PlatformOrderDeliveryAddressRespDTO[];
+  msg?: string;
+  success?: boolean;
+}
+
+/** BizResponse«List«PlatformOrderItemDiscountDTO»» */
+export interface BizResponseListPlatformOrderItemDiscountDTO {
+  code?: string;
+  data?: PlatformOrderItemDiscountDTO[];
   msg?: string;
   success?: boolean;
 }
@@ -14688,6 +14766,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/customer/platformOrderItem/getProductSpecialCheck`,
         method: "GET",
         query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 平台订单详情（前台）
+     * @name PlatformOrderItemItemDiscount
+     * @summary itemDiscount
+     * @request POST:/customer/platformOrderItem/itemDiscount
+     */
+    platformOrderItemItemDiscount: (itemDiscountReqDTOS: ItemDiscountReqDTO[], params: RequestParams = {}) =>
+      this.request<BizResponseListPlatformOrderItemDiscountDTO, any>({
+        path: `/customer/platformOrderItem/itemDiscount`,
+        method: "POST",
+        body: itemDiscountReqDTOS,
+        type: ContentType.Json,
         ...params,
       }),
 
@@ -18549,6 +18644,28 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags oem-search-source-order-feign-api-impl
+     * @name GetSkuProductCustomsRespDto
+     * @summary getSkuProductCustomsRespDTO
+     * @request GET:/oem/getSkuProductCustomsRespDTO
+     */
+    getSkuProductCustomsRespDto: (
+      query: {
+        /** productskus */
+        productskus: string[];
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseListOemSkuProductCustomsResp, any>({
+        path: `/oem/getSkuProductCustomsRespDTO`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags oem-search-source-order-feign-api-impl
      * @name ListSearchSourceOrderSkuDetail
      * @summary listSearchSourceOrderSkuDetail
      * @request POST:/oem/listSearchSourceOrderSkuDetail
@@ -18809,6 +18926,26 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/oem/repurchase/order/sample/update/sellPrice/product/list`,
         method: "POST",
         body: vo,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags oem-search-source-order-feign-api-impl
+     * @name UpdateSearchSourceOrderSkuProductItemCategoryZh
+     * @summary updateSearchSourceOrderSkuProductItemCategoryZh
+     * @request POST:/oem/updateSearchSourceOrderSkuProductItemCategoryZh
+     */
+    updateSearchSourceOrderSkuProductItemCategoryZh: (
+      dto: UpdateSearchSourceSkuProductItemCategoryZhReqDTO,
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseVoid, any>({
+        path: `/oem/updateSearchSourceOrderSkuProductItemCategoryZh`,
+        method: "POST",
+        body: dto,
         type: ContentType.Json,
         ...params,
       }),
@@ -21611,6 +21748,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/shop/product/sku/updateShopProductSkuImg`,
         method: "POST",
         body: dto,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 客户店铺sku
+     * @name ProductSkuUpdateVolume
+     * @summary 更新商品体积
+     * @request POST:/shop/product/sku/updateVolume
+     */
+    productSkuUpdateVolume: (reqDTO: UpdateVolumeReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseVoid, any>({
+        path: `/shop/product/sku/updateVolume`,
+        method: "POST",
+        body: reqDTO,
         type: ContentType.Json,
         ...params,
       }),

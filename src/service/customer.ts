@@ -275,6 +275,13 @@ export interface AddSubCustomerReqDTO {
   verificationCode?: string;
 }
 
+/** AddUserReqDTO */
+export interface AddUserReqDTO {
+  customerIds?: number[];
+  userId?: string;
+  userName?: string;
+}
+
 /** AddUserRoleReqDTO */
 export interface AddUserRoleReqDTO {
   roleId?: string;
@@ -410,6 +417,11 @@ export interface BatchModifyPurchaseReqDTO {
   records?: ModifyPurchaseRecordDTO[];
   userId?: string;
   userName?: string;
+}
+
+/** BatchRemoveUserReqDTO */
+export interface BatchRemoveUserReqDTO {
+  customerIds?: number[];
 }
 
 /** BindThirdReqDTO */
@@ -554,6 +566,98 @@ export interface ChangeMobileReqDTO {
   password?: string;
   /** 验证码 */
   verificationCode?: string;
+}
+
+/**
+ * ChangeUrlWhiteUserReqDTO
+ * 换源白名单列表
+ */
+export interface ChangeUrlWhiteUserReqDTO {
+  /**
+   * 客户经理id
+   * @format int64
+   */
+  managerId?: number;
+  /**
+   * 会员等级id
+   * @format int64
+   */
+  membershipId?: number;
+  /** @format int32 */
+  pageNum?: number;
+  /** @format int32 */
+  pageSize?: number;
+  /** @format int32 */
+  startIndex?: number;
+  /**
+   * 客户总监id
+   * @format int64
+   */
+  supervisionManagerId?: number;
+  /**
+   * 系统来源: 1-D2C; 2-B2B
+   * @format int32
+   */
+  systemSource?: number;
+  /** 统一客户全名 */
+  unificationCustomerFullName?: string;
+  /** 仓库编码 */
+  wareCode?: string;
+}
+
+/**
+ * ChangeUrlWhiteUserRespDTO
+ * 换源白名单列表
+ */
+export interface ChangeUrlWhiteUserRespDTO {
+  /**
+   * 添加时间
+   * @format date-time
+   */
+  createTime?: string;
+  /**
+   * 用户id
+   * @format int64
+   */
+  customerId?: number;
+  /**
+   * 客户经理id
+   * @format int64
+   */
+  managerId?: number;
+  /** 客户经理名称 */
+  managerName?: string;
+  /** 会员信息 */
+  membership?: CustomerMembershipResDTO;
+  /** 国家代码 */
+  nationCode?: string;
+  /** 站点代码 */
+  stationCode?: string;
+  /**
+   * 客户id
+   * @format int64
+   */
+  superCustomerId?: number;
+  /**
+   * 客户总监id
+   * @format int64
+   */
+  supervisionManagerId?: number;
+  /** 客户总监名称 */
+  supervisionManagerName?: string;
+  /**
+   * 系统来源: 1-D2C; 2-B2B
+   * @format int32
+   */
+  systemSource?: number;
+  /** 统一客户全名 */
+  unificationCustomerFullName?: string;
+  /** 添加人 */
+  userName?: string;
+  /** 仓库编码 */
+  wareCode?: string;
+  /** 仓库名称 */
+  wareName?: string;
 }
 
 /** CheckEmailReqDTO */
@@ -1390,6 +1494,7 @@ export interface CustomerTagSearchReq {
   customerIds?: number[];
   /** @format int32 */
   customerTag?: number;
+  customerTags?: number[];
 }
 
 /** CustomerThirdBindRespDTO */
@@ -3350,6 +3455,8 @@ export interface SignUpRespDTO {
 export interface SupportCenterContentDTO {
   /** 业务类型: 2B, 2C */
   bizType?: string;
+  /** content */
+  content?: string;
   /** 内容类型: text, video */
   contentType?: string;
   /** 内容url */
@@ -3458,6 +3565,8 @@ export interface SupportCenterSubjectDTO {
    * @format int64
    */
   creator?: number;
+  /** 描述 */
+  description?: string;
   /**
    * 修改者id
    * @format int64
@@ -3468,6 +3577,8 @@ export interface SupportCenterSubjectDTO {
    * @format int64
    */
   parentSupportCenterSubjectId?: number;
+  /** 路径 */
+  path?: string;
   /**
    * 排序
    * @format int32
@@ -3493,11 +3604,15 @@ export interface SupportCenterSubjectDTO {
 export interface SupportCenterSubjectUpdateBackendDTO {
   /** 业务类型: 2B, 2C */
   bizType?: string;
+  /** 描述 */
+  description?: string;
   /**
    * 父级分类id
    * @format int64
    */
   parentSupportCenterSubjectId?: number;
+  /** 路径 */
+  path?: string;
   /**
    * 排序
    * @format int32
@@ -3630,6 +3745,14 @@ export interface TermUpdateDTO {
   content?: string;
   /** @format int64 */
   termId?: number;
+}
+
+/** ThirdIsBindRespDTO */
+export interface ThirdIsBindRespDTO {
+  /** 是否已绑定 */
+  isBind?: boolean;
+  /** 是否为新注册用户 */
+  isNew?: boolean;
 }
 
 /** Type */
@@ -4738,6 +4861,14 @@ export interface BizResponseNotifyPrivateVO {
   success?: boolean;
 }
 
+/** BizResponse«Page«ChangeUrlWhiteUserRespDTO»» */
+export interface BizResponsePageChangeUrlWhiteUserRespDTO {
+  code?: string;
+  data?: PageChangeUrlWhiteUserRespDTO;
+  msg?: string;
+  success?: boolean;
+}
+
 /** BizResponse«Page«CustomerDetailManagerRespDTO»» */
 export interface BizResponsePageCustomerDetailManagerRespDTO {
   code?: string;
@@ -4994,6 +5125,22 @@ export interface BizResponseSignUpRespDTO {
   success?: boolean;
 }
 
+/** BizResponse«SupportCenterContentDTO» */
+export interface BizResponseSupportCenterContentDTO {
+  code?: string;
+  data?: SupportCenterContentDTO;
+  msg?: string;
+  success?: boolean;
+}
+
+/** BizResponse«SupportCenterSubjectDTO» */
+export interface BizResponseSupportCenterSubjectDTO {
+  code?: string;
+  data?: SupportCenterSubjectDTO;
+  msg?: string;
+  success?: boolean;
+}
+
 /** BizResponse«TakeUserRespDTO» */
 export interface BizResponseTakeUserRespDTO {
   code?: string;
@@ -5006,6 +5153,14 @@ export interface BizResponseTakeUserRespDTO {
 export interface BizResponseTermConfigDTO {
   code?: string;
   data?: TermConfigDTO;
+  msg?: string;
+  success?: boolean;
+}
+
+/** BizResponse«ThirdIsBindRespDTO» */
+export interface BizResponseThirdIsBindRespDTO {
+  code?: string;
+  data?: ThirdIsBindRespDTO;
   msg?: string;
   success?: boolean;
 }
@@ -5151,6 +5306,26 @@ export interface MaterialPrice {
   updateUser?: string;
   /** 链接 */
   url?: string;
+}
+
+/** Page«ChangeUrlWhiteUserRespDTO» */
+export interface PageChangeUrlWhiteUserRespDTO {
+  countId?: string;
+  /** @format int64 */
+  current?: number;
+  hitCount?: boolean;
+  /** @format int64 */
+  maxLimit?: number;
+  optimizeCountSql?: boolean;
+  orders?: OrderItem[];
+  /** @format int64 */
+  pages?: number;
+  records?: ChangeUrlWhiteUserRespDTO[];
+  searchCount?: boolean;
+  /** @format int64 */
+  size?: number;
+  /** @format int64 */
+  total?: number;
 }
 
 /** Page«CustomerDetailManagerRespDTO» */
@@ -7089,6 +7264,53 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags 帮助中心
+     * @name SupportCenterQueryByPath
+     * @summary 帮助中心根据路径查全路径
+     * @request GET:/base/supportCenter/query/byPath
+     */
+    supportCenterQueryByPath: (
+      query?: {
+        /** path */
+        path?: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseSupportCenterSubjectDTO, any>({
+        path: `/base/supportCenter/query/byPath`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 帮助中心
+     * @name SupportCenterQueryGetSupportCenterContentById
+     * @summary 帮助中心根据id查内容
+     * @request GET:/base/supportCenter/query/getSupportCenterContentById
+     */
+    supportCenterQueryGetSupportCenterContentById: (
+      query?: {
+        /**
+         * contentId
+         * @format int32
+         */
+        contentId?: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseSupportCenterContentDTO, any>({
+        path: `/base/supportCenter/query/getSupportCenterContentById`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 帮助中心
      * @name SupportCenterSubjectBatchUpdateContentSort
      * @summary 批量更新排序
      * @request POST:/base/supportCenter/subject/batchUpdateContentSort
@@ -7367,7 +7589,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/bind/third/isBind
      */
     thirdIsBind: (reqDTO: BindThirdReqDTO, params: RequestParams = {}) =>
-      this.request<BizResponseBoolean, any>({
+      this.request<BizResponseThirdIsBindRespDTO, any>({
         path: `/bind/third/isBind`,
         method: "POST",
         body: reqDTO,
@@ -9004,6 +9226,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags 客户分配
+     * @name AddUser
+     * @summary 新增白名单
+     * @request POST:/distribute/addUser
+     */
+    addUser: (reqDTO: AddUserReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseBoolean, any>({
+        path: `/distribute/addUser`,
+        method: "POST",
+        body: reqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 客户分配
      * @name BatchModify
      * @summary 批量修改
      * @request POST:/distribute/batchModify
@@ -9021,6 +9260,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags 客户分配
+     * @name BatchRemoveUser
+     * @summary 单个/批量移除白名单
+     * @request POST:/distribute/batchRemoveUser
+     */
+    batchRemoveUser: (reqDTO: BatchRemoveUserReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseBoolean, any>({
+        path: `/distribute/batchRemoveUser`,
+        method: "POST",
+        body: reqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 客户分配
      * @name List
      * @summary 获取用户列表
      * @request POST:/distribute/list
@@ -9028,6 +9284,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     list: (reqDTO: QueryCustomerDistributeReqDTO, params: RequestParams = {}) =>
       this.request<BizResponsePageQueryCustomerDistributeRespDTO, any>({
         path: `/distribute/list`,
+        method: "POST",
+        body: reqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 客户分配
+     * @name QueryChangeUrlUsers
+     * @summary 获取白名单用户列表
+     * @request POST:/distribute/queryChangeUrlUsers
+     */
+    queryChangeUrlUsers: (reqDTO: ChangeUrlWhiteUserReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponsePageChangeUrlWhiteUserRespDTO, any>({
+        path: `/distribute/queryChangeUrlUsers`,
         method: "POST",
         body: reqDTO,
         type: ContentType.Json,
@@ -11902,6 +12175,32 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     ) =>
       this.request<BizResponseCustomerRespDTO, any>({
         path: `/query/ca/getSimpleCustomerV1`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+  };
+  queryChangeUrlUserByCustomerId = {
+    /**
+     * No description
+     *
+     * @tags customer-distribute-feign-api-impl
+     * @name QueryChangeUrlUserByCustomerId
+     * @summary queryChangeUrlUserByCustomerId
+     * @request GET:/queryChangeUrlUserByCustomerId
+     */
+    queryChangeUrlUserByCustomerId: (
+      query: {
+        /**
+         * customerId
+         * @format int64
+         */
+        customerId: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseBoolean, any>({
+        path: `/queryChangeUrlUserByCustomerId`,
         method: "GET",
         query: query,
         ...params,

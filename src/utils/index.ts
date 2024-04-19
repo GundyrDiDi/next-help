@@ -6,6 +6,7 @@ import { PlatCookie, ShopCookie, TokenSignCookie } from '@/config';
 import { CustomerDetail } from '@/model';
 import { getUserFn } from './time';
 import { getDefaultStore } from 'jotai';
+import { ENUM_PLATE } from '@/model/Plat';
 
 
 interface JumpPageDefaultOptions {
@@ -159,7 +160,7 @@ export const getCookieToken=bwCookie.get(TokenSignCookie)||bwCookie.get(encodeUR
 export const getCookieShop=()=>bwCookie.get(ShopCookie)||bwCookie.get(encodeURIComponent(ShopCookie));
 
 /** 通过 cookie 获取登录信息 */
-export const getCookiePlat=bwCookie.get(PlatCookie)||bwCookie.get(encodeURIComponent(PlatCookie))||'d2c';
+export const getCookiePlat=(bwCookie.get(PlatCookie)||bwCookie.get(encodeURIComponent(PlatCookie))||'d2c') as ENUM_PLATE;
 
 /** 通过 cookie 设置信息 */
 export const setCookieToken=(token:string)=>{

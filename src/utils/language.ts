@@ -1,3 +1,10 @@
+/*
+ * @Author: shiguang
+ * @Date: 2024-03-28 15:21:28
+ * @LastEditors: shiguang
+ * @LastEditTime: 2024-04-09 15:22:04
+ * @Description: 
+ */
 import { Local } from "@/i18n/settings";
 import { Lang } from "@/model";
 import { getLangType } from "@/model/Lang";
@@ -50,3 +57,6 @@ export const useSite2Station = (lang:Local =getLang()):Site => {
     [Local.EN]: Site.EN
   }[lang]
 }
+
+/** 获取国家站点code */
+export const getSiteStation = useSite2Station;

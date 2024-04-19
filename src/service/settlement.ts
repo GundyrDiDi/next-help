@@ -10781,6 +10781,14 @@ export interface BizResponseListAdditionConfigPublic {
   success?: boolean;
 }
 
+/** BizResponse«List«AdditionConfigRespDTO»» */
+export interface BizResponseListAdditionConfigRespDTO {
+  code?: string;
+  data?: AdditionConfigRespDTO[];
+  msg?: string;
+  success?: boolean;
+}
+
 /** BizResponse«List«AdditionConfigSellingPriceSettingLog»» */
 export interface BizResponseListAdditionConfigSellingPriceSettingLog {
   code?: string;
@@ -12909,6 +12917,28 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     ) =>
       this.request<BizResponseAdditionConfigRespDTO, any>({
         path: `/addition/getAdditionConfig`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags addition-controller
+     * @name GetAdditionConfigList
+     * @summary getAdditionConfigList
+     * @request GET:/addition/getAdditionConfigList
+     */
+    getAdditionConfigList: (
+      query: {
+        /** additionConfigIdList */
+        additionConfigIdList: number[];
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseListAdditionConfigRespDTO, any>({
+        path: `/addition/getAdditionConfigList`,
         method: "GET",
         query: query,
         ...params,
