@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-11 11:30:19
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-16 23:02:23
+ * @LastEditTime: 2024-04-25 17:01:46
  * @Description: 
  */
 'use client'
@@ -76,7 +76,7 @@ const Help = (props: HelpProps) => {
                         className="mo:py-[8px] mo:px-[12px]"
                         dataSource={[
                             { title: 'TOP', href: 'https://s.theckb.com' },
-                            { title: t('帮助中心'), href: `/${lang}/help` },
+                            { title: t('帮助中心'), href: `/${lang}` },
                         ]}
                     />
                 </div>

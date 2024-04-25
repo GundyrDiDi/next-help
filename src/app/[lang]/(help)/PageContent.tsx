@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 11:36:34
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-16 22:50:52
+ * @LastEditTime: 2024-04-25 16:38:30
  * @Description: 
  */
 import { Metadata, ResolvingMetadata } from 'next';
@@ -29,10 +29,11 @@ const getMetaConf = (lang: Local) => {
     return conf[lang]
 }
 
-export async function generateMetadata(
-    { params }: { params: { lang: string } },
+export async function generateMetadataAaa(
+    first: { params: { lang: string } },
     parent: ResolvingMetadata
 ): Promise<Metadata> {
+    const { params } = first
     const metaConf = getMetaConf(params.lang as Local)
     const title =  metaConf?.title ?? 'THE CKB';
     const description =  metaConf?.description ?? 'THE CKB';

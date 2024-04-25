@@ -1,3 +1,10 @@
+/*
+ * @Author: shiguang
+ * @Date: 2024-04-25 10:57:25
+ * @LastEditors: shiguang
+ * @LastEditTime: 2024-04-25 14:26:29
+ * @Description: 
+ */
 import { Local } from "@/i18n/settings";
 import Kaerumedia from "./component/Index"
 import { useSite2Station } from "@/utils/language";
@@ -36,5 +43,3 @@ export default async function Page({ params }:Props) {
     </>
   );
 }
-
-

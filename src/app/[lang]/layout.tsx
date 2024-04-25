@@ -13,7 +13,6 @@ type Props = Readonly<{
 
 export default async function RootLayout(props: Props) {
   const { children,  params } = props;
-  console.log(props)
   const { lang } = params;
   const cookieStore = cookies();
   const plat = (cookieStore.get(encodeURIComponent(PlatCookie))?.value || "d2c") as ENUM_PLATE;

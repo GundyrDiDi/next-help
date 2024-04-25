@@ -37,7 +37,6 @@ export default function Layout({
   params,
 }: Props) {
   const { lang, initPlat, token } = params;
-  console.log(typeof window, 33333)
   const [customerDetail, requestCustomerDetail] = useAtom(CustomerDetail);
   const setMessages = useSetAtom(MessageAtom);
   const [plat, setPlat] = useAtom(Plat);
