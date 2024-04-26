@@ -17,7 +17,7 @@ interface UserDropDwonProps {
   customerDetail?: CustomerDetailRespDTO;
 }
 const toHelp = (lang: Local) => {
-  window.location.href = `${NEXT_PUBLIC_HELP_CENTER_URL}/${lang}/help`
+  window.location.href = `${NEXT_PUBLIC_HELP_CENTER_URL}/${lang}`
 }
 // hover:text-[color:--color-primary-light]
 const UserDropDwon: React.FC<UserDropDwonProps> = (props) => {

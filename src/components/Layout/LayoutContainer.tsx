@@ -21,6 +21,7 @@ import { api } from "@/service";
 import CKBCategory from "@/components/CKBCategory/Index";
 import { useRouter, usePathname } from "next/navigation";
 import { ENUM_PLATE } from "@/model/Plat";
+import { ReadonlyHeaders } from "next/dist/server/web/spec-extension/adapters/headers";
 
 interface Props {
   children: React.ReactNode;
@@ -28,6 +29,9 @@ interface Props {
     lang: Local;
     initPlat: ENUM_PLATE;
     token?: string;
+    serverHeaders: {
+      host: string;
+    }
 
   };
 }
@@ -36,7 +40,8 @@ export default function Layout({
   children,
   params,
 }: Props) {
-  const { lang, initPlat, token } = params;
+  const { lang, initPlat, token, serverHeaders } = params;
+  
   const [customerDetail, requestCustomerDetail] = useAtom(CustomerDetail);
   const setMessages = useSetAtom(MessageAtom);
   const [plat, setPlat] = useAtom(Plat);
@@ -186,7 +191,8 @@ export default function Layout({
     return obj;
   }, [initPlat]);
   console.log(getThemeStyle(), plat, 'plat');
-  const isHelpPage = currentPath.includes('/help')
+  
+  const isHelpPage = serverHeaders.host.includes('help')
   const isVideoPage = currentPath.includes('/video/')
   return (
     <ConfigProvider locale={locale} theme={getThemeStyle()}>
