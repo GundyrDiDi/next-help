@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-09 16:43:56
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-09 21:21:03
+ * @LastEditTime: 2024-05-09 22:06:51
  * @Description: 
  */
 'use client'
@@ -30,11 +30,14 @@ import { setFirstViewUrl } from "@/utils/client/tinkingDataJumpQuery";
 
 (() => {
   if (typeof window === "undefined") return;
+  console.log("clientInitJS11");
   setFirstViewUrl();
   routeInterceptor();
 })();
 
 const ClientInitJS = () => {
-    return null;
+    return <div>
+      111
+    </div>
 }
 export default ClientInitJS
