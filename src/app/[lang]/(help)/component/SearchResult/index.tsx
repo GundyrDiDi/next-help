@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-10 22:25:44
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-15 13:48:13
+ * @LastEditTime: 2024-04-26 23:15:03
  * @Description: 
  */
 import { SupportCenterContentDTO } from "@/service/customer";
@@ -54,7 +54,7 @@ const SearchResult = (props: SearchResultProps) => {
                                     setActiveIdx(index)
                                 }}
                             >
-                                <Link href={`/${lang}/help/search?keywords=${searchKeywords}`} >
+                                <Link href={`/${lang}/search?keywords=${searchKeywords}`} >
                                     {item.title}
                                 </Link>
                             </div>

@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 11:30:20
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-12 09:52:17
+ * @LastEditTime: 2024-04-25 17:21:40
  * @Description: 
  */
 import { BizResponseCustomerDetailRespDTO, FrogArticleDetailRespDTO } from "@/service/customer";
@@ -52,8 +52,9 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const frogArticleId = +params.frogArticleId;
   const article = await getData(frogArticleId);
+  
   const title = article?.frogArticleTitle;
-
+  
   return {
     metadataBase: new URL("https://s.theckb.com/"),
     alternates: {

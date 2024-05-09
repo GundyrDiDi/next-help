@@ -50,7 +50,7 @@ const FloatToolbar = () => {
                 <li className="tool-bar-helpCenter">
                     <a
                         className={isExpand ? 'bg-white' : ''}
-                        href={`${NEXT_PUBLIC_HELP_CENTER_URL}/${lang}/help`}
+                        href={`${NEXT_PUBLIC_HELP_CENTER_URL}/${lang}`}
                     >
                         <img
                             src={`${CDN_HOST}/BusinessMarket/icon/icon_help%402x.png`}
