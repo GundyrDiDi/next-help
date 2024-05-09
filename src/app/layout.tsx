@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-03-28 15:21:28
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-09 21:59:11
+ * @LastEditTime: 2024-05-09 22:47:11
  * @Description: 
  */
 import { Local } from "@/i18n/settings";
@@ -12,7 +12,7 @@ import "./globals.scss";
 import { Metadata, ResolvingMetadata } from "next";
 import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google'
 import { AntdRegistry } from '@ant-design/nextjs-registry';
-import ClientInitJS from "./clientInitJS";
+import ClientInitJS from "./ClientInitJS";
 
 // import { create } from "route-interceptor";
 
