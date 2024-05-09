@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 19:54:03
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-16 17:54:21
+ * @LastEditTime: 2024-04-25 17:01:53
  * @Description: 
  */
 'use client'
@@ -39,7 +39,7 @@ const Index = (props: Props) => {
                     className="mo:py-[16px] mo:px-[12px]"
                     dataSource={[
                         { title: 'TOP', href: 'https://s.theckb.com' },
-                        { title: t('帮助中心'), href: `/${lang}/help` },
+                        { title: t('帮助中心'), href: `/${lang}` },
                         { title:  isSearchPage ? t('搜索结果') : title ?? ''},
                     ]}
                 />

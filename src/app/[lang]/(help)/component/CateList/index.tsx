@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 11:47:37
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-17 20:30:47
+ * @LastEditTime: 2024-04-25 17:01:02
  * @Description: 
  */
 'use client'
@@ -47,13 +47,13 @@ const JumpHelpDetailLink = (props: { contentType: 'text' | 'video' | 'search'; l
     const { contentType, lang, value, children } = props;
     const getHref = () => {
         if (contentType === 'video') {
-            return `/${lang}/help/video/${value}`
+            return `/${lang}/video/${value}`
         }
         if (contentType === 'text') {
-            return `/${lang}/help/${value}`
+            return `/${lang}/${value}`
         }
         if (contentType === 'search') {
-            return `/${lang}/help/search?keywords=${value}`
+            return `/${lang}/search?keywords=${value}`
         }
         const other: never = contentType
         throw Error(other)
