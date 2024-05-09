@@ -1,3 +1,10 @@
+/*
+ * @Author: shiguang
+ * @Date: 2024-05-09 16:33:02
+ * @LastEditors: shiguang
+ * @LastEditTime: 2024-05-09 17:48:26
+ * @Description: 
+ */
 import { SvgCheck } from "@/components/svgs";
 import {
   ENUM_PAGE,
@@ -51,7 +58,7 @@ const ArticleItem = ({ article }: Props) => {
     return toTheCkb(ENUM_PAGE.VIP_LEVEL);
     }
 
-    location.href = href;
+    window.$location.href = href;
   };
   return (
     <div

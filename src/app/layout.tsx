@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-03-28 15:21:28
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-12 16:58:13
+ * @LastEditTime: 2024-05-09 16:58:07
  * @Description: 
  */
 import { Local } from "@/i18n/settings";
@@ -10,9 +10,23 @@ import { cookies } from "next/headers";
 import { PlatCookie, TokenSignCookie } from "@/config";
 import "./globals.scss";
 import { Metadata, ResolvingMetadata } from "next";
-import {  GoogleTagManager,GoogleAnalytics } from '@next/third-parties/google'
+import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google'
 import { AntdRegistry } from '@ant-design/nextjs-registry';
+import ClientInitJS from "./clientInitJS";
 
+// import { create } from "route-interceptor";
+
+
+// const interceptor = create({
+//   way: ["a", "window.open", "history", "hash", "location"],
+//   intercept: (path) => {
+//     console.log(999);
+//     return path;
+//     // return path.replace("/bbb", "/ccc");
+//   },
+// });
+
+// interceptor.start();
 
 interface Props {
   params: {
@@ -51,6 +65,7 @@ export default function RootLayout({
   const token = cookieStore.get(encodeURIComponent(TokenSignCookie))?.value;
   return (
     <html lang={lang} data-theme={String(plat).toUpperCase()} className={lang}>
+      <ClientInitJS/>
       <script
         type="text/javascript"
         src="https://cdn.channel.io/plugin/ch-plugin-web.js"
@@ -58,13 +73,13 @@ export default function RootLayout({
       ></script>
       {/* <meta name="google-site-verification" content="1DIor1BkSq1vf_uf4-m5WRiVIyeWGmckG9hD2VLb3eM" /> */}
       <meta name="google-site-verification" content="oahwUkqmAScewSrtx4M7_EaH_ci5PvH-N9FAHIda1gk" />
-      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, minimal-ui, viewport-fit=cover,user-scalable=no"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, minimal-ui, viewport-fit=cover,user-scalable=no" />
       <GoogleTagManager gtmId="GTM-W9HSLNKD" />
       {/* <GoogleAnalytics gaId="GTM-W9HSLNKD" /> */}
       <body>
         <div id="app" className="page_layout">
           <AntdRegistry>
-          {children}
+            {children}
           </AntdRegistry>
         </div>
       </body>

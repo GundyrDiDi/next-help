@@ -1,8 +1,8 @@
 /*
  * @Author: shiguang
  * @Date: 2023-04-26 10:20:06
- * @LastEditors: liuliangliang liuliangliang@sniffgroup.com
- * @LastEditTime: 2023-11-23 17:39:40
+ * @LastEditors: shiguang
+ * @LastEditTime: 2024-05-09 17:43:32
  * @Description: 全局变量
  */
 
@@ -17,6 +17,10 @@ declare global {
             ja_JP: Record<string, Record<string, string>>;
             ko_KR: Record<string, Record<string, string>>;
             en_GB: Record<string, Record<string, string>>;
+        };
+        $location: {
+            href: string;
+            replace: (url: string) => void;
         };
         ChannelIO: (
             init: string,

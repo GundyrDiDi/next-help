@@ -43,12 +43,12 @@ const ArticlesCont = ({ frogArticle, querys,userInfo }: Props) => {
       });
 
       if (!userInfo?.customerId&& frogArticle.noLoginRestriction === 3) {
-        location.href=href
+        window.$location.href=href
         return
       }
       if (frogArticle.noMembershipRestriction === 3) {
         if (!userInfo?.customerId || !userInfo?.membership?.templateLevel) {
-          location.href=href
+          window.$location.href=href
           return
         }
         setMarkingShow(false);
