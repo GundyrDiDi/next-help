@@ -28,11 +28,9 @@ export const setFirstViewUrl = () => {
  */
 export const getIsStheckbUrl = (originUrl: string) => {
     try {
-        debugger
         const { url } = queryString.parseUrl(originUrl, {parseFragmentIdentifier: true})
         const host = url.split('//')[1].split('/')[0];
         const isStheckb = host.endsWith('s.theckb.com');
-        debugger
         return isStheckb;
     } catch (error) {
         return false
@@ -51,7 +49,6 @@ const getIsNeedTransformJumpUrl = (originUrl: string) => {
         // 已上报 或者首次访问页面不存在 就不上报
         firstViewUrlHref === FIRST_VIEW_URL_REPORTED
     ){
-        debugger
         return false
     }
     return true
@@ -61,12 +58,9 @@ const getIsNeedTransformJumpUrl = (originUrl: string) => {
  * 跳转到 s.theckb 的时候添加参数
  */
 export const addQueryWhenJumpStheckb = (originUrl: string) => {
-    debugger
     if(!getIsNeedTransformJumpUrl(originUrl)) return originUrl;
-    debugger
     const firstViewUrlHref = window.localStorage.getItem(FIRST_VIEW_URL);
     const { url: firstViewUrl, query: firstViewUrlQuery } = queryString.parseUrl(firstViewUrlHref!)
-    debugger
     const { url, query, fragmentIdentifier } = queryString.parseUrl(originUrl, {parseFragmentIdentifier: true})
     // utm_source=google&utm_medium=display&utm_campaign=gd_common_all
     const newJumpHref = queryString.stringifyUrl({
@@ -86,7 +80,6 @@ export const addQueryWhenJumpStheckb = (originUrl: string) => {
         skipEmptyString: true, 
         skipNull: true
     })
-    debugger
     // 结束之后打上已经跳转过的标签
     window.localStorage.setItem(FIRST_VIEW_URL, FIRST_VIEW_URL_REPORTED);
     return newJumpHref;

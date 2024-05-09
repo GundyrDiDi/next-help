@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-09 17:56:13
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-09 21:15:12
+ * @LastEditTime: 2024-05-09 21:32:21
  * @Description: 
  */
 
@@ -18,7 +18,6 @@ export const handleHref = (originUrl: string) => {
 const interceptRouteByLocation = (handleHref: (originUrl: string) => string) => {
   const $location = {
     set href(_href: string) {
-      debugger
       const to = handleHref(_href);
       location.href = to;
     },
