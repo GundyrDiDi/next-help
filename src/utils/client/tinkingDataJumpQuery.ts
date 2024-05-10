@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-09 20:02:18
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-09 21:31:59
+ * @LastEditTime: 2024-05-10 22:33:46
  * @Description: 
  */
 
@@ -68,7 +68,7 @@ export const addQueryWhenJumpStheckb = (originUrl: string) => {
         query: {
             ...query,
             channel: 'seo',
-            channel_group: firstViewUrl,
+            channel_group: firstViewUrl.replace('https://', ''),
             /** 下面这几个参数是可能广告带过来的，这里也要带到 s.theckb.com 上 */
             utm_source: firstViewUrlQuery.utm_source,
             utm_medium: firstViewUrlQuery.utm_medium,
