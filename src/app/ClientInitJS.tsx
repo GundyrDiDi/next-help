@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-09 16:43:56
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-09 22:06:51
+ * @LastEditTime: 2024-05-10 22:18:21
  * @Description: 
  */
 'use client'
@@ -36,8 +36,6 @@ import { setFirstViewUrl } from "@/utils/client/tinkingDataJumpQuery";
 })();
 
 const ClientInitJS = () => {
-    return <div>
-      111
-    </div>
+    return null
 }
 export default ClientInitJS
