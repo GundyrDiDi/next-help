@@ -86,7 +86,7 @@ export default function Layout({
       !runsOnServerSide &&
       customerDetail?.langcode
     ) {
-      location.href = location.href.replace(
+      window.$location.href = window.$location.href.replace(
         `/${lang}/`,
         `/${customerDetail?.langcode}/`
       );

@@ -43,7 +43,7 @@ const HotArticlesList = () => {
       toTheCkb(ENUM_PAGE.VIP_LEVEL);
       return;
     }
-    window.location.href = `/${lang}/article/${
+    window.$location.href = `/${lang}/article/${
       article?.frogArticleId
     }`;
   };

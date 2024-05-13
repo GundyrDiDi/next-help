@@ -1,3 +1,10 @@
+/*
+ * @Author: shiguang
+ * @Date: 2024-03-21 16:38:31
+ * @LastEditors: shiguang
+ * @LastEditTime: 2024-05-09 17:48:07
+ * @Description: 
+ */
 import { useAtom } from "jotai";
 import { Lang } from "@/model";
 import { THE_CKB_LINK } from "@/config";
@@ -30,5 +37,5 @@ export const useLink=(path:string,params:Record<string,any>|null=null)=>{
 
 export const toTheCkb=(path:string,needLang:boolean=true)=>{
   const lang=needLang?`/${getLang()}`:''
-  location.href=`${THE_CKB_LINK}${lang}${path}`
+  window.$location.href=`${THE_CKB_LINK}${lang}${path}`
 }
