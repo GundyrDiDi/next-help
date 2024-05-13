@@ -3,14 +3,14 @@
  * @Date: 2024-04-08 11:47:09
  * @LastEditors: shiguang
  * @LastEditTime: 2024-04-12 11:27:51
- * @Description: 
+ * @Description:
  */
-'use client'
+"use client";
 import { Plat } from "@/model";
 import { ENUM_PLATE } from "@/model/Plat";
 import { isB2B } from "@/utils";
-import { Button, Input, Space } from "antd"
-import { t } from "i18next"
+import { Button, Input, Space } from "antd";
+import { t } from "i18next";
 import { useAtom } from "jotai";
 
 interface SearchProps {
@@ -28,32 +28,41 @@ const Search = (props: SearchProps) => {
   return (
     <div
       className={`
-      pc:w-[1200px] pc:h-[300px] pad:h-[300px] mo:h-[120px] bg-cover
-      flex justify-center items-center ${props.className ?? ''}
-       bg-no-repeat
-      ${ plat === ENUM_PLATE.b2b ? `bg-[url('https://static-s.theckb.com/BusinessMarket/helpCenter/image/help-bg-b2b.f7536f71.png')]` : `bg-[url('https://page-client.theckb.com/client-prod/present/img/help-bg.3398f88f.png')]`}
-      `}
+      pc:w-[1200px] pc:h-[120px] pad:h-[120px] mo:h-[120px] bg-cover
+      flex justify-center items-center ${
+        props.className ?? ""
+      } flex-col p-[32px]`}
     >
-      <Space.Compact className="pc:w-[480px] pad:w-[480px] pc:h-[40px] pad:h-[40px] mo:w-[100%] mo:mx-[12px]">
-        <Input 
-          placeholder={t('输入FAQs关键词')} 
-          className="mo:w-[100%]" 
+      <div className="text-[30px] font-bold mb-[16px]">{t("关键词搜索")}</div>
+      <Space.Compact className="pc:w-[480px] pad:w-[480px] pc:h-[54px] pad:h-[54px] mo:w-[100%] mo:mx-[12px]">
+        <Input
+          placeholder={t("输入FAQs关键词")}
+          style={{
+            fontSize: "16px",
+            fontWeight: "bold",
+            color: "#00000040",
+          }}
           value={value}
           onChange={(e) => {
-            onChange?.(e.target.value)
+            onChange?.(e.target.value);
           }}
         />
-          <Button
-            type="primary"
-            className="pc:!h-[40px] pad:!h-[40px] mo:!h-[36px] pc:!w-[80px] mo:!w-[60px]"
-            onClick={() => {
-              onSearch?.(value)
-            }}
-          >
-            {t('搜索')}
-          </Button>
+        <Button
+          type="primary"
+          className="pc:!h-[54px] pad:!h-[54px] mo:!h-[40px] pc:!w-[80px] mo:!w-[72px]"
+          style={{
+            fontSize: "18px",
+            padding: "5px",
+            fontWeight: "bold",
+          }}
+          onClick={() => {
+            onSearch?.(value);
+          }}
+        >
+          {t("搜索")}
+        </Button>
       </Space.Compact>
     </div>
-  )
-}
-export default Search
+  );
+};
+export default Search;
