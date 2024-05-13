@@ -1590,7 +1590,7 @@ const en = {
   没有更多了: "This is all",
   暂无平台: "There are no platforms yet",
   关键词搜索:'Keyword Search',
-  输入FAQs关键词: "Enter keywords to search",
+  输入FAQs关键词: "for example: inspection standards",
   收藏商品: "My favorite products",
   收藏店铺: "Add to Favorite Stores",
   多为我推荐此类型商品: "Set as recommended products",

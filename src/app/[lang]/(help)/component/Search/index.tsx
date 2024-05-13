@@ -52,6 +52,7 @@ const Search = (props: SearchProps) => {
           className="pc:!h-[54px] pad:!h-[54px] mo:!h-[40px] pc:!w-[80px] mo:!w-[72px]"
           style={{
             fontSize: "18px",
+            padding: "5px",
             fontWeight: "bold",
           }}
           onClick={() => {
