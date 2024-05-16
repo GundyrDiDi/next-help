@@ -42,6 +42,8 @@ export interface AddAdditionTemplateReqDTO {
 
 /** AddTransportationAttributesDTO */
 export interface AddTransportationAttributesDTO {
+  /** 异常原因编码 */
+  abnormalReasonCode?: string;
   /** 运输属性英文名称 */
   attributeEnName?: string;
   /** 运输属性日文名称 */
@@ -55,6 +57,21 @@ export interface AddTransportationAttributesDTO {
    * @format int32
    */
   enableOutBound?: number;
+}
+
+/**
+ * AdditionAmtResultVO
+ * 附加项计算结果
+ */
+export interface AdditionAmtResultVO {
+  /** 附加项明细 */
+  additionPriceResult?: AdditionPriceResultVO[];
+  /** 汇率 */
+  exchangeRate?: number;
+  /** 总金额(外币) */
+  totalAmt?: number;
+  /** 总金额(人民币) */
+  totalAmtCn?: number;
 }
 
 /**
@@ -956,7 +973,9 @@ export interface AdditionEventDTO {
     | "MULTI_FREEZE"
     | "COMBINATION_SERVICE_FREEZE_CHARGE"
     | "INV_AGE_FEE"
-    | "PKG_STAND_FEE";
+    | "PKG_STAND_FEE"
+    | "FEE_ACTUAL_DEDUCTION"
+    | "FEE_ACTUAL_REFUND";
   checkMaxRemakeNum?: boolean;
   /** @format int64 */
   customerShopId?: number;
@@ -992,7 +1011,10 @@ export interface AdditionEventDTO {
     | "AMOUNT_REMAKE_OVERFLOW_FREEZE"
     | "IL_CHARGE_REFUND"
     | "RECHARGE_CANCEL"
-    | "PROMOTION_RECHARGE";
+    | "PROMOTION_RECHARGE"
+    | "FEE_DEDUCTION"
+    | "FEE_ACTUAL_DEDUCTION"
+    | "FEE_ACTUAL_REFUND";
   /** @format int64 */
   mainCustomerId?: number;
   messageId?: string;
@@ -1018,6 +1040,35 @@ export interface AdditionNodeRespDTO {
   name?: string;
   /** @format date-time */
   updateTime?: string;
+}
+
+/**
+ * AdditionPriceResultVO
+ * 附加项价格明细
+ */
+export interface AdditionPriceResultVO {
+  /** 附加项中文name */
+  additionCnName?: string;
+  /**
+   * 附加项code
+   * @format int32
+   */
+  additionCode?: number;
+  /** 附加项name */
+  additionName?: string;
+  /** 返回码 */
+  code?: string;
+  /** 错误原因 */
+  errorMsg?: string;
+  /**
+   * 数量
+   * @format int64
+   */
+  num?: number;
+  /** 单价 */
+  price?: number;
+  /** 总价 */
+  totalPrice?: number;
 }
 
 /** AdditionProductDTO */
@@ -1061,6 +1112,7 @@ export interface AdditionRespDTO {
   actualDeductionNodeName?: string;
   /** @format int32 */
   additionCode?: number;
+  additionGroup?: string[];
   /** @format int32 */
   additionId?: number;
   additionName?: string;
@@ -1081,6 +1133,7 @@ export interface AdditionRespDTO {
   deductionNodeName?: string;
   deductionType?: string;
   deductionTypeName?: string;
+  gifUrl?: string;
   imageUrl?: string;
   /** @format int32 */
   ingredientStatus?: number;
@@ -1199,8 +1252,10 @@ export interface AdditionTemplateRespDTO {
 
 /** AdditionUpdateReqDTO */
 export interface AdditionUpdateReqDTO {
+  additionGroup?: number[];
   /** @format int32 */
   additionId?: number;
+  gifUrl?: string;
   imageUrl?: string;
   /** @format int32 */
   ingredientStatus?: number;
@@ -1265,6 +1320,14 @@ export interface AreaPriceDTO {
   price?: number;
 }
 
+/** AreaPriceVO */
+export interface AreaPriceVO {
+  /** 偏远地区name */
+  areaNameList?: string[];
+  /** 偏远地区运费 */
+  price?: number;
+}
+
 /** AttributeDeliveryAmountLimitDTO */
 export interface AttributeDeliveryAmountLimitDTO {
   /** 属性编码 */
@@ -1274,6 +1337,33 @@ export interface AttributeDeliveryAmountLimitDTO {
    * @format int32
    */
   deliveryLimitAmount?: number;
+}
+
+/**
+ * AttributeVO
+ * 属性
+ */
+export interface AttributeVO {
+  /**
+   * 高(cm)
+   * @format int64
+   */
+  height?: number;
+  /**
+   * 长(cm)
+   * @format int64
+   */
+  length?: number;
+  /**
+   * 重量(克)
+   * @format int64
+   */
+  weight?: number;
+  /**
+   * 宽(cm)
+   * @format int64
+   */
+  width?: number;
 }
 
 /** AuditLogDTO */
@@ -1932,6 +2022,7 @@ export interface BaseBatchDTO {
 export interface BaseResponse {
   code?: string;
   msg?: string;
+  success?: boolean;
 }
 
 /** BasisData */
@@ -2225,6 +2316,130 @@ export interface BizResponse {
   success?: boolean;
 }
 
+/** CalcIntShipFeeDTO */
+export interface CalcIntShipFeeDTO {
+  /** @format date-time */
+  deliveryTime?: string;
+  /** @format int64 */
+  height?: number;
+  intShipConfigIdList?: number[];
+  /** @format int64 */
+  length?: number;
+  stationCode?: string;
+  /** @format int32 */
+  systemSource?: number;
+  /** @format int64 */
+  weight?: number;
+  /** @format int64 */
+  width?: number;
+}
+
+/** CalcIntShipFeeRespDTO */
+export interface CalcIntShipFeeRespDTO {
+  deliveryDays?: string;
+  distribution?: string;
+  /** @format int64 */
+  intShipConfigId?: number;
+  logisticsFeature?: string;
+  logo?: string;
+  officialWebsiteLink?: string;
+  price?: number;
+}
+
+/**
+ * CalcParamVO
+ * 成本计算器执行计算入参
+ */
+export interface CalcParamVO {
+  /** 发货附加项参数 */
+  deliverAdditionParam?: DeliverAdditionParamVO;
+  /** 需要计算的费用类型 0代金/1默认附加项/2商品附加项/3发货附加项/4运费/5库存保管费/6关税 */
+  feeList?: number[];
+  /** 库存保管费参数 */
+  inventoryParam?: InventoryParamVO;
+  /**
+   * 选择的会员等级
+   * @format int64
+   */
+  membershipTemplateId?: number;
+  /** 商品信息 */
+  productParam?: ProductParamVO[];
+  /** 国际物流参数 */
+  shipParam?: ShipParamVO;
+  /** 站点code */
+  stationCode?: string;
+  /**
+   * 业务线 1:d2c 2:b2b
+   * @format int32
+   */
+  systemSource?: number;
+}
+
+/**
+ * CalcProductAttrVO
+ * 商品计算总重量体积参数
+ */
+export interface CalcProductAttrVO {
+  /** 商品信息 */
+  productAttrVOList?: ProductAttrVO[];
+  /**
+   * 业务线 1:D2C 2:B2B
+   * @format int32
+   */
+  systemSource?: number;
+}
+
+/**
+ * CalcResultVO
+ * 成本计算器计算结果
+ */
+export interface CalcResultVO {
+  /** 默认附加项计算结果 */
+  defaultAdditionResult?: AdditionAmtResultVO;
+  /** 发货附加项计算结果 */
+  deliverAdditionResult?: AdditionAmtResultVO;
+  /** 汇率 */
+  exchangeRate?: number;
+  /** 国内运费计算结果 */
+  innerShipResult?: InnerShipAmtResultVO;
+  /** 库存保管费单价规则 */
+  inventoryPriceRules?: Record<string, InventoryConfigDTO>;
+  /** 商品附加项计算结果 */
+  productAdditionResult?: AdditionAmtResultVO;
+  /** 商品代金费计算结果 */
+  productResult?: ProductResultVO;
+  /** 国际运费计算结果 */
+  shipResult?: ShipResultVO;
+  /** 站点 */
+  stationCode?: string;
+  /** 关税计算结果 */
+  taxResult?: TaxResultVO;
+  /** 总金额(外币) */
+  totalAmt?: number;
+  /** 总金额(人民币) */
+  totalAmtCn?: number;
+}
+
+/**
+ * CalcShipParamVO
+ * 选择国际物流计算入参
+ */
+export interface CalcShipParamVO {
+  /** 需要计算的费用类型 0代金/1默认附加项/2商品附加项/3发货附加项/4运费/5库存保管费/6关税 */
+  feeList?: number[];
+  /** 商品信息 */
+  productParam?: ProductParamVO[];
+  /** 国际物流参数 */
+  shipParam?: ShipParamVO;
+  /** 站点code */
+  stationCode?: string;
+  /**
+   * 业务线 1:d2c 2:b2b
+   * @format int32
+   */
+  systemSource?: number;
+}
+
 /** CaptureOrderDTO */
 export interface CaptureOrderDTO {
   payPalOrderId?: string;
@@ -2290,6 +2505,11 @@ export interface CreatePaymentOrderRespDTO {
   orderId?: string;
 }
 
+/** CreateSubscriptionDTO */
+export interface CreateSubscriptionDTO {
+  payPalSubscriptionId?: string;
+}
+
 /** CustomerAdditionMergeRespDTO */
 export interface CustomerAdditionMergeRespDTO {
   deliveryAdditionList?: CustomerAdditionRespDTO[];
@@ -2329,6 +2549,8 @@ export interface CustomerAdditionRespDTO {
   documentUrl?: string;
   /** @format int32 */
   extraType?: number;
+  gifUrl?: string;
+  groupList?: string[];
   imageUrl?: string;
   /** @format int32 */
   ingredientStatus?: number;
@@ -3099,6 +3321,8 @@ export interface CustomerShopRespDTO {
   /** @format int32 */
   customerShopPlatform?: number;
   customerShopUrl?: string;
+  /** @format int32 */
+  customerShopUseOnTheWayStockFlag?: number;
   /** @format int64 */
   dealOrderCount?: number;
   /** @format int32 */
@@ -3421,13 +3645,16 @@ export interface CustomerWalletFundFlowInfoRespDTO {
   fundFlowNo?: string;
   /** @format int32 */
   fundFlowType?: number;
+  orderDeductionFeeDetail?: OrderDeductionFeeRespDTO;
   orderNo?: string;
+  orderPreSelleFeeDetail?: OrderPreSelleFeeRespDTO;
   platformOrderNo?: string;
   platformOrderProductSettleDetail?: PlatformOrderProductSettleDetail;
   remark?: string;
   selectOrderFreezeDetailRespDTOS?: SelectOrderFreezeDetailRespDTO[];
   settlementDeliveryRespDTO?: SettlementDeliveryRespDTO;
   settlementDeliveryRespDTOList?: SettlementDeliveryRespDTO[];
+  stationCode?: string;
   /** @format int32 */
   systemSource?: number;
   /** @format date-time */
@@ -3726,6 +3953,7 @@ export interface DeductShipTieredDiffInfoRespDTO {
   orderNumber?: string;
   orderValuationWeight?: number;
   orderValuationWeightAmount?: number;
+  stationCode?: string;
   transferNumber?: string;
   valuationAmountDiff?: number;
   valuationDiff?: number;
@@ -3737,6 +3965,15 @@ export interface DeductShipTieredDiffInfoRespDTO {
 export interface DeductValuationDiffReqDTO {
   /** @format int64 */
   intShipTieredDiffId?: number;
+}
+
+/**
+ * DeliverAdditionParamVO
+ * 发货附加项参数
+ */
+export interface DeliverAdditionParamVO {
+  /** 发货附加项参数 */
+  additionIdList?: number[];
 }
 
 /** DeliveryDayRangeDTO */
@@ -3775,6 +4012,8 @@ export interface DownloadIntShipTemplateReqDTO {
 
 /** EditTransportationAttributesDTO */
 export interface EditTransportationAttributesDTO {
+  /** 异常原因编码 */
+  abnormalReasonCode?: string;
   /** ID */
   attributeCode?: string;
   /** 运输属性英文名称 */
@@ -3801,6 +4040,8 @@ export interface EditWarehouseForwardConfigDTO {
    * @format int64
    */
   intForwarderConfigId?: number;
+  /** 货代主键ID集合 */
+  intForwarderConfigIdList?: number[];
   /** 仓库列表 */
   warehouseList?: WarehouseRespDTO[];
 }
@@ -3991,7 +4232,10 @@ export interface FundFlowInfoReqDTO {
     | "AMOUNT_REMAKE_OVERFLOW_FREEZE"
     | "IL_CHARGE_REFUND"
     | "RECHARGE_CANCEL"
-    | "PROMOTION_RECHARGE";
+    | "PROMOTION_RECHARGE"
+    | "FEE_DEDUCTION"
+    | "FEE_ACTUAL_DEDUCTION"
+    | "FEE_ACTUAL_REFUND";
   orderNo?: string;
 }
 
@@ -4342,6 +4586,19 @@ export interface ImportExcelResultModel {
   successNum?: number;
 }
 
+/**
+ * InnerShipAmtResultVO
+ * 国内物流计算结果
+ */
+export interface InnerShipAmtResultVO {
+  /** 汇率 */
+  exchangeRate?: number;
+  /** 总金额(外币) */
+  totalAmt?: number;
+  /** 总金额(人民币) */
+  totalAmtCn?: number;
+}
+
 /** InsertIntForwarderConfigReqDTO */
 export interface InsertIntForwarderConfigReqDTO {
   contentReqDTOList?: IntForwarderContentReqDTO[];
@@ -4423,6 +4680,7 @@ export interface IntForwarderConfigInfoRespDTO {
 
 /** IntForwarderConfigQuery */
 export interface IntForwarderConfigQuery {
+  countryCode?: string;
   forwarder?: string;
   intForwarderConfigIdList?: number[];
   /** @format int32 */
@@ -4552,6 +4810,8 @@ export interface IntShipBillQuery {
   sorts?: ISortFieldEnum[];
   /** @format int32 */
   startIndex?: number;
+  /** 站点国家 */
+  stationCode?: string;
   /**
    * 系统来源: 1-D2C; 2-B2B
    * @format int32
@@ -4662,6 +4922,8 @@ export interface IntShipBillRespDTO {
   shippingAmount?: number;
   /** 国际运费扣款差异： 国际运费扣款金额-总应收 */
   shippingAmountDiff?: number;
+  /** 站点国家 */
+  stationCode?: string;
   /**
    * 系统来源: 1-D2C; 2-B2B
    * @format int32
@@ -4722,6 +4984,8 @@ export interface IntShipConfigInfoRespDTO {
 export interface IntShipConfigListQuery {
   countryCode?: string;
   countryJpyName?: string;
+  /** @format int64 */
+  customerId?: number;
   forwarder?: string;
   intShipConfigIds?: number[];
   /** @format int64 */
@@ -4803,36 +5067,58 @@ export interface IntShipContentReqDTO {
 
 /** IntShipContentRespDTO */
 export interface IntShipContentRespDTO {
+  /** 偏远地区附加费详情 */
   areaPriceList?: AreaPriceDTO[];
+  /** 续重(千克) */
   continuedWeight?: number;
+  /** 续重价格 */
   continuedWeightPrice?: number;
   /** @format date-time */
   createTime?: string;
   /** @format date-time */
   endTime?: string;
+  /** 首重(千克) */
   firstWeight?: number;
+  /** 首重价格 */
   firstWeightPrice?: number;
+  /** 燃油附加费率 */
   fuelPrice?: number;
   /** @format int64 */
   intShipContentId?: number;
-  /** @format int32 */
+  /**
+   * 是否启用，0否，1是
+   * @format int32
+   */
   intShipContentStatus?: number;
   isApproximation?: boolean;
+  /** 大包起重(千克) */
   leastWeight?: number;
+  /** 物流说明 */
   logisticsDescription?: string;
+  /** 旺季附加费单价 */
   peakSeasonPrice?: number;
+  /** 可发送地址，1：FBA纳品；2：非FBA纳品 */
   sendableAddress?: string[];
+  /** 可发送地址，1：FBA纳品；2：非FBA纳品 */
   sendableAddressDesc?: string[];
   /** @format date-time */
   startTime?: string;
-  /** @format int32 */
+  /**
+   * 计费单价类型;1-小包;2-大包;3-大包+小包
+   * @format int32
+   */
   unitPriceType?: number;
   /** @format date-time */
   updateTime?: string;
   weight?: number;
+  /** 重量范围配置 */
   weightConfList?: WeightConfDTO[];
+  /** 抛重除数 */
   weightThrowingDivisor?: number;
-  /** @format int32 */
+  /**
+   * 计费重量类型;1-全抛;2-半抛;3-不抛
+   * @format int32
+   */
   weightThrowingType?: number;
 }
 
@@ -4860,6 +5146,8 @@ export interface IntShipFeeDetailRespDTO {
   peakSeasonPrice?: number;
   reviewBaseAmount?: number;
   shipFeeFormula?: string;
+  /** 站点国家 */
+  stationCode?: string;
   transportMode?: string;
   unitPrice?: number;
   unitPriceFormula?: string;
@@ -4896,12 +5184,18 @@ export interface IntShipFeeInfoRespDTO {
 
 /** IntShipForwardersRespDTO */
 export interface IntShipForwardersRespDTO {
+  deliveryDays?: string;
   distribution?: string;
   forwarders?: IntForwarderConfigRespDTO[];
   /** @format int64 */
   intShipConfigId?: number;
+  logisticsFeature?: string;
+  logo?: string;
+  officialWebsiteLink?: string;
   /** @format int32 */
   sort?: number;
+  /** @format int32 */
+  transportType?: number;
 }
 
 /** IntShipOtherQuery */
@@ -4931,6 +5225,8 @@ export interface IntShipOtherQuery {
   sorts?: ISortFieldEnum[];
   /** @format int32 */
   startIndex?: number;
+  /** 站点 */
+  stationCode?: string;
   /**
    * 系统来源: 1-D2C; 2-B2B
    * @format int32
@@ -5036,6 +5332,8 @@ export interface IntShipOtherRespDTO {
   shippingDescription?: string;
   /** 特殊处理费 */
   specialHandlingFee?: number;
+  /** 站点 */
+  stationCode?: string;
   /** 仓储费 */
   storageFee?: number;
   /**
@@ -5183,6 +5481,8 @@ export interface IntShipTieredDiffQuery {
   sorts?: ISortFieldEnum[];
   /** @format int32 */
   startIndex?: number;
+  /** 站点 */
+  stationCode?: string;
   /**
    * 系统来源: 1-D2C; 2-B2B
    * @format int32
@@ -5270,6 +5570,8 @@ export interface IntShipTieredDiffRespDTO {
   netWeight?: number;
   /** 系统订单计价重 */
   orderValuationWeight?: number;
+  /** 站点 */
+  stationCode?: string;
   /** 系统订单重量 */
   sysOrderWeight?: number;
   /**
@@ -5306,6 +5608,31 @@ export interface IntShipTieredDiffRespDTO {
 /** IntShipUpdateSortReqDTO */
 export interface IntShipUpdateSortReqDTO {
   sortList?: IntShipSortDTO[];
+}
+
+/** InventoryConfigDTO */
+export interface InventoryConfigDTO {
+  /** @format date-time */
+  endDate?: string;
+  /** @format int64 */
+  freeNum?: number;
+  ladderPrices?: LadderPrice[];
+  price?: number;
+  /** @format date-time */
+  startDate?: string;
+  volumeType?: string;
+}
+
+/**
+ * InventoryParamVO
+ * 库存保管费参数
+ */
+export interface InventoryParamVO {
+  /**
+   * 保管天数
+   * @format int64
+   */
+  days?: number;
 }
 
 /**
@@ -5470,6 +5797,12 @@ export interface JxhyProductRangeDTO {
   productSkuNumPer?: number;
   /** 列名 */
   title?: string;
+}
+
+/** LableValue */
+export interface LableValue {
+  code?: string;
+  value?: string;
 }
 
 /**
@@ -6092,7 +6425,10 @@ export interface MembershipTemplateListVO {
   /** @format date-time */
   createTime?: string;
   deleteFlag?: boolean;
-  /** @format int64 */
+  /**
+   * 会员模板表id
+   * @format int64
+   */
   membershipTemplateId?: number;
   /**
    * 会员类型:0-普通,1-特殊
@@ -6100,9 +6436,14 @@ export interface MembershipTemplateListVO {
    */
   specialType?: number;
   statusFlag?: boolean;
+  /** 会员身份描述说明 */
   templateDesc?: string;
-  /** @format int32 */
+  /**
+   * 会员等级
+   * @format int32
+   */
   templateLevel?: number;
+  /** 会员身份名称 */
   templateName?: string;
   /** 会员身份名称中文 */
   templateNameZh?: string;
@@ -6647,10 +6988,119 @@ export interface OnlineOrderCreateDTO {
   originRechargeAmount?: number;
 }
 
+/** OrderDeductionAdditionFeeRespDTO */
+export interface OrderDeductionAdditionFeeRespDTO {
+  /** 总价 */
+  amount?: number;
+  /** 币种 */
+  currency?: string;
+  /** 汇率 */
+  exchangeRate?: number;
+  /**
+   * 费用类型
+   * @format int32
+   */
+  feeType?: number;
+}
+
+/** OrderDeductionFeeRespDTO */
+export interface OrderDeductionFeeRespDTO {
+  /** 实付补扣金额列表 */
+  orderActualFeeList?: OrderDeductionAdditionFeeRespDTO[];
+  /** 预付金额列表 */
+  orderPreFeeList?: OrderDeductionAdditionFeeRespDTO[];
+}
+
 /** OrderItem */
 export interface OrderItem {
   asc?: boolean;
   column?: string;
+}
+
+/** OrderPreFeeDetailRespDTO */
+export interface OrderPreFeeDetailRespDTO {
+  /** 总价 */
+  amount?: number;
+  /** 编号 */
+  bizNo?: string;
+  /** 币种 */
+  currency?: string;
+  /** 汇率 */
+  exchangeRate?: number;
+  /**
+   * 费用类型
+   * @format int32
+   */
+  feeType?: number;
+  /** 名称 */
+  name?: string;
+  /**
+   * 商品数量
+   * @format int32
+   */
+  nums?: number;
+  /** 商品单价 */
+  price?: number;
+  /**
+   * 结算数量
+   * @format int32
+   */
+  settleNums?: number;
+  /** 结算单价 */
+  settlePrice?: number;
+  /** 重量 */
+  weight?: number;
+}
+
+/** OrderPreFeeRespDTO */
+export interface OrderPreFeeRespDTO {
+  /** 币种 */
+  currency?: string;
+  /** 汇率 */
+  exchangeRate?: number;
+  /**
+   * 费用类型:0-商品代金,1-默认附加项 2-商品附加项,3-发货附加项,4-国际运费,5-库存保管费,6-关税,7-国内运费
+   * @format int32
+   */
+  feeType?: number;
+  orderPreFeeDetailList?: OrderPreFeeDetailRespDTO[];
+  /** 总价格 */
+  totalAmount?: number;
+}
+
+/** OrderPreSelleFeeRespDTO */
+export interface OrderPreSelleFeeRespDTO {
+  /** 订单预扣款-发货附加项费用 */
+  orderPreDeliveryAdditionFee?: OrderPreFeeRespDTO;
+  /** 订单预扣款-国际运费详情 */
+  orderPreDeliveryFee?: OrderPreFeeRespDTO;
+  /** 订单预扣款-手续费 */
+  orderPreFee?: OrderPreFeeRespDTO;
+  /** 订单预扣款-商品附加项费用 */
+  orderPreProductAdditionFee?: OrderPreFeeRespDTO;
+  /** 订单预扣款-商品带金详情 */
+  orderPreVoucherFee?: OrderPreVoucherFeeRespDTO;
+}
+
+/** OrderPreVoucherFeeRespDTO */
+export interface OrderPreVoucherFeeRespDTO {
+  /** 费用编码 */
+  bizNo?: string;
+  /** 币种 */
+  currency?: string;
+  /** 明细 */
+  customerWalletFundFlowGoodsList?: CustomerWalletFundFlowGoodsDTO[];
+  /** 汇率 */
+  exchangeRate?: number;
+  /** 费用名称 */
+  feeName?: string;
+  /**
+   * 费用类型
+   * @format int32
+   */
+  feeType?: number;
+  /** 总价格 */
+  totalAmount?: number;
 }
 
 /**
@@ -7606,6 +8056,20 @@ export interface PriceExceptionInfoVO {
   exceptionType?: number;
 }
 
+/**
+ * ProductAttrVO
+ * 商品计算总重量体积参数
+ */
+export interface ProductAttrVO {
+  /** 商品属性 */
+  attribute?: AttributeVO;
+  /**
+   * 数量
+   * @format int64
+   */
+  num?: number;
+}
+
 /** ProductDTO */
 export interface ProductDTO {
   additionPrice?: number;
@@ -7618,6 +8082,72 @@ export interface ProductDTO {
   productPropertiesName?: string;
   productSku?: string;
   productTitle?: string;
+}
+
+/**
+ * ProductParamVO
+ * 计算器商品模型
+ */
+export interface ProductParamVO {
+  /** 商品附加项信息 */
+  additionIdList?: number[];
+  /**
+   * 数量
+   * @format int64
+   */
+  num?: number;
+  /** 商品属性 */
+  productAttribute?: AttributeVO;
+  /** spu编码 */
+  productCode?: string;
+  /** 组合商品子商品 */
+  productItemParam?: ProductParamVO[];
+  /** sku编码 */
+  productSku?: string;
+  /**
+   * 商品类型 1:成品 2:OEM商品 3:组合商品
+   * @format int32
+   */
+  productType?: number;
+  /** 关税信息 */
+  taxInfo?: TaxInfoVO;
+}
+
+/**
+ * ProductPriceResultVO
+ * 商品代金价格明细
+ */
+export interface ProductPriceResultVO {
+  /** 返回码 */
+  code?: string;
+  /** 错误原因 */
+  errorMsg?: string;
+  /**
+   * 数量
+   * @format int64
+   */
+  num?: number;
+  /** 单价 */
+  price?: number;
+  /** sku编码 */
+  productSku?: string;
+  /** 总价 */
+  totalPrice?: number;
+}
+
+/**
+ * ProductResultVO
+ * 商品代金费
+ */
+export interface ProductResultVO {
+  /** 汇率 */
+  exchangeRate?: number;
+  /** 商品代金明细 */
+  productPriceResult?: ProductPriceResultVO[];
+  /** 总金额(外币) */
+  totalAmt?: number;
+  /** 总金额(人民币) */
+  totalAmtCn?: number;
 }
 
 /** PurchaseAbnormalOrderDTO */
@@ -7651,6 +8181,14 @@ export interface RangeInfoDTO {
   /** @format int32 */
   rangeTo?: number;
   rangeValue?: number;
+}
+
+/** RangeVO */
+export interface RangeVO {
+  /** 最大 */
+  max?: number;
+  /** 最小 */
+  min?: number;
 }
 
 /** RechargeOrderCreateDTO */
@@ -7693,6 +8231,7 @@ export interface RecommendedLogisticsRespDTO {
   forwarder?: IntForwarderConfigRespDTO;
   /** @format int64 */
   intShipConfigId?: number;
+  logo?: string;
   /** @format int32 */
   sort?: number;
 }
@@ -8290,12 +8829,145 @@ export interface SettlementExpressRespDTO {
   systemOrderNo?: string;
 }
 
+/** ShipContentVO */
+export interface ShipContentVO {
+  /** 偏远地区附加费详情 */
+  areaPriceList?: AreaPriceVO[];
+  /** 大包重量范围限制 */
+  bigPackageRange?: RangeVO;
+  /** 大包计费配置 */
+  bigWeightConfList?: WeightConfDTO[];
+  /** 燃油附加费率 */
+  fuelPrice?: number;
+  /** 物流说明 */
+  logisticsDescription?: string;
+  /** 旺季附加费单价 */
+  peakSeasonPrice?: number;
+  /** 小包重量范围限制 */
+  smallPackageRange?: RangeVO;
+  /** 小包计费配置 */
+  smallWeightConfList?: WeightConfDTO[];
+  /**
+   * 计费单价类型;1-小包;2-大包;3-大包+小包
+   * @format int32
+   */
+  unitPriceType?: number;
+  /** 抛重除数 */
+  weightThrowingDivisor?: number;
+  /**
+   * 计费重量类型;1-全抛;2-半抛;3-不抛
+   * @format int32
+   */
+  weightThrowingType?: number;
+}
+
+/**
+ * ShipParamVO
+ * 国际物流参数
+ */
+export interface ShipParamVO {
+  /** 目的地国家code */
+  countryCode?: string;
+  /** 是否发往FBA仓库 */
+  fba?: boolean;
+  /**
+   * 指定物流
+   * @format int64
+   */
+  intShipConfigId?: number;
+  /** 包裹属性 */
+  packageAttribute?: AttributeVO;
+  /** 发货仓库 */
+  wareCode?: string;
+}
+
+/**
+ * ShipPriceResultVO
+ * 国际物流费用明细
+ */
+export interface ShipPriceResultVO {
+  /** 外币价格 */
+  amt?: number;
+  /** 返回码 */
+  code?: string;
+  /** 配送天数(范围) */
+  deliveryDayRange?: RangeVO;
+  /** 物流name */
+  distribution?: string;
+  /** 错误原因 */
+  errorMsg?: string;
+  /**
+   * 物流id
+   * @format int64
+   */
+  intShipConfigId?: number;
+  /** 物流特点 */
+  logisticsFeature?: string;
+  /** logo */
+  logo?: string;
+  /** 官网链接 */
+  officialWebsiteLink?: string;
+  /** 价格 */
+  price?: number;
+  /** 当前生效的物流明细 */
+  shipContent?: ShipContentVO;
+  /** 可关联的运输属性 */
+  transportationAttributesDTOList?: TransportationAttributesDTO[];
+}
+
 /** ShipQueryByForwardAndCustomerParam */
 export interface ShipQueryByForwardAndCustomerParam {
   /** @format int64 */
   customerId?: number;
   /** @format int64 */
   intForwardConfigId?: number;
+}
+
+/**
+ * ShipResultVO
+ * 国际物流计算结果
+ */
+export interface ShipResultVO {
+  /** 国家code */
+  countryCode?: string;
+  /** 国家name */
+  countryName?: string;
+  /** 汇率 */
+  exchangeRate?: number;
+  /** 物流费用信息 */
+  shipPriceResult?: ShipPriceResultVO[];
+  /** 总金额(外币) */
+  totalAmt?: number;
+  /** 总金额(人民币) */
+  totalAmtCn?: number;
+}
+
+/**
+ * ShipVO
+ * 国际料金表
+ */
+export interface ShipVO {
+  /** 可运送国家 */
+  countryList?: string[];
+  /** 配送天数(范围) */
+  deliveryDayRange?: RangeVO;
+  /** 物流name */
+  distribution?: string;
+  /**
+   * 物流id
+   * @format int64
+   */
+  intShipConfigId?: number;
+  /** 物流特点 */
+  logisticsFeature?: string;
+  /** logo */
+  logo?: string;
+  /** 官网链接 */
+  officialWebsiteLink?: string;
+  /** 当前生效的物流明细 */
+  shipContent?: ShipContentVO;
+  /** 可关联的运输属性 */
+  transportationAttributesDTOList?: TransportationAttributesDTO[];
 }
 
 /**
@@ -8335,6 +9007,53 @@ export interface SpotCheckConfigDTO {
   startQuantity?: number;
 }
 
+/**
+ * TaxInfoVO
+ * 关税
+ */
+export interface TaxInfoVO {
+  /** hscode */
+  hscode?: string;
+  /** 税率 */
+  taxRate?: number;
+}
+
+/**
+ * TaxPriceResultVO
+ * 关税明细
+ */
+export interface TaxPriceResultVO {
+  /** 返回码 */
+  code?: string;
+  /** 错误原因 */
+  errorMsg?: string;
+  /** hscode */
+  hscode?: string;
+  /** sku编码 */
+  productSku?: string;
+  /** sku关税金额 */
+  taxAmt?: number;
+  /** 税率 */
+  taxRate?: number;
+  /** sku商品代金 */
+  totalPrice?: number;
+}
+
+/**
+ * TaxResultVO
+ * 关税结果
+ */
+export interface TaxResultVO {
+  /** 汇率 */
+  exchangeRate?: number;
+  /** 关税明细 */
+  taxPriceResult?: TaxPriceResultVO[];
+  /** 总金额(外币) */
+  totalAmt?: number;
+  /** 总金额(人民币) */
+  totalAmtCn?: number;
+}
+
 /** TransportModeRespDTO */
 export interface TransportModeRespDTO {
   /** 运输方式名称 */
@@ -8344,6 +9063,16 @@ export interface TransportModeRespDTO {
    * @format int32
    */
   transportType?: number;
+}
+
+/** TransportationAttributesDTO */
+export interface TransportationAttributesDTO {
+  /** 运输属性中文名称 */
+  attributeCnName?: string;
+  /** 运输属性编码 */
+  attributeCode?: string;
+  /** 运输属性名称(外语) */
+  attributeName?: string;
 }
 
 /** TransportationAttributesPageDTO */
@@ -8359,6 +9088,8 @@ export interface TransportationAttributesPageDTO {
 
 /** TransportationAttributesRespDTO */
 export interface TransportationAttributesRespDTO {
+  /** 异常原因编码 */
+  abnormalReasonCode?: string;
   /** 运输属性编码 */
   attributeCode?: string;
   /** 运输属性英文名称 */
@@ -8787,7 +9518,9 @@ export interface WalletChangeEventDTO {
     | "MULTI_FREEZE"
     | "COMBINATION_SERVICE_FREEZE_CHARGE"
     | "INV_AGE_FEE"
-    | "PKG_STAND_FEE";
+    | "PKG_STAND_FEE"
+    | "FEE_ACTUAL_DEDUCTION"
+    | "FEE_ACTUAL_REFUND";
   changeAmount?: number;
   changeAmountJpy?: number;
   /** @format int32 */
@@ -8830,7 +9563,10 @@ export interface WalletChangeEventDTO {
     | "AMOUNT_REMAKE_OVERFLOW_FREEZE"
     | "IL_CHARGE_REFUND"
     | "RECHARGE_CANCEL"
-    | "PROMOTION_RECHARGE";
+    | "PROMOTION_RECHARGE"
+    | "FEE_DEDUCTION"
+    | "FEE_ACTUAL_DEDUCTION"
+    | "FEE_ACTUAL_REFUND";
   /** @format int64 */
   mainCustomerId?: number;
   messageId?: string;
@@ -8897,7 +9633,9 @@ export interface WalletChangeResultEventDTO {
     | "MULTI_FREEZE"
     | "COMBINATION_SERVICE_FREEZE_CHARGE"
     | "INV_AGE_FEE"
-    | "PKG_STAND_FEE";
+    | "PKG_STAND_FEE"
+    | "FEE_ACTUAL_DEDUCTION"
+    | "FEE_ACTUAL_REFUND";
   changeAmount?: number;
   changeAmountJpy?: number;
   /** @format int64 */
@@ -8935,7 +9673,10 @@ export interface WalletChangeResultEventDTO {
     | "AMOUNT_REMAKE_OVERFLOW_FREEZE"
     | "IL_CHARGE_REFUND"
     | "RECHARGE_CANCEL"
-    | "PROMOTION_RECHARGE";
+    | "PROMOTION_RECHARGE"
+    | "FEE_DEDUCTION"
+    | "FEE_ACTUAL_DEDUCTION"
+    | "FEE_ACTUAL_REFUND";
   /** @format int64 */
   mainCustomerId?: number;
   newCallback?: boolean;
@@ -8995,6 +9736,8 @@ export interface WareNameLangDTO {
 export interface WarehouseForwardAttributeReqPageDTO {
   /** 运输属性编码 */
   attributeCode?: string;
+  /** 国家code */
+  countryCode?: string;
   /** 货代公司名称 */
   forwarder?: string;
   /** @format int32 */
@@ -9012,6 +9755,8 @@ export interface WarehouseForwardAttributeReqPageDTO {
 
 /** WarehouseForwardAttributesRespDTO */
 export interface WarehouseForwardAttributesRespDTO {
+  /** 国家中文名称 */
+  countryCnName?: string;
   /** 货代公司名称 */
   forwarder?: string;
   /**
@@ -9035,14 +9780,24 @@ export interface WarehouseRespDTO {
 
 /** WeightConfDTO */
 export interface WeightConfDTO {
+  /** 续重 */
   continuedWeight?: number;
+  /** 续重价格 */
   continuedWeightPrice?: number;
+  /** 首重 */
   firstWeight?: number;
+  /** 首重价格 */
   firstWeightPrice?: number;
+  /** 重量最大值 */
   max?: number;
+  /** 重量最小值 */
   min?: number;
+  /** 价格 */
   price?: number;
-  /** @format int32 */
+  /**
+   * 计费单价类型;1-小包;2-大包;3-大包+小包
+   * @format int32
+   */
   unitPriceType?: number;
 }
 
@@ -10514,6 +11269,15 @@ export interface BizResponseAreaDTO {
   success?: boolean;
 }
 
+/** BizResponse«AttributeVO» */
+export interface BizResponseAttributeVO {
+  code?: string;
+  /** 属性 */
+  data?: AttributeVO;
+  msg?: string;
+  success?: boolean;
+}
+
 /** BizResponse«BalanceRechargeTotalVO» */
 export interface BizResponseBalanceRechargeTotalVO {
   code?: string;
@@ -10545,6 +11309,7 @@ export interface BizResponseBillInfoDTO {
   /** 账单详情 */
   data?: BillInfoDTO;
   msg?: string;
+  success?: boolean;
 }
 
 /** BizResponse«BillNotifyVO» */
@@ -10553,6 +11318,16 @@ export interface BizResponseBillNotifyVO {
   /** 账单通知 */
   data?: BillNotifyVO;
   msg?: string;
+  success?: boolean;
+}
+
+/** BizResponse«CalcResultVO» */
+export interface BizResponseCalcResultVO {
+  code?: string;
+  /** 成本计算器计算结果 */
+  data?: CalcResultVO;
+  msg?: string;
+  success?: boolean;
 }
 
 /** BizResponse«CaptureOrderDTO» */
@@ -10567,6 +11342,14 @@ export interface BizResponseCaptureOrderDTO {
 export interface BizResponseCreatePaymentOrderRespDTO {
   code?: string;
   data?: CreatePaymentOrderRespDTO;
+  msg?: string;
+  success?: boolean;
+}
+
+/** BizResponse«CreateSubscriptionDTO» */
+export interface BizResponseCreateSubscriptionDTO {
+  code?: string;
+  data?: CreateSubscriptionDTO;
   msg?: string;
   success?: boolean;
 }
@@ -10858,6 +11641,15 @@ export interface BizResponseListBaseBank {
   code?: string;
   data?: BaseBank[];
   msg?: string;
+  success?: boolean;
+}
+
+/** BizResponse«List«CalcIntShipFeeRespDTO»» */
+export interface BizResponseListCalcIntShipFeeRespDTO {
+  code?: string;
+  data?: CalcIntShipFeeRespDTO[];
+  msg?: string;
+  success?: boolean;
 }
 
 /** BizResponse«List«CustomerAdditionRespDTO»» */
@@ -10881,6 +11673,7 @@ export interface BizResponseListCustomerBankCard {
   code?: string;
   data?: CustomerBankCard[];
   msg?: string;
+  success?: boolean;
 }
 
 /** BizResponse«List«CustomerWalletFundFlowInfoRespDTO»» */
@@ -11003,6 +11796,14 @@ export interface BizResponseListJxhyProductRangeDTO {
   success?: boolean;
 }
 
+/** BizResponse«List«LableValue»» */
+export interface BizResponseListLableValue {
+  code?: string;
+  data?: LableValue[];
+  msg?: string;
+  success?: boolean;
+}
+
 /** BizResponse«List«Map«string,object»»» */
 export interface BizResponseListMapStringObject {
   code?: string;
@@ -11107,6 +11908,14 @@ export interface BizResponseListSettlementExpressRespDTO {
   success?: boolean;
 }
 
+/** BizResponse«List«ShipVO»» */
+export interface BizResponseListShipVO {
+  code?: string;
+  data?: ShipVO[];
+  msg?: string;
+  success?: boolean;
+}
+
 /** BizResponse«List«TransportModeRespDTO»» */
 export interface BizResponseListTransportModeRespDTO {
   code?: string;
@@ -11155,6 +11964,23 @@ export interface BizResponseLogisticsAndForwarderRespDTO {
   success?: boolean;
 }
 
+/** BizResponse«Map«string,List«AdditionRespDTO»»» */
+export interface BizResponseMapStringListAdditionRespDTO {
+  code?: string;
+  data?: Record<string, AdditionRespDTO[]>;
+  msg?: string;
+  success?: boolean;
+}
+
+/** BizResponse«MembershipAutomaticRenewal» */
+export interface BizResponseMembershipAutomaticRenewal {
+  code?: string;
+  /** 会员自动续费表 */
+  data?: MembershipAutomaticRenewal;
+  msg?: string;
+  success?: boolean;
+}
+
 /** BizResponse«MembershipTemplateConfigAndRightReqVO» */
 export interface BizResponseMembershipTemplateConfigAndRightReqVO {
   code?: string;
@@ -11193,6 +12019,14 @@ export interface BizResponseMembershipTemplatePriceRespDTO {
 export interface BizResponseNewAreaDTO {
   code?: string;
   data?: NewAreaDTO;
+  msg?: string;
+  success?: boolean;
+}
+
+/** BizResponse«OrderDeductionFeeRespDTO» */
+export interface BizResponseOrderDeductionFeeRespDTO {
+  code?: string;
+  data?: OrderDeductionFeeRespDTO;
   msg?: string;
   success?: boolean;
 }
@@ -11330,6 +12164,7 @@ export interface BizResponsePageCustomerBill {
   code?: string;
   data?: PageCustomerBill;
   msg?: string;
+  success?: boolean;
 }
 
 /** BizResponse«Page«CustomerWalletFundFlowRespDTO»» */
@@ -11393,6 +12228,7 @@ export interface BizResponsePageMembershipPrechargeOrderRespDTO {
   code?: string;
   data?: PageMembershipPrechargeOrderRespDTO;
   msg?: string;
+  success?: boolean;
 }
 
 /** BizResponse«Page«MembershipTemplatePriceListVO»» */
@@ -11440,6 +12276,7 @@ export interface BizResponsePageSettlementAppLog {
   code?: string;
   data?: PageSettlementAppLog;
   msg?: string;
+  success?: boolean;
 }
 
 /** BizResponse«Page«TransportationAttributesRespDTO»» */
@@ -11528,6 +12365,15 @@ export interface BizResponseSellingPriceMembershipRateRespDTO {
   code?: string;
   /** 精选货源折扣价 */
   data?: SellingPriceMembershipRateRespDTO;
+  msg?: string;
+  success?: boolean;
+}
+
+/** BizResponse«ShipResultVO» */
+export interface BizResponseShipResultVO {
+  code?: string;
+  /** 国际物流计算结果 */
+  data?: ShipResultVO;
   msg?: string;
   success?: boolean;
 }
@@ -11632,6 +12478,7 @@ export interface BizResponseString {
   code?: string;
   data?: string;
   msg?: string;
+  success?: boolean;
 }
 
 /** IPage«PayAccountListVO» */
@@ -11663,6 +12510,9 @@ export interface IPagePayFlowListVO {
   /** @format int64 */
   total?: number;
 }
+
+/** Map«string,List«AdditionRespDTO»» */
+export type MapStringListAdditionRespDTO = Record<string, any>;
 
 /** Map«string,object» */
 export type MapStringObject = Record<string, object>;
@@ -13042,6 +13892,33 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags addition-controller
+     * @name GroupQuery
+     * @summary 附加项组合查询
+     * @request GET:/addition/group/query
+     */
+    groupQuery: (
+      query: {
+        /**
+         * additionScene
+         * @format int32
+         */
+        additionScene: number;
+        /** 附加项ID */
+        stationCode?: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseMapStringListAdditionRespDTO, any>({
+        path: `/addition/group/query`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags addition-controller
      * @name QueryAdditionConfig
      * @summary queryAdditionConfig
      * @request POST:/addition/queryAdditionConfig
@@ -13317,6 +14194,28 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     ) =>
       this.request<BizResponseBigdecimal, any>({
         path: `/admin/wallet/getMomey`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags admin-wallet-controller
+     * @name WalletGetOrderDeductionDetail
+     * @summary 店铺消费记录详情
+     * @request GET:/admin/wallet/getOrderDeductionDetail
+     */
+    walletGetOrderDeductionDetail: (
+      query?: {
+        /** 订单编号 */
+        platformOrderNo?: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseOrderDeductionFeeRespDTO, any>({
+        path: `/admin/wallet/getOrderDeductionDetail`,
         method: "GET",
         query: query,
         ...params,
@@ -13635,6 +14534,59 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         ...params,
       }),
   };
+  box = {
+    /**
+     * No description
+     *
+     * @tags 装箱
+     * @name Install
+     * @summary 统计总重量和体积
+     * @request POST:/box/install
+     */
+    install: (param: CalcProductAttrVO, params: RequestParams = {}) =>
+      this.request<BizResponseAttributeVO, any>({
+        path: `/box/install`,
+        method: "POST",
+        body: param,
+        type: ContentType.Json,
+        ...params,
+      }),
+  };
+  calc = {
+    /**
+     * No description
+     *
+     * @tags 成本计算器
+     * @name Execute
+     * @summary 执行计算
+     * @request POST:/calc/execute
+     */
+    execute: (param: CalcParamVO, params: RequestParams = {}) =>
+      this.request<BizResponseCalcResultVO, any>({
+        path: `/calc/execute`,
+        method: "POST",
+        body: param,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 成本计算器
+     * @name Ship
+     * @summary 国际物流运费计算
+     * @request POST:/calc/ship
+     */
+    ship: (param: CalcShipParamVO, params: RequestParams = {}) =>
+      this.request<BizResponseShipResultVO, any>({
+        path: `/calc/ship`,
+        method: "POST",
+        body: param,
+        type: ContentType.Json,
+        ...params,
+      }),
+  };
   customer = {
     /**
      * No description
@@ -13651,6 +14603,18 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @format int32
          */
         productType?: number;
+        /**
+         * 来源 0:购物车 1:成本计算器
+         * @format int32
+         */
+        source?: number;
+        /** 站点 */
+        stationCode?: string;
+        /**
+         * 业务线
+         * @format int32
+         */
+        systemSource?: number;
       },
       params: RequestParams = {},
     ) =>
@@ -14979,6 +15943,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags int-ship-config-controller
+     * @name CalcShipFee
+     * @summary batchCalcShipFee
+     * @request POST:/intShipConfig/calc/ship/fee
+     */
+    calcShipFee: (param: CalcIntShipFeeDTO, params: RequestParams = {}) =>
+      this.request<BizResponseListCalcIntShipFeeRespDTO, any>({
+        path: `/intShipConfig/calc/ship/fee`,
+        method: "POST",
+        body: param,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags int-ship-config-controller
      * @name GetForwarderCountry
      * @summary getForwarderCountrys
      * @request GET:/intShipConfig/get/forwarder/country
@@ -15278,6 +16259,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags int-ship-config-controller
+     * @name International
+     * @summary 国际料金表
+     * @request POST:/intShipConfig/international
+     */
+    international: (params: RequestParams = {}) =>
+      this.request<BizResponseListShipVO, any>({
+        path: `/intShipConfig/international`,
+        method: "POST",
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags int-ship-config-controller
      * @name List
      * @summary listIntShipConfig
      * @request POST:/intShipConfig/list
@@ -15285,6 +16282,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     list: (query: IntShipConfigListQuery, params: RequestParams = {}) =>
       this.request<BizResponseListIntShipForwardersRespDTO, any>({
         path: `/intShipConfig/list`,
+        method: "POST",
+        body: query,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags int-ship-config-controller
+     * @name ListFeign
+     * @summary listIntShipConfigByMember
+     * @request POST:/intShipConfig/list/feign
+     */
+    listFeign: (query: IntShipConfigListQuery, params: RequestParams = {}) =>
+      this.request<BizResponseListIntShipForwardersRespDTO, any>({
+        path: `/intShipConfig/list/feign`,
         method: "POST",
         body: query,
         type: ContentType.Json,
@@ -15710,6 +16724,28 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: "POST",
         body: reqDTO,
         type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 结算中心-配置项-会员配置
+     * @name ConfigureAvailableTemplate
+     * @summary 根据站点查询可用的会员等级模板
+     * @request GET:/membership/configure/available/template
+     */
+    configureAvailableTemplate: (
+      query: {
+        /** stationCode */
+        stationCode: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseListMembershipTemplateListVO, any>({
+        path: `/membership/configure/available/template`,
+        method: "GET",
+        query: query,
         ...params,
       }),
 
@@ -16435,7 +17471,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/membership/order/create/paypal
      */
     orderCreatePaypal: (orderCreateVO: OnlineMembershipOrderCreateVO, params: RequestParams = {}) =>
-      this.request<BizResponse, any>({
+      this.request<BizResponseCreateSubscriptionDTO, any>({
         path: `/membership/order/create/paypal`,
         method: "POST",
         body: orderCreateVO,
@@ -16717,9 +17753,163 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary handleNotifyTest
      * @request POST:/paypal/test
      */
-    test: (jsonParam: MapStringObject, params: RequestParams = {}) =>
+    test: (jsonParam: Record<string, object>, params: RequestParams = {}) =>
       this.request<BaseResponse, any>({
         path: `/paypal/test`,
+        method: "POST",
+        body: jsonParam,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags notify-us-controller
+     * @name UsAutomaticRenewalStatus
+     * @summary 获取用户是否选择自动续费
+     * @request GET:/paypal/us/automaticRenewalStatus
+     */
+    usAutomaticRenewalStatus: (params: RequestParams = {}) =>
+      this.request<BizResponse, any>({
+        path: `/paypal/us/automaticRenewalStatus`,
+        method: "GET",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags notify-us-controller
+     * @name UsNotify
+     * @summary handleNotify
+     * @request GET:/paypal/us/notify
+     */
+    usNotify: (params: RequestParams = {}) =>
+      this.request<BaseResponse, any>({
+        path: `/paypal/us/notify`,
+        method: "GET",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags notify-us-controller
+     * @name HeadPaypal2
+     * @summary handleNotify
+     * @request HEAD:/paypal/us/notify
+     * @originalName headPaypal
+     * @duplicate
+     */
+    headPaypal2: (params: RequestParams = {}) =>
+      this.request<BaseResponse, any>({
+        path: `/paypal/us/notify`,
+        method: "HEAD",
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags notify-us-controller
+     * @name UsNotify2
+     * @summary handleNotify
+     * @request POST:/paypal/us/notify
+     * @originalName usNotify
+     * @duplicate
+     */
+    usNotify2: (params: RequestParams = {}) =>
+      this.request<BaseResponse, any>({
+        path: `/paypal/us/notify`,
+        method: "POST",
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags notify-us-controller
+     * @name UsNotify3
+     * @summary handleNotify
+     * @request PUT:/paypal/us/notify
+     * @originalName usNotify
+     * @duplicate
+     */
+    usNotify3: (params: RequestParams = {}) =>
+      this.request<BaseResponse, any>({
+        path: `/paypal/us/notify`,
+        method: "PUT",
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags notify-us-controller
+     * @name UsNotify4
+     * @summary handleNotify
+     * @request DELETE:/paypal/us/notify
+     * @originalName usNotify
+     * @duplicate
+     */
+    usNotify4: (params: RequestParams = {}) =>
+      this.request<BaseResponse, any>({
+        path: `/paypal/us/notify`,
+        method: "DELETE",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags notify-us-controller
+     * @name OptionsPaypal2
+     * @summary handleNotify
+     * @request OPTIONS:/paypal/us/notify
+     * @originalName optionsPaypal
+     * @duplicate
+     */
+    optionsPaypal2: (params: RequestParams = {}) =>
+      this.request<BaseResponse, any>({
+        path: `/paypal/us/notify`,
+        method: "OPTIONS",
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags notify-us-controller
+     * @name UsNotify5
+     * @summary handleNotify
+     * @request PATCH:/paypal/us/notify
+     * @originalName usNotify
+     * @duplicate
+     */
+    usNotify5: (params: RequestParams = {}) =>
+      this.request<BaseResponse, any>({
+        path: `/paypal/us/notify`,
+        method: "PATCH",
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags notify-us-controller
+     * @name UsTest
+     * @summary handleNotifyTest
+     * @request POST:/paypal/us/test
+     */
+    usTest: (jsonParam: Record<string, object>, params: RequestParams = {}) =>
+      this.request<BaseResponse, any>({
+        path: `/paypal/us/test`,
         method: "POST",
         body: jsonParam,
         type: ContentType.Json,
@@ -18686,6 +19876,21 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags test-controller
+     * @name UsShipInit
+     * @summary 初始化美国站物流
+     * @request GET:/test/us/ship/init
+     */
+    usShipInit: (params: RequestParams = {}) =>
+      this.request<BizResponse, any>({
+        path: `/test/us/ship/init`,
+        method: "GET",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags test-controller
      * @name WfFailPayflowJob
      * @summary 日采购退款对账的job测试
      * @request POST:/test/wf/fail/payflow/job
@@ -18787,6 +19992,28 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags 运输属性
+     * @name GetByAbnormalCode
+     * @summary 通过异常原因查询属性
+     * @request GET:/transportationAttributes/getByAbnormalCode
+     */
+    getByAbnormalCode: (
+      query: {
+        /** abnormalReasonCodeList */
+        abnormalReasonCodeList: string[];
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseListTransportationAttributesRespDTO, any>({
+        path: `/transportationAttributes/getByAbnormalCode`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 运输属性
      * @name List
      * @summary 运输属性列表
      * @request POST:/transportationAttributes/list
@@ -18820,7 +20047,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags customer-wallet-controller
+     * @tags 用户钱包
      * @name AddCustomerWallet
      * @summary addCustomerWallet
      * @request POST:/wallet/addCustomerWallet
@@ -18852,7 +20079,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags customer-wallet-controller
+     * @tags 用户钱包
      * @name BalanceChange
      * @summary changeAmount
      * @request POST:/wallet/balance/change
@@ -18869,7 +20096,32 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags customer-wallet-controller
+     * @tags 用户钱包
+     * @name CustomerGetArrearageDeliveryTaskAmount
+     * @summary 查询仓库结算异常国际发货单数量
+     * @request GET:/wallet/customer/getArrearageDeliveryTaskAmount
+     */
+    customerGetArrearageDeliveryTaskAmount: (
+      query: {
+        /**
+         * customerShopId
+         * @format int64
+         */
+        customerShopId: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseInt, any>({
+        path: `/wallet/customer/getArrearageDeliveryTaskAmount`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 用户钱包
      * @name DownloadFundDetailByPlatformOrderNo
      * @summary 订单资金明细下载
      * @request POST:/wallet/download/FundDetailByPlatformOrderNo
@@ -18886,7 +20138,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags customer-wallet-controller
+     * @tags 用户钱包
      * @name ExportMainCustomerFundFlow
      * @summary 导出主账号消费记录
      * @request POST:/wallet/exportMainCustomerFundFlow
@@ -18903,7 +20155,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags customer-wallet-controller
+     * @tags 用户钱包
      * @name ExportShopFundFlow
      * @summary 导出店铺消费记录
      * @request POST:/wallet/exportShopFundFlow
@@ -18943,6 +20195,21 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags customer-wallet-fund-flow-controller
+     * @name FundFlowFeeTypeList
+     * @summary 获取国际发货单资金明细详情
+     * @request GET:/wallet/fund/flow/feeType/list
+     */
+    fundFlowFeeTypeList: (params: RequestParams = {}) =>
+      this.request<BizResponseListLableValue, any>({
+        path: `/wallet/fund/flow/feeType/list`,
+        method: "GET",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags customer-wallet-fund-flow-controller
      * @name FundFlowInternationalExpressGet
      * @summary 获取国际发货单资金明细详情
      * @request GET:/wallet/fund/flow/international/express/get
@@ -18964,7 +20231,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags customer-wallet-controller
+     * @tags 用户钱包
      * @name GetCustomerUnCheckMoney
      * @summary 获取账户未入账金额
      * @request GET:/wallet/getCustomerUnCheckMoney
@@ -18979,7 +20246,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags customer-wallet-controller
+     * @tags 用户钱包
      * @name GetCustomerWallet
      * @summary getCustomerWallet
      * @request GET:/wallet/getCustomerWallet
@@ -19004,7 +20271,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags customer-wallet-controller
+     * @tags 用户钱包
      * @name GetCustomerWalletList
      * @summary 获取子店铺钱包列表
      * @request GET:/wallet/getCustomerWalletList
@@ -19019,7 +20286,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags customer-wallet-controller
+     * @tags 用户钱包
      * @name GetFlowOneById
      * @summary 店铺消费记录详情
      * @request GET:/wallet/getFlowOneById
@@ -19044,7 +20311,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags customer-wallet-controller
+     * @tags 用户钱包
      * @name GetFundDetailByPlatformOrderNo
      * @summary 订单资金明细详情
      * @request GET:/wallet/getFundDetailByPlatformOrderNo
@@ -19066,7 +20333,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags customer-wallet-controller
+     * @tags 用户钱包
      * @name GetFundFlowInfo
      * @summary getFundFlowInfo
      * @request POST:/wallet/getFundFlowInfo
@@ -19083,7 +20350,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags customer-wallet-controller
+     * @tags 用户钱包
      * @name GetFundFlowRespDto
      * @summary 获取费用类型
      * @request GET:/wallet/getFundFlowRespDTO
@@ -19098,7 +20365,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags customer-wallet-controller
+     * @tags 用户钱包
      * @name GetMainCustomerWallet
      * @summary 获取主账户钱包
      * @request GET:/wallet/getMainCustomerWallet
@@ -19113,7 +20380,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags customer-wallet-controller
+     * @tags 用户钱包
      * @name GroupByFlowOrderNo
      * @summary groupByFlowOrderNo
      * @request POST:/wallet/groupByFlowOrderNo
@@ -19130,7 +20397,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags customer-wallet-controller
+     * @tags 用户钱包
      * @name ListCustomerWallet
      * @summary getCustomerWalletList
      * @request POST:/wallet/listCustomerWallet
@@ -19507,7 +20774,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags customer-wallet-controller
+     * @tags 用户钱包
      * @name QueryFundFlow
      * @summary 查看店铺消费记录
      * @request POST:/wallet/queryFundFlow
@@ -19730,7 +20997,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/wallet/recharge/membership/getAutomaticToggleStaus
      */
     rechargeMembershipGetAutomaticToggleStaus: (params: RequestParams = {}) =>
-      this.request<BizResponse, any>({
+      this.request<BizResponseMembershipAutomaticRenewal, any>({
         path: `/wallet/recharge/membership/getAutomaticToggleStaus`,
         method: "POST",
         type: ContentType.Json,
@@ -19919,7 +21186,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags customer-wallet-controller
+     * @tags 用户钱包
      * @name WalletTransferOut
      * @summary 转账
      * @request POST:/wallet/walletTransferOut
@@ -19934,6 +21201,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
   };
   warehouseForwardConfig = {
+    /**
+     * No description
+     *
+     * @tags 仓库货代配置
+     * @name BatchEdit
+     * @summary 仓库货代配置-批量编辑
+     * @request POST:/warehouseForwardConfig/batchEdit
+     */
+    batchEdit: (dto: EditWarehouseForwardConfigDTO, params: RequestParams = {}) =>
+      this.request<BizResponseObject, any>({
+        path: `/warehouseForwardConfig/batchEdit`,
+        method: "POST",
+        body: dto,
+        type: ContentType.Json,
+        ...params,
+      }),
+
     /**
      * No description
      *

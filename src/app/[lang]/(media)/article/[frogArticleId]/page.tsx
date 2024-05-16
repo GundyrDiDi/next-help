@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 11:30:20
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-15 21:46:50
+ * @LastEditTime: 2024-05-16 14:56:40
  * @Description: 
  */
 import { BizResponseCustomerDetailRespDTO, FrogArticleDetailRespDTO } from "@/service/customer";

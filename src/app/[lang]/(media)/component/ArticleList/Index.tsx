@@ -29,6 +29,8 @@ const ArticleList = ({initListArticle}:Props) => {
   const [querys] = useAtom(QueryParams);
   const { t } = useTranslation();
   const [list,setList]=useState(initListArticle??[])
+  const { keyword } = querys;
+
   const {
     data: articleRes,
     loading,
@@ -36,6 +38,22 @@ const ArticleList = ({initListArticle}:Props) => {
     run: articlePage,
   } = usePagination(
     async ({ current, pageSize }, params: Params) => {
+      // 查询历史记录
+      if(querys.isShowReadRecord){
+        const res = await api.customer.frog.articleFootPage({
+          pageNum: current,
+          pageSize,
+          ...params,
+        })
+        return {
+          total: res.data?.total || 0,
+          list: res.data?.records || [],
+        };
+        // return {
+        //   total:  0,
+        //   list: [],
+        // };
+      }
       if (querys.tab === -2) {
         const res = await api.customer.frog.articleArchivePage({
           pageNum: current,
@@ -64,8 +82,6 @@ const ArticleList = ({initListArticle}:Props) => {
   );
 
   useEffect(() => {
-    // console.log("querys.tab", querys.tab);
-    
    if(initListArticle?.length){
     articlePage(
       { pageSize: 10, current: 1 },
@@ -74,10 +90,11 @@ const ArticleList = ({initListArticle}:Props) => {
         stationCode,
         frogArticleYear: querys.year ? String(querys.year) : "",
         frogArticleMonth: querys.month ? String(querys.month) : "",
+        keyword: querys.keyword,
       }
     );
    }
-  }, [articlePage, querys.month, querys.tab, querys.year, stationCode,initListArticle]);
+  }, [articlePage, querys.month, querys.tab, querys.year, stationCode,initListArticle, querys.keyword]);
 
   useEffect(()=>{
    if(querys.tab==-1&&pagination.current==1){

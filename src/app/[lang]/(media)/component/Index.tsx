@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-10 14:43:54
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-16 00:09:31
+ * @LastEditTime: 2024-05-16 14:19:54
  * @Description: 
  */
 "use client";
@@ -22,31 +22,30 @@ import { Button, Input, Space } from "antd";
 interface Props {
   initListArticle: FrogArticleRespDTO[]
 }
+interface SearchProps {
+  onSearch: (keywords: string) => void;
+  onClickReadRecord?: () => void;
+}
 
-const Search = () => {
+const SearchArticle = (props: SearchProps) => {
+  const { onSearch, onClickReadRecord } = props;
+  const onSearchClick = () => {
+    const dom = document.querySelector('#JS_media-search-keywords') as HTMLInputElement
+    console.log(dom.value, 333)
+    onSearch(dom.value)
+  }
   return (
-    <div className="bg-[#ccc] text-center" >
+    <div className="text-center pc:mt-[56px]" >
       <div className="text-[#FAAD14] pc:text-[38px] font-[700] pc:mb-[8px]" >KAERU MEDIA</div>
       <div className="text-[#fff] pc:mt-[8px] pc:mb-[16px] pc:text-[16px]" >ECビジネスの成功に役立つ業界情報を発信</div>
       <div className="flex pc:h-[64px] justify-center mb-[56px]" >
         <div className="flex pc:w-[640px] rounded-[6px] h-[100%] " >
-          {/* <Input placeholder="キーワード検索" className="h-[100%]" style={{  flexGrow: 2 }} />
-          <div className="pc:w-[96px] h-[100%] bg-[#FAAD14] text-[#fff] flex flex-col justify-center" >检索</div> */}
-          {/* <Input.Search
-            placeholder="input search text"
-            allowClear
-            enterButton="Search"
-            className="h-[100%]"
-            
-            size="large"
-          // onSearch={onSearch}
-          /> */}
           <Space.Compact style={{ width: '100%' }}>
-            <Input defaultValue="キーワード検索" />
-            <Button type="primary" className="!h-[100%] !bg-[#FAAD14] !text-[16px]" >Submit</Button>
+            <Input placeholder="キーワード検索" id="JS_media-search-keywords" onPressEnter={onSearchClick} />
+            <Button type="primary" className="!h-[100%] !bg-[#FAAD14] !text-[16px]" onClick={onSearchClick} >Submit</Button>
           </Space.Compact>
         </div>
-        <div className="h-[100%] flex flex-col justify-center font-[700] pc:text-[16px] text-[#fff] pc:ml-[16px]" >閲覧履歴</div>
+        <div className="h-[100%] flex flex-col justify-center font-[700] pc:text-[16px] text-[#fff] pc:ml-[16px] cursor-pointer hover:text-[#FAAD14]" onClick={onClickReadRecord} >閲覧履歴</div>
       </div>
     </div>
   );
@@ -62,25 +61,42 @@ export default function Page({ initListArticle }: Props) {
   useEffect(() => {
     setBaner(bannerData[lang][plat.toUpperCase() as "B2B" | "D2C"]);
   }, [lang, plat]);
-
+  
+  const onSearch = (keyword: string) => {
+    setQuerys((value) => {
+      return {
+        ...value,
+        // tab: undefined,
+        keyword,
+      };
+    });
+  }
   const changeNav = (index: number) => {
     console.log(index, 'index');
-
     setQuerys((value) => {
       return {
         ...value,
         tab: index,
+        isShowReadRecord: false,
       };
     });
   };
 
   return (
     <>
-      <div className="Kaerumedia-banner relative">
-        <img src={banner} alt="" />
-        <div className="absolute top-0 left-0 bottom-0 right-0" >
-          <Search />
-        </div>
+      <div className="Kaerumedia-banner bg-[url('https://static-s.theckb.com/kaerumedia/media_search_bg1.png')] ">
+        {/* <img src={banner} alt="" /> */}
+        {/* <div className="absolute left-0 bottom-0 right-0" > */}
+          <SearchArticle 
+            onSearch={onSearch} 
+            onClickReadRecord={() => {
+              debugger
+              setQuerys({
+                isShowReadRecord: true,
+              });
+            }} 
+          />
+        {/* </div> */}
       </div>
       <div className="Kaerumedia-mainBox">
         <NavBar navList={navList} changeType={changeNav} />
