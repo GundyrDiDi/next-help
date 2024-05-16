@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 14:42:07
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-16 17:49:53
+ * @LastEditTime: 2024-05-16 17:53:02
  * @Description: 
  */
 'use client'
@@ -67,12 +67,13 @@ const Index = (props: IndexProps) => {
                 res = await request.customer.frog.articleFootPage({
                     pageNum, pageSize: 10, stationCode: siteStation
                 })
+            }else{
+                res = await request.customer.frog.articlePage({
+                    pageNum, pageSize: 10,
+                    ...requestParams, stationCode: siteStation,
+                    keyword
+                })
             }
-            res = await request.customer.frog.articlePage({
-                pageNum, pageSize: 10,
-                ...requestParams, stationCode: siteStation,
-                keyword
-            })
             return {
                 total: res?.data?.total ?? 0,
                 list: res?.data?.records ?? [],
@@ -97,7 +98,7 @@ const Index = (props: IndexProps) => {
                         reqArticleList({ pageSize: 10 })
                     }}
                     onClickReadRecord={() => {
-                        reqArticleList({ pageSize: 10, pageNum: 1 })
+                        reqArticleList({ pageSize: 10, pageNum: 1, type: RequestArticleListType.VIST_RECORD })
                     }}
                 />
             </Form.Item>
