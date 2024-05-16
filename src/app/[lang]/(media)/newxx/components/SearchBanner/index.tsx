@@ -2,13 +2,16 @@
  * @Author: shiguang
  * @Date: 2024-05-16 14:59:21
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-16 20:25:26
+ * @LastEditTime: 2024-05-16 20:59:49
  * @Description: 
  */
 
 'use client'
 
+import { Plat } from "@/model";
+import { ENUM_PLATE } from "@/model/Plat";
 import { Button, Input, Space } from "antd";
+import { useAtom } from "jotai";
 import { ChangeEventHandler } from "react";
 
 
@@ -25,8 +28,13 @@ const SearchBanner = (props: SearchProps) => {
         console.log(dom.value, 333)
         onSearch?.(dom.value)
     }
+    const [plat] = useAtom(Plat);
+    const isD2C = ENUM_PLATE.d2c === plat;
     return (
-        <div className="bg-[url('https://static-s.theckb.com/kaerumedia/media_search_bg1.png')] pc:h-[270px] pc:pt-[56px] " >
+        <div className={`pc:h-[270px] pc:pt-[56px] ${
+            isD2C ? `bg-[url('https://static-s.theckb.com/kaerumedia/media_search_bg2.png')]` :
+            `bg-[url('https://static-s.theckb.com/kaerumedia/media_search_bg1.png')]`
+        }`} >
             <div className="text-center" >
                 <div className="text-[#FAAD14] pc:text-[38px] font-[700] pc:mb-[8px]" >KAERU MEDIA</div>
                 <div className="text-[#fff] pc:mt-[8px] pc:mb-[16px] pc:text-[16px]" >ECビジネスの成功に役立つ業界情報を発信</div>

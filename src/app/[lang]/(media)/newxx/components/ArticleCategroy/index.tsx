@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 15:03:15
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-16 20:21:42
+ * @LastEditTime: 2024-05-16 20:53:26
  * @Description: 
  */
 "use client"
@@ -33,10 +33,9 @@ const ArticleCategroy = (props: ArticleCategroyProps) => {
             <div
                 key={item.id}
                 className={`pc:w-[170px] h-[100%] flex items-center justify-center cursor-pointer hover:bg-[#004C3F] ${
-                    item.id === value ? 'bg-[#004C3F]' : ''
+                    item.id === value ? 'bg-[--dcolor]' : ''
                 }`}
                 onClick={() => {
-                    debugger
                     onChange?.(item.id === -1 ? undefined : item.id!)
                 }}
                 style={{ borderLeft: isAll ? '1px solid rgba(255,255,255,0.4)' : undefined, borderRight: '1px solid rgba(255,255,255,0.4)' }}
@@ -45,7 +44,7 @@ const ArticleCategroy = (props: ArticleCategroyProps) => {
             </div>
         );
     }
-    return <div className="flex bg-[#4D7460] text-[#FFF] pc:text-[18px] pc:h-[50px] justify-center" >
+    return <div className="flex bg-[--pcolor] text-[#FFF] pc:text-[18px] pc:h-[50px] justify-center" >
         {renderItem({ name: '全部', id: -1 }, true)}
         {list.map((item, idx) => renderItem(item))}
     </div>
