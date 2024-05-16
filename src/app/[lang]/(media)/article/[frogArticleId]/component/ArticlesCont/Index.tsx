@@ -17,21 +17,11 @@ import { getCookieToken, isLogin } from "@/utils";
 import { useLink } from "@/utils/router";
 import { CustomerDetailRespDTO2 } from "@/model/CustomerDetail";
 import HotArtical from "./HotArtical";
+import ArticalCategory from "./ArticalCategory";
+import FixedBanner from "./FixedBanner";
 
 
-const arrToGroup2 = <T extends any>(arr: T[]) => {
-  const newArr: Array<T[]> = [];
-  for(let i = 0; i < arr.length; i++ ){
-      const temp: T[] = [];
-      temp.push(arr[i]);
-      i++;
-      if(i < arr.length){
-          temp.push(arr[i]);
-      }
-      newArr.push(temp);
-  }
-  return newArr;
-}
+
 
 interface Props {
   frogArticle?: FrogArticleDetailRespDTO;
@@ -129,35 +119,9 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
             </div> */}
           </div>
           <div className="pc:w-[370px] shrink-0 mo:w-[100%]" >
-            <div className="__cate-list bg-[#FAFAFA] p-[20px] mb-[20px]" >
-              <div className="flex items-center px-[15px] py-[10px] mb-[20px] bg-[#008060] text-[#fff] font-[700]" > 
-                <div>icon</div> <div className="pl-[12px]" >カテゴリ</div>
-              </div>
-              <div className="flex flex-wrap" >
-                {arrToGroup2(['xxx', 'xxx', 'xxx', 'xxx', 'xxx', 'xxx', 'xxx']).map((item, index) => {
-                  const [first, last] = item
-                  const renderItem = (_item: any) => {
-                    return (
-                      <div 
-                        className="flex text-[15.5px] text-[#404040] bg-[#fff] cursor-pointer items-center justify-center border border-solid border-[#F0F0F0] hover:border-[#1C9976] hover:bg-[#1c9976]/[.1] hover:text-[#008060] box-border mb-[8px] h-[58px]"
-                        style={{ flexGrow: 2 }}
-                      > 
-                        <div>{item}</div>
-                      </div>
-                    )
-                  }
-                  return <div key={index} className="flex justify-between w-[100%]" >
-                    {renderItem(first)}
-                    <div className="w-[8px] flex-shrink-0 "/>
-                    {last ? renderItem(last) : <div style={{ flexGrow: 2, opacity: 0 }} >empty</div>}
-                  </div>
-                })}
-              </div>
-            </div>
+            <ArticalCategory/>
             <HotArtical/>
-            <div className="pc:w-[370px] pc:h-[208px] bg-[#ccc] mo:fixed mo:left-0 mo:right-0 bottom-[8px] mo:h-[120px]" >
-                我是飘窗
-            </div>
+            <FixedBanner/>
           </div>
 
         </div>
