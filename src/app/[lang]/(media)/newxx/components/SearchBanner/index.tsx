@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 14:59:21
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-16 15:55:52
+ * @LastEditTime: 2024-05-16 20:25:26
  * @Description: 
  */
 
@@ -34,7 +34,7 @@ const SearchBanner = (props: SearchProps) => {
                     <div className="flex pc:w-[640px] rounded-[6px] h-[100%] " >
                         <Space.Compact style={{ width: '100%' }}>
                             <Input placeholder="キーワード検索" id="JS_media-search-keywords" onPressEnter={onSearchClick} onChange={onChange} />
-                            <Button type="primary" className="!h-[100%] !bg-[#FAAD14] !text-[16px]" onClick={onSearchClick} >Submit</Button>
+                            <Button type="primary" className="!h-[100%] !bg-[#FAAD14] !text-[16px]" onClick={onSearchClick} >搜索</Button>
                         </Space.Compact>
                     </div>
                     <div className="h-[100%] flex flex-col justify-center font-[700] pc:text-[16px] text-[#fff] pc:ml-[16px] cursor-pointer hover:text-[#FAAD14]" onClick={onClickReadRecord} >閲覧履歴</div>

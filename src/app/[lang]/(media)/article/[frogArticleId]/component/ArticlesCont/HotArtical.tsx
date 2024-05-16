@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-15 23:10:55
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-15 23:26:34
+ * @LastEditTime: 2024-05-16 20:47:14
  * @Description: 
  */
 
@@ -23,10 +23,10 @@ const list = [
 ]
 
 const HotArtical = () => {
-    return <div className="pc:hidden pad:hidden" >
+    return <div className="pc:hidden pad:hidden pc:rounded-[8px] overflow-hidden" >
         <div
             className="bg-[#008060] font-[16px] text-[#fff] leading-[40px] h-[40px] px-[8px]"
-            style={{ borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }}
+            // style={{ borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }}
         >
             人気記事
         </div>

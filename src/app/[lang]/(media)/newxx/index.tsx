@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 14:42:07
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-16 17:53:02
+ * @LastEditTime: 2024-05-16 20:37:02
  * @Description: 
  */
 'use client'
@@ -15,6 +15,7 @@ import HotArticalList from "./components/HotArticalList";
 import { Form, Pagination } from "antd";
 import { request } from "@/config/request";
 import { usePagination, useRequest } from "ahooks";
+import { useParams, useSearchParams } from "next/navigation";
 
 // 查询历史记录
 // const res = await api.customer.frog.articleFootPage({
@@ -54,24 +55,29 @@ interface IndexProps {
 
 const Index = (props: IndexProps) => {
     const { siteStation } = props;
+    const searchParams = useSearchParams()
+    const frogArticleTypeId = searchParams.get('frogArticleTypeId')
+
+    // const { frogArticleTypeId } = useSearchParams()
+    console.log(frogArticleTypeId, frogArticleTypeId, 'frogArticleTypeId')
     const [form] = Form.useForm()
     const { data, loading, run: reqArticleList, params } = useRequest(
         async (requestParams: RequestType = {} as RequestType) => {
             const w: any = window;
             w.fff = form;
-            const { pageNum: _pageNum, keyword } = form.getFieldsValue()
-            debugger
+            const { pageNum: _pageNum, keyword, frogArticleTypeId } = form.getFieldsValue()
             let res: BizResponsePageFrogArticleRespDTO | undefined = undefined;
             const pageNum = requestParams.pageNum ?? _pageNum
             if (requestParams.type === RequestArticleListType.VIST_RECORD) {
                 res = await request.customer.frog.articleFootPage({
                     pageNum, pageSize: 10, stationCode: siteStation
                 })
-            }else{
+            } else {
                 res = await request.customer.frog.articlePage({
                     pageNum, pageSize: 10,
                     ...requestParams, stationCode: siteStation,
-                    keyword
+                    keyword,
+                    frogArticleTypeId
                 })
             }
             return {
@@ -83,21 +89,16 @@ const Index = (props: IndexProps) => {
         { manual: false },
     );
     return <div className="bg-[#F5F5F5]" >
-        <Form form={form} >
-            <div
-                onClick={() => {
-                    console.log(form.getFieldsValue())
-                }}
-            >
-                点我
-            </div>
-
+        <Form form={form} initialValues={frogArticleTypeId ? { frogArticleTypeId } : undefined} >
             <Form.Item name="keyword" noStyle >
                 <SearchBanner
                     onSearch={() => {
                         reqArticleList({ pageSize: 10 })
                     }}
                     onClickReadRecord={() => {
+                        form.setFieldsValue({
+                            frogArticleTypeId: -99,
+                        })
                         reqArticleList({ pageSize: 10, pageNum: 1, type: RequestArticleListType.VIST_RECORD })
                     }}
                 />
@@ -105,14 +106,18 @@ const Index = (props: IndexProps) => {
 
             <div className="pc:py-[20px]" >
                 <Form.Item name="frogArticleTypeId" noStyle >
-                    <ArticleCategroy />
+                    <ArticleCategroy
+                        onChange={(value) => {
+                            reqArticleList({ pageSize: 10, pageNum: 1, frogArticleTypeId: value })
+                        }}
+                    />
                 </Form.Item>
             </div>
             <div className="flex justify-center" >
                 <div className="pc:w-[1200px] flex" >
                     <div className="pc:mr-[20px]" >
                         <ArticleList list={data?.list ?? []} />
-                        <div className="py-[32px]" >
+                        {!!data?.list.length && <div className="py-[32px]" >
                             <Form.Item name="pageNum" noStyle valuePropName="current" >
                                 <Pagination
                                     pageSize={10}
@@ -124,7 +129,7 @@ const Index = (props: IndexProps) => {
                                     showQuickJumper
                                 />
                             </Form.Item>
-                        </div>
+                        </div>}
                     </div>
                     <div>
                         <HotArticalList />

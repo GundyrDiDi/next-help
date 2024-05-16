@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 15:03:15
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-16 17:58:34
+ * @LastEditTime: 2024-05-16 20:36:29
  * @Description: 
  */
 
@@ -10,6 +10,8 @@ import { ENUM_PAGE, NO_LOGIN_RESTRICTION_TYPE, NO_MEMBERSHIP_RESTRICTION_TYPE } 
 import { FrogArticleRespDTO } from "@/service/customer";
 import { isLogin } from "@/utils";
 import { getLink, toTheCkb } from "@/utils/router";
+import { Empty } from "antd";
+import { useTranslation } from "react-i18next";
 
 interface ArticleListProps {
     list?: FrogArticleRespDTO[];
@@ -17,9 +19,12 @@ interface ArticleListProps {
 
 const ArticleList = (props: ArticleListProps) => {
     const { list } = props
+    const { t } = useTranslation();
+
     return (
         <div className="flex justify-center" >
             <div className="pc:p-[20px] bg-[#fff] pc:w-[940px] pc:rounded-[6px] " >
+                {!list?.length && <Empty description={t("没有更多了")} />}
                 {list?.map((item, key) => {
                     return <div
                         className="flex pc:h-[166px] pc:mb-[40px] cursor-pointer"

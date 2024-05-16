@@ -1,6 +1,10 @@
+'use client'
 import { request } from "@/config/request";
 import { FrogArticleType } from "@/service/customer";
 import { useRequest } from "ahooks";
+import { useParams, useRouter } from "next/navigation";
+
+
 
 const arrToGroup2 = <T extends any>(arr: T[]) => {
     const newArr: Array<T[]> = [];
@@ -16,6 +20,8 @@ const arrToGroup2 = <T extends any>(arr: T[]) => {
     return newArr;
 }
 const ArticalCategory = () => {
+    const router = useRouter()
+    const { lang } = useParams();
     const { data } = useRequest(request.customer.frog.articleTypeList, {
         defaultParams: [{
             stationCode: 'JapanStation'
@@ -35,6 +41,9 @@ const ArticalCategory = () => {
                             <div
                                 className="flex text-[15.5px] text-[#404040] bg-[#fff] cursor-pointer items-center justify-center border border-solid border-[#F0F0F0] hover:border-[#1C9976] hover:bg-[#1c9976]/[.1] hover:text-[#008060] box-border mb-[8px] h-[58px]"
                                 style={{ flexGrow: 2 }}
+                                onClick={() => {
+                                    router.push(`/${lang}?frogArticleTypeId=${_item.id}`)
+                                }}
                             >
                                 <div>{_item.name}</div>
                             </div>
