@@ -17,7 +17,7 @@ const FixedBanner = () => {
     
     return (<div className="pc:w-[370px] pc:h-[208px] bg-[#ccc] mo:fixed mo:left-0 mo:right-0 bottom-[8px] mo:h-[120px] relative " >
         <div className="absolute right-0 top-0 cursor-pointer" onClick={() => setIsCloseBanner(true) } >关闭</div>
-        <img alt="" src={imageUrl} className="block h-[100%]" />
+        <img alt="" src={imageUrl} className="block h-[100%] w-[100%] " />
     </div>)
 }
 

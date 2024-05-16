@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 14:59:21
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-16 20:59:49
+ * @LastEditTime: 2024-05-16 21:28:18
  * @Description: 
  */
 
@@ -31,14 +31,14 @@ const SearchBanner = (props: SearchProps) => {
     const [plat] = useAtom(Plat);
     const isD2C = ENUM_PLATE.d2c === plat;
     return (
-        <div className={`pc:h-[270px] pc:pt-[56px] ${
+        <div className={`pc:h-[270px] pc:pt-[56px] mo:h-[140px] ${
             isD2C ? `bg-[url('https://static-s.theckb.com/kaerumedia/media_search_bg2.png')]` :
             `bg-[url('https://static-s.theckb.com/kaerumedia/media_search_bg1.png')]`
         }`} >
             <div className="text-center" >
-                <div className="text-[#FAAD14] pc:text-[38px] font-[700] pc:mb-[8px]" >KAERU MEDIA</div>
-                <div className="text-[#fff] pc:mt-[8px] pc:mb-[16px] pc:text-[16px]" >ECビジネスの成功に役立つ業界情報を発信</div>
-                <div className="flex pc:h-[64px] justify-center mb-[56px]" >
+                <div className="text-[#FAAD14] pc:text-[38px] mo:text-[24px] mo:h-[30px] font-[700] pc:mb-[8px]" >KAERU MEDIA</div>
+                <div className="text-[#fff] pc:mt-[8px] pc:mb-[16px] pc:text-[16px] mo:text-[14px]" >ECビジネスの成功に役立つ業界情報を発信</div>
+                <div className="flex pc:h-[64px] mo:h-[40px] justify-center pc:mb-[56px]" >
                     <div className="flex pc:w-[640px] rounded-[6px] h-[100%] " >
                         <Space.Compact style={{ width: '100%' }}>
                             <Input placeholder="キーワード検索" id="JS_media-search-keywords" onPressEnter={onSearchClick} onChange={onChange} />

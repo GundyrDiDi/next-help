@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-15 23:10:55
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-16 20:33:11
+ * @LastEditTime: 2024-05-16 21:18:00
  * @Description: 
  */
 'use client'
@@ -36,7 +36,7 @@ const HotArticalList = () => {
       );
     const { lang } = useParams();
 
-    return <div className="bg-[#fff] pc:rounded-[8px] overflow-hidden" >
+    return <div className="bg-[#fff] rounded-[8px] pc:rounded-[8px] overflow-hidden" >
         <div
             className="bg-[#008060] font-[16px] text-[#fff] leading-[40px] h-[40px] px-[8px]"
             // style={{ borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }}

@@ -30,8 +30,10 @@ const ArticalCategory = () => {
     const list = data?.data ?? [];
     return (
         <div className="__cate-list bg-[#FAFAFA] p-[20px] mb-[20px]" >
-            <div className="flex items-center px-[15px] py-[10px] mb-[20px] bg-[#008060] text-[#fff] font-[700]" >
-                <div>icon</div> <div className="pl-[12px]" >カテゴリ</div>
+            <div className="flex px-[15px] mb-[20px] bg-[#008060] text-[#fff] font-[700] mo:text-[24px] items-center mo:h-[50px]" >
+                <div className="flex" >
+                    <div>icon</div> <div className="pl-[12px]" >カテゴリ 1111</div>
+                </div> 
             </div>
             <div className="flex flex-wrap" >
                 {arrToGroup2(list).map((item, index) => {
