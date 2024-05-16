@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 15:02:12
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-16 15:39:48
+ * @LastEditTime: 2024-05-16 17:48:00
  * @Description: 时间归档分类列表
  */
 'use client'
@@ -37,7 +37,7 @@ const TimeLineCate = () => {
     const list = data?.data ?? [];
     // const 
 
-    return <div>
+    return <div className="bg-[#fff]" >
         <div
             className="bg-[#008060] font-[16px] text-[#fff] leading-[40px] h-[40px] px-[8px]"
             style={{ borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }}

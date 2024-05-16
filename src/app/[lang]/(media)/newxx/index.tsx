@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 14:42:07
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-16 17:28:58
+ * @LastEditTime: 2024-05-16 17:49:53
  * @Description: 
  */
 'use client'
@@ -34,13 +34,13 @@ enum RequestArticleListType {
     VIST_RECORD = 'VIST_RECORD'
 }
 
-type RequestType = 
+type RequestType =
     {
         type?: RequestArticleListType;
         pageNum?: number;
         pageSize?: number;
     } & GetFrogArticleArchivePageDTO & GetFrogArticlePageDTO & GetFrogArticlePageDTO
-;
+    ;
 
 
 
@@ -48,7 +48,7 @@ interface IndexProps {
     // SSRArticleListData: BizResponsePageFrogArticleRespDTO;
 }
 request.customer.frog.articleFootPage
-interface IndexProps{
+interface IndexProps {
     siteStation: string;
 }
 
@@ -57,16 +57,19 @@ const Index = (props: IndexProps) => {
     const [form] = Form.useForm()
     const { data, loading, run: reqArticleList, params } = useRequest(
         async (requestParams: RequestType = {} as RequestType) => {
+            const w: any = window;
+            w.fff = form;
             const { pageNum: _pageNum, keyword } = form.getFieldsValue()
+            debugger
             let res: BizResponsePageFrogArticleRespDTO | undefined = undefined;
             const pageNum = requestParams.pageNum ?? _pageNum
             if (requestParams.type === RequestArticleListType.VIST_RECORD) {
-                res = await request.customer.frog.articleFootPage({ 
-                    pageNum, pageSize: 10, stationCode: siteStation 
+                res = await request.customer.frog.articleFootPage({
+                    pageNum, pageSize: 10, stationCode: siteStation
                 })
             }
-            res = await request.customer.frog.articlePage({ 
-                pageNum, pageSize: 10, 
+            res = await request.customer.frog.articlePage({
+                pageNum, pageSize: 10,
                 ...requestParams, stationCode: siteStation,
                 keyword
             })
@@ -79,48 +82,58 @@ const Index = (props: IndexProps) => {
         { manual: false },
     );
     return <div className="bg-[#F5F5F5]" >
-        <div
-            onClick={() => {
-                console.log(form.getFieldsValue())
-            }}
-        >
-            点我
-        </div>
         <Form form={form} >
+            <div
+                onClick={() => {
+                    console.log(form.getFieldsValue())
+                }}
+            >
+                点我
+            </div>
+
             <Form.Item name="keyword" noStyle >
-                <SearchBanner 
+                <SearchBanner
                     onSearch={() => {
-                        reqArticleList({pageSize: 10})
-                    }} 
+                        reqArticleList({ pageSize: 10 })
+                    }}
                     onClickReadRecord={() => {
                         reqArticleList({ pageSize: 10, pageNum: 1 })
                     }}
                 />
             </Form.Item>
-        </Form>
-        <div className="pc:py-[20px]" >
-            <Form.Item name="frogArticleTypeId" noStyle >
-                <ArticleCategroy />
-            </Form.Item>
-        </div>
-        <div>
-            <div>
-                <ArticleList list={data?.list ?? []} />
-                <Form.Item name="keyword" noStyle valuePropName="current" >
-                    <Pagination
-                        pageSize={10}
-                        total={data?.total}
-                        style={{ marginTop: 16, textAlign: 'right' }}
-                        showQuickJumper
-                    />
+
+            <div className="pc:py-[20px]" >
+                <Form.Item name="frogArticleTypeId" noStyle >
+                    <ArticleCategroy />
                 </Form.Item>
             </div>
-
-            <div>
-                <HotArticalList />
-                <TimeArchiveCate />
+            <div className="flex justify-center" >
+                <div className="pc:w-[1200px] flex" >
+                    <div className="pc:mr-[20px]" >
+                        <ArticleList list={data?.list ?? []} />
+                        <div className="py-[32px]" >
+                            <Form.Item name="pageNum" noStyle valuePropName="current" >
+                                <Pagination
+                                    pageSize={10}
+                                    total={data?.total}
+                                    onChange={(pageNum) => {
+                                        reqArticleList({ pageNum })
+                                    }}
+                                    style={{ marginTop: 16, textAlign: 'right' }}
+                                    showQuickJumper
+                                />
+                            </Form.Item>
+                        </div>
+                    </div>
+                    <div>
+                        <HotArticalList />
+                        <div className="pc:mt-[20px]" >
+                            <TimeArchiveCate />
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </Form>
     </div>
 }
 
