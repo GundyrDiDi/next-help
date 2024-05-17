@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 14:42:07
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-17 11:07:42
+ * @LastEditTime: 2024-05-17 11:49:00
  * @Description: 
  */
 'use client'
@@ -104,7 +104,7 @@ const Index = (props: IndexProps) => {
                 />
             </Form.Item>
 
-            <div className="pc:py-[20px] mo:py-[8px]" >
+            <div className="py-[20px] mo:py-[8px]" >
                 <Form.Item name="frogArticleTypeId" noStyle >
                     <ArticleCategroy
                         onChange={(value) => {
@@ -113,7 +113,7 @@ const Index = (props: IndexProps) => {
                     />
                 </Form.Item>
             </div>
-            <div className="flex mo:!block justify-center mo:bg-white" >
+            <div className="flex mo:!block pad:!block justify-center mo:bg-white pad:p-[20px] pad:pt-[0px]" >
                 <div className="pc:w-[1200px] flex mo:!block mo:bg-white" >
                     <div className="pc:mr-[20px] mo:!bg-white" >
                         <ArticleList list={data?.list ?? []} />
@@ -132,7 +132,7 @@ const Index = (props: IndexProps) => {
                             </Form.Item>
                         </div>}
                     </div>
-                    <div className="mo:hidden" >
+                    <div className="mo:hidden pad:hidden " >
                         <HotArticalList />
                         <div className="pc:mt-[20px]" >
                             <TimeArchiveCate />

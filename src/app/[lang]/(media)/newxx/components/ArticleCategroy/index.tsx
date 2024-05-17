@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 15:03:15
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-17 11:06:29
+ * @LastEditTime: 2024-05-17 11:45:53
  * @Description: 
  */
 "use client"
@@ -32,7 +32,7 @@ const ArticleCategroy = (props: ArticleCategroyProps) => {
         return (
             <div
                 key={item.id}
-                className={`pc:w-[170px] h-[100%] flex items-center justify-center cursor-pointer hover:bg-[#004C3F] ${
+                className={`pc:w-[170px] pad:w-[124px] h-[100%] flex items-center justify-center cursor-pointer hover:bg-[#004C3F] ${
                     item.id === value ? 'bg-[--dcolor]' : ''
                 } mo:!px-[16px] mo:!shrink-0 mo:!h-[50px]`}
                 onClick={() => {
@@ -44,7 +44,7 @@ const ArticleCategroy = (props: ArticleCategroyProps) => {
             </div>
         );
     }
-    return <div className="flex bg-[--pcolor] text-[#FFF] pc:text-[18px] pc:h-[50px] pc:justify-center mo:overflow-x-auto" >
+    return <div className="flex bg-[--pcolor] text-[#FFF] pc:text-[18px] pc:h-[50px] pad:h-[50px] pc:justify-center mo:overflow-x-auto" >
         {/* <div>11222222222222222222222222222222</div>
         <div>111</div>
         <div>111</div>
