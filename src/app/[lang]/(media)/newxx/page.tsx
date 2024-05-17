@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-25 10:57:25
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-16 16:52:26
+ * @LastEditTime: 2024-05-17 17:18:05
  * @Description: 
  */
 import { Local } from "@/i18n/settings";
@@ -57,7 +57,6 @@ export default async function Page({ params }:Props) {
   return (
     <>
       <Index siteStation={siteStation as string} />
-    {/* <Kaerumedia  initListArticle={res?.data?.records??[]}/> */}
     </>
   );
 }

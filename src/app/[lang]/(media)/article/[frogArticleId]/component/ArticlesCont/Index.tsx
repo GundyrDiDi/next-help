@@ -95,7 +95,7 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
           <div className="pc:w-[calc(1200px-378px)] mo:w-[100%] " >
             <div className="pc:pr-[20px]">
               <div >
-                <h1 className="content-title !text-[30px] !leading-[40px] !m-[0] mo:text-[20px]">{frogArticle?.frogArticleTitle}</h1>
+                <h1 className="content-title !text-[30px] !m-[0] mo:!text-[20px]">{frogArticle?.frogArticleTitle}</h1>
                 {frogArticle?.frogArticleId !== 151 && (
                   <div className="text-right mo:text-left mo:mt-[8px] mo:h-[20px] text-[#000]/[0.45]">
                     {setStationTime(frogArticle?.createTime)}
@@ -115,17 +115,12 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
                 source={querys.source}
               />
             </div>
-            {/* <div className="">
-              <HotArticles showBtn={false} type={querys.type} />
-            </div> */}
           </div>
           <div className="pc:w-[370px] shrink-0 mo:w-[100%]" >
             <ArticalCategory/>
-            {/* <HotArtical/> */}
             <HotArticalList/>
             <FixedBanner/>
           </div>
-
         </div>
       </div>
       {markingShow && <Marking />}
