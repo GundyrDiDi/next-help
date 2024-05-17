@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 14:42:07
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-16 20:37:02
+ * @LastEditTime: 2024-05-17 10:19:47
  * @Description: 
  */
 'use client'
@@ -88,7 +88,7 @@ const Index = (props: IndexProps) => {
         },
         { manual: false },
     );
-    return <div className="bg-[#F5F5F5]" >
+    return <div className="bg-[#F5F5F5] mo:bg-white" >
         <Form form={form} initialValues={frogArticleTypeId ? { frogArticleTypeId } : undefined} >
             <Form.Item name="keyword" noStyle >
                 <SearchBanner
@@ -104,7 +104,7 @@ const Index = (props: IndexProps) => {
                 />
             </Form.Item>
 
-            <div className="pc:py-[20px]" >
+            <div className="pc:py-[20px] mo:py-[8px]" >
                 <Form.Item name="frogArticleTypeId" noStyle >
                     <ArticleCategroy
                         onChange={(value) => {
@@ -113,9 +113,9 @@ const Index = (props: IndexProps) => {
                     />
                 </Form.Item>
             </div>
-            <div className="flex justify-center" >
-                <div className="pc:w-[1200px] flex" >
-                    <div className="pc:mr-[20px]" >
+            <div className="flex mo:!block justify-center mo:bg-white" >
+                <div className="pc:w-[1200px] flex mo:!block mo:bg-white" >
+                    <div className="pc:mr-[20px] mo:!bg-white" >
                         <ArticleList list={data?.list ?? []} />
                         {!!data?.list.length && <div className="py-[32px]" >
                             <Form.Item name="pageNum" noStyle valuePropName="current" >
@@ -131,7 +131,7 @@ const Index = (props: IndexProps) => {
                             </Form.Item>
                         </div>}
                     </div>
-                    <div>
+                    <div className="mo:hidden" >
                         <HotArticalList />
                         <div className="pc:mt-[20px]" >
                             <TimeArchiveCate />
