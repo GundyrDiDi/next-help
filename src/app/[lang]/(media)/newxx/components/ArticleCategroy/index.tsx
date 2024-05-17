@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 15:03:15
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-17 09:50:48
+ * @LastEditTime: 2024-05-17 11:06:29
  * @Description: 
  */
 "use client"
@@ -44,7 +44,23 @@ const ArticleCategroy = (props: ArticleCategroyProps) => {
             </div>
         );
     }
-    return <div className="flex bg-[--pcolor] text-[#FFF] pc:text-[18px] pc:h-[50px] justify-center mo:overflow-x-auto" >
+    return <div className="flex bg-[--pcolor] text-[#FFF] pc:text-[18px] pc:h-[50px] pc:justify-center mo:overflow-x-auto" >
+        {/* <div>11222222222222222222222222222222</div>
+        <div>111</div>
+        <div>111</div>
+        <div>111</div>
+        <div>111</div>
+        <div>111</div>
+        <div>111</div>
+        <div>111</div>
+        <div>111</div>
+        <div>111</div>
+        <div>111</div>
+        <div>111</div>
+        <div>111</div>
+        <div>111</div>
+        <div>111</div>
+        <div>33333322</div> */}
         {renderItem({ name: '全部', id: -1 }, true)}
         {list.map((item, idx) => renderItem(item))}
     </div>

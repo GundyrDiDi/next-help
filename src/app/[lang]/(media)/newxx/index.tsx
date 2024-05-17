@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 14:42:07
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-17 10:19:47
+ * @LastEditTime: 2024-05-17 11:07:42
  * @Description: 
  */
 'use client'
@@ -117,7 +117,7 @@ const Index = (props: IndexProps) => {
                 <div className="pc:w-[1200px] flex mo:!block mo:bg-white" >
                     <div className="pc:mr-[20px] mo:!bg-white" >
                         <ArticleList list={data?.list ?? []} />
-                        {!!data?.list.length && <div className="py-[32px]" >
+                        {!!data?.list.length && <div className="pc:py-[32px]" >
                             <Form.Item name="pageNum" noStyle valuePropName="current" >
                                 <Pagination
                                     pageSize={10}
@@ -125,7 +125,8 @@ const Index = (props: IndexProps) => {
                                     onChange={(pageNum) => {
                                         reqArticleList({ pageNum })
                                     }}
-                                    style={{ marginTop: 16, textAlign: 'right' }}
+                                    className="text-center mo:!mb-[40px]"
+                                    style={{ marginTop: 16 }}
                                     showQuickJumper
                                 />
                             </Form.Item>
