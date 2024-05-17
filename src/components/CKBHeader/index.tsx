@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { Badge, Popover, message } from "antd";
 import { CaretDownOutlined } from "@ant-design/icons";
-import { useAtom, useAtomValue, useStore } from "jotai";
+import { useAtom, useAtomValue, useSetAtom, useStore } from "jotai";
 import dayjs from "dayjs";
 import { CustomerDetail, Lang, Plat } from "@/model";
 import IconHeadSculpture from "@/components/Icon/IconHeadSculpture";
@@ -27,6 +27,8 @@ import { toTheCkb } from "@/utils/router";
 import langType from "@/model/Lang";
 import classNames from "classnames";
 import { Local } from "@/i18n/settings";
+import { useParams, usePathname } from "next/navigation";
+import { ReadRecordMenuItem } from '@/app/[lang]/(media)/newxx/components/SearchBanner/utils';
 
 const menuCommonStyle =
   "flex items-center ml-[20px] hover:text-[color:--color-primary-light] cursor-pointer flex-row";
@@ -144,7 +146,9 @@ const CKBHeader = ({}: Props) => {
     if (customerDetail?.isKO) return floatExchangeRate < 10;
     return false;
   };
-
+  // const pathName = usePathname()
+  // const { lang: _paramsLang } = useParams()
+  // const isHomePage = `/${_paramsLang}` === pathName;
   return (
     <div className="CKBHeader">
       <div className="wrap of-hd viewport">
@@ -152,6 +156,18 @@ const CKBHeader = ({}: Props) => {
           <>
             <div className="cover"></div>
             <div className="loginMenu">
+            <ReadRecordMenuItem closeMenu={() => setLoginMenu(false)} />
+            {/* {isHomePage && 
+            <div
+              onClick={() => {
+                requestReadRecordContext.requestReadRecord();
+              }}
+              className="bg-[#fff] mo:text-center mo:h-[50px] flex items-center justify-center text-[--color-primary] text-[16px] " 
+              style={{ borderBottom: '1px solid #E6EAF0' }} 
+            >
+              浏览记录
+            </div>} */}
+
               {isLogin() ? (
                 <>
                   <div
