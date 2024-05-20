@@ -2,6 +2,13 @@
  * @Author: shiguang
  * @Date: 2024-05-16 15:02:12
  * @LastEditors: shiguang
+ * @LastEditTime: 2024-05-20 11:02:53
+ * @Description: 
+ */
+/*
+ * @Author: shiguang
+ * @Date: 2024-05-16 15:02:12
+ * @LastEditors: shiguang
  * @LastEditTime: 2024-05-16 21:06:28
  * @Description: 时间归档分类列表
  */
@@ -42,7 +49,7 @@ const TimeLineCate = () => {
     
     return <div className="bg-[#fff] pc:rounded-[8px] overflow-hidden text-[#666] text-[14px] " >
         <div
-            className="bg-[#008060] font-[16px] text-[#fff] leading-[40px] h-[40px] px-[8px]"
+            className="bg-[--pcolor] font-[16px] text-[#fff] leading-[40px] h-[40px] px-[8px]"
             // style={{ borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }}
         >
             カテゴリ
