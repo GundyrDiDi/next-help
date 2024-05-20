@@ -2,13 +2,15 @@
  * @Author: shiguang
  * @Date: 2024-05-16 15:03:15
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-20 18:04:34
+ * @LastEditTime: 2024-05-20 18:42:40
  * @Description: 
  */
 "use client"
 import { request } from "@/config/request";
 import { FrogArticleType } from "@/service/customer";
+import { getSiteStation } from "@/utils/language";
 import { useRequest } from "ahooks";
+import { useParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
 
 interface ArticleCategroyProps{
@@ -19,10 +21,11 @@ interface ArticleCategroyProps{
 // -99 是不展示
 const ArticleCategroy = (props: ArticleCategroyProps) => {
     const { onChange, value: _value } = props;
+    const { lang } = useParams()
     const value = _value ?? -99;
     const { data } = useRequest(request.customer.frog.articleTypeList, {
         defaultParams: [{
-            stationCode: 'JapanStation'
+            stationCode: getSiteStation(lang as any)
         }]
     });
     console.log(_value, 'wwwwww', data);

@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 18:07:45
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-20 16:24:49
+ * @LastEditTime: 2024-05-20 18:37:05
  * @Description: 
  */
 'use client'
@@ -12,6 +12,7 @@ import { getSiteStation } from "@/utils/language";
 import { useRequest } from "ahooks";
 import { useParams, useRouter } from "next/navigation";
 import IconFile from "./IconFile";
+import { useTranslation } from "react-i18next";
 
 
 
@@ -38,11 +39,12 @@ const ArticalCategory = () => {
         }]
     });
     const list = data?.data ?? [];
+    const { t } = useTranslation()
     return (
         <div className="__cate-list bg-[#FAFAFA] p-[20px] mb-[20px]" >
             <div className="flex px-[15px] mb-[20px] bg-[--pcolor] text-[#fff] font-[700] text-[24px] items-center h-[50px]" >
                 <div className="flex items-center " >
-                    <IconFile/> <div className="pl-[12px]" >カテゴリ</div>
+                    <IconFile/> <div className="pl-[12px]" >{t('分类')}</div>
                 </div> 
             </div>
             <div className="flex flex-wrap" >

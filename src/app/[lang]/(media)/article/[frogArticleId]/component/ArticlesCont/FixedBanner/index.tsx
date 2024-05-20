@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 18:23:25
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-20 17:29:39
+ * @LastEditTime: 2024-05-20 18:30:43
  * @Description: 
  */
 'use client'
@@ -11,6 +11,7 @@ import { getSiteStation } from "@/utils/language";
 import { useRequest } from "ahooks";
 import { useParams } from "next/navigation";
 import { useState } from "react";
+import IconClose from "./IconClose";
 
 const fixedBannerExpiredLocalStorageKey = 'fixedBannerExpired';
 
@@ -40,7 +41,7 @@ const FixedBanner = () => {
         }}
     >
         <div
-            className="absolute right-0 top-0 cursor-pointer"
+            className="absolute right-0 top-0 cursor-pointer bg-[#000]/[.25] flex items-center justify-center w-[24px] h-[24px]"
             onClick={(e) => {
                 const curDate = String((new Date()).getDate())
                 window.localStorage.setItem(fixedBannerExpiredLocalStorageKey, curDate)
@@ -48,7 +49,7 @@ const FixedBanner = () => {
                 e.stopPropagation();
             }}
         >
-            关闭
+            <IconClose width={12} height={12}  />
         </div>
         <img alt="" src={imageUrl} className="block h-[100%] w-[100%] mo:hidden" />
         <img alt="" src={bannerImgMobileUrl} className="block h-[100%] w-[100%] pc:hidden pad:hidden" />

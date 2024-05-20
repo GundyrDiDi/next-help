@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 15:02:12
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-20 16:08:08
+ * @LastEditTime: 2024-05-20 18:44:17
  * @Description: 
  */
 /*
@@ -18,6 +18,7 @@ import { request } from "@/config/request";
 import { useState } from "react";
 import { useParams } from "next/navigation";
 import { getSiteStation } from "@/utils/language";
+import { useTranslation } from "react-i18next";
 
 // const { runAsync: articlePage, loading } = useRequest(
 //     request.customer.frog.articleArchive,
@@ -51,6 +52,7 @@ const TimeArchiveCate = (props: TimeArchiveCateProps) => {
     const { value, onChange } = props;
     const { lang } = useParams();
     const stationCode = getSiteStation(lang as any)
+    const { t } = useTranslation()
 
     const { data } = useRequest(request.customer.frog.articleArchive, { defaultParams: [{ stationCode }] });
     const list = data?.data ?? [];
@@ -63,7 +65,7 @@ const TimeArchiveCate = (props: TimeArchiveCateProps) => {
             className="bg-[--pcolor] font-[16px] text-[#fff] leading-[40px] h-[40px] px-[8px]"
             // style={{ borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }}
         >
-            カテゴリ
+            {t('分类')}
         </div>
         {(isExpand ? list: list.slice(0,8)).map((item, idx) => <div
             onClick={() => {
