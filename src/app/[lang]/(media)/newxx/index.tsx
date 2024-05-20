@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 14:42:07
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-17 17:23:24
+ * @LastEditTime: 2024-05-20 16:06:53
  * @Description: 
  */
 'use client'
@@ -10,7 +10,7 @@ import { BizResponsePageFrogArticleRespDTO, GetFrogArticleArchivePageDTO, GetFro
 import SearchBanner from "./components/SearchBanner";
 import ArticleCategroy from "./components/ArticleCategroy";
 import ArticleList from "./components/ArticleList";
-import TimeArchiveCate from "./components/TimeArchiveCate";
+import TimeArchiveCate, { TimeArchiveCateValue } from "./components/TimeArchiveCate";
 import HotArticalList from "./components/HotArticalList";
 import { Form, Pagination } from "antd";
 import { request } from "@/config/request";
@@ -41,6 +41,7 @@ type RequestType =
         type?: RequestArticleListType;
         pageNum?: number;
         pageSize?: number;
+        timeArchiveCate?: TimeArchiveCateValue;
     } & GetFrogArticleArchivePageDTO & GetFrogArticlePageDTO & GetFrogArticlePageDTO
     ;
 
@@ -62,6 +63,7 @@ const Index = (props: IndexProps) => {
     
     const { data, loading, run: reqArticleList, params } = useRequest(
         async (requestParams: RequestType = {} as RequestType) => {
+            const { timeArchiveCate } = requestParams;
             const w: any = window;
             w.fff = form;
             const { pageNum: _pageNum, keyword, frogArticleTypeId } = form.getFieldsValue()
@@ -71,7 +73,16 @@ const Index = (props: IndexProps) => {
                 res = await request.customer.frog.articleFootPage({
                     pageNum, pageSize: 10, stationCode: siteStation
                 })
-            } else {
+            // 说明看的是归档文章
+            } if(timeArchiveCate){
+                timeArchiveCate.frogArticleMonth
+                res = await request.customer.frog.articleArchivePage({
+                    pageNum, pageSize: 10, 
+                    stationCode: siteStation,
+                    frogArticleMonth: String(timeArchiveCate.frogArticleMonth),
+                    frogArticleYear: String(timeArchiveCate.frogArticleYear),
+                })
+            }else {
                 res = await request.customer.frog.articlePage({
                     pageNum, pageSize: 10,
                     ...requestParams, stationCode: siteStation,
@@ -107,7 +118,8 @@ const Index = (props: IndexProps) => {
                 <SearchBanner
                     onSearch={() => {
                         form.setFieldsValue({
-                            isArticalReadRecord: false
+                            isArticalReadRecord: false,
+                            timeArchiveCate: undefined,
                         })
                         reqArticleList({ pageSize: 10 })
                     }}
@@ -124,7 +136,8 @@ const Index = (props: IndexProps) => {
                         onChange={(value) => {
                             reqArticleList({ pageSize: 10, pageNum: 1, frogArticleTypeId: value })
                             form.setFieldsValue({
-                                isArticalReadRecord: false
+                                isArticalReadRecord: false,
+                                timeArchiveCate: undefined
                             })
                         }}
                     />
@@ -152,7 +165,20 @@ const Index = (props: IndexProps) => {
                     <div className="mo:hidden pad:hidden " >
                         <HotArticalList />
                         <div className="pc:mt-[20px]" >
-                            <TimeArchiveCate />
+                            <Form.Item name="timeArchiveCate" noStyle >
+                                <TimeArchiveCate
+                                 onChange={(val) => {
+                                    form.setFieldsValue({
+                                        pageNum: 1,
+                                        isArticalReadRecord: undefined
+                                    })
+                                    reqArticleList({ 
+                                        pageNum: 1, 
+                                        timeArchiveCate: val  
+                                    })
+                                 }} 
+                                />
+                            </Form.Item>
                         </div>
                     </div>
                 </div>

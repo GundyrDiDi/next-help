@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 15:03:15
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-20 14:06:36
+ * @LastEditTime: 2024-05-20 15:26:53
  * @Description: 
  */
 "use client"
@@ -40,7 +40,7 @@ const ArticleCategroy = (props: ArticleCategroyProps) => {
                 }}
                 style={{ borderLeft: isAll ? '1px solid rgba(255,255,255,0.4)' : undefined, borderRight: '1px solid rgba(255,255,255,0.4)' }}
             >
-                {item.name}
+                <span className="line-clamp-1" >{item.name}</span>
             </div>
         );
     }

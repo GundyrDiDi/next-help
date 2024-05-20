@@ -161,7 +161,7 @@ export interface AddFrogArticleReqDTO {
   frogArticleType?: number;
   /**
    * 文章类型Id
-   * @format int32
+   * @format int64
    */
   frogArticleTypeId?: number;
   /** @format int64 */
@@ -1871,6 +1871,11 @@ export interface FrogArticleDetailRespDTO {
   frogArticleTitle?: string;
   /** @format int32 */
   frogArticleType?: number;
+  /**
+   * 文章类型id
+   * @format int64
+   */
+  frogArticleTypeId?: number;
   /** @format int64 */
   frogArticleViewCount?: number;
   /**
@@ -1915,7 +1920,7 @@ export interface FrogArticleRespDTO {
   frogArticleType?: number;
   /**
    * 文章类型id
-   * @format int32
+   * @format int64
    */
   frogArticleTypeId?: number;
   /** @format int64 */
@@ -2141,7 +2146,7 @@ export interface GetFrogArticlePageDTO {
   frogArticleType?: number;
   /**
    * 文章类型Id
-   * @format int32
+   * @format int64
    */
   frogArticleTypeId?: number;
   /** 文章归档年份 */
@@ -2206,7 +2211,7 @@ export interface GetManageFrogArticlePageDTO {
   frogArticleType?: number;
   /**
    * 文章类型id
-   * @format int32
+   * @format int64
    */
   frogArticleTypeId?: number;
   /** @format int32 */
@@ -2378,6 +2383,11 @@ export interface HotFrogArticleRespDTO {
   frogArticleTitle?: string;
   /** @format int32 */
   frogArticleType?: number;
+  /**
+   * 文章类型id
+   * @format int64
+   */
+  frogArticleTypeId?: number;
   /** @format int64 */
   frogArticleViewCount?: number;
   /**
@@ -2536,9 +2546,11 @@ export interface ManageFrogArticleRespDTO {
   frogArticleType?: string;
   /**
    * 文章类型id
-   * @format int32
+   * @format int64
    */
   frogArticleTypeId?: number;
+  /** 文章类型名称 */
+  frogArticleTypeName?: string;
   /** @format int64 */
   frogArticleViewCount?: number;
   /**
@@ -4217,7 +4229,7 @@ export interface UpdateFrogArticleReqDTO {
   frogArticleType?: number;
   /**
    * 文章类型Id
-   * @format int32
+   * @format int64
    */
   frogArticleTypeId?: number;
   /** @format int64 */
@@ -5700,6 +5712,7 @@ export interface FrogArticleType {
   /** @format int64 */
   id?: number;
   name?: string;
+  nameZh?: string;
   /** @format int32 */
   sort?: number;
   stationCode?: string;

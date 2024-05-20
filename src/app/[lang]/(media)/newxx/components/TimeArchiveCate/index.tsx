@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 15:02:12
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-20 15:23:19
+ * @LastEditTime: 2024-05-20 16:08:08
  * @Description: 
  */
 /*
@@ -38,15 +38,21 @@ const list = [
     },
 
 ]
-
-interface TimeLineCateProps {
-    // station
+export interface TimeArchiveCateValue {
+    frogArticleMonth: number;
+    frogArticleYear: number;
 }
-const TimeLineCate = () => {
+interface TimeArchiveCateProps {
+    value?: TimeArchiveCateValue;
+    onChange?: (value?: TimeArchiveCateValue) => void;
+}
+
+const TimeArchiveCate = (props: TimeArchiveCateProps) => {
+    const { value, onChange } = props;
     const { lang } = useParams();
     const stationCode = getSiteStation(lang as any)
 
-    const { data, loading } = useRequest(request.customer.frog.articleArchive, { defaultParams: [{ stationCode }] });
+    const { data } = useRequest(request.customer.frog.articleArchive, { defaultParams: [{ stationCode }] });
     const list = data?.data ?? [];
     const [isExpand, setIsExpand] = useState(false);
 
@@ -60,12 +66,21 @@ const TimeLineCate = () => {
             カテゴリ
         </div>
         {(isExpand ? list: list.slice(0,8)).map((item, idx) => <div
+            onClick={() => {
+                onChange?.({
+                    frogArticleMonth: item.frogArticleMonth!,
+                    frogArticleYear: item.frogArticleYear!,
+                })
+            }}
             key={idx}
-            className="flex px-[8px] py-[10px]"
+            className={`flex px-[8px] py-[10px] cursor-pointer group ${
+                item.frogArticleMonth === value?.frogArticleMonth && item.frogArticleYear === value?.frogArticleYear ? 
+                'bg-purple-400' : 'bg-white'
+            } `}
             style={idx !== list.length - 1 ? { borderBottom: '1px dashed #E3E3E3 ' } : {}}
         >
-            <div className="w-[210px] line-clamp-1" >{item.frogArticleYear}-{item.frogArticleMonth}</div>
-            <div>{item.articleNum}</div>
+            <div className="w-[210px] line-clamp-1 group-hover:text-[--hfccolor] " >{item.frogArticleYear}-{item.frogArticleMonth}</div>
+            <div className="group-hover:text-[--hfccolor]" >{item.articleNum}</div>
         </div>)}
         <div className="bg-[#D6D6D6] h-[20px] flex justify-center items-center cursor-pointer" onClick={() => setIsExpand(!isExpand)} >
             <img src="https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/aw-rt.png" alt="" className={`${isExpand ? '-rotate-90' : 'rotate-90'} w-[16px] h-[16px]`} />
@@ -73,4 +88,4 @@ const TimeLineCate = () => {
     </div>
 }
 
-export default TimeLineCate
+export default TimeArchiveCate
