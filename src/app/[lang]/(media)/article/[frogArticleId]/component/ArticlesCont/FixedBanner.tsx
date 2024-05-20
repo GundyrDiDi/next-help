@@ -2,15 +2,22 @@
  * @Author: shiguang
  * @Date: 2024-05-16 18:23:25
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-20 09:48:40
+ * @LastEditTime: 2024-05-20 14:08:58
  * @Description: 
  */
 import { request } from "@/config/request";
+import { getSiteStation } from "@/utils/language";
 import { useRequest } from "ahooks";
+import { useParams } from "next/navigation";
 import { useState } from "react";
 
 const FixedBanner = () => {
-    const { data } = useRequest(request.customer.banner.show, { defaultParams: [{ bannerType: 3, systemSource: 1, stationCode: 'JapanStation' }] })
+    const { lang } = useParams();
+    const stationCode = getSiteStation(lang as any)
+
+    const { data } = useRequest(request.customer.banner.show, { defaultParams: [{ 
+        bannerType: 3, systemSource: 1, stationCode
+    }] })
     const [isCloseBanner, setIsCloseBanner] = useState(false);
     const imageUrl = data?.data?.[0]?.bannerImgUrl;
     const bannerImgMobileUrl = data?.data?.[0]?.bannerImgMobileUrl;

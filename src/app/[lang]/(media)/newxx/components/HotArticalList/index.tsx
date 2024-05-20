@@ -2,12 +2,13 @@
  * @Author: shiguang
  * @Date: 2024-05-15 23:10:55
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-20 11:02:58
+ * @LastEditTime: 2024-05-20 14:09:28
  * @Description: 
  */
 'use client'
 
 import { request } from "@/config/request";
+import { getSiteStation } from "@/utils/language";
 import { useRequest } from "ahooks";
 import { useParams } from "next/navigation";
 
@@ -28,13 +29,14 @@ const list = [
 ]
 
 const HotArticalList = () => {
+    const { lang } = useParams();
+    const stationCode = getSiteStation(lang as any)
     const { data } = useRequest(
         request.customer.frog.articleHotPage,
         {
-            defaultParams: [{ pageNum: 1, pageSize: 12, stationCode: 'JapanStation' }]
+            defaultParams: [{ pageNum: 1, pageSize: 12, stationCode }]
         }
       );
-    const { lang } = useParams();
 
     return <div className="bg-[#fff] rounded-[8px] pc:rounded-[8px] overflow-hidden" >
         <div

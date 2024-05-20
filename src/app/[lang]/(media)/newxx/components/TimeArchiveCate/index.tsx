@@ -16,6 +16,8 @@
 import { useRequest } from "ahooks";
 import { request } from "@/config/request";
 import { useState } from "react";
+import { useParams } from "next/navigation";
+import { getSiteStation } from "@/utils/language";
 
 // const { runAsync: articlePage, loading } = useRequest(
 //     request.customer.frog.articleArchive,
@@ -41,7 +43,10 @@ interface TimeLineCateProps {
     // station
 }
 const TimeLineCate = () => {
-    const { data, loading } = useRequest(request.customer.frog.articleArchive, { defaultParams: [{ stationCode: 'JapanStation' }] });
+    const { lang } = useParams();
+    const stationCode = getSiteStation(lang as any)
+
+    const { data, loading } = useRequest(request.customer.frog.articleArchive, { defaultParams: [{ stationCode }] });
     const list = data?.data ?? [];
     const [isExpand, setIsExpand] = useState(false);
 

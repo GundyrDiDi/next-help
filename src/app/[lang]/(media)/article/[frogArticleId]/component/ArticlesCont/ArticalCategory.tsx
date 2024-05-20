@@ -1,6 +1,14 @@
+/*
+ * @Author: shiguang
+ * @Date: 2024-05-16 18:07:45
+ * @LastEditors: shiguang
+ * @LastEditTime: 2024-05-20 14:07:44
+ * @Description: 
+ */
 'use client'
 import { request } from "@/config/request";
 import { FrogArticleType } from "@/service/customer";
+import { getSiteStation } from "@/utils/language";
 import { useRequest } from "ahooks";
 import { useParams, useRouter } from "next/navigation";
 
@@ -22,9 +30,10 @@ const arrToGroup2 = <T extends any>(arr: T[]) => {
 const ArticalCategory = () => {
     const router = useRouter()
     const { lang } = useParams();
+    const stationCode = getSiteStation(lang as any)
     const { data } = useRequest(request.customer.frog.articleTypeList, {
         defaultParams: [{
-            stationCode: 'JapanStation'
+            stationCode
         }]
     });
     const list = data?.data ?? [];
