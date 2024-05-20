@@ -2,13 +2,14 @@
  * @Author: shiguang
  * @Date: 2024-05-16 15:03:15
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-20 15:26:53
+ * @LastEditTime: 2024-05-20 18:04:34
  * @Description: 
  */
 "use client"
 import { request } from "@/config/request";
 import { FrogArticleType } from "@/service/customer";
 import { useRequest } from "ahooks";
+import { useTranslation } from "react-i18next";
 
 interface ArticleCategroyProps{
     value?: string;
@@ -25,6 +26,9 @@ const ArticleCategroy = (props: ArticleCategroyProps) => {
         }]
     });
     console.log(_value, 'wwwwww', data);
+
+    const { t } = useTranslation();
+    
 
     const list = data?.data ?? [];
 
@@ -61,7 +65,7 @@ const ArticleCategroy = (props: ArticleCategroyProps) => {
         <div>111</div>
         <div>111</div>
         <div>33333322</div> */}
-        {renderItem({ name: '全部', id: -1 }, true)}
+        {renderItem({ name: t('全部'), id: -1 }, true)}
         {list.map((item, idx) => renderItem(item))}
     </div>
 }

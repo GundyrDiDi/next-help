@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 14:59:21
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-17 11:32:46
+ * @LastEditTime: 2024-05-20 18:07:51
  * @Description: 
  */
 
@@ -13,6 +13,7 @@ import { ENUM_PLATE } from "@/model/Plat";
 import { Button, Input, Space } from "antd";
 import { useAtom } from "jotai";
 import { ChangeEventHandler } from "react";
+import { useTranslation } from "react-i18next";
 
 
 interface SearchProps {
@@ -28,6 +29,7 @@ const SearchBanner = (props: SearchProps) => {
         console.log(dom.value, 333)
         onSearch?.(dom.value)
     }
+    const { t } = useTranslation()
     const [plat] = useAtom(Plat);
     const isD2C = ENUM_PLATE.d2c === plat;
     return (
@@ -41,11 +43,11 @@ const SearchBanner = (props: SearchProps) => {
                 <div className="flex pc:h-[64px] mo:h-[40px] justify-center pc:mb-[56px]" >
                     <div className="flex pc:w-[640px] pad:w-[580px] rounded-[6px] h-[100%] " >
                         <Space.Compact style={{ width: '100%' }}>
-                            <Input placeholder="キーワード検索" id="JS_media-search-keywords" onPressEnter={onSearchClick} onChange={onChange} />
-                            <Button type="primary" className="!h-[100%] !bg-[#FAAD14] !text-[16px]" onClick={onSearchClick} >搜索</Button>
+                            <Input placeholder={t('输入标题关键词')} id="JS_media-search-keywords" onPressEnter={onSearchClick} onChange={onChange} />
+                            <Button type="primary" className="!h-[100%] !bg-[#FAAD14] !text-[16px]" onClick={onSearchClick} >{t('搜索')}</Button>
                         </Space.Compact>
                     </div>
-                    <div className="h-[100%] flex flex-col justify-center font-[700] pc:text-[16px] text-[#fff] pc:ml-[16px] pad:ml-[16px] cursor-pointer hover:text-[#FAAD14] mo:!hidden" onClick={onClickReadRecord} >閲覧履歴</div>
+                    <div className="h-[100%] flex flex-col justify-center font-[700] pc:text-[16px] text-[#fff] pc:ml-[16px] pad:ml-[16px] cursor-pointer hover:text-[#FAAD14] mo:!hidden" onClick={onClickReadRecord} >{t('阅读历史')}</div>
                 </div>
             </div>
         </div>
