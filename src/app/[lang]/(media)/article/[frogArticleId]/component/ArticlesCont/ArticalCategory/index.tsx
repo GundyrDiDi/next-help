@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 18:07:45
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-20 14:07:44
+ * @LastEditTime: 2024-05-20 16:24:49
  * @Description: 
  */
 'use client'
@@ -11,6 +11,7 @@ import { FrogArticleType } from "@/service/customer";
 import { getSiteStation } from "@/utils/language";
 import { useRequest } from "ahooks";
 import { useParams, useRouter } from "next/navigation";
+import IconFile from "./IconFile";
 
 
 
@@ -39,9 +40,9 @@ const ArticalCategory = () => {
     const list = data?.data ?? [];
     return (
         <div className="__cate-list bg-[#FAFAFA] p-[20px] mb-[20px]" >
-            <div className="flex px-[15px] mb-[20px] bg-[--pcolor] text-[#fff] font-[700] mo:text-[24px] items-center mo:h-[50px]" >
-                <div className="flex" >
-                    <div>icon</div> <div className="pl-[12px]" >カテゴリ 1111</div>
+            <div className="flex px-[15px] mb-[20px] bg-[--pcolor] text-[#fff] font-[700] text-[24px] items-center h-[50px]" >
+                <div className="flex items-center " >
+                    <IconFile/> <div className="pl-[12px]" >カテゴリ</div>
                 </div> 
             </div>
             <div className="flex flex-wrap" >
