@@ -2950,6 +2950,8 @@ export interface DeliverTaskReqDTO {
   createEndTime?: string;
   /** @format date-time */
   createStartTime?: string;
+  /** @format int32 */
+  crossDockingFlag?: number;
   /** @format int64 */
   customerId?: number;
   customerName?: string;
@@ -3564,7 +3566,7 @@ export interface DeliveryCreateReqDTO {
   boxMarkLink?: string;
   /** 分行代码 */
   branchCode?: string;
-  /** 发货任务-清关地址信息 */
+  /** 发货任务-清关地址英文信息 */
   declarationAddress?: DeliveryAddressCreateDTO;
   /** 申报折扣 */
   declarationDiscount?: number;
@@ -3619,6 +3621,8 @@ export interface DeliveryCreateReqDTO {
   labelType?: number;
   /** @format int32 */
   orderSource?: number;
+  /** 发货任务-清关地址原文信息 */
+  originalDeclarationAddress?: DeliveryAddressCreateDTO;
   /** 装箱清单url */
   packingListUrl?: string;
   /** 直行便订单编号 */

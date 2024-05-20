@@ -43,6 +43,8 @@ export interface AddBannerReqDTO {
   bannerApplicableTemplateId?: number;
   /** 指定用户的id，以英文逗号分隔 */
   bannerDesignatedUserId?: string;
+  /** banner图片url-H5页面 */
+  bannerImgMobileUrl?: string;
   /** banner图片url */
   bannerImgUrl?: string;
   /** banner图片点击跳转链接 */
@@ -2133,6 +2135,8 @@ export interface GetFrogArticleArchivePageDTO {
 
 /** GetFrogArticlePageDTO */
 export interface GetFrogArticlePageDTO {
+  /** 文章归档月份 */
+  frogArticleMonth?: string;
   /** @format int32 */
   frogArticleType?: number;
   /**
@@ -2140,6 +2144,8 @@ export interface GetFrogArticlePageDTO {
    * @format int32
    */
   frogArticleTypeId?: number;
+  /** 文章归档年份 */
+  frogArticleYear?: string;
   /** 关键字 */
   keyword?: string;
   /** @format int32 */
@@ -2497,6 +2503,8 @@ export interface ManageBannerRespDTO {
   bannerDesignatedUserList?: CustomerDetailRespDTO[];
   /** @format int64 */
   bannerId?: number;
+  /** banner图片url-H5页面 */
+  bannerImgMobileUrl?: string;
   bannerImgUrl?: string;
   bannerJumpLink?: string;
   bannerName?: string;
@@ -4094,6 +4102,8 @@ export interface UpdateBannerReqDTO {
   bannerDesignatedUserId?: string;
   /** @format int64 */
   bannerId?: number;
+  /** banner图片url-H5页面 */
+  bannerImgMobileUrl?: string;
   bannerImgUrl?: string;
   bannerJumpLink?: string;
   bannerName?: string;
