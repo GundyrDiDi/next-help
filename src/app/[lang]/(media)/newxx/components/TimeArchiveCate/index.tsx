@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 15:02:12
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-20 11:02:53
+ * @LastEditTime: 2024-05-20 15:23:19
  * @Description: 
  */
 /*
@@ -68,7 +68,7 @@ const TimeLineCate = () => {
             <div>{item.articleNum}</div>
         </div>)}
         <div className="bg-[#D6D6D6] h-[20px] flex justify-center items-center cursor-pointer" onClick={() => setIsExpand(!isExpand)} >
-            {isExpand ? '收起' : '展开'}
+            <img src="https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/aw-rt.png" alt="" className={`${isExpand ? '-rotate-90' : 'rotate-90'} w-[16px] h-[16px]`} />
         </div>
     </div>
 }
