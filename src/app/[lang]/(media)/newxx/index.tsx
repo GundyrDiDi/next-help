@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 14:42:07
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-20 16:06:53
+ * @LastEditTime: 2024-05-20 16:10:27
  * @Description: 
  */
 'use client'
@@ -100,7 +100,10 @@ const Index = (props: IndexProps) => {
     );
     
     requestReadRecordContext.setRequestReadRecordContext(() => {
-        form.setFieldsValue({ isArticalReadRecord: true })
+        form.setFieldsValue({ 
+            isArticalReadRecord: true,
+            timeArchiveCate: undefined
+        })
         reqArticleList({ pageSize: 10, pageNum: 1, type: RequestArticleListType.VIST_RECORD })
     })
 
