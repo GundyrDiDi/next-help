@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 14:59:21
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-21 12:51:04
+ * @LastEditTime: 2024-05-21 18:32:40
  * @Description: 
  */
 
@@ -48,7 +48,7 @@ const SearchBanner = (props: SearchProps) => {
                                 <Button type="primary" className="!h-[100%] !bg-[#FAAD14] !text-[16px] pad:!px-[32px] pc:!px-[32px]" onClick={onSearchClick} >{t('搜索')}</Button>
                             </Space.Compact>
                         </div>
-                        <div className="h-[100%] flex flex-col justify-center font-[700] pc:text-[16px] text-[#fff] pc:ml-[16px] pad:ml-[16px] cursor-pointer hover:text-[#FAAD14] mo:!hidden" onClick={onClickReadRecord} >{t('阅读历史')}</div>
+                        {/* <div className="h-[100%] flex flex-col justify-center font-[700] pc:text-[16px] text-[#fff] pc:ml-[16px] pad:ml-[16px] cursor-pointer hover:text-[#FAAD14] mo:!hidden" onClick={onClickReadRecord} >{t('阅读历史')}</div> */}
                     </div>
                 </div>
             </div>
