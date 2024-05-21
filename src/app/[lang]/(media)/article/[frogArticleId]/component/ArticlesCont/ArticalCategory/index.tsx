@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 18:07:45
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-21 18:38:42
+ * @LastEditTime: 2024-05-21 18:44:42
  * @Description: 
  */
 'use client'
@@ -43,9 +43,9 @@ const ArticalCategory = () => {
     const { t } = useTranslation()
     return (
         <div className="__cate-list bg-[#FAFAFA] p-[20px] mb-[20px]" >
-            <div className="flex px-[15px] mb-[20px] bg-[--pcolor] text-[#fff] font-[700] text-[24px] items-center h-[50px]" >
+            <div className="flex px-[15px] mb-[20px] bg-[--pcolor] text-[#fff] font-[700] text-[16px] items-center h-[40px]" >
                 <div className="flex items-center " >
-                    <IconFile/> <div className="pl-[12px]" >{t('分类')}</div>
+                    <IconFile width="20" height="15" /> <div className="pl-[12px]" >{t('分类')}</div>
                 </div> 
             </div>
             <div className="flex flex-wrap" >
