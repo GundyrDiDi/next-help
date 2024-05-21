@@ -91,7 +91,7 @@ const Index = (props: IndexProps) => {
                     pageNum, pageSize: 10,
                     ...requestParams, stationCode: siteStation,
                     keyword,
-                    ...frogArticleTypeId === -1 ? {} : { frogArticleTypeId }
+                    frogArticleTypeId
                 }
                 if(params.frogArticleTypeId === -1){
                     delete params.frogArticleTypeId
