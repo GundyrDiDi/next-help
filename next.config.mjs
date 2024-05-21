@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 21:06:55
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-21 10:26:24
+ * @LastEditTime: 2024-05-21 11:00:58
  * @Description: 
  */
 /** @type {import('next').NextConfig} */
@@ -52,30 +52,30 @@ const getEnv = () => {
   //     NEXT_PUBLIC_THE_CKB_API_URL: "https://gateway-prod.theckb.com",
   //   };
   // }
-  return {
-    NEXT_PUBLIC_ENV: "pre",
-    buildTime: new Date().toLocaleString(),
-    NEXT_PUBLIC_THE_CKB_LINK: "https://pre-s.theckb.com",
-    NEXT_PUBLIC_THE_CKB_API_URL: "https://pre-gateway.theckb.com",
-    NEXT_PUBLIC_HELP_CENTER_URL: 'https://pre-help.theckb.com',
-    NEXT_PUBLIC_X_GRAY_TAG: '20240509-frog',
-  };
+  // return {
+  //   NEXT_PUBLIC_ENV: "pre",
+  //   buildTime: new Date().toLocaleString(),
+  //   NEXT_PUBLIC_THE_CKB_LINK: "https://pre-s.theckb.com",
+  //   NEXT_PUBLIC_THE_CKB_API_URL: "https://pre-gateway.theckb.com",
+  //   NEXT_PUBLIC_HELP_CENTER_URL: 'https://pre-help.theckb.com',
+  //   NEXT_PUBLIC_X_GRAY_TAG: '20240509-frog',
+  // };
     // return {
     //   NEXT_PUBLIC_ENV: "prod",
     //   buildTime: new Date().toLocaleString(),
     //   NEXT_PUBLIC_THE_CKB_LINK: "https://s.theckb.com",
     //   NEXT_PUBLIC_THE_CKB_API_URL: "https://gateway-prod.theckb.com",
     // };
-    //    return {
-    //   NEXT_PUBLIC_ENV: "test",
-    //   buildTime: new Date().toLocaleString(),
-    //   NEXT_PUBLIC_THE_CKB_LINK: "https://master-s.theckb.com",
-    //   NEXT_PUBLIC_THE_CKB_API_URL: "https://master-gateway.theckb.com",
-    //   // # 测试环境帮助中心地址
-    //   NEXT_PUBLIC_HELP_CENTER_URL: 'https://test-client-help.theckb.com',
-    //   // # 测试环境帮助中心地址
-    //   NEXT_PUBLIC_X_GRAY_TAG: '20240509-frog',
-    // };
+       return {
+      NEXT_PUBLIC_ENV: "test",
+      buildTime: new Date().toLocaleString(),
+      NEXT_PUBLIC_THE_CKB_LINK: "https://master-s.theckb.com",
+      NEXT_PUBLIC_THE_CKB_API_URL: "https://master-gateway.theckb.com",
+      // # 测试环境帮助中心地址
+      NEXT_PUBLIC_HELP_CENTER_URL: 'https://test-client-help.theckb.com',
+      // # 测试环境帮助中心地址
+      NEXT_PUBLIC_X_GRAY_TAG: '20240509-frog',
+    };
 };
 
 const env = getEnv();

@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 14:42:07
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-21 10:17:11
+ * @LastEditTime: 2024-05-21 10:57:30
  * @Description: 
  */
 'use client'
@@ -64,7 +64,6 @@ const Index = (props: IndexProps) => {
     
     const { data, loading, run: reqArticleList, params } = useRequest(
         async (requestParams: RequestType = {} as RequestType) => {
-            debugger
             const { timeArchiveCate } = requestParams;
             const w: any = window;
             w.fff = form;
