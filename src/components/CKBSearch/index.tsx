@@ -100,7 +100,7 @@ const CKBSearch = () => {
         [Local.EN]: SearchLangType.EN, // 英语
       }[lang],
       label: {
-        [Local.JA]: "日本语入力",
+        [Local.JA]: "日本語入力",
         [Local.KO]: "한국어 입력",
         [Local.EN]: "English",
       }[lang],
