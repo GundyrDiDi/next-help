@@ -407,7 +407,7 @@ const CKBSearch = () => {
               handleJump();
             }}
           >
-            <div>
+            <div className="flex items-center" >
               <SvgOutLink className="icon text-[16px] outline-none	mr-[6px]" />
               <span id="guideText">{t("站外搜索")}</span>
             </div>
