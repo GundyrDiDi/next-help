@@ -39,7 +39,7 @@ const SearchBanner = (props: SearchProps) => {
         }`} >
             <div className="text-center mo:pt-[20px]" >
                 <div className="text-[#FAAD14] text-[38px] mo:text-[24px] mo:h-[30px] font-[700] pc:my-[8px] pc:!leading-[48px] pad:!leading-[48px]" >KAERU MEDIA</div>
-                <div className="text-[#fff] pc:mt-[8px] pc:mb-[16px] pad:mb-[16px] text-[16px] mo:text-[14px] mo:mb-[8px]" >ECビジネスの成功に役立つ業界情報を発信</div>
+                <div className="text-[#fff] pc:mt-[8px] pc:mb-[16px] pad:mb-[16px] text-[16px] mo:text-[14px] mo:mb-[8px]" >{t('发布有助于电子商务成功的行业信息')}</div>
                 <div className="flex items-center justify-center" >
                     <div className="flex pc:h-[64px] mo:h-[40px] justify-center pc:mb-[56px] pad:!w-[580px] mo:w-[100%] mo:px-[40px]" >
                         <div className="flex pc:w-[640px]  rounded-[6px] h-[100%] grow " >
