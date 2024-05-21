@@ -1,3 +1,10 @@
+/*
+ * @Author: shiguang
+ * @Date: 2024-05-10 14:43:54
+ * @LastEditors: shiguang
+ * @LastEditTime: 2024-05-21 16:36:05
+ * @Description: 
+ */
 import { useTranslation } from "@/i18n/client";
 import "./index.scss";
 import { useAtom, useAtomValue } from "jotai";
@@ -28,6 +35,7 @@ const Marking = () => {
         <div className="marking-content">
           { useInfo?.customerId ? (
             <>
+              {/* 已经登录会员查看 */}
               <p>{t("加入CKB 会员计划以查看更多信息")}</p>
               <div onClick={vipLoginClick} className="join">
                 {t("会员登录")}
@@ -35,6 +43,7 @@ const Marking = () => {
             </>
           ) : (
             <>
+            {/* 未登录会员查看 */}
               <p>{t("注册或登录以查看更多信息")}</p>
               <div style={{ display: "flex" }}>
                 <Button

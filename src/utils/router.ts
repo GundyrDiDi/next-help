@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-03-21 16:38:31
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-16 17:57:39
+ * @LastEditTime: 2024-05-21 15:51:52
  * @Description: 
  */
 import { useAtom } from "jotai";
@@ -14,7 +14,7 @@ import { getLang } from "./language";
  * 去登录
  */
 export const toLogin=()=>{
-  toTheCkb('login',false)
+  toTheCkb('/login',false)
 }
 
 

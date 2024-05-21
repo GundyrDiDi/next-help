@@ -20,6 +20,7 @@ import { CustomerDetailRespDTO2 } from "@/model/CustomerDetail";
 import ArticalCategory from "./ArticalCategory";
 import FixedBanner from "./FixedBanner";
 import HotArticalList from "@/app/[lang]/(media)/newxx/components/HotArticalList";
+import { useRouter } from "next/navigation";
 
 
 
@@ -31,7 +32,8 @@ interface Props {
 }
 const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
   const [markingShow, setMarkingShow] = useState<boolean>(true);
-  const href = useLink(`kaerumedia`);
+  // const href = useLink(`kaerumedia`);
+  const router = useRouter();
 
   useMount(() => {
     const imgList = document.getElementById('content-html')?.querySelectorAll('img')
@@ -48,14 +50,14 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
       api.customer.frog.articleCount({
         frogArticleId: frogArticle?.frogArticleId,
       });
-
+      // 未登录
       if (!userInfo?.customerId && frogArticle.noLoginRestriction === 3) {
-        window.$location.href = href
+        router.push('/');
         return
       }
       if (frogArticle.noMembershipRestriction === 3) {
         if (!userInfo?.customerId || !userInfo?.membership?.templateLevel) {
-          window.$location.href = href
+          router.push('/');
           return
         }
         setMarkingShow(false);
@@ -103,7 +105,7 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
                 )}
                 <div
                   id="content-html"
-                  className="media-help-artical-content"
+                  className={`media-help-artical-content ${markingShow ? `h-[100vh] overflow-hidden` : ''}`}
                   dangerouslySetInnerHTML={{
                     __html: frogArticle?.frogArticleContent!,
                   }}

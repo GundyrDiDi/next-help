@@ -2,13 +2,13 @@
  * @Author: shiguang
  * @Date: 2024-05-16 15:03:15
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-17 17:19:17
+ * @LastEditTime: 2024-05-21 16:25:56
  * @Description: 
  */
 
 import { SvgCheck } from "@/components/svgs";
 import { ENUM_PAGE, NO_LOGIN_RESTRICTION_TYPE, NO_MEMBERSHIP_RESTRICTION_TYPE } from "@/const/enum";
-import { Plat } from "@/model";
+import { CustomerDetail, Plat } from "@/model";
 import { ENUM_PLATE } from "@/model/Plat";
 import { FrogArticleRespDTO } from "@/service/customer";
 import { isLogin } from "@/utils";
@@ -20,12 +20,62 @@ import { useTranslation } from "react-i18next";
 interface ArticleListProps {
     list?: FrogArticleRespDTO[];
 }
+const onClickArticleItem = (href: string) => {
+    const noLoginMap = new Map([
+        [ 
+            /** 不可查看 */
+            NO_LOGIN_RESTRICTION_TYPE.CHECK_DISABLE, () => {
+                toTheCkb(ENUM_PAGE.LOGIN, false);
+            }
+        ],
+        [ 
+            /** 部分可查看 */
+            NO_LOGIN_RESTRICTION_TYPE.CHECK_PART, () => {
+                window.$location.href = href;
+            }
+        ],
+        [ 
+            /** 可查看全文 */
+            NO_LOGIN_RESTRICTION_TYPE.CHECK_ALL, () => {
+                window.$location.href = href;
+            }
+        ],
+    ]);
+    
+    const loginMap = new Map([
+        [ 
+            /** 不可查看 */
+            NO_MEMBERSHIP_RESTRICTION_TYPE.CHECK_DISABLE, () => {
+                toTheCkb(ENUM_PAGE.LOGIN, false);
+            }
+        ],
+        [ 
+            /** 部分可查看 */
+            NO_MEMBERSHIP_RESTRICTION_TYPE.CHECK_PART, () => {
+                window.$location.href = href;
+            }
+        ],
+        [ 
+            /** 可查看全文 */
+            NO_MEMBERSHIP_RESTRICTION_TYPE.CHECK_ALL, () => {
+                window.$location.href = href;
+            }
+        ],
+    ]);
+    
+
+}
+
+// 登录
+
+
 
 const ArticleList = (props: ArticleListProps) => {
     const { list } = props
     const { t } = useTranslation();
     const [plat] = useAtom(Plat);
     const isD2C = ENUM_PLATE.d2c === plat;
+    const [userInfo] = useAtom(CustomerDetail);
 
     return (
         <div className="flex justify-center pad:!block mo:!block mo:p-[12px]" >
@@ -37,22 +87,19 @@ const ArticleList = (props: ArticleListProps) => {
                         key={key}
                         onClick={() => {
                             const href = getLink(`article/${item.frogArticleId}`);
-                            // 点击跳转文章线详情
-                            if (
-                                !isLogin() &&
-                                item.noLoginRestriction === NO_LOGIN_RESTRICTION_TYPE.CHECK_DISABLE
-                            ) {
-                                toTheCkb(ENUM_PAGE.LOGIN, false);
-                                return;
+                            if(!isLogin()){
+                                // 未登录 && 不可查看 的时候跳转 login
+                                if(item.noLoginRestriction === NO_LOGIN_RESTRICTION_TYPE.CHECK_DISABLE){
+                                    toTheCkb(ENUM_PAGE.LOGIN, false);
+                                    return
+                                }
+                                window.$location.href = href;
+                                return
                             }
-                            if (
-                                item.noMembershipRestriction === NO_MEMBERSHIP_RESTRICTION_TYPE.CHECK_DISABLE
-                                // TODO
-                                // && !userInfo?.membership?.templateLevel
-                            ) {
+                            // 登录了的时候 但是需要会员才能看。 跳转到需要开会员
+                            if(item.noMembershipRestriction === NO_MEMBERSHIP_RESTRICTION_TYPE.CHECK_DISABLE && !userInfo?.membership?.templateLevel){
                                 return toTheCkb(ENUM_PAGE.VIP_LEVEL);
                             }
-
                             window.$location.href = href;
                         }}
                     >
