@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-10 14:43:54
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-17 11:24:13
+ * @LastEditTime: 2024-05-21 18:09:24
  * @Description: 
  */
 "use client";
@@ -90,7 +90,7 @@ export default function Page({ initListArticle }: Props) {
           <SearchArticle 
             onSearch={onSearch} 
             onClickReadRecord={() => {
-              debugger
+              
               setQuerys({
                 isShowReadRecord: true,
               });

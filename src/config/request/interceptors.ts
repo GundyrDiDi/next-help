@@ -5,9 +5,10 @@ import Code from '@/i18n/locales/code.json';
 import { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie'
 import { getCookieShop, getCookieToken, setCookieShopId, setCookieToken } from '@/utils/index';
-import { PlatCookie } from '@/config';
+import { PlatCookie, TokenSignCookie } from '@/config';
 import { getSiteStation, useSite2Station } from '@/utils/language';
 import { toTheCkb } from '@/utils/router';
+import { cookies } from 'next/headers';
 
 const domain = '.theckb.com'
 
@@ -82,7 +83,12 @@ async function requestInterceptorOnServer(config: InternalAxiosRequestConfig) {
     if (siteStation) {
         config.headers['X-Stationcode'] = siteStation;
     }
-   
+    const token = encodeURIComponent(TokenSignCookie)
+
+    if(token){
+        config.headers['X-Authtoken'] = token;
+    }
+    
     if (process.env.NEXT_PUBLIC_X_GRAY_TAG) {
         config.headers['X-GRAY-TAG'] = process.env.NEXT_PUBLIC_X_GRAY_TAG;
     }

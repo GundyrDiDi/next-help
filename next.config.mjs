@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 21:06:55
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-21 14:52:13
+ * @LastEditTime: 2024-05-21 18:09:21
  * @Description: 
  */
 /** @type {import('next').NextConfig} */
@@ -77,7 +77,6 @@ const getEnv = () => {
     //   NEXT_PUBLIC_X_GRAY_TAG: '20240509-frog',
     // };
 };
-
 const env = getEnv();
 console.log(`启动时间：${new Date().toLocaleString()},启动环境:${SERVER_ENV}`);
 const nextConfig = {
