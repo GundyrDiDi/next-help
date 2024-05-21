@@ -253,7 +253,9 @@ const CKBSearch = () => {
 
   // 去购物车
   const gotoCar = () => {
-    if (isLogin()) return toLogin();
+    if(document.querySelector('#JS_unLoginFlag')){
+      return toLogin();
+    }
     toTheCkb(`/shopcart`);
   };
 

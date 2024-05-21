@@ -318,6 +318,7 @@ const CKBHeader = ({}: Props) => {
                   /
                   <a
                     className="light hover:text-[color:--color-primary-light] cursor-pointer"
+                    id='JS_unLoginFlag'
                     onClick={() => {
                       toTheCkb(`${ENUM_PAGE.REGISTER}`, false);
                     }}
