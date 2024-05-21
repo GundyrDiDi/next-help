@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 18:07:45
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-21 11:34:26
+ * @LastEditTime: 2024-05-21 14:41:42
  * @Description: 
  */
 'use client'
@@ -33,7 +33,8 @@ const ArticalCategory = () => {
     const router = useRouter()
     const { lang } = useParams();
     const stationCode = getSiteStation(lang as any)
-    const { data } = useRequest(request.customer.frog.articleTypeList, {
+    // /customer/frog/article/type/list/customer
+    const { data } = useRequest(request.customer.frog.articleTypeListCustomer, {
         defaultParams: [{
             stationCode
         }]

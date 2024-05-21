@@ -10357,6 +10357,28 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags 青蛙文章接口
+     * @name ArticleTypeListCustomer
+     * @summary 客户端青蛙文章分类列表(有文章的分类)
+     * @request GET:/frog/article/type/list/customer
+     */
+    articleTypeListCustomer: (
+      query: {
+        /** stationCode */
+        stationCode: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseListFrogArticleType, any>({
+        path: `/frog/article/type/list/customer`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 青蛙文章接口
      * @name ArticleTypeSave
      * @summary 保存青蛙文章分类
      * @request POST:/frog/article/type/save

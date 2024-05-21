@@ -92,10 +92,10 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
         className="justify-center pad:flex pc:flex mo:block article-content mo:py-[20px] px-[12px] bg-[#fff]"
       >
         <div className="pad:flex pc:flex mo:block pad:w-[1200px] pc:w-[1200px] pc:mt-[48px]" >
-          <div className="pc:w-[calc(1200px-378px)] mo:w-[100%] " >
+          <div className="pc:w-[calc(1200px-378px)] mo:w-[100%] pad:w-[100%] pad:mr-[20px] " >
             <div className="pc:pr-[20px]">
               <div >
-                <h1 className="content-title !text-[30px] !m-[0] mo:!text-[20px]">{frogArticle?.frogArticleTitle}</h1>
+                <h1 className="content-title !text-[30px] !m-[0] mo:!text-[20px] font-[700] ">{frogArticle?.frogArticleTitle}</h1>
                 {frogArticle?.frogArticleId !== 151 && (
                   <div className="text-right mo:text-left mo:mt-[8px] mo:h-[20px] text-[#000]/[0.45]">
                     {setStationTime(frogArticle?.createTime)}
@@ -116,9 +116,11 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
               />
             </div>
           </div>
-          <div className="pc:w-[370px] shrink-0 mo:w-[100%]" >
+          <div className="pc:w-[370px] shrink-0 mo:w-[100%] pad:w-[280px] " >
             <ArticalCategory/>
-            <HotArticalList/>
+            <div className="mb-[20px]" >
+              <HotArticalList/>
+            </div>
             <FixedBanner/>
           </div>
         </div>

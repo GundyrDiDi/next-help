@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 15:03:15
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-21 10:14:28
+ * @LastEditTime: 2024-05-21 14:42:20
  * @Description: 
  */
 "use client"
@@ -23,7 +23,7 @@ const ArticleCategroy = (props: ArticleCategroyProps) => {
     const { onChange, value: _value } = props;
     const { lang } = useParams()
     const value = _value ?? -99;
-    const { data } = useRequest(request.customer.frog.articleTypeList, {
+    const { data } = useRequest(request.customer.frog.articleTypeListCustomer, {
         defaultParams: [{
             stationCode: getSiteStation(lang as any)
         }]
