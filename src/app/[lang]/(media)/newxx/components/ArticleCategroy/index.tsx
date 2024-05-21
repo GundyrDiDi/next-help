@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 15:03:15
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-21 14:42:20
+ * @LastEditTime: 2024-05-21 18:39:42
  * @Description: 
  */
 "use client"
@@ -42,6 +42,7 @@ const ArticleCategroy = (props: ArticleCategroyProps) => {
                 className={`pc:w-[170px] pad:w-[124px] h-[100%] flex items-center justify-center cursor-pointer hover:bg-[--dcolor)] line-clamp-1 ${
                     item.id === value ? 'bg-[--dcolor]' : ''
                 } mo:!px-[16px] mo:!shrink-0 mo:!h-[50px]`}
+                title={item.name}
                 onClick={() => {
                     onChange?.(item.id!)
                 }}

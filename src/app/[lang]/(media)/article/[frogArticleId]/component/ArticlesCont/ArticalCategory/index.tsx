@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 18:07:45
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-21 14:41:42
+ * @LastEditTime: 2024-05-21 18:38:42
  * @Description: 
  */
 'use client'
@@ -56,6 +56,7 @@ const ArticalCategory = () => {
                             <div
                                 className="flex w-[50%] line-clamp-1 text-[15.5px] text-[#404040] bg-[#fff] cursor-pointer items-center justify-center border border-solid border-[#F0F0F0] hover:border-[#1C9976] hover:bg-[#1c9976]/[.1] hover:text-[#008060] box-border mb-[8px] h-[58px]"
                                 style={{ flexGrow: 2 }}
+                                title={_item.name}
                                 onClick={() => {
                                     router.push(`/${lang}?frogArticleTypeId=${_item.id}`)
                                 }}
