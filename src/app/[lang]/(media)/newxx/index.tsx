@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 14:42:07
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-21 10:10:43
+ * @LastEditTime: 2024-05-21 10:17:11
  * @Description: 
  */
 'use client'
@@ -87,12 +87,16 @@ const Index = (props: IndexProps) => {
                     frogArticleYear: String(timeArchiveCate.frogArticleYear),
                 })
             }else {
-                res = await request.customer.frog.articlePage({
+                const params = {
                     pageNum, pageSize: 10,
                     ...requestParams, stationCode: siteStation,
                     keyword,
                     ...frogArticleTypeId === -1 ? {} : { frogArticleTypeId }
-                })
+                }
+                if(params.frogArticleTypeId === -1){
+                    delete params.frogArticleTypeId
+                }
+                res = await request.customer.frog.articlePage(params)
             }
             return {
                 total: res?.data?.total ?? 0,

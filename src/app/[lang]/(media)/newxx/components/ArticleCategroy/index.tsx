@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 15:03:15
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-20 18:42:40
+ * @LastEditTime: 2024-05-21 10:14:28
  * @Description: 
  */
 "use client"
@@ -43,7 +43,7 @@ const ArticleCategroy = (props: ArticleCategroyProps) => {
                     item.id === value ? 'bg-[--dcolor]' : ''
                 } mo:!px-[16px] mo:!shrink-0 mo:!h-[50px]`}
                 onClick={() => {
-                    onChange?.(item.id === -1 ? undefined : item.id!)
+                    onChange?.(item.id!)
                 }}
                 style={{ borderLeft: isAll ? '1px solid rgba(255,255,255,0.4)' : undefined, borderRight: '1px solid rgba(255,255,255,0.4)' }}
             >
