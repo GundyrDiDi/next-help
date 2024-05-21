@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 14:42:07
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-20 16:10:27
+ * @LastEditTime: 2024-05-21 10:10:43
  * @Description: 
  */
 'use client'
@@ -42,6 +42,7 @@ type RequestType =
         pageNum?: number;
         pageSize?: number;
         timeArchiveCate?: TimeArchiveCateValue;
+        isArticalReadRecord?: boolean;
     } & GetFrogArticleArchivePageDTO & GetFrogArticlePageDTO & GetFrogArticlePageDTO
     ;
 
@@ -63,18 +64,21 @@ const Index = (props: IndexProps) => {
     
     const { data, loading, run: reqArticleList, params } = useRequest(
         async (requestParams: RequestType = {} as RequestType) => {
+            debugger
             const { timeArchiveCate } = requestParams;
             const w: any = window;
             w.fff = form;
-            const { pageNum: _pageNum, keyword, frogArticleTypeId } = form.getFieldsValue()
+            const formValues = form.getFieldsValue()
+            const { pageNum: _pageNum, keyword, frogArticleTypeId } = formValues;
+            const isArticalReadRecord = requestParams.isArticalReadRecord ?? formValues.isArticalReadRecord
             let res: BizResponsePageFrogArticleRespDTO | undefined = undefined;
             const pageNum = requestParams.pageNum ?? _pageNum
-            if (requestParams.type === RequestArticleListType.VIST_RECORD) {
+            if (isArticalReadRecord) {
                 res = await request.customer.frog.articleFootPage({
                     pageNum, pageSize: 10, stationCode: siteStation
                 })
             // 说明看的是归档文章
-            } if(timeArchiveCate){
+            }else if(timeArchiveCate){
                 timeArchiveCate.frogArticleMonth
                 res = await request.customer.frog.articleArchivePage({
                     pageNum, pageSize: 10, 
@@ -87,7 +91,7 @@ const Index = (props: IndexProps) => {
                     pageNum, pageSize: 10,
                     ...requestParams, stationCode: siteStation,
                     keyword,
-                    frogArticleTypeId
+                    ...frogArticleTypeId === -1 ? {} : { frogArticleTypeId }
                 })
             }
             return {
@@ -109,10 +113,10 @@ const Index = (props: IndexProps) => {
 
     const onClickReadRecord=() => {
         form.setFieldsValue({
-            frogArticleTypeId: -99,
+            frogArticleTypeId: undefined,
             isArticalReadRecord: true
         })
-        reqArticleList({ pageSize: 10, pageNum: 1, type: RequestArticleListType.VIST_RECORD })
+        reqArticleList({ pageSize: 10, pageNum: 1, isArticalReadRecord: true })
     }
 
     return <div className="bg-[#F5F5F5] mo:bg-white" >

@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 15:02:12
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-20 18:44:17
+ * @LastEditTime: 2024-05-21 10:03:27
  * @Description: 
  */
 /*
@@ -67,7 +67,10 @@ const TimeArchiveCate = (props: TimeArchiveCateProps) => {
         >
             {t('分类')}
         </div>
-        {(isExpand ? list: list.slice(0,8)).map((item, idx) => <div
+        {(isExpand ? list: list.slice(0,8)).map((item, idx) => {
+            const isChoose = item.frogArticleMonth === value?.frogArticleMonth && item.frogArticleYear === value?.frogArticleYear
+            return (
+                <div
             onClick={() => {
                 onChange?.({
                     frogArticleMonth: item.frogArticleMonth!,
@@ -75,18 +78,18 @@ const TimeArchiveCate = (props: TimeArchiveCateProps) => {
                 })
             }}
             key={idx}
-            className={`flex px-[8px] py-[10px] cursor-pointer group ${
-                item.frogArticleMonth === value?.frogArticleMonth && item.frogArticleYear === value?.frogArticleYear ? 
-                'bg-purple-400' : 'bg-white'
-            } `}
+            className={`flex px-[8px] py-[10px] cursor-pointer group`}
             style={idx !== list.length - 1 ? { borderBottom: '1px dashed #E3E3E3 ' } : {}}
         >
-            <div className="w-[210px] line-clamp-1 group-hover:text-[--hfccolor] " >{item.frogArticleYear}-{item.frogArticleMonth}</div>
-            <div className="group-hover:text-[--hfccolor]" >{item.articleNum}</div>
-        </div>)}
-        <div className="bg-[#D6D6D6] h-[20px] flex justify-center items-center cursor-pointer" onClick={() => setIsExpand(!isExpand)} >
-            <img src="https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/aw-rt.png" alt="" className={`${isExpand ? '-rotate-90' : 'rotate-90'} w-[16px] h-[16px]`} />
+            <div className={`w-[210px] line-clamp-1 group-hover:text-[--hfccolor] ${isChoose ? 'text-[--hfccolor]' : '' }`} >{item.frogArticleYear}-{item.frogArticleMonth}</div>
+            <div className={`group-hover:text-[--hfccolor] ${isChoose ? 'text-[--hfccolor]' : '' }`} >{item.articleNum}</div>
         </div>
+            )
+        })}
+        {list.length > 8 && <div className="bg-[#D6D6D6] h-[20px] flex justify-center items-center cursor-pointer" onClick={() => setIsExpand(!isExpand)} >
+            <img src="https://static-s.theckb.com/BusinessMarket/Client/kaerumedia/aw-rt.png" alt="" className={`${isExpand ? '-rotate-90' : 'rotate-90'} w-[16px] h-[16px]`} />
+        </div>}
+        
     </div>
 }
 
