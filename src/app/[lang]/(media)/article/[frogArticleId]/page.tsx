@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 11:30:20
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-16 14:56:40
+ * @LastEditTime: 2024-05-21 19:19:47
  * @Description: 
  */
 import { BizResponseCustomerDetailRespDTO, FrogArticleDetailRespDTO } from "@/service/customer";
@@ -42,7 +42,7 @@ export default async function Page({ params, searchParams }: Props) {
         cache: "no-cache",
         headers:{
         'X-Authtoken':token||''
-    } 
+    }
   }
   ).then((res) => res.json());
   return <ArticlesCont userInfo={data} frogArticle={article} querys={searchParams} />;
