@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 15:03:15
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-21 16:25:56
+ * @LastEditTime: 2024-05-22 11:49:16
  * @Description: 
  */
 
@@ -103,12 +103,13 @@ const ArticleList = (props: ArticleListProps) => {
                             window.$location.href = href;
                         }}
                     >
-                        <div 
+                        {/* <div 
                             className="pc:w-[380px] pad:w-[256px] mo:h-[154px] rounded-[6px] h-[100%] shrink-0 pc:bg-contain pad:bg-contain mo:bg-cover" 
                             style={{ backgroundImage: `url(${item.frogArticleImgUrl})`, backgroundRepeat: 'no-repeat' }} 
                          >
 
-                         </div>
+                         </div> */}
+                        <img className=" block pc:w-[380px] pad:w-[256px] mo:h-[154px] rounded-[6px] !h-auto shrink-0 mo:w-[100%]" alt="" src={item.frogArticleImgUrl} />
                         <div className="flex flex-col justify-between pc:ml-[16px] pad:ml-[16px] grow h-[100%] group " >
                             <div className="text-[#333] pc:text-[18px] font-[700] text-[15px] line-clamp-2 mo:my-[12px] group-hover:!text-[--color-primary]" >{item.frogArticleTitle}</div>
                             {/* <div>{item.frogArticleSubTitle}</div> */}
