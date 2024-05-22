@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-15 23:10:55
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-22 11:40:26
+ * @LastEditTime: 2024-05-22 11:54:39
  * @Description: 
  */
 'use client'
@@ -29,8 +29,11 @@ const list = [
     },
 
 ]
-
-const HotArticalList = () => {
+interface HotArticalListProps{
+    isShowHeaderIcon: boolean;
+}
+const HotArticalList = (props: HotArticalListProps) => {
+    const { isShowHeaderIcon } = props;
     const { lang } = useParams();
     const stationCode = getSiteStation(lang as any)
     const { data } = useRequest(
@@ -43,9 +46,9 @@ const HotArticalList = () => {
     return <div className="bg-[#fff] rounded-[8px] pc:rounded-[8px] overflow-hidden" >
         <div
             className="bg-[--pcolor] !text-[16px] text-[#fff] leading-[40px] h-[40px] px-[8px] flex items-center"
-            // style={{ borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }}
         >
-            <IconFlame className="mr-[8px]" /> {t('热门文章')}
+            {isShowHeaderIcon && <IconFlame className="mr-[8px]" />}
+            {t('热门文章')}
         </div>
         {data?.data?.records?.map((item, idx) => <a
             key={idx}

@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 14:42:07
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-22 11:34:47
+ * @LastEditTime: 2024-05-22 11:54:05
  * @Description: 
  */
 'use client'
@@ -183,7 +183,7 @@ const Index = (props: IndexProps) => {
                         </div>}
                     </div>
                     <div className="mo:hidden pad:hidden " >
-                        <HotArticalList />
+                        <HotArticalList isShowHeaderIcon={false} />
                         <div className="pc:mt-[20px]" >
                             <Form.Item name="timeArchiveCate" noStyle >
                                 <TimeArchiveCate
