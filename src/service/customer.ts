@@ -36,25 +36,49 @@ export interface AddAdditionReqDTO {
 
 /** AddBannerReqDTO */
 export interface AddBannerReqDTO {
-  /** @format int64 */
+  /**
+   * 适用用户会员模板id
+   * @format int64
+   */
   bannerApplicableTemplateId?: number;
+  /** 指定用户的id，以英文逗号分隔 */
   bannerDesignatedUserId?: string;
+  /** banner图片url-H5页面 */
+  bannerImgMobileUrl?: string;
+  /** banner图片url */
   bannerImgUrl?: string;
+  /** banner图片点击跳转链接 */
   bannerJumpLink?: string;
+  /** 名称 */
   bannerName?: string;
-  /** @format int32 */
+  /**
+   * 开启/关闭状态，0：开启，1：关闭
+   * @format int32
+   */
   bannerStatus?: number;
-  /** @format int32 */
+  /**
+   * banner类型，0：我的频道；1：透明购，2：市场购,3:青蛙文章
+   * @format int32
+   */
   bannerType?: number;
-  /** @format date-time */
+  /**
+   * banner有效期结束时间
+   * @format date-time
+   */
   endTime?: string;
   /** @format int64 */
   mallCategoryId?: number;
-  /** @format date-time */
+  /**
+   * banner有效期开始时间
+   * @format date-time
+   */
   startTime?: string;
   /** 站点code */
   stationCode?: string;
-  /** @format int32 */
+  /**
+   * 系统来源，1:d2c,2:b2b
+   * @format int32
+   */
   systemSource?: number;
 }
 
@@ -135,6 +159,11 @@ export interface AddFrogArticleReqDTO {
   frogArticleTitle?: string;
   /** @format int32 */
   frogArticleType?: number;
+  /**
+   * 文章类型Id
+   * @format int64
+   */
+  frogArticleTypeId?: number;
   /** @format int64 */
   frogArticleViewCount?: number;
   /**
@@ -150,6 +179,18 @@ export interface AddFrogArticleReqDTO {
   /** SEO 描述 */
   seoDescription?: string;
   stationCode?: string;
+}
+
+/** AddIntendedCustomerInfoReqDTO */
+export interface AddIntendedCustomerInfoReqDTO {
+  /** 邮箱 */
+  email: string;
+  /** 姓名 */
+  name: string;
+  /** 手机号 */
+  phone?: string;
+  /** 站点 */
+  stationCode: string;
 }
 
 /** AddManageUserReqDTO */
@@ -553,6 +594,7 @@ export interface ChangeEmailReqDTO {
   customerId?: number;
   newCustomerEmail?: string;
   password?: string;
+  stationCode?: string;
   verificationCode?: string;
 }
 
@@ -628,7 +670,7 @@ export interface ChangeUrlWhiteUserRespDTO {
   /** 客户经理名称 */
   managerName?: string;
   /** 会员信息 */
-  membership?: CustomerMembershipResDTO;
+  membership?: CustomerMembership;
   /** 国家代码 */
   nationCode?: string;
   /** 站点代码 */
@@ -670,6 +712,7 @@ export interface CheckEmailReqDTO {
   countryPlaceCode?: string;
   customerEmail?: string;
   langcode?: string;
+  stationCode?: string;
 }
 
 /** Customer */
@@ -846,7 +889,8 @@ export interface CustomerDetailManagerRespDTO {
   /** @format int64 */
   managerId?: number;
   managerName?: string;
-  membership?: CustomerMembershipResDTO;
+  /** 客户与会员身份关联数据 */
+  membership?: CustomerMembership;
   membershipPreChargeOrder?: string;
   nationCode?: string;
   outsideLink?: string;
@@ -877,62 +921,133 @@ export interface CustomerDetailManagerRespDTO {
 
 /** CustomerDetailRespDTO */
 export interface CustomerDetailRespDTO {
-  /** @format int32 */
+  /**
+   * 账号类型：1-主账号；2-子账号；
+   * @format int32
+   */
   accountType?: number;
+  /** 默认店铺余额 */
   availableAmount?: number;
+  /** chartWorkId */
   chatWorkId?: string;
+  /** 国家代码 */
   countryCode?: string;
-  /** @format date-time */
+  /**
+   * 创建日期
+   * @format date-time
+   */
   createTime?: string;
+  /** 邮箱地址 */
   customerEmail?: string;
   customerEmailChecked?: boolean;
-  /** @format int64 */
+  /**
+   * 用户id
+   * @format int64
+   */
   customerId?: number;
+  /** 客户手机号 */
   customerMobile?: string;
+  /** 用户名 */
   customerName?: string;
-  /** @format int64 */
+  /**
+   * 用户店铺表id
+   * @format int64
+   */
   customerShopId?: number;
+  /** 客户店铺列表 */
   customerShopList?: CustomerShopRespDTO[];
-  /** @format int32 */
+  /**
+   * 客户状态：1-正常；2-停用
+   * @format int32
+   */
   customerStatus?: number;
-  /** @format int32 */
+  /**
+   * 是否默认登录：0-否；1-是
+   * @format int32
+   */
   defaultLogin?: number;
-  /** @format int32 */
+  /**
+   * 性别：1-男；2-女；3-未知
+   * @format int32
+   */
   gender?: number;
+  /** 谷歌表 */
   googleUrl?: string;
+  /** 头像 */
   headerUrl?: string;
   initialPassword?: boolean;
-  /** @format int32 */
+  /**
+   * 内部用户标志：0-否；1-是
+   * @format int32
+   */
   internalFlag?: number;
   langcode?: string;
-  /** @format date-time */
+  /**
+   * 上次登录时间
+   * @format date-time
+   */
   lastLoginTime?: string;
+  /** 登录名 */
   loginName?: string;
-  /** @format int64 */
+  /**
+   * 主账号id
+   * @format int64
+   */
   mainCustomerId?: number;
-  /** @format int32 */
+  /**
+   * 是否有分配业务员权限:1-有,0-没有
+   * @format int32
+   */
   manageStatus?: number;
-  /** @format int64 */
+  /**
+   * 客户经理id
+   * @format int64
+   */
   managerId?: number;
+  /** 客户经理名称 */
   managerName?: string;
-  membership?: CustomerMembershipResDTO;
+  /** 会员信息 */
+  membership?: CustomerMembership;
+  /** 国家代码 */
   nationCode?: string;
+  /** 外链分享 */
   outsideLink?: string;
+  /** 对应店铺名称 */
   shopName?: string;
+  /** 是否展示会员信息 */
   showMembershipInfo?: boolean;
+  /** skype */
   skype?: string;
-  /** @format int32 */
+  /**
+   * 下单拆包提醒的标志：默认0-需要提醒；1-不再提醒
+   * @format int32
+   */
   splitRemindFlag?: number;
+  /** 站点代码 */
   stationCode?: string;
-  /** @format int64 */
+  /**
+   * b2b与d2c的统一id
+   * @format int64
+   */
   superCustomerId?: number;
-  /** @format int64 */
+  /**
+   * 客户总监id
+   * @format int64
+   */
   supervisionManagerId?: number;
+  /** 客户总监名称 */
   supervisionManagerName?: string;
-  /** @format int32 */
+  /**
+   * 系统来源: 1-D2C; 2-B2B
+   * @format int32
+   */
   systemSource?: number;
+  /** 统一客户全名 */
   unificationCustomerFullName?: string;
-  /** @format date-time */
+  /**
+   * 更新日期
+   * @format date-time
+   */
   updateTime?: string;
   utcTimeZone?: string;
 }
@@ -988,11 +1103,13 @@ export interface CustomerItemRespDTO {
   loginName?: string;
   /** @format int64 */
   mainCustomerId?: number;
-  membership?: CustomerMembershipResDTO;
+  /** 客户与会员身份关联数据 */
+  membership?: CustomerMembership;
   outsideLink?: string;
   password?: string;
   salt?: string;
   skype?: string;
+  stationCode?: string;
   /** @format int64 */
   superCustomerId?: number;
   /** @format int32 */
@@ -1162,7 +1279,8 @@ export interface CustomerOverviewRespDTO {
   loginName?: string;
   /** @format int64 */
   mainCustomerId?: number;
-  membership?: CustomerMembershipResDTO;
+  /** 客户与会员身份关联数据 */
+  membership?: CustomerMembership;
   /** @format int64 */
   superCustomerId?: number;
   /** @format int32 */
@@ -1440,6 +1558,43 @@ export interface CustomerShopRespDTO {
   yesterdayShipmentsQuantity?: number;
 }
 
+/** CustomerShopShipDelReqDTO */
+export interface CustomerShopShipDelReqDTO {
+  /**
+   * 配置id
+   * @format int64
+   */
+  shopShipId?: number;
+}
+
+/** CustomerShopShipReqDTO */
+export interface CustomerShopShipReqDTO {
+  /** 目的地国家 */
+  countryCode?: string;
+  /**
+   * 配置id，编辑时必传
+   * @format int64
+   */
+  customerShopShipId?: number;
+  /**
+   * 物流 id
+   * @format int64
+   */
+  logisticsId?: number;
+}
+
+/** CustomerShopShipRespDTO */
+export interface CustomerShopShipRespDTO {
+  countryCode?: string;
+  countryName?: string;
+  /** @format int64 */
+  customerShopShipId?: number;
+  /** @format int64 */
+  logisticsId?: number;
+  logisticsLogo?: string;
+  logisticsName?: string;
+}
+
 /** CustomerShopWmsRespDTO */
 export interface CustomerShopWmsRespDTO {
   /** @format int64 */
@@ -1579,6 +1734,22 @@ export interface DelUserRoleReqDTO {
   userId?: string[];
 }
 
+/** DeleteClearanceAddressReqDTO */
+export interface DeleteClearanceAddressReqDTO {
+  /** @format int64 */
+  customerShopId?: number;
+  /** @format int64 */
+  shopClearanceAddressId?: number;
+}
+
+/** DeleteShippingAddressReqDTO */
+export interface DeleteShippingAddressReqDTO {
+  /** @format int64 */
+  customerShopId?: number;
+  /** @format int64 */
+  shopShippingAddressId?: number;
+}
+
 /** DepartmentDetailRespDTO */
 export interface DepartmentDetailRespDTO {
   code?: string;
@@ -1632,6 +1803,7 @@ export interface EmailLoginReqDTO {
   customerEmail?: string;
   /** @format int32 */
   platformType?: number;
+  stationCode?: string;
   /** 三方平台用户账号,可以理解为唯一标识 */
   thirdCustomerId?: string;
   /** 三方平台用户名称 */
@@ -1646,10 +1818,16 @@ export interface EmailLoginReqDTO {
 /** FeedbackInfoReqDTO */
 export interface FeedbackInfoReqDTO {
   companyName?: string;
-  email?: string;
+  /** 邮箱 */
+  email: string;
+  /** 附件、图片 */
+  files?: string[];
   message?: string;
   phone?: string;
-  userName?: string;
+  /** 站点信息 */
+  stationCode: string;
+  /** 姓名 */
+  userName: string;
 }
 
 /** FeedbackInfoRspDTO */
@@ -1658,10 +1836,12 @@ export interface FeedbackInfoRspDTO {
   /** @format date-time */
   createTime?: string;
   email?: string;
+  files?: string[];
   /** @format int64 */
   id?: number;
   message?: string;
   phone?: string;
+  stationCode?: string;
   /** @format date-time */
   updateTime?: string;
   userName?: string;
@@ -1691,6 +1871,11 @@ export interface FrogArticleDetailRespDTO {
   frogArticleTitle?: string;
   /** @format int32 */
   frogArticleType?: number;
+  /**
+   * 文章类型id
+   * @format int64
+   */
+  frogArticleTypeId?: number;
   /** @format int64 */
   frogArticleViewCount?: number;
   /**
@@ -1733,8 +1918,18 @@ export interface FrogArticleRespDTO {
   frogArticleTitle?: string;
   /** @format int32 */
   frogArticleType?: number;
+  /**
+   * 文章类型id
+   * @format int64
+   */
+  frogArticleTypeId?: number;
   /** @format int64 */
   frogArticleViewCount?: number;
+  /**
+   * 是否置顶
+   * @format int32
+   */
+  isPinTop?: number;
   /**
    * 未登录限制；1.可查看全文；2.部分可查看；3.不可查看
    * @format int32
@@ -1747,7 +1942,17 @@ export interface FrogArticleRespDTO {
   noMembershipRestriction?: number;
   /** SEO 描述 */
   seoDescription?: string;
+  /**
+   * 排序
+   * @format int32
+   */
+  sort?: number;
   stationCode?: string;
+  /**
+   * 更新时间
+   * @format date-time
+   */
+  updateTime?: string;
   /** @format int64 */
   viewNum?: number;
 }
@@ -1935,8 +2140,19 @@ export interface GetFrogArticleArchivePageDTO {
 
 /** GetFrogArticlePageDTO */
 export interface GetFrogArticlePageDTO {
+  /** 文章归档月份 */
+  frogArticleMonth?: string;
   /** @format int32 */
   frogArticleType?: number;
+  /**
+   * 文章类型Id
+   * @format int64
+   */
+  frogArticleTypeId?: number;
+  /** 文章归档年份 */
+  frogArticleYear?: string;
+  /** 关键字 */
+  keyword?: string;
   /** @format int32 */
   pageNum?: number;
   /** @format int32 */
@@ -1944,6 +2160,11 @@ export interface GetFrogArticlePageDTO {
   /** @format int32 */
   startIndex?: number;
   stationCode?: string;
+  /**
+   * 客户Id
+   * @format int64
+   */
+  superCustomerId?: number;
 }
 
 /** GetFrogArticlePrepAndNextReqDTO */
@@ -1974,7 +2195,10 @@ export interface GetManageBannerPageReqDTO {
   /** @format date-time */
   startTime?: string;
   stationCode?: string;
-  /** @format int32 */
+  /**
+   * banner类型，0：我的频道；1：透明购，2：市场购, 3:青蛙文章
+   * @format int32
+   */
   type?: number;
 }
 
@@ -1985,6 +2209,11 @@ export interface GetManageFrogArticlePageDTO {
   frogArticleTitle?: string;
   /** @format int32 */
   frogArticleType?: number;
+  /**
+   * 文章类型id
+   * @format int64
+   */
+  frogArticleTypeId?: number;
   /** @format int32 */
   pageNum?: number;
   /** @format int32 */
@@ -2016,7 +2245,6 @@ export interface GetThirdAuthLinkReqDTO {
   /**
    * 类型 0-直采 1-代采
    * @format int32
-   * @example "http://2peuvm.natappfree.cc/oauth/callback/google"
    */
   buType: number;
   /**
@@ -2024,6 +2252,8 @@ export interface GetThirdAuthLinkReqDTO {
    * @example "http://2peuvm.natappfree.cc/oauth/callback/google"
    */
   redirectUrl: string;
+  /** 站点信息 美国站 US */
+  stationCode?: string;
   /**
    * 三方平台标识
    * @example "google"
@@ -2153,6 +2383,11 @@ export interface HotFrogArticleRespDTO {
   frogArticleTitle?: string;
   /** @format int32 */
   frogArticleType?: number;
+  /**
+   * 文章类型id
+   * @format int64
+   */
+  frogArticleTypeId?: number;
   /** @format int64 */
   frogArticleViewCount?: number;
   /**
@@ -2210,6 +2445,8 @@ export interface IntAreaDTO {
    * @format int64
    */
   pid?: number;
+  /** 邮编 */
+  postalCode?: string;
 }
 
 /** IntAreaQueryDTO */
@@ -2273,8 +2510,11 @@ export interface ManageBannerRespDTO {
   /** @format int32 */
   bannerClickNum?: number;
   bannerDesignatedUserId?: string;
+  bannerDesignatedUserList?: CustomerDetailRespDTO[];
   /** @format int64 */
   bannerId?: number;
+  /** banner图片url-H5页面 */
+  bannerImgMobileUrl?: string;
   bannerImgUrl?: string;
   bannerJumpLink?: string;
   bannerName?: string;
@@ -2304,8 +2544,20 @@ export interface ManageFrogArticleRespDTO {
   frogArticleSubTitle?: string;
   frogArticleTitle?: string;
   frogArticleType?: string;
+  /**
+   * 文章类型id
+   * @format int64
+   */
+  frogArticleTypeId?: number;
+  /** 文章类型名称 */
+  frogArticleTypeName?: string;
   /** @format int64 */
   frogArticleViewCount?: number;
+  /**
+   * 是否置顶
+   * @format int32
+   */
+  isPinTop?: number;
   /**
    * 未登录限制；1.可查看全文；2.部分可查看；3.不可查看
    * @format int32
@@ -2318,6 +2570,11 @@ export interface ManageFrogArticleRespDTO {
   noMembershipRestriction?: number;
   /** SEO 描述 */
   seoDescription?: string;
+  /**
+   * 排序
+   * @format int32
+   */
+  sort?: number;
   stationCode?: string;
 }
 
@@ -2716,6 +2973,32 @@ export interface NotifyTemplateUpsertVO {
   updateTime?: string;
 }
 
+/** OpenBaseReqDto */
+export interface OpenBaseReqDto {
+  /** app key */
+  appKey?: string;
+  /** sign */
+  sign?: string;
+  /**
+   * timestamp
+   * @format int64
+   */
+  timestamp?: number;
+}
+
+/** OpenShopListRespDTO */
+export interface OpenShopListRespDTO {
+  /**
+   * customer shop id
+   * @format int64
+   */
+  customerShopId?: number;
+  /** customer shop name */
+  customerShopName?: string;
+  /** customer shop url */
+  customerShopUrl?: string;
+}
+
 /** OrderItem */
 export interface OrderItem {
   asc?: boolean;
@@ -2745,6 +3028,7 @@ export interface PasswordLoginReqDTO {
   /** @format int32 */
   platformType?: number;
   recaptchaCode?: string;
+  stationCode?: string;
   /** 三方平台用户账号,可以理解为唯一标识 */
   thirdCustomerId?: string;
   /** 三方平台用户名称 */
@@ -2975,6 +3259,7 @@ export interface ResetPasswordReqDTO {
   /** 国际区号 */
   globalRoaming?: string;
   newPassword?: string;
+  stationCode?: string;
   verificationCode?: string;
 }
 
@@ -3013,6 +3298,36 @@ export interface SaveCustomerConfigReqDTO {
   configName?: string;
   /** 配置值 */
   configValue?: string;
+}
+
+/** SaveOrUpdateCustomerConfigReqDTO */
+export interface SaveOrUpdateCustomerConfigReqDTO {
+  /** 配置 code */
+  configCode?: string;
+  /** 配置名称 */
+  configName?: string;
+  /** 配置值 */
+  configValue?: string;
+  /**
+   * 子账号id
+   * @format int64
+   */
+  customerId?: number;
+  /**
+   * 级别 1-superCustomerId 2-mainCustomerId 3-customerId
+   * @format int32
+   */
+  level?: number;
+  /**
+   * 主账号id
+   * @format int64
+   */
+  mainCustomerId?: number;
+  /**
+   * 超级用户id
+   * @format int64
+   */
+  superCustomerId?: number;
 }
 
 /** SearchResultDTO */
@@ -3073,6 +3388,7 @@ export interface ShopAdditionAddressRespDTO {
   customerId?: number;
   /** @format int64 */
   customerShopId?: number;
+  customerShopShipRespDTOList?: CustomerShopShipRespDTO[];
   /** @format int64 */
   shopAdditionId?: number;
   /** @format int32 */
@@ -3798,6 +4114,8 @@ export interface UpdateBannerReqDTO {
   bannerDesignatedUserId?: string;
   /** @format int64 */
   bannerId?: number;
+  /** banner图片url-H5页面 */
+  bannerImgMobileUrl?: string;
   bannerImgUrl?: string;
   bannerJumpLink?: string;
   bannerName?: string;
@@ -3909,6 +4227,11 @@ export interface UpdateFrogArticleReqDTO {
   frogArticleTitle?: string;
   /** @format int32 */
   frogArticleType?: number;
+  /**
+   * 文章类型Id
+   * @format int64
+   */
+  frogArticleTypeId?: number;
   /** @format int64 */
   frogArticleViewCount?: number;
   /**
@@ -4316,6 +4639,15 @@ export interface BizResponseCustomerMembershipResDTO {
   success?: boolean;
 }
 
+/** BizResponse«CustomerMembership对象» */
+export interface BizResponseCustomerMembership {
+  code?: string;
+  /** 客户与会员身份关联数据 */
+  data?: CustomerMembership;
+  msg?: string;
+  success?: boolean;
+}
+
 /** BizResponse«CustomerOverviewRespDTO» */
 export interface BizResponseCustomerOverviewRespDTO {
   code?: string;
@@ -4477,6 +4809,14 @@ export interface BizResponseListCustomerMembershipResDTO {
   success?: boolean;
 }
 
+/** BizResponse«List«CustomerMembership对象»» */
+export interface BizResponseListCustomerMembership {
+  code?: string;
+  data?: CustomerMembership[];
+  msg?: string;
+  success?: boolean;
+}
+
 /** BizResponse«List«CustomerShopBySuperRespDTO»» */
 export interface BizResponseListCustomerShopBySuperRespDTO {
   code?: string;
@@ -4497,6 +4837,14 @@ export interface BizResponseListCustomerShopPageDTO {
 export interface BizResponseListCustomerShopRespDTO {
   code?: string;
   data?: CustomerShopRespDTO[];
+  msg?: string;
+  success?: boolean;
+}
+
+/** BizResponse«List«CustomerShopShipRespDTO»» */
+export interface BizResponseListCustomerShopShipRespDTO {
+  code?: string;
+  data?: CustomerShopShipRespDTO[];
   msg?: string;
   success?: boolean;
 }
@@ -4581,6 +4929,14 @@ export interface BizResponseListFrogArticleArchiveSortRespDTO {
   success?: boolean;
 }
 
+/** BizResponse«List«FrogArticleType对象»» */
+export interface BizResponseListFrogArticleType {
+  code?: string;
+  data?: FrogArticleType[];
+  msg?: string;
+  success?: boolean;
+}
+
 /** BizResponse«List«HolidayDateDTO»» */
 export interface BizResponseListHolidayDateDTO {
   code?: string;
@@ -4657,6 +5013,14 @@ export interface BizResponseListMenuTreeListRespDTO {
 export interface BizResponseListMenuTreeRespDTO {
   code?: string;
   data?: MenuTreeRespDTO[];
+  msg?: string;
+  success?: boolean;
+}
+
+/** BizResponse«List«OpenShopListRespDTO»» */
+export interface BizResponseListOpenShopListRespDTO {
+  code?: string;
+  data?: OpenShopListRespDTO[];
   msg?: string;
   success?: boolean;
 }
@@ -5257,6 +5621,72 @@ export interface CustomerGoogle {
 }
 
 /**
+ * CustomerMembership对象
+ * 客户与会员身份关联数据
+ */
+export interface CustomerMembership {
+  /**
+   * 创建日期
+   * @format date-time
+   */
+  createTime?: string;
+  /** @format int64 */
+  customerMembershipId?: number;
+  /**
+   * 状态：1-正常；2-停用
+   * @format int32
+   */
+  customerMembershipStatus?: number;
+  /** 客户姓名 */
+  customerName?: string;
+  /**
+   * 过期日期
+   * @format date-time
+   */
+  expiresDate?: string;
+  /**
+   * 会员身份模板
+   * @format int64
+   */
+  membershipTemplateId?: number;
+  /** 会员身份名称 */
+  membershipTemplateName?: string;
+  /**
+   * 会员身份收费标准
+   * @format int64
+   */
+  membershipTemplatePriceId?: number;
+  /** 会员身份收费标准名称 */
+  membershipTemplatePriceName?: string;
+  /**
+   * 会员类型:0-普通,1-特殊
+   * @format int32
+   */
+  specialType?: number;
+  stationCode?: string;
+  /**
+   * 客户id
+   * @format int64
+   */
+  superCustomerId?: number;
+  /**
+   * 会员等级，从低到高，0最低
+   * @format int32
+   */
+  templateLevel?: number;
+  /**
+   * 试用标志:0-不是,1是
+   * @format int32
+   */
+  trialFlag?: number;
+  /**
+   * 更新日期
+   * @format date-time
+   */
+  updateTime?: string;
+}
+
+/**
  * DingCompany对象
  * 公司钉钉信息表
  */
@@ -5271,6 +5701,21 @@ export interface DingCompany {
   dingCompanyId?: string;
   leader?: string;
   name?: string;
+  /** @format date-time */
+  updateTime?: string;
+}
+
+/** FrogArticleType对象 */
+export interface FrogArticleType {
+  /** @format date-time */
+  createTime?: string;
+  /** @format int64 */
+  id?: number;
+  name?: string;
+  nameZh?: string;
+  /** @format int32 */
+  sort?: number;
+  stationCode?: string;
   /** @format date-time */
   updateTime?: string;
 }
@@ -5757,6 +6202,7 @@ export interface _DTO {
   globalRoaming?: string;
   /** @format int32 */
   platformType?: number;
+  stationCode?: string;
   /** 三方平台用户账号,可以理解为唯一标识 */
   thirdCustomerId?: string;
   /** 三方平台用户名称 */
@@ -6517,6 +6963,53 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags 地区设置
+     * @name GetByPid
+     * @summary 查询下级地区信息
+     * @request GET:/area/getByPid
+     */
+    getByPid: (
+      query: {
+        /**
+         * pid
+         * @format int64
+         */
+        pid: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseListIntAreaDTO, any>({
+        path: `/area/getByPid`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 地区设置
+     * @name GetCountryByCountryCode
+     * @summary getCountryByCountryCode
+     * @request GET:/area/getCountryByCountryCode
+     */
+    getCountryByCountryCode: (
+      query: {
+        /** countryCode */
+        countryCode: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseIntAreaDTO, any>({
+        path: `/area/getCountryByCountryCode`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 地区设置
      * @name GetJapanProvinceByEnLike
      * @summary getJapanProvinceByEnLike
      * @request GET:/area/getJapanProvinceByEnLike
@@ -7049,13 +7542,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags 官网接口
-     * @name FeedbackGetRegisterImage
+     * @name FeedbackList
      * @summary 查询列表
-     * @request GET:/base/feedback/getRegisterImage
+     * @request GET:/base/feedback/list
      */
-    feedbackGetRegisterImage: (params: RequestParams = {}) =>
+    feedbackList: (params: RequestParams = {}) =>
       this.request<BizResponseListFeedbackInfoRspDTO, any>({
-        path: `/base/feedback/getRegisterImage`,
+        path: `/base/feedback/list`,
         method: "GET",
         ...params,
       }),
@@ -7993,6 +8486,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         type: ContentType.Json,
         ...params,
       }),
+
+    /**
+     * No description
+     *
+     * @tags customer-config-controller
+     * @name SaveOrUpdate
+     * @summary 保存或更新用户配置
+     * @request POST:/config/saveOrUpdate
+     */
+    saveOrUpdate: (request: SaveOrUpdateCustomerConfigReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseVoid, any>({
+        path: `/config/saveOrUpdate`,
+        method: "POST",
+        body: request,
+        type: ContentType.Json,
+        ...params,
+      }),
   };
   create2D = {
     /**
@@ -8008,6 +8518,24 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/create2D`,
         method: "POST",
         body: superCustomerIds,
+        type: ContentType.Json,
+        ...params,
+      }),
+  };
+  crossBorder = {
+    /**
+     * No description
+     *
+     * @tags shop
+     * @name ShopList
+     * @summary get shop list
+     * @request POST:/crossBorder/shop/list
+     */
+    shopList: (dto: OpenBaseReqDto, params: RequestParams = {}) =>
+      this.request<BizResponseListOpenShopListRespDTO, any>({
+        path: `/crossBorder/shop/list`,
+        method: "POST",
+        body: dto,
         type: ContentType.Json,
         ...params,
       }),
@@ -8255,7 +8783,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/customer/shop/addClearanceAddress
      */
     shopAddClearanceAddress: (reqDTO: AddClearanceAddressReqDTO, params: RequestParams = {}) =>
-      this.request<BizResponse, any>({
+      this.request<BizResponseLong, any>({
         path: `/customer/shop/addClearanceAddress`,
         method: "POST",
         body: reqDTO,
@@ -8272,7 +8800,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/customer/shop/addShippingAddress
      */
     shopAddShippingAddress: (reqDTO: AddShippingAddressReqDTO, params: RequestParams = {}) =>
-      this.request<BizResponse, any>({
+      this.request<BizResponseLong, any>({
         path: `/customer/shop/addShippingAddress`,
         method: "POST",
         body: reqDTO,
@@ -8293,6 +8821,26 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/customer/shop/auto/order/switch`,
         method: "POST",
         body: dto,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags D2C&&B2B-前台用户店铺
+     * @name ShopDeleteClearanceAddressV2
+     * @summary 删除清关地址
+     * @request POST:/customer/shop/deleteClearanceAddress/v2
+     */
+    shopDeleteClearanceAddressV2: (
+      deleteClearanceAddressReqDTO: DeleteClearanceAddressReqDTO,
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponse, any>({
+        path: `/customer/shop/deleteClearanceAddress/v2`,
+        method: "POST",
+        body: deleteClearanceAddressReqDTO,
         type: ContentType.Json,
         ...params,
       }),
@@ -8345,6 +8893,26 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/customer/shop/deleteShippingAddress`,
         method: "POST",
         query: query,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags D2C&&B2B-前台用户店铺
+     * @name ShopDeleteShippingAddressV2
+     * @summary 删除收货地址
+     * @request POST:/customer/shop/deleteShippingAddress/v2
+     */
+    shopDeleteShippingAddressV2: (
+      deleteShippingAddressReqDTO: DeleteShippingAddressReqDTO,
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponse, any>({
+        path: `/customer/shop/deleteShippingAddress/v2`,
+        method: "POST",
+        body: deleteShippingAddressReqDTO,
         type: ContentType.Json,
         ...params,
       }),
@@ -8645,7 +9213,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/customer/shop/updateClearanceAddress
      */
     shopUpdateClearanceAddress: (reqDTO: UpdateClearanceAddressReqDTO, params: RequestParams = {}) =>
-      this.request<BizResponse, any>({
+      this.request<BizResponseLong, any>({
         path: `/customer/shop/updateClearanceAddress`,
         method: "POST",
         body: reqDTO,
@@ -8662,7 +9230,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/customer/shop/updateShippingAddress
      */
     shopUpdateShippingAddress: (reqDTO: UpdateShippingAddressReqDTO, params: RequestParams = {}) =>
-      this.request<BizResponse, any>({
+      this.request<BizResponseLong, any>({
         path: `/customer/shop/updateShippingAddress`,
         method: "POST",
         body: reqDTO,
@@ -9568,6 +10136,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags 青蛙文章接口
+     * @name ArticleFootPage
+     * @summary 查询青蛙文章浏览记录分页（前台）
+     * @request POST:/frog/article/foot/page
+     */
+    articleFootPage: (request: GetFrogArticlePageDTO, params: RequestParams = {}) =>
+      this.request<BizResponsePageFrogArticleRespDTO, any>({
+        path: `/frog/article/foot/page`,
+        method: "POST",
+        body: request,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 青蛙文章接口
      * @name ArticleGetPrepAndNext
      * @summary 查询当前文章上一篇/下一篇文章
      * @request POST:/frog/article/get/prepAndNext
@@ -9653,6 +10238,31 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags 青蛙文章接口
+     * @name ArticlePinTop
+     * @summary 置顶文章
+     * @request GET:/frog/article/pinTop
+     */
+    articlePinTop: (
+      query: {
+        /**
+         * frogArticleId
+         * @format int64
+         */
+        frogArticleId: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseObject, any>({
+        path: `/frog/article/pinTop`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 青蛙文章接口
      * @name ArticleSignHot
      * @summary 标记热门文章
      * @request POST:/frog/article/sign/hot
@@ -9693,6 +10303,117 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: "PUT",
         body: dto,
         type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 青蛙文章接口
+     * @name ArticleTypeDelete
+     * @summary 删除青蛙文章分类
+     * @request GET:/frog/article/type/delete
+     */
+    articleTypeDelete: (
+      query: {
+        /**
+         * id
+         * @format int64
+         */
+        id: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseObject, any>({
+        path: `/frog/article/type/delete`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 青蛙文章接口
+     * @name ArticleTypeList
+     * @summary 青蛙文章分类列表
+     * @request GET:/frog/article/type/list
+     */
+    articleTypeList: (
+      query: {
+        /** stationCode */
+        stationCode: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseListFrogArticleType, any>({
+        path: `/frog/article/type/list`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 青蛙文章接口
+     * @name ArticleTypeListCustomer
+     * @summary 客户端青蛙文章分类列表(有文章的分类)
+     * @request GET:/frog/article/type/list/customer
+     */
+    articleTypeListCustomer: (
+      query: {
+        /** stationCode */
+        stationCode: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseListFrogArticleType, any>({
+        path: `/frog/article/type/list/customer`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 青蛙文章接口
+     * @name ArticleTypeSave
+     * @summary 保存青蛙文章分类
+     * @request POST:/frog/article/type/save
+     */
+    articleTypeSave: (typeList: FrogArticleType[], params: RequestParams = {}) =>
+      this.request<BizResponseObject, any>({
+        path: `/frog/article/type/save`,
+        method: "POST",
+        body: typeList,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 青蛙文章接口
+     * @name ArticleUnPinTop
+     * @summary 取消置顶文章
+     * @request GET:/frog/article/unPinTop
+     */
+    articleUnPinTop: (
+      query: {
+        /**
+         * frogArticleId
+         * @format int64
+         */
+        frogArticleId: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseObject, any>({
+        path: `/frog/article/unPinTop`,
+        method: "GET",
+        query: query,
         ...params,
       }),
 
@@ -10041,6 +10762,29 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: "POST",
         query: query,
         type: ContentType.Json,
+        ...params,
+      }),
+  };
+  getCountByKey = {
+    /**
+     * No description
+     *
+     * @tags D2C&&B2B-前台用户密码和邮箱修改
+     * @name GetCountByKey
+     * @summary 根据key获取数量
+     * @request GET:/getCountByKey
+     */
+    getCountByKey: (
+      query: {
+        /** key */
+        key: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseLong, any>({
+        path: `/getCountByKey`,
+        method: "GET",
+        query: query,
         ...params,
       }),
   };
@@ -10552,7 +11296,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/getCustomerMembership
      */
     getCustomerMembership: (params: RequestParams = {}) =>
-      this.request<BizResponseCustomerMembershipResDTO, any>({
+      this.request<BizResponseCustomerMembership, any>({
         path: `/getCustomerMembership`,
         method: "GET",
         ...params,
@@ -10577,7 +11321,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<BizResponseCustomerMembershipResDTO, any>({
+      this.request<BizResponseCustomerMembership, any>({
         path: `/getCustomerMembershipById`,
         method: "GET",
         query: query,
@@ -11188,6 +11932,24 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     insertMembershipOrder: (reqDTO: MembershipOrderDTO, params: RequestParams = {}) =>
       this.request<BizResponseString, any>({
         path: `/insertMembershipOrder`,
+        method: "POST",
+        body: reqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+  };
+  intended = {
+    /**
+     * No description
+     *
+     * @tags 美国站首页底部用户信息相关
+     * @name PostIntended
+     * @summary 添加信息
+     * @request POST:/intended/add
+     */
+    postIntended: (reqDTO: AddIntendedCustomerInfoReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseVoid, any>({
+        path: `/intended/add`,
         method: "POST",
         body: reqDTO,
         type: ContentType.Json,
@@ -12493,7 +13255,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/selectCustomerMembershipList
      */
     selectCustomerMembershipList: (dto: CustomerMembershipReqDTO, params: RequestParams = {}) =>
-      this.request<BizResponseListCustomerMembershipResDTO, any>({
+      this.request<BizResponseListCustomerMembership, any>({
         path: `/selectCustomerMembershipList`,
         method: "POST",
         body: dto,
@@ -12594,6 +13356,31 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: "POST",
         body: dto,
         type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags customer-shop-feign-api-impl
+     * @name GetDefaultClearanceAddress
+     * @summary getDefaultClearanceAddress
+     * @request GET:/shop/getDefaultClearanceAddress
+     */
+    getDefaultClearanceAddress: (
+      query: {
+        /**
+         * customerShopId
+         * @format int64
+         */
+        customerShopId: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseShopClearanceAddressRespDTO, any>({
+        path: `/shop/getDefaultClearanceAddress`,
+        method: "GET",
+        query: query,
         ...params,
       }),
 
@@ -12745,6 +13532,72 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/shop/select/list/by/customerIds`,
         method: "POST",
         body: customerIds,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags D2C&&B2B-用户店铺物流配置修改
+     * @name ShipAdd
+     * @summary 新建店铺国际物流配置
+     * @request POST:/shop/ship/add
+     */
+    shipAdd: (dto: CustomerShopShipReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseVoid, any>({
+        path: `/shop/ship/add`,
+        method: "POST",
+        body: dto,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags D2C&&B2B-用户店铺物流配置修改
+     * @name ShipDelete
+     * @summary 删除店铺国际物流配置
+     * @request POST:/shop/ship/delete
+     */
+    shipDelete: (customerShopShipDelReqDTO: CustomerShopShipDelReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseVoid, any>({
+        path: `/shop/ship/delete`,
+        method: "POST",
+        body: customerShopShipDelReqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags D2C&&B2B-用户店铺物流配置修改
+     * @name ShipGet
+     * @summary 获取店铺国际物流配置列表
+     * @request GET:/shop/ship/get
+     */
+    shipGet: (params: RequestParams = {}) =>
+      this.request<BizResponseListCustomerShopShipRespDTO, any>({
+        path: `/shop/ship/get`,
+        method: "GET",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags D2C&&B2B-用户店铺物流配置修改
+     * @name ShipUpdate
+     * @summary 编辑店铺国际物流配置
+     * @request POST:/shop/ship/update
+     */
+    shipUpdate: (dto: CustomerShopShipReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseVoid, any>({
+        path: `/shop/ship/update`,
+        method: "POST",
+        body: dto,
         type: ContentType.Json,
         ...params,
       }),

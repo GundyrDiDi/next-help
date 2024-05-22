@@ -1,3 +1,10 @@
+<!--
+ * @Author: shiguang
+ * @Date: 2024-03-21 16:38:31
+ * @LastEditors: shiguang
+ * @LastEditTime: 2024-05-16 20:57:23
+ * @Description: 
+-->
 ```bash
 npm run dev
 # or
@@ -7,6 +14,17 @@ pnpm dev
 # or
 bun dev
 ```
+
+- 服务端
+  - 判断当前是2b OR 2c
+
+- 客户端
+  - 判断当前是2b OR 2c
+  const [plat] = useAtom(Plat);
+  
+
+
+
 
 ## 目录结构
 采用 App Router 的模式

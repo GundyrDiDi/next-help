@@ -2,21 +2,22 @@
  * @Author: shiguang
  * @Date: 2024-04-25 11:55:19
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-25 16:44:58
+ * @LastEditTime: 2024-05-16 20:06:24
  * @Description: 
  */
 'use server'
 import React from 'react';
 import HelpPage, { generateMetadataAaa as helpGenerateMetadata } from './(help)/PageContent';
-import MediaPage from './(media)/PageContent';
+// import MediaPage from './(media)/PageContent';
+import MediaPage from './(media)/newxx/page';
 import { createSwitchGenerateMetadata, createSwitchPageComponent } from '@/utils/server/mergePage';
 
-const MergePageComponentWithAsync = (getServerComponent: () => Promise<React.FC>) => {
-    return async (props: any) => {
-        const ServerComponent = await getServerComponent()
-        return <ServerComponent {...props} />;
-    }
-}
+// const MergePageComponentWithAsync = (getServerComponent: () => Promise<React.FC>) => {
+//     return async (props: any) => {
+//         const ServerComponent = await getServerComponent()
+//         return <ServerComponent {...props} />;
+//     }
+// }
 
 
 export const generateMetadata = createSwitchGenerateMetadata({

@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 11:30:20
  * @LastEditors: shiguang
- * @LastEditTime: 2024-04-25 17:21:40
+ * @LastEditTime: 2024-05-22 10:31:21
  * @Description: 
  */
 import { BizResponseCustomerDetailRespDTO, FrogArticleDetailRespDTO } from "@/service/customer";
@@ -26,6 +26,8 @@ const getData = async (frogArticleId: number) => {
     `${process.env.NEXT_PUBLIC_THE_CKB_API_URL}/customer/frog/article/detail?frogArticleId=${frogArticleId}`,
     { cache: "no-cache" }
   ).then((res) => res.json());
+  console.log(12345, `${process.env.NEXT_PUBLIC_THE_CKB_API_URL}/customer/frog/article/detail?frogArticleId=${frogArticleId}`);
+  console.log(article, 333)
   return article.data as FrogArticleDetailRespDTO;
 };
 
@@ -40,10 +42,12 @@ export default async function Page({ params, searchParams }: Props) {
         cache: "no-cache",
         headers:{
         'X-Authtoken':token||''
-    } 
+    }
   }
   ).then((res) => res.json());
-  return <ArticlesCont userInfo={data} frogArticle={article} querys={searchParams} />;
+  return <div>
+    <ArticlesCont userInfo={data} frogArticle={article} querys={searchParams} />
+  </div>;
 }
 
 export async function generateMetadata(
@@ -52,6 +56,7 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const frogArticleId = +params.frogArticleId;
   const article = await getData(frogArticleId);
+  console.log(article, 666, `${process.env.NEXT_PUBLIC_THE_CKB_API_URL}/customer/getCustomerDetails`,)
   
   const title = article?.frogArticleTitle;
   

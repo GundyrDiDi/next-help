@@ -100,7 +100,7 @@ const CKBSearch = () => {
         [Local.EN]: SearchLangType.EN, // 英语
       }[lang],
       label: {
-        [Local.JA]: "日本语入力",
+        [Local.JA]: "日本語入力",
         [Local.KO]: "한국어 입력",
         [Local.EN]: "English",
       }[lang],
@@ -253,7 +253,9 @@ const CKBSearch = () => {
 
   // 去购物车
   const gotoCar = () => {
-    if (isLogin()) return toLogin();
+    if(document.querySelector('#JS_unLoginFlag')){
+      return toLogin();
+    }
     toTheCkb(`/shopcart`);
   };
 
@@ -405,7 +407,7 @@ const CKBSearch = () => {
               handleJump();
             }}
           >
-            <div>
+            <div className="flex items-center" >
               <SvgOutLink className="icon text-[16px] outline-none	mr-[6px]" />
               <span id="guideText">{t("站外搜索")}</span>
             </div>

@@ -16,19 +16,28 @@ import { CustomerDetail } from "@/model";
 import { getCookieToken, isLogin } from "@/utils";
 import { useLink } from "@/utils/router";
 import { CustomerDetailRespDTO2 } from "@/model/CustomerDetail";
+// import HotArtical from "./HotArtical";
+import ArticalCategory from "./ArticalCategory";
+import FixedBanner from "./FixedBanner";
+import HotArticalList from "@/app/[lang]/(media)/newxx/components/HotArticalList";
+import { useRouter } from "next/navigation";
+
+
+
 
 interface Props {
   frogArticle?: FrogArticleDetailRespDTO;
   querys: { [key: string]: string | undefined };
-  userInfo?:CustomerDetailRespDTO2;
+  userInfo?: CustomerDetailRespDTO2;
 }
-const ArticlesCont = ({ frogArticle, querys,userInfo }: Props) => {
+const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
   const [markingShow, setMarkingShow] = useState<boolean>(true);
-  const href = useLink(`kaerumedia`);
-  
+  // const href = useLink(`kaerumedia`);
+  const router = useRouter();
+
   useMount(() => {
     const imgList = document.getElementById('content-html')?.querySelectorAll('img')
-    console.log(imgList,'imgList');
+    console.log(imgList, 'imgList');
     imgList?.forEach((item: any) => {
       if (item.dataset.href && item.dataset.href !== '') {
         item.onclick = () => {
@@ -41,14 +50,14 @@ const ArticlesCont = ({ frogArticle, querys,userInfo }: Props) => {
       api.customer.frog.articleCount({
         frogArticleId: frogArticle?.frogArticleId,
       });
-
-      if (!userInfo?.customerId&& frogArticle.noLoginRestriction === 3) {
-        window.$location.href=href
+      // 未登录
+      if (!userInfo?.customerId && frogArticle.noLoginRestriction === 3) {
+        router.push('/');
         return
       }
       if (frogArticle.noMembershipRestriction === 3) {
         if (!userInfo?.customerId || !userInfo?.membership?.templateLevel) {
-          window.$location.href=href
+          router.push('/');
           return
         }
         setMarkingShow(false);
@@ -77,37 +86,47 @@ const ArticlesCont = ({ frogArticle, querys,userInfo }: Props) => {
         }
       }
     }
-     
+    
   });
   return (
     <>
       <div
-        className={classNames("Article w-[100%]", { readLess: markingShow })}
+        className="justify-center pad:flex pc:flex mo:block article-content mo:py-[20px] px-[12px] bg-[#fff]"
       >
-        <div className="Article-main box-style viewport">
-          <div className="content">
-            <div className="content-title">{frogArticle?.frogArticleTitle}</div>
-            {frogArticle?.frogArticleId !== 151 && (
-              <div className="content-date">
-                {setStationTime(frogArticle?.createTime)}
+        <div className="pad:flex pc:flex mo:block pad:w-[1200px] pc:w-[1200px] pc:mt-[48px]" >
+          <div className="pc:w-[calc(1200px-378px)] mo:w-[100%] pad:w-[100%] pad:mr-[20px] " >
+            <div className="pc:pr-[20px]">
+              <div >
+                <h1 className="content-title !text-[30px] !m-[0] mo:!text-[20px] font-[700] ">{frogArticle?.frogArticleTitle}</h1>
+                {frogArticle?.frogArticleId !== 151 && (
+                  <div className="text-right mo:text-left mo:mt-[8px] mo:h-[20px] text-[#000]/[0.45]">
+                    {setStationTime(frogArticle?.createTime)}
+                  </div>
+                )}
+                <div
+                  id="content-html"
+                  className={`media-help-artical-content ${markingShow ? `h-[100vh] overflow-hidden` : ''}`}
+                  dangerouslySetInnerHTML={{
+                    __html: frogArticle?.frogArticleContent!,
+                  }}
+                ></div>
               </div>
-            )}
-            <div
-              className="content-html"
-              id="content-html"
-              dangerouslySetInnerHTML={{
-                __html: frogArticle?.frogArticleContent!,
-              }}
-            ></div>
+              <ArticleSwitch
+                frogArticleId={frogArticle?.frogArticleId}
+                type={querys.type}
+                source={querys.source}
+              />
+            </div>
           </div>
-          <ArticleSwitch
-            frogArticleId={frogArticle?.frogArticleId}
-            type={querys.type}
-            source={querys.source}
-          />
-        </div>
-        <div className="Article-hot box-style">
-          <HotArticles showBtn={false} type={querys.type} />
+          <div className="pc:w-[370px] shrink-0 mo:w-[100%] pad:w-[280px] " >
+            <div className="__cate-list bg-[#FAFAFA] p-[20px] mb-[20px]" >
+              <ArticalCategory/>
+              <div className="mt-[40px]" >
+                <HotArticalList isShowHeaderIcon />
+              </div>
+            </div>
+            <FixedBanner/>
+          </div>
         </div>
       </div>
       {markingShow && <Marking />}

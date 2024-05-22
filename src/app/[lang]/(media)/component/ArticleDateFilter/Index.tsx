@@ -1,3 +1,10 @@
+/*
+ * @Author: shiguang
+ * @Date: 2024-05-10 14:43:54
+ * @LastEditors: shiguang
+ * @LastEditTime: 2024-05-16 12:08:51
+ * @Description: 
+ */
 import { useAsyncEffect, useRequest, useToggle } from "ahooks";
 import classNames from "classnames";
 
@@ -36,7 +43,8 @@ const ArticleDateFilter = () => {
       return {
         year:item.frogArticleYear,
         month:item.frogArticleMonth,
-        tab:-2
+        tab:-2,
+        isShowReadRecord: false
       }
     })
   }

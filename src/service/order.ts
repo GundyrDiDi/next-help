@@ -481,7 +481,9 @@ export interface AdditionEventDTO {
     | "MULTI_FREEZE"
     | "COMBINATION_SERVICE_FREEZE_CHARGE"
     | "INV_AGE_FEE"
-    | "PKG_STAND_FEE";
+    | "PKG_STAND_FEE"
+    | "FEE_ACTUAL_DEDUCTION"
+    | "FEE_ACTUAL_REFUND";
   checkMaxRemakeNum?: boolean;
   /** @format int64 */
   customerShopId?: number;
@@ -517,7 +519,10 @@ export interface AdditionEventDTO {
     | "AMOUNT_REMAKE_OVERFLOW_FREEZE"
     | "IL_CHARGE_REFUND"
     | "RECHARGE_CANCEL"
-    | "PROMOTION_RECHARGE";
+    | "PROMOTION_RECHARGE"
+    | "FEE_DEDUCTION"
+    | "FEE_ACTUAL_DEDUCTION"
+    | "FEE_ACTUAL_REFUND";
   /** @format int64 */
   mainCustomerId?: number;
   messageId?: string;
@@ -646,6 +651,61 @@ export interface AfterSalesHandlingReqDTO {
   shopProductSkus?: string[];
   /** 系统订单编号 */
   systemOrderNo?: string[];
+}
+
+/** AggregationItemDTO */
+export interface AggregationItemDTO {
+  /** @format int32 */
+  batchNumber?: number;
+  /** @format int32 */
+  blackReasonCode?: number;
+  /** @format int32 */
+  blackTag?: number;
+  /** @format int32 */
+  channel?: number;
+  combinationProductItemList?: CombinationProductItemRespDTO[];
+  consignPrice?: number;
+  /** @format int32 */
+  countryProductTag?: number;
+  /** @format double */
+  height?: number;
+  isOnePsale?: boolean;
+  /** @format double */
+  length?: number;
+  /** @format int32 */
+  livePriceFlag?: number;
+  /** @format int32 */
+  num?: number;
+  productCateCode?: string;
+  productCode?: string;
+  productItemCategoryZh?: string;
+  productMainImg?: string;
+  productPriceLadderList?: ProductPriceLadderRespDTO[];
+  productProperties?: string;
+  productPropertiesName?: string;
+  productSellPrice?: number;
+  productSku?: string;
+  productSkuImg?: string;
+  /** @format int32 */
+  productStatus?: number;
+  /** @format int32 */
+  productTag?: number;
+  productTitle?: string;
+  productTitleEn?: string;
+  productTitleJp?: string;
+  productTitleKr?: string;
+  /** @format int32 */
+  productType?: number;
+  /** @format int64 */
+  searchSourceOrderId?: number;
+  searchSourceOrderNo?: string;
+  /** @format int32 */
+  shopIsBlack?: number;
+  taxInfo?: TaxInfoDTO;
+  /** @format int64 */
+  weight?: number;
+  /** @format double */
+  width?: number;
 }
 
 /** ApiProductDTO */
@@ -915,6 +975,65 @@ export interface BizResponse {
   success?: boolean;
 }
 
+/** CalcProductPriceReqDTO */
+export interface CalcProductPriceReqDTO {
+  /** @format int64 */
+  customerId?: number;
+  /** @format int64 */
+  membershipTemplateId?: number;
+  productParam?: ProductPriceReqDTO[];
+}
+
+/** CalcProductPriceRespDTO */
+export interface CalcProductPriceRespDTO {
+  item?: CalcProductPriceRespDTO[];
+  /** @format int32 */
+  num?: number;
+  price?: number;
+  productSku?: string;
+}
+
+/** CalcShipPriceProductSkuDTO */
+export interface CalcShipPriceProductSkuDTO {
+  /**
+   * 数量
+   * @format int32
+   */
+  num?: number;
+  /** 商品sku */
+  productSku?: string;
+  /**
+   * 商品类型
+   * @format int32
+   */
+  productType?: number;
+}
+
+/** CalcShipPriceResultDTO */
+export interface CalcShipPriceResultDTO {
+  /** 运输时效 */
+  deliveryDays?: string;
+  /** 配送公司 */
+  distribution?: string;
+  /** 货代公司集合 */
+  forwarders?: IntForwarderConfigRespDTO[];
+  /**
+   * 物流id
+   * @format int64
+   */
+  intShipConfigId?: number;
+  /** 物流特点 */
+  logisticsFeature?: string;
+  /** logo */
+  logo?: string;
+  /** 官网链接 */
+  officialWebsiteLink?: string;
+  /** 物流费用(外币) */
+  price?: number;
+  /** 物流费用(人民币) */
+  priceCny?: number;
+}
+
 /** CancelAbnormalOrderReqDTO */
 export interface CancelAbnormalOrderReqDTO {
   /** @format int32 */
@@ -1170,7 +1289,11 @@ export interface CartItemDTO {
   /** @format int32 */
   countryProductTag?: number;
   customerProductMsku?: string;
+  /** @format double */
+  height?: number;
   isOnePsale?: boolean;
+  /** @format double */
+  length?: number;
   /** @format int32 */
   livePriceFlag?: number;
   /** @format int32 */
@@ -1189,13 +1312,16 @@ export interface CartItemDTO {
   paymentDetails?: SearchSourceSupplierPaymentItemRespDTO[];
   /** @format int32 */
   paymentType?: number;
+  productCateCode?: string;
   /** @format int64 */
   productCategoryFrontendNdId?: number;
   productCode?: string;
+  productItemCategoryZh?: string;
   productMainImg?: string;
   productPriceLadderList?: ProductPriceLadderRespDTO[];
   productProperties?: string;
   productPropertiesName?: string;
+  productPropertiesNameEn?: string;
   productSellPrice?: number;
   productSku?: string;
   productSkuImg?: string;
@@ -1210,6 +1336,9 @@ export interface CartItemDTO {
   productType?: number;
   questionClassificationName?: string;
   /** @format int64 */
+  searchSourceOrderId?: number;
+  searchSourceOrderNo?: string;
+  /** @format int64 */
   searchSourcePriceId?: number;
   secondaryProductCateCode?: string;
   /** @format int32 */
@@ -1221,6 +1350,11 @@ export interface CartItemDTO {
   showDeliveryTimeStatus?: number;
   /** @format int32 */
   stockQuantity?: number;
+  taxInfo?: TaxInfoDTO;
+  /** @format int64 */
+  weight?: number;
+  /** @format double */
+  width?: number;
 }
 
 /** CartReqDTO */
@@ -1238,6 +1372,7 @@ export interface CartReqDTO {
   shopProductSku?: string;
   /** @format int32 */
   startIndex?: number;
+  stationCode?: string;
   /** @format int32 */
   systemSource?: number;
 }
@@ -1259,6 +1394,39 @@ export interface CheckCartSkuDTO {
   oemOrderType?: number;
   /** skuList列表 */
   skuList?: string[];
+}
+
+/** ClearanceAddressReqDTO */
+export interface ClearanceAddressReqDTO {
+  address?: string;
+  addressEn?: string;
+  area?: string;
+  areaEn?: string;
+  city?: string;
+  cityEn?: string;
+  /** 市名称 */
+  cityName?: string;
+  /** 通关码 */
+  clearanceCode?: string;
+  /** @format int32 */
+  clearanceType?: number;
+  companyCode?: string;
+  companyName?: string;
+  companyNameEn?: string;
+  countryCode?: string;
+  /** 国家名称 */
+  countryName?: string;
+  email?: string;
+  /** 国家代码 */
+  nationCode?: string;
+  /** 国家id */
+  nationId?: string;
+  phone?: string;
+  postalCode?: string;
+  /** 省名称 */
+  provinceName?: string;
+  receiveName?: string;
+  receiveNameEn?: string;
 }
 
 /** CombinationOrderQueryReqDTO */
@@ -1400,42 +1568,69 @@ export interface CombinationProductItemAddCartDTO {
 
 /** CombinationProductItemRespDTO */
 export interface CombinationProductItemRespDTO {
-  additionList?: CartAdditionDTO[];
+  additionList?: CartAdditionRespDTO[];
+  additionNameJpSummary?: string;
+  /** @format int32 */
+  batchNumber?: number;
   /** @format int32 */
   channel?: number;
   /** @format int64 */
   combinationProductItemId?: number;
   combinationProductSku?: string;
+  consignPrice?: number;
   /** @format date-time */
   createTime?: string;
+  customerProductMsku?: string;
   /** @format int64 */
   customerShopId?: number;
   customerShopName?: string;
+  /** @format double */
+  height?: number;
+  isOnePsale?: boolean;
+  /** @format double */
+  length?: number;
   /** @format int32 */
   minOrderQuantity?: number;
   /** @format int32 */
   noAdditionalFlag?: number;
   /** @format int32 */
   oemProductClassificationId?: number;
+  paymentDetail?: string;
+  /** @format int32 */
+  paymentType?: number;
+  productCateCode?: string;
   /** @format int64 */
   productCategoryFrontendNdId?: number;
   productCode?: string;
-  productDetailUrl?: string;
+  productItemCategoryZh?: string;
   productPriceLadderList?: ProductPriceLadderRespDTO[];
   productPropertiesName?: string;
   productSellPrice?: number;
   productSku?: string;
   productSkuImg?: string;
+  /** @format int32 */
+  productStatus?: number;
+  /** @format int32 */
+  productTag?: number;
   productTitle?: string;
   productTitleJp?: string;
   /** @format int32 */
   productType?: number;
-  remainCombinationProductItemRespList?: RemainCombinationProductItemRespDTO[];
+  /** @format int64 */
+  searchSourceOrderId?: number;
+  searchSourceOrderNo?: string;
+  /** @format int64 */
+  searchSourcePriceId?: number;
   shopProductSku?: string;
+  taxInfo?: TaxInfoDTO;
   /** @format int32 */
   unitNums?: number;
   /** @format date-time */
   updateTime?: string;
+  /** @format int64 */
+  weight?: number;
+  /** @format double */
+  width?: number;
 }
 
 /** CombinationProductItemStock */
@@ -1720,6 +1915,7 @@ export interface CreateOrderPreCheckDTO {
   cartIds?: number[];
   /** @format int32 */
   orderType?: number;
+  stationCode?: string;
 }
 
 /** CreateOrderPreCheckRespDTO */
@@ -1738,6 +1934,7 @@ export interface CreateOrderReqDTO {
   /** @format int32 */
   apiFlag?: number;
   cartIdList?: number[];
+  clearanceAddress?: ClearanceAddressReqDTO;
   combinationProductItemStockList?: CombinationProductItemStock[];
   /** @format int64 */
   customerId?: number;
@@ -1768,6 +1965,7 @@ export interface CreateOrderReqDTO {
   shopOrderId?: number;
   /** @format int32 */
   singleProductFlag?: number;
+  stationCode?: string;
   /** @format int64 */
   superCustomerId?: number;
   supportOneSale?: boolean;
@@ -1930,6 +2128,8 @@ export interface CustomerAdditionRespDTO {
   documentUrl?: string;
   /** @format int32 */
   extraType?: number;
+  gifUrl?: string;
+  groupList?: string[];
   imageUrl?: string;
   /** @format int32 */
   ingredientStatus?: number;
@@ -2037,6 +2237,8 @@ export interface CustomerInvoiceDetailsRespDTO {
 export interface CustomerPlatformOrderItemRespDTO {
   /** 商品单价 */
   actualProductSellPrice?: number;
+  /** 实际结算价格 */
+  actualSettlementPrice?: number;
   /** 总价 */
   actualTotalProductSellPrice?: number;
   /** 附加项费用 */
@@ -2151,6 +2353,8 @@ export interface CustomerPlatformOrderItemRespDTO {
   /** 国内运费 */
   domesticShipping?: number;
   estimateStockTime?: string;
+  /** 汇率 */
+  exchangeRate?: number;
   /**
    * 国内运输中(>0时显示)
    * @format int32
@@ -2238,6 +2442,8 @@ export interface CustomerPlatformOrderItemRespDTO {
   productMainImg?: string;
   /** 商品规格 */
   productPropertiesName?: string;
+  /** 商品规格英文 */
+  productPropertiesNameEn?: string;
   /** 平台商品SKU */
   productSku?: string;
   /** 商品sku图 */
@@ -2349,6 +2555,7 @@ export interface CustomerPlatformOrderRespDTO {
   deliverStatus?: number;
   /** @format int32 */
   deliveryReviewFlag?: number;
+  exchangeRate?: number;
   /** @format int64 */
   intShipConfigId?: number;
   interceptCancelTime?: string;
@@ -2378,6 +2585,7 @@ export interface CustomerPlatformOrderRespDTO {
   processedNum?: number;
   productAdditionFreezeAmount?: number;
   receiveName?: string;
+  receivingCountryCode?: string;
   /** @format int32 */
   separateFlag?: number;
   stageInfos?: StageInfoDTO[];
@@ -2404,7 +2612,9 @@ export interface CustomerProductDetailsRespDTO {
   productDetailUrl?: string;
   productMainImg?: string;
   productPropertiesName?: string;
+  productPropertiesNameEn?: string;
   productSku?: string;
+  productSkuImg?: string;
   productTitleJp?: string;
   /** @format int32 */
   realDeliveryNums?: number;
@@ -2534,6 +2744,7 @@ export interface CustomerSearchPlatformOrderItemRespDTO {
   productDetailUrl?: string;
   productMainImg?: string;
   productPropertiesName?: string;
+  productPropertiesNameEn?: string;
   productSku?: string;
   productTitle?: string;
   productTitleJp?: string;
@@ -2739,6 +2950,8 @@ export interface DeliverTaskReqDTO {
   createEndTime?: string;
   /** @format date-time */
   createStartTime?: string;
+  /** @format int32 */
+  crossDockingFlag?: number;
   /** @format int64 */
   customerId?: number;
   customerName?: string;
@@ -2846,6 +3059,8 @@ export interface DeliverTaskRespDTO {
   deliveryType?: number;
   distribution?: string;
   /** @format int32 */
+  downloadPackingDetailsFlag?: number;
+  /** @format int32 */
   downloadPackingListFlag?: number;
   /** @format date-time */
   endConfirmTime?: string;
@@ -2917,6 +3132,7 @@ export interface DeliverTaskRespDTO {
   stationCode?: string;
   /** @format date-time */
   strandedTime?: string;
+  tagExtendParams?: string;
   taskDetailList?: DeliveryTaskDetailRespDTO[];
   /** @format int32 */
   thirdWarehouseType?: number;
@@ -2943,6 +3159,16 @@ export interface DeliveryAbnormalOrderCount {
    * @format int64
    */
   abnormalOrderCount?: number;
+  /**
+   * 售后数量
+   * @format int32
+   */
+  afterSalesCount?: number;
+  /**
+   * 取消数量
+   * @format int32
+   */
+  cancelCount?: number;
   /**
    * 待确认运输
    * @format int32
@@ -3340,7 +3566,7 @@ export interface DeliveryCreateReqDTO {
   boxMarkLink?: string;
   /** 分行代码 */
   branchCode?: string;
-  /** 发货任务-清关地址信息 */
+  /** 发货任务-清关地址英文信息 */
   declarationAddress?: DeliveryAddressCreateDTO;
   /** 申报折扣 */
   declarationDiscount?: number;
@@ -3395,6 +3621,8 @@ export interface DeliveryCreateReqDTO {
   labelType?: number;
   /** @format int32 */
   orderSource?: number;
+  /** 发货任务-清关地址原文信息 */
+  originalDeclarationAddress?: DeliveryAddressCreateDTO;
   /** 装箱清单url */
   packingListUrl?: string;
   /** 直行便订单编号 */
@@ -3417,6 +3645,8 @@ export interface DeliveryCreateReqDTO {
   shippingType?: string;
   /** 运输方式(日文) */
   shippingTypeJp?: string;
+  /** 2B标签tag参数 */
+  shopTagContent?: ShopTagContentDto;
   /**
    * 系统来源 1-D2C,2-B2B
    * @format int32
@@ -3485,6 +3715,8 @@ export interface DeliveryDetailCreateDTO {
   splitFlag?: number;
   /** 系统(d2c必传) */
   systemOrderItemId?: string;
+  /** 标签信息 */
+  tagContent?: string;
   transportAttr?: string;
   transportAttrCode?: string;
 }
@@ -3586,6 +3818,44 @@ export interface DeliveryReviewOrderSku {
 export interface DeliveryReviewOrderSkuConfirmReqDTO {
   deliveryReviewCode?: string;
   skuList?: ConfirmSku[];
+}
+
+/** DeliveryTagTemplateReqDTO */
+export interface DeliveryTagTemplateReqDTO {
+  /**
+   * 模板尺寸 1-40*80 2-50*30
+   * @format int32
+   */
+  size?: number;
+  /** 模板html */
+  templateHtml?: string;
+  /** 模板内容 */
+  templateJson?: object[];
+  /**
+   * 类型 0-其他条形码 1-fba 2-乐天 3-shoplist 4-zozotown
+   * @format int32
+   */
+  type?: number;
+}
+
+/** DeliveryTagTemplateRespDTO */
+export interface DeliveryTagTemplateRespDTO {
+  /** Excel头信息 */
+  excelHeaders?: string[];
+  /**
+   * 模板尺寸 1-40*80 2-50*30
+   * @format int32
+   */
+  size?: number;
+  /** 模板html */
+  templateHtml?: string;
+  /** 模板内容 */
+  templateJson?: object[];
+  /**
+   * 类型 0-其他条形码 1-fba 2-乐天 3-shoplist 4-zozotown
+   * @format int32
+   */
+  type?: number;
 }
 
 /** DeliveryTaskAdditionalDetailRespDTO */
@@ -3702,6 +3972,7 @@ export interface DeliveryTaskDetailRespDTO {
   shipmentId?: string;
   shipmentName?: string;
   shopProductSku?: string;
+  tagContent?: string;
   thirdProductSku?: string;
   warehouse?: string;
 }
@@ -3818,6 +4089,7 @@ export interface EditShopProductSkuFileReqDTO {
   customerShopId?: number;
   name?: string;
   shopProductSku?: string;
+  tagContent?: object[];
   /** @format int32 */
   type?: number;
   url?: string;
@@ -4069,6 +4341,8 @@ export interface GetManagePlatformOrderPageReqDTO {
   separateFlag?: number;
   /** @format int32 */
   startIndex?: number;
+  /** 站点代码(日本:JapanStation,韩国:KoreaStation,英国:UkStation 美国：US) */
+  stationCode?: string;
   /** @format int32 */
   systemSource?: number;
   unificationCustomerFullName?: string;
@@ -4082,6 +4356,7 @@ export interface GetMaxApplyAmountRespDTO {
 
 /** GetPlatformOrderDetailRespDTO */
 export interface GetPlatformOrderDetailRespDTO {
+  clearanceAddressReqDTO?: ClearanceAddressReqDTO;
   invoiceDetailsList?: CustomerInvoiceDetailsRespDTO[];
   /** @format int32 */
   orderType?: number;
@@ -4160,6 +4435,7 @@ export interface ImportStockReqDTO {
   oemProductClassificationId?: number;
   originalSku?: string;
   pkgCode?: string;
+  productImg?: string;
   productLink?: string;
   productName?: string;
   productProp?: string;
@@ -4610,6 +4886,29 @@ export interface IngredientsStyle {
   updateTime?: string;
 }
 
+/** IntForwarderConfigRespDTO */
+export interface IntForwarderConfigRespDTO {
+  /** 国家中文名称 */
+  countryCnName?: string;
+  /** 国家code */
+  countryCode?: string;
+  /** 国家英文文名称 */
+  countryEnName?: string;
+  /** 国家日文名称 */
+  countryJpyName?: string;
+  /** @format date-time */
+  createTime?: string;
+  forwarder?: string;
+  /** @format int64 */
+  intForwarderConfigId?: number;
+  logisticsCompanyCode?: string;
+  membershipName?: string[];
+  shippingType?: string;
+  /** @format date-time */
+  updateTime?: string;
+  warehouseList?: string[];
+}
+
 /** InternationalityLogisticsInfoDetailRespDTO */
 export interface InternationalityLogisticsInfoDetailRespDTO {
   /** @format int32 */
@@ -4891,6 +5190,7 @@ export interface ManageSearchPlatformOrderItemReqDTO {
   channel?: number;
   customerOrderNo?: string;
   customerProductNo?: string;
+  databaseNameSuffix?: string;
   internationalLogisticsOrderNumber?: string;
   internationalLogisticsOrderNumberList?: string[];
   /** @format int32 */
@@ -5567,6 +5867,53 @@ export interface OrderAsycDTO {
   total?: number;
 }
 
+/** OrderCalculatePriceReq */
+export interface OrderCalculatePriceReq {
+  /** 购物车id列表 */
+  cartIdList?: number[];
+  /** 发货附加项id列表 */
+  deliveryAdditionalIdList?: number[];
+  /**
+   * 物流id
+   * @format int64
+   */
+  intShipConfigId?: number;
+}
+
+/** OrderCalculatePriceResp */
+export interface OrderCalculatePriceResp {
+  /** 发货附加项总金额(外币) */
+  deliverAdditionAmt?: number;
+  /** 发货附加项总金额(人民币) */
+  deliverAdditionAmtCn?: number;
+  /** 汇率 */
+  exchangeRate?: number;
+  /** 手续费总金额(外币) */
+  handlingFeeAmt?: number;
+  /** 手续费总金额(人民币) */
+  handlingFeeAmtCn?: number;
+  /** 国内运费总金额(外币) */
+  internalShipAmt?: number;
+  /** 国内运费总金额(人民币) */
+  internalShipAmtCn?: number;
+  /** 商品附加项总金额(外币) */
+  productAdditionAmt?: number;
+  /** 商品附加项总金额(人民币) */
+  productAdditionAmtCn?: number;
+  /** 商品代金总金额(外币) */
+  productAmt?: number;
+  /** 商品代金总金额(人民币) */
+  productAmtCn?: number;
+  /** 国际运费总金额(外币) */
+  shipAmt?: number;
+  /** 国际运费总金额(人民币) */
+  shipAmtCn?: number;
+  /** 总金额(外币) */
+  totalAmt?: number;
+  /** 总金额(人民币) */
+  totalAmtCn?: number;
+}
+
 /** OrderCombinationProductItemRespDTO */
 export interface OrderCombinationProductItemRespDTO {
   /** 商品附加项 */
@@ -6029,6 +6376,7 @@ export interface PlatformOrderDTO {
   /** @format date-time */
   createTime?: string;
   customerOrderNo?: string;
+  exchangeRate?: number;
   interceptCancelTime?: string;
   /** @format int32 */
   interceptCancelType?: number;
@@ -6041,6 +6389,8 @@ export interface PlatformOrderDTO {
   /** @format int64 */
   platformOrderId?: number;
   platformOrderNo?: string;
+  /** @format int32 */
+  platformOrderSettleStatus?: number;
   platformOrderStatus?: string[];
 }
 
@@ -6314,6 +6664,7 @@ export interface PlatformOrderItemDTO {
   productMainImg?: string;
   productPriceLadderList?: string;
   productPropertiesName?: string;
+  productPropertiesNameEn?: string;
   productSellPrice?: number;
   productSku?: string;
   productSkuImg?: string;
@@ -6431,6 +6782,26 @@ export interface PlatformOrderItemRespDTO {
   /** @format int32 */
   sellQuantity?: number;
   totalFreezeAmount?: number;
+}
+
+/** PlatformOrderItemSearchReqDTO */
+export interface PlatformOrderItemSearchReqDTO {
+  customerShopId?: string;
+  /** @format int32 */
+  pageNum?: number;
+  /** @format int32 */
+  pageSize?: number;
+  productTypes?: number[];
+  /** 搜索词 */
+  searchWord?: string;
+  skyWalkingDynamicField?: object;
+  /** @format int32 */
+  startIndex?: number;
+  /**
+   * 系统来源: 1-D2C; 2-B2B
+   * @format int32
+   */
+  systemSource?: number;
 }
 
 /** PlatformOrderItemSettleDTO */
@@ -6787,6 +7158,13 @@ export interface ProductPriceLadderRespDTO {
   sku?: string;
 }
 
+/** ProductPriceReqDTO */
+export interface ProductPriceReqDTO {
+  /** @format int32 */
+  num?: number;
+  productSku?: string;
+}
+
 /** ProductSpecialCheckRespDTO */
 export interface ProductSpecialCheckRespDTO {
   productSku?: string;
@@ -6883,6 +7261,24 @@ export interface QueryPayStageRespDTO {
   freezeAmount?: number;
   stageFreezeAmount?: number;
   totalAmount?: number;
+}
+
+/**
+ * QueryShipListAndCalcPriceParamDTO
+ * 查询可用物流并计算运费
+ */
+export interface QueryShipListAndCalcPriceParamDTO {
+  /** 国家 */
+  countryCode?: string;
+  /** sku信息 */
+  skuList?: CalcShipPriceProductSkuDTO[];
+  /** 站点 */
+  stationCode?: string;
+  /**
+   * 业务
+   * @format int32
+   */
+  systemSource?: number;
 }
 
 /** QueryStageInfoReqDTO */
@@ -9400,7 +9796,10 @@ export interface SearchSourceOrderSkuQueryDTO {
   productName?: string;
   searchSourceOrderIdList?: number[];
   searchSourceOrderNo?: string;
+  /** @format int32 */
+  searchSourceOrderStatus?: number;
   sku?: string;
+  skuList?: string[];
   sorts?: ISortFieldEnum[];
   /** @format int32 */
   startIndex?: number;
@@ -9542,6 +9941,8 @@ export interface SearchSourceOrderSkuVO {
   supplierPrice?: number[];
   /** 报价，最多是三个报价 （阶梯价展示第一个起始价） */
   supplierPriceDetails?: SearchSourceOrderSupplierPriceDetailDTO[];
+  /** 关税信息 */
+  taxInfo?: TaxInfoDTO;
   /** 用户信息（后台展示） */
   user?: ManagerUserDTO;
 }
@@ -10406,6 +10807,8 @@ export interface ShopProductSkuRespDTO {
   shopProductSkuId?: number;
   /** sku附件表 */
   skuFileDTOList?: ShopProductSkuFileDTO[];
+  /** 标签内容 */
+  skuTagDTOList?: ShopProductSkuTagDTO[];
   /**
    * 系统来源: 1-D2C; 2-B2B
    * @format int32
@@ -10420,6 +10823,48 @@ export interface ShopProductSkuRespDTO {
   updateTime?: string;
   /** @format int32 */
   useable?: number;
+}
+
+/** ShopProductSkuTagDTO */
+export interface ShopProductSkuTagDTO {
+  /**
+   * 创建日期
+   * @format date-time
+   */
+  createTime?: string;
+  /** 店铺商品SKU(店铺商品库) */
+  shopProductSku?: string;
+  /**
+   * 店铺商品SKU标签表id
+   * @format int64
+   */
+  shopProductSkuTagId?: number;
+  /** 标签内容 */
+  tagContent?: string;
+  /**
+   * 文件类型 0-其他条形码 1-fba 2-乐天 3-shoplist 4-zozotown
+   * @format int32
+   */
+  type?: number;
+  /**
+   * 更新日期
+   * @format date-time
+   */
+  updateTime?: string;
+}
+
+/** ShopTagContentDto */
+export interface ShopTagContentDto {
+  /** 扣税账号 */
+  brand?: string;
+  /** 扣税账号 */
+  clubName?: string;
+  /** 扣税账号 */
+  customerShopName?: string;
+  /** 扣税账号 */
+  receiverName?: string;
+  /** 扣税账号 */
+  tagLogo?: string;
 }
 
 /** SpecialCheckInfoDTO */
@@ -10549,6 +10994,12 @@ export interface SystemOrderItemReqDTO {
   customerShopId?: number;
   shopProductSkuList?: string[];
   systemOrderNo?: string;
+}
+
+/** TaxInfoDTO */
+export interface TaxInfoDTO {
+  hscode?: string;
+  taxRate?: number;
 }
 
 /** UnBindAmazonSkuReqDTO */
@@ -10791,7 +11242,9 @@ export interface WalletChangeEventDTO {
     | "MULTI_FREEZE"
     | "COMBINATION_SERVICE_FREEZE_CHARGE"
     | "INV_AGE_FEE"
-    | "PKG_STAND_FEE";
+    | "PKG_STAND_FEE"
+    | "FEE_ACTUAL_DEDUCTION"
+    | "FEE_ACTUAL_REFUND";
   changeAmount?: number;
   changeAmountJpy?: number;
   /** @format int32 */
@@ -10834,7 +11287,10 @@ export interface WalletChangeEventDTO {
     | "AMOUNT_REMAKE_OVERFLOW_FREEZE"
     | "IL_CHARGE_REFUND"
     | "RECHARGE_CANCEL"
-    | "PROMOTION_RECHARGE";
+    | "PROMOTION_RECHARGE"
+    | "FEE_DEDUCTION"
+    | "FEE_ACTUAL_DEDUCTION"
+    | "FEE_ACTUAL_REFUND";
   /** @format int64 */
   mainCustomerId?: number;
   messageId?: string;
@@ -11114,10 +11570,34 @@ export interface BizResponseListAdditionalItemsInfoRespDTO {
   success?: boolean;
 }
 
+/** BizResponse«List«AggregationItemDTO»» */
+export interface BizResponseListAggregationItemDTO {
+  code?: string;
+  data?: AggregationItemDTO[];
+  msg?: string;
+  success?: boolean;
+}
+
 /** BizResponse«List«BillingFeeDetailsRespDTO»» */
 export interface BizResponseListBillingFeeDetailsRespDTO {
   code?: string;
   data?: BillingFeeDetailsRespDTO[];
+  msg?: string;
+  success?: boolean;
+}
+
+/** BizResponse«List«CalcProductPriceRespDTO»» */
+export interface BizResponseListCalcProductPriceRespDTO {
+  code?: string;
+  data?: CalcProductPriceRespDTO[];
+  msg?: string;
+  success?: boolean;
+}
+
+/** BizResponse«List«CalcShipPriceResultDTO»» */
+export interface BizResponseListCalcShipPriceResultDTO {
+  code?: string;
+  data?: CalcShipPriceResultDTO[];
   msg?: string;
   success?: boolean;
 }
@@ -11198,6 +11678,14 @@ export interface BizResponseListDeductionDetailsRespDTO {
 export interface BizResponseListDeliveryAdditionalRespDTO {
   code?: string;
   data?: DeliveryAdditionalRespDTO[];
+  msg?: string;
+  success?: boolean;
+}
+
+/** BizResponse«List«DeliveryTagTemplateRespDTO»» */
+export interface BizResponseListDeliveryTagTemplateRespDTO {
+  code?: string;
+  data?: DeliveryTagTemplateRespDTO[];
   msg?: string;
   success?: boolean;
 }
@@ -11562,6 +12050,14 @@ export interface BizResponseOrderAndSkuDetailRespDTO {
   success?: boolean;
 }
 
+/** BizResponse«OrderCalculatePriceResp» */
+export interface BizResponseOrderCalculatePriceResp {
+  code?: string;
+  data?: OrderCalculatePriceResp;
+  msg?: string;
+  success?: boolean;
+}
+
 /** BizResponse«OrderCombinationProductRespDTO» */
 export interface BizResponseOrderCombinationProductRespDTO {
   code?: string;
@@ -11686,6 +12182,14 @@ export interface BizResponsePageAbnormalOrderRespDTO {
 export interface BizResponsePageAbnormalOrder {
   code?: string;
   data?: PageAbnormalOrder;
+  msg?: string;
+  success?: boolean;
+}
+
+/** BizResponse«Page«AggregationItemDTO»» */
+export interface BizResponsePageAggregationItemDTO {
+  code?: string;
+  data?: PageAggregationItemDTO;
   msg?: string;
   success?: boolean;
 }
@@ -12232,6 +12736,26 @@ export interface PageAbnormalOrder {
   /** @format int64 */
   pages?: number;
   records?: AbnormalOrder[];
+  searchCount?: boolean;
+  /** @format int64 */
+  size?: number;
+  /** @format int64 */
+  total?: number;
+}
+
+/** Page«AggregationItemDTO» */
+export interface PageAggregationItemDTO {
+  countId?: string;
+  /** @format int64 */
+  current?: number;
+  hitCount?: boolean;
+  /** @format int64 */
+  maxLimit?: number;
+  optimizeCountSql?: boolean;
+  orders?: OrderItem[];
+  /** @format int64 */
+  pages?: number;
+  records?: AggregationItemDTO[];
   searchCount?: boolean;
   /** @format int64 */
   size?: number;
@@ -13295,6 +13819,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags 购物车
+     * @name CalculatePrice
+     * @summary 购物车算价(仅支持美国站)
+     * @request POST:/cart/calculatePrice
+     */
+    calculatePrice: (req: OrderCalculatePriceReq, params: RequestParams = {}) =>
+      this.request<BizResponseOrderCalculatePriceResp, any>({
+        path: `/cart/calculatePrice`,
+        method: "POST",
+        body: req,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 购物车
      * @name CanUseOnTheWayStock
      * @summary 是否支持在途库存
      * @request GET:/cart/canUseOnTheWayStock
@@ -13479,6 +14020,31 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     ) =>
       this.request<BizResponseListCartGroupItemDTO, any>({
         path: `/cart/list`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 购物车
+     * @name ListByFilterInvalid
+     * @summary 购物车列表(过滤失效商品)
+     * @request GET:/cart/listByFilterInvalid
+     */
+    listByFilterInvalid: (
+      query?: {
+        /**
+         * orderType
+         * @format int32
+         */
+        orderType?: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseListCartGroupItemDTO, any>({
+        path: `/cart/listByFilterInvalid`,
         method: "GET",
         query: query,
         ...params,
@@ -16029,6 +16595,98 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         type: ContentType.Json,
         ...params,
       }),
+
+    /**
+     * No description
+     *
+     * @tags 国际发货单商品行标签模板
+     * @name TagExcelExport
+     * @summary 导出Excel
+     * @request GET:/delivery/tag/excelExport
+     */
+    tagExcelExport: (
+      query: {
+        /**
+         * type
+         * @format int32
+         */
+        type: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<void, any>({
+        path: `/delivery/tag/excelExport`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 国际发货单商品行标签模板
+     * @name TagGetDefaultTemplate
+     * @summary 获取店铺配置的默认标签模板
+     * @request GET:/delivery/tag/getDefaultTemplate
+     */
+    tagGetDefaultTemplate: (
+      query: {
+        /**
+         * type
+         * @format int32
+         */
+        type: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseListDeliveryTagTemplateRespDTO, any>({
+        path: `/delivery/tag/getDefaultTemplate`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 国际发货单商品行标签模板
+     * @name TagGetTemplate
+     * @summary 获取店铺配置的标签模板
+     * @request GET:/delivery/tag/getTemplate
+     */
+    tagGetTemplate: (
+      query: {
+        /**
+         * type
+         * @format int32
+         */
+        type: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseListDeliveryTagTemplateRespDTO, any>({
+        path: `/delivery/tag/getTemplate`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 国际发货单商品行标签模板
+     * @name TagSaveTemplate
+     * @summary 新增或编辑标签模板
+     * @request POST:/delivery/tag/saveTemplate
+     */
+    tagSaveTemplate: (deliveryTagTemplateReqDTO: DeliveryTagTemplateReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseVoid, any>({
+        path: `/delivery/tag/saveTemplate`,
+        method: "POST",
+        body: deliveryTagTemplateReqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
   };
   excel = {
     /**
@@ -18181,6 +18839,26 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags 平台订单详情（后台）
+     * @name PlatformOrderItemListHistoryOrderSku
+     * @summary 用户历史订单商品列表
+     * @request POST:/manage/platformOrderItem/listHistoryOrderSku
+     */
+    platformOrderItemListHistoryOrderSku: (
+      orderItemSearchReq: PlatformOrderItemSearchReqDTO,
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponsePageAggregationItemDTO, any>({
+        path: `/manage/platformOrderItem/listHistoryOrderSku`,
+        method: "POST",
+        body: orderItemSearchReq,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 平台订单详情（后台）
      * @name PlatformOrderItemListInternationalityLogisticsInfoDetail
      * @summary 国际物流信息详情
      * @request GET:/manage/platformOrderItem/listInternationalityLogisticsInfoDetail
@@ -18196,6 +18874,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/manage/platformOrderItem/listInternationalityLogisticsInfoDetail`,
         method: "GET",
         query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 平台订单详情（后台）
+     * @name PlatformOrderItemOrderItemExport
+     * @summary 平台订单详情导出
+     * @request POST:/manage/platformOrderItem/orderItemExport
+     */
+    platformOrderItemOrderItemExport: (dto: ManageSearchPlatformOrderItemReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseExportRespDTO, any>({
+        path: `/manage/platformOrderItem/orderItemExport`,
+        method: "POST",
+        body: dto,
+        type: ContentType.Json,
         ...params,
       }),
 
@@ -19348,6 +20043,47 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: "POST",
         body: reqDTO,
         type: ContentType.Json,
+        ...params,
+      }),
+  };
+  product = {
+    /**
+     * No description
+     *
+     * @tags order-product-price-calc-feign-api-impl
+     * @name CalcPrice
+     * @summary productPriceCalc
+     * @request POST:/product/calc/price
+     */
+    calcPrice: (reqDTO: CalcProductPriceReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseListCalcProductPriceRespDTO, any>({
+        path: `/product/calc/price`,
+        method: "POST",
+        body: reqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 商品
+     * @name ImportQueryProduct
+     * @summary 导入查询商品信息
+     * @request POST:/product/importQueryProduct
+     */
+    importQueryProduct: (
+      data: {
+        /** file */
+        file?: File;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseListAggregationItemDTO, any>({
+        path: `/product/importQueryProduct`,
+        method: "POST",
+        body: data,
+        type: ContentType.FormData,
         ...params,
       }),
   };
@@ -20623,6 +21359,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags search-source-order-oem-sku-controller
+     * @name SkuListForCostCalculator
+     * @summary 获取oem商品列表（前台：成本计算器）
+     * @request POST:/searchSourceOrder/sku/listForCostCalculator
+     */
+    skuListForCostCalculator: (vo: SearchSourceOrderSkuQueryDTO, params: RequestParams = {}) =>
+      this.request<BizResponsePageResultSearchSourceOrderSkuVO, any>({
+        path: `/searchSourceOrder/sku/listForCostCalculator`,
+        method: "POST",
+        body: vo,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags search-source-order-oem-sku-controller
      * @name SkuOperateLog
      * @summary 获取oem商品操作日志
      * @request GET:/searchSourceOrder/sku/operateLog
@@ -21412,6 +22165,24 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         ...params,
       }),
   };
+  ship = {
+    /**
+     * No description
+     *
+     * @tags 订单运费
+     * @name List
+     * @summary 订单可用物流列表
+     * @request POST:/ship/list
+     */
+    list: (paramDTO: QueryShipListAndCalcPriceParamDTO, params: RequestParams = {}) =>
+      this.request<BizResponseListCalcShipPriceResultDTO, any>({
+        path: `/ship/list`,
+        method: "POST",
+        body: paramDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+  };
   shop = {
     /**
      * No description
@@ -21440,6 +22211,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     productSkuBatchEditFileFeign: (reqDTOList: EditShopProductSkuFileReqDTO[], params: RequestParams = {}) =>
       this.request<BizResponseObject, any>({
         path: `/shop/product/sku/batchEditFileFeign`,
+        method: "POST",
+        body: reqDTOList,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 客户店铺sku
+     * @name ProductSkuBatchEditTagContent
+     * @summary 批量编辑客户店铺sku的标签内容
+     * @request POST:/shop/product/sku/batchEditTagContent
+     */
+    productSkuBatchEditTagContent: (reqDTOList: EditShopProductSkuFileReqDTO[], params: RequestParams = {}) =>
+      this.request<BizResponseVoid, any>({
+        path: `/shop/product/sku/batchEditTagContent`,
         method: "POST",
         body: reqDTOList,
         type: ContentType.Json,

@@ -39,7 +39,7 @@ export  const useLangOptions=(site:Site)=>{
         [Site.EN]: SearchLangType.EN // 英语
       }[site],
       label: {
-        [Site.JA]: '日本语入力',
+        [Site.JA]: '日本語入力',
         [Site.KO]: '한국어 입력',
         [Site.EN]: 'English'
       }[site]

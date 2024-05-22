@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-03-21 16:38:31
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-09 17:48:07
+ * @LastEditTime: 2024-05-21 15:51:52
  * @Description: 
  */
 import { useAtom } from "jotai";
@@ -14,7 +14,7 @@ import { getLang } from "./language";
  * 去登录
  */
 export const toLogin=()=>{
-  toTheCkb('login',false)
+  toTheCkb('/login',false)
 }
 
 
@@ -33,6 +33,7 @@ export const useLink=(path:string,params:Record<string,any>|null=null)=>{
   }
   return href;
 }
+export const getLink = useLink;
 
 
 export const toTheCkb=(path:string,needLang:boolean=true)=>{

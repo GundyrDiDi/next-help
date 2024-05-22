@@ -4803,6 +4803,10 @@ const en = {
   回到帮助中心: "Back to the Help Center",
   "三菱UFJ银行TTS汇率：": "BOC Exchange Rate：",
   "THE CKB的对应汇率：": "THE CKB Exchange Rate：",
+  '阅读历史': 'Browsing History',
+  '输入标题关键词': 'Enter key words',
+  '发布有助于电子商务成功的行业信息': 'Various Useful Information on E-commerce Success',
+  '分类': 'Category',
 };
 
 export default en;
