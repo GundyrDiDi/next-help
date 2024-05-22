@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 18:07:45
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-21 18:44:42
+ * @LastEditTime: 2024-05-22 08:52:53
  * @Description: 
  */
 'use client'
@@ -54,7 +54,7 @@ const ArticalCategory = () => {
                     const renderItem = (_item: FrogArticleType) => {
                         return (
                             <div
-                                className="flex w-[50%] line-clamp-1 text-[15.5px] text-[#404040] bg-[#fff] cursor-pointer items-center justify-center border border-solid border-[#F0F0F0] hover:border-[#1C9976] hover:bg-[#1c9976]/[.1] hover:text-[#008060] box-border mb-[8px] h-[58px]"
+                                className="flex w-[50%] line-clamp-1 text-[15.5px] text-[#404040] bg-[#fff] cursor-pointer items-center justify-center border border-solid border-[#F0F0F0] hover:border-[--pcolor] hover:bg-[--pcolor]/[.3] hover:text-[--pcolor] box-border mb-[8px] h-[58px]"
                                 style={{ flexGrow: 2 }}
                                 title={_item.name}
                                 onClick={() => {
