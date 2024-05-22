@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 18:23:25
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-20 18:30:43
+ * @LastEditTime: 2024-05-22 10:33:27
  * @Description: 
  */
 'use client'
@@ -26,7 +26,7 @@ const FixedBanner = () => {
     })
     const [isCloseBanner, setIsCloseBanner] = useState(() => {
         const curDate = String((new Date()).getDate())
-        const localStorageDate = typeof window && window.localStorage.getItem(fixedBannerExpiredLocalStorageKey)
+        const localStorageDate = typeof window !== 'undefined' && window.localStorage.getItem(fixedBannerExpiredLocalStorageKey)
         if (curDate === localStorageDate) return true;
         return false
     });

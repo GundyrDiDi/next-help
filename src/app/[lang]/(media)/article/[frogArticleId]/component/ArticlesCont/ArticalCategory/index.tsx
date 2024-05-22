@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 18:07:45
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-22 08:52:53
+ * @LastEditTime: 2024-05-22 11:36:07
  * @Description: 
  */
 'use client'
@@ -42,8 +42,8 @@ const ArticalCategory = () => {
     const list = data?.data ?? [];
     const { t } = useTranslation()
     return (
-        <div className="__cate-list bg-[#FAFAFA] p-[20px] mb-[20px]" >
-            <div className="flex px-[15px] mb-[20px] bg-[--pcolor] text-[#fff] font-[700] text-[16px] items-center h-[40px]" >
+        <div  >
+            <div className="flex px-[15px] mb-[20px] bg-[--pcolor] text-[#fff] font-[700] text-[16px] items-center h-[40px]" style={{ borderTopLeftRadius: 8, borderTopRightRadius: 8 }} >
                 <div className="flex items-center " >
                     <IconFile width="20" height="15" /> <div className="pl-[12px]" >{t('分类')}</div>
                 </div> 
@@ -58,7 +58,7 @@ const ArticalCategory = () => {
                                 style={{ flexGrow: 2 }}
                                 title={_item.name}
                                 onClick={() => {
-                                    router.push(`/${lang}?frogArticleTypeId=${_item.id}`)
+                                    router.push(`/${lang}?articleTypeId=${_item.id}`)
                                 }}
                             >
                                 <div className="px-[8px] line-clamp-1" >

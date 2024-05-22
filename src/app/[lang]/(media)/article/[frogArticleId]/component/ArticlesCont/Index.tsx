@@ -119,9 +119,11 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
             </div>
           </div>
           <div className="pc:w-[370px] shrink-0 mo:w-[100%] pad:w-[280px] " >
-            <ArticalCategory/>
-            <div className="mb-[20px]" >
-              <HotArticalList/>
+            <div className="__cate-list bg-[#FAFAFA] p-[20px] mb-[20px]" >
+              <ArticalCategory/>
+              <div className="mt-[40px]" >
+                <HotArticalList/>
+              </div>
             </div>
             <FixedBanner/>
           </div>

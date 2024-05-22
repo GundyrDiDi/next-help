@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 14:42:07
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-21 10:57:30
+ * @LastEditTime: 2024-05-22 11:34:47
  * @Description: 
  */
 'use client'
@@ -17,6 +17,7 @@ import { request } from "@/config/request";
 import { useRequest } from "ahooks";
 import { useSearchParams } from "next/navigation";
 import {requestReadRecordContext } from "./components/SearchBanner/utils";
+import { useEffect, useRef } from "react";
 
 // 查询历史记录
 // const res = await api.customer.frog.articleFootPage({
@@ -54,15 +55,20 @@ interface IndexProps {
 request.customer.frog.articleFootPage
 interface IndexProps {
     siteStation: string;
+    SSRArticleListData: BizResponsePageFrogArticleRespDTO;
 }
 
 const Index = (props: IndexProps) => {
-    const { siteStation } = props;
+    const { siteStation, SSRArticleListData } = props;
     const searchParams = useSearchParams()
-    const frogArticleTypeId = searchParams.get('frogArticleTypeId')
+    const frogArticleTypeId = searchParams.get('articleTypeId')
     const [form] = Form.useForm()
+    const isClentRender = useRef(false)
+    useEffect(() => {
+        isClentRender.current = true;
+    })
     
-    const { data, loading, run: reqArticleList, params } = useRequest(
+    const { data: res, loading, run: reqArticleList, params } = useRequest(
         async (requestParams: RequestType = {} as RequestType) => {
             const { timeArchiveCate } = requestParams;
             const w: any = window;
@@ -121,7 +127,11 @@ const Index = (props: IndexProps) => {
         })
         reqArticleList({ pageSize: 10, pageNum: 1, isArticalReadRecord: true })
     }
-
+    const data = isClentRender.current ? res : {
+        total: SSRArticleListData?.data?.total ?? 0,
+        list: SSRArticleListData?.data?.records ?? [],
+    }
+    // const articleList = isClentRender.current ? data?.list : ;
     return <div className="bg-[#F5F5F5] mo:bg-white" >
         <Form form={form} initialValues={frogArticleTypeId ? { frogArticleTypeId } : undefined} >
             <Form.Item name="keyword" noStyle >

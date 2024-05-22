@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-15 23:10:55
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-21 18:44:14
+ * @LastEditTime: 2024-05-22 11:40:26
  * @Description: 
  */
 'use client'
@@ -12,6 +12,7 @@ import { getSiteStation } from "@/utils/language";
 import { useRequest } from "ahooks";
 import { useParams } from "next/navigation";
 import { useTranslation } from "react-i18next";
+import IconFlame from "./IconFlame";
 
 const list = [
     {
@@ -41,10 +42,10 @@ const HotArticalList = () => {
     const { t } = useTranslation()
     return <div className="bg-[#fff] rounded-[8px] pc:rounded-[8px] overflow-hidden" >
         <div
-            className="bg-[--pcolor] !text-[16px] text-[#fff] leading-[40px] h-[40px] px-[8px]"
+            className="bg-[--pcolor] !text-[16px] text-[#fff] leading-[40px] h-[40px] px-[8px] flex items-center"
             // style={{ borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }}
         >
-            {t('热门文章')}
+            <IconFlame className="mr-[8px]" /> {t('热门文章')}
         </div>
         {data?.data?.records?.map((item, idx) => <a
             key={idx}
@@ -52,7 +53,7 @@ const HotArticalList = () => {
             href={`/${lang}/article/${item.frogArticleId}`}
             style={idx !== list.length - 1 ? { borderBottom: '1px dashed #E3E3E3 ' } : {}}
         >
-            <div className="w-[210px] line-clamp-2" >{item.frogArticleTitle}</div>
+            <div className="line-clamp-2" >{item.frogArticleTitle}</div>
         </a>)}
     </div>
 }
