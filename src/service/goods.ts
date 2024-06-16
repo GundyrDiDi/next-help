@@ -5028,71 +5028,26 @@ export interface ProductImageUrlDTO {
 
 /** ProductInfo */
 export interface ProductInfo {
-  /** @format int32 */
-  countryProductTag?: number;
-  /** 完整层级类目名称 */
-  intactCateName?: string;
-  /**
-   * 是否有效：1:有效;0:无效;2:备用
-   * @format int32
-   */
-  isOnline?: number;
-  /**
-   * 高，单位cm
-   * @format double
-   */
-  maintainHeight?: number;
-  /**
-   * 长，单位cm
-   * @format double
-   */
-  maintainLength?: number;
-  /**
-   * 重，单位g
-   * @format int64
-   */
-  maintainWeight?: number;
-  /**
-   * 宽，单位cm
-   * @format double
-   */
-  maintainWidth?: number;
-  /**
-   * 直营商城标识
-   * @format int32
-   */
-  offlineDirectSaleFlag?: number;
-  /** 类目编码 */
-  productCateCode?: string;
-  /** 商品编码 */
+  directStoreProductDescImgs?: string;
+  directStoreProductItemImgs?: string;
+  directStoreProductItemImgsS?: string;
+  directStoreProductMainImg?: string;
+  platformType?: string;
+  productAppSellPrice?: number;
   productCode?: string;
-  /** sniff商品详情URL */
-  productDetailSniffUrl?: string;
-  /** 商品url */
+  productDescImgs?: string;
+  productDescOcrImgs?: string;
+  productDescription?: string;
   productDetailUrl?: string;
-  /** 商品轮播图 */
-  productItemImgs?: ProductImageUrlDTO[];
-  /** 商品主图 */
+  /** @format int64 */
+  productId?: number;
+  productItemImgs?: string;
+  productItemImgsS?: string;
   productMainImg?: string;
-  /** 商品价格 */
+  productPropImgs?: string;
   productSellPrice?: number;
-  /** 商品货号 */
-  productStallNumber?: string;
-  /**
-   * 商品标签 1 精选货源
-   * @format int32
-   */
-  productTag?: number;
-  /** 商品标题 */
   productTitle?: string;
-  /** 供应商id */
-  supplierId?: string;
-  /** 供应商名称 */
-  supplierName?: string;
-  /** 供应商款式编码 */
-  supplierSpu?: string;
-  /** 运输属性 */
-  transportationAttrCode?: string;
+  productTitleJa?: string;
 }
 
 /** ProductItemCategoryZhUpdateVO */
@@ -7346,6 +7301,8 @@ export interface Sku {
   isOnePsale?: boolean;
   /** @format int32 */
   isOnline?: number;
+  /** @format int32 */
+  isPurchase?: number;
   jxhyPrice?: number;
   /** @format double */
   length?: number;
@@ -7377,6 +7334,8 @@ export interface Sku {
   materialInfoZhJson?: string;
   /** @format date-time */
   newOrderTime?: string;
+  /** @format date-time */
+  newPurchaseOrderTime?: string;
   /** @format int32 */
   offlineDirectSaleFlag?: number;
   platformType?: string;
@@ -8656,6 +8615,11 @@ export interface SupplierManageListQueryVO {
   isOnePsale?: boolean;
   /** @format int32 */
   isOnline?: number;
+  /**
+   * 是否下过采购订单: 0 未下 1已下
+   * @format int32
+   */
+  isPurchase?: number;
   /** 待补充英文材质 */
   materialInfoEnIsEmptyString?: boolean;
   materialInfoJaIsEmptyString?: boolean;
@@ -8672,6 +8636,16 @@ export interface SupplierManageListQueryVO {
    * @format date-time
    */
   newOrderTimeStart?: string;
+  /**
+   * 最新采购订单结束时间
+   * @format date-time
+   */
+  newPurchaseOrderTimeEnd?: string;
+  /**
+   * 最新采购订单开始时间
+   * @format date-time
+   */
+  newPurchaseOrderTimeStart?: string;
   /**
    * 线下商品直营标识 0-普通 1-直营
    * @format int32
@@ -8768,6 +8742,8 @@ export interface SupplierManageListVO {
   isOnePsale?: boolean;
   /** @format int32 */
   isOnline?: number;
+  /** @format int32 */
+  isPurchase?: number;
   jxhyPrice?: number;
   /** @format double */
   length?: number;
@@ -8806,6 +8782,8 @@ export interface SupplierManageListVO {
    * @format date-time
    */
   newOrderTime?: string;
+  /** @format date-time */
+  newPurchaseOrderTime?: string;
   /** @format int32 */
   offlineDirectSaleFlag?: number;
   platformType?: string;
@@ -9016,6 +8994,8 @@ export interface SupplierProductRespDTO {
 
 /** SupplierReqDTO */
 export interface SupplierReqDTO {
+  /** @format int32 */
+  pageSize?: number;
   shopCode?: string;
   shopUrl: string;
 }
@@ -9109,6 +9089,46 @@ export interface SupplierSettlementRespDTO {
    * @format date-time
    */
   updateTime?: string;
+}
+
+/** SupplierShopAndProductsRespDTO */
+export interface SupplierShopAndProductsRespDTO {
+  /** 品牌id */
+  brandId?: string;
+  /** 品牌名称 */
+  brandName?: string;
+  /**
+   * 渠道;1-档口(市场购);2-线上平台(透明购):3-线下合作
+   * @format int32
+   */
+  channel?: number;
+  /** @format int64 */
+  id?: number;
+  /** 原始卖家店铺id */
+  originalShopId?: string;
+  /** 原始卖家店铺名 */
+  originalShopName?: string;
+  /** 来源平台类型;TB:淘宝;AM:1688;TM:天猫;VC:搜款网;WS:网商园;YW:义乌小商品市场;OL:线下 */
+  platformType?: string;
+  /** 店铺商品信息列表 */
+  productList?: ProductInfo[];
+  /** 采购渠道:TB:淘宝;AM:1688;TM:天猫;VC:搜款网;WS:网商园;YW:义乌小商品市场;OL:线下 */
+  purchaseChannel?: string;
+  /** 旺旺id */
+  shopCustomerServiceId?: string;
+  /** 店铺主图 */
+  shopMainImg?: string;
+  /** 店铺URL */
+  shopUrl?: string;
+  /** 店铺编码 */
+  supplierShopCode?: string;
+  /** 店铺编码 */
+  supplierShopName?: string;
+  /**
+   * 供应商类型:1-成品,2-OEM,3-成品和OEM
+   * @format int32
+   */
+  supplierType?: number;
 }
 
 /** SupplierShopCustomerServiceRespDTO */
@@ -9981,6 +10001,14 @@ export interface BizResponseListString {
   success?: boolean;
 }
 
+/** BizResponse«Map«string,TaxInfoDTO»» */
+export interface BizResponseMapStringTaxInfoDTO {
+  code?: string;
+  data?: Record<string, TaxInfoDTO>;
+  msg?: string;
+  success?: boolean;
+}
+
 /** BizResponse«Map«string,boolean»» */
 export interface BizResponseMapStringBoolean {
   code?: string;
@@ -10528,6 +10556,14 @@ export interface BizResponseSupplierProductRespDTO {
   success?: boolean;
 }
 
+/** BizResponse«SupplierShopAndProductsRespDTO» */
+export interface BizResponseSupplierShopAndProductsRespDTO {
+  code?: string;
+  data?: SupplierShopAndProductsRespDTO;
+  msg?: string;
+  success?: boolean;
+}
+
 /** BizResponse«SupplierShopRespDTO» */
 export interface BizResponseSupplierShopRespDTO {
   code?: string;
@@ -10650,6 +10686,9 @@ export interface IPageStrategyConfigShopVo {
   /** @format int64 */
   total?: number;
 }
+
+/** Map«string,TaxInfoDTO» */
+export type MapStringTaxInfoDTO = Record<string, TaxInfoDTO>;
 
 /** Map«string,boolean» */
 export type MapStringBoolean = Record<string, boolean>;
@@ -14688,6 +14727,26 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags 平台报文HsCode映射
+     * @name MapByKeywordZhAndStation
+     * @summary 根据关键字查询信息（成本计算器）
+     * @request POST:/hscode/mapByKeywordZhAndStation
+     */
+    mapByKeywordZhAndStation: (
+      productHsCodeKeywordMappingPageReqDTO: ProductHsCodeKeywordMappingPageReqDTO,
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseMapStringTaxInfoDTO, any>({
+        path: `/hscode/mapByKeywordZhAndStation`,
+        method: "POST",
+        body: productHsCodeKeywordMappingPageReqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 平台报文HsCode映射
      * @name Page
      * @summary 分页查询
      * @request POST:/hscode/page
@@ -16232,6 +16291,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         isOnePsale?: boolean;
         /** @format int32 */
         isOnline?: number;
+        /**
+         * 是否下过采购订单: 0 未下 1已下
+         * @format int32
+         */
+        isPurchase?: number;
         /** 待补充英文材质 */
         materialInfoEnIsEmptyString?: boolean;
         materialInfoJaIsEmptyString?: boolean;
@@ -16248,6 +16312,16 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @format date-time
          */
         newOrderTimeStart?: string;
+        /**
+         * 最新采购订单结束时间
+         * @format date-time
+         */
+        newPurchaseOrderTimeEnd?: string;
+        /**
+         * 最新采购订单开始时间
+         * @format date-time
+         */
+        newPurchaseOrderTimeStart?: string;
         /**
          * 线下商品直营标识 0-普通 1-直营
          * @format int32
@@ -18792,6 +18866,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         isOnePsale?: boolean;
         /** @format int32 */
         isOnline?: number;
+        /**
+         * 是否下过采购订单: 0 未下 1已下
+         * @format int32
+         */
+        isPurchase?: number;
         /** 待补充英文材质 */
         materialInfoEnIsEmptyString?: boolean;
         materialInfoJaIsEmptyString?: boolean;
@@ -18808,6 +18887,16 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @format date-time
          */
         newOrderTimeStart?: string;
+        /**
+         * 最新采购订单结束时间
+         * @format date-time
+         */
+        newPurchaseOrderTimeEnd?: string;
+        /**
+         * 最新采购订单开始时间
+         * @format date-time
+         */
+        newPurchaseOrderTimeStart?: string;
         /**
          * 线下商品直营标识 0-普通 1-直营
          * @format int32
@@ -19338,6 +19427,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/supplierShop/pageList`,
         method: "POST",
         body: queryVO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 供应商店铺
+     * @name QryShopAndProductsByShopUrl
+     * @summary 通过店铺链接查询店铺商品信息，默认返回10条
+     * @request POST:/supplierShop/qryShopAndProductsByShopUrl
+     */
+    qryShopAndProductsByShopUrl: (dto: SupplierReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseSupplierShopAndProductsRespDTO, any>({
+        path: `/supplierShop/qryShopAndProductsByShopUrl`,
+        method: "POST",
+        body: dto,
         type: ContentType.Json,
         ...params,
       }),

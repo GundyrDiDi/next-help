@@ -2,14 +2,16 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 04:16:22
+ * @LastEditTime: 2024-06-17 04:40:33
  * @Description: 
  */
 import { Tooltip, message } from "antd";
 import { shopToolBarEmitter } from "../ShopToolBar";
 import ShopUI, { ShopUIProps } from "../ShopUI"
 import { crossFetch } from "../../../utils/fetch";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { $getNodeByKey } from "lexical";
 
 interface ShopDecorateProps {
     nodeKey: string;
@@ -156,8 +158,9 @@ const thirdPlateIconConf: Record<string, any> = {
 	// WS: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/网商园.png'
 };
 
-const useShopListData = (urlList: ShopUIProps['urlList']) => {
+const useShopListData = (urlList: ShopUIProps['urlList'], onErrorRef: React.MutableRefObject<() => void>) => {
     const [listDta, setListData] = useState<ListDataItem[]>();
+    
     useEffect(() => {
         if (!urlList?.length) return;
         const urls = urlList.map(item => item.url);
@@ -184,14 +187,23 @@ const useShopListData = (urlList: ShopUIProps['urlList']) => {
         }).catch(errList => {
             if(Array.isArray(errList)){
                 message.warning(errList.join('\n'))
+                onErrorRef.current();
             }
         });;
-    }, [urlList])
+    }, [urlList, onErrorRef])
     return listDta;
 }
 
 const ShopDecorate = (props: ShopDecorateProps) => {
-    const  listData = useShopListData(props.options.urlList)
+    const [editor] = useLexicalComposerContext();
+    const onErrorRef = useRef<() => void>(() => {})
+    onErrorRef.current = () => {
+       editor.update(() => {
+           const node = $getNodeByKey(props.nodeKey);
+           node?.remove();
+       })
+   }
+    const  listData = useShopListData(props.options.urlList, onErrorRef)
     return <Tooltip
         arrow={false}
         title={

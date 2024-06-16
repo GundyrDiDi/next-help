@@ -3,7 +3,7 @@
  * @Author: shiguang
  * @Date: 2024-05-23 14:49:20
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-16 22:42:27
+ * @LastEditTime: 2024-06-17 04:48:24
  * @Description: 
  */
 'use client'
@@ -145,7 +145,8 @@ const Editor = forwardRef<CKBEditorRef, EditorProps>((props, ref) => {
       tableCellBackgroundColor,
     },
   } = useSettings();
-  const placeholder = <div>我是 placeholder https://www.theckb.com/archive/china-ec-220704/</div>;
+  // const placeholder = <div>我是 placeholder https://www.theckb.com/archive/china-ec-220704/</div>;
+  const placeholder = <div></div>;
   useInsertTableOfContentsInArticle();
   // if(ref){
   //   ref.current

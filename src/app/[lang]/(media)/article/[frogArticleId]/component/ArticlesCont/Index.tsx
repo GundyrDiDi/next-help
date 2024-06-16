@@ -90,6 +90,9 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
     }
     
   });
+  const isCkbEditor = frogArticle?.articalVersionFlag === 1;
+  console.log(frogArticle?.articalVersionFlag, 'wwwwww')
+ 
   return (
     <>
       <div
@@ -105,19 +108,20 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
                     {setStationTime(frogArticle?.createTime)}
                   </div>
                 )}
-                {!!frogArticle?.frogArticleContent &&
+                {/* 新版编辑器 */}
+                {isCkbEditor && !!frogArticle?.frogArticleContent &&
                   <EditorView 
                     articleTitle={frogArticle?.frogArticleTitle} 
                     initHtml={frogArticle?.frogArticleContent}
                   />
                 }
-                {/* <div
+                <div
                   id="content-html"
                   className={`media-help-artical-content ${markingShow ? `h-[100vh] overflow-hidden` : ''}`}
                   dangerouslySetInnerHTML={{
                     __html: frogArticle?.frogArticleContent!,
                   }}
-                ></div> */}
+                ></div>
               </div>
               <ArticleSwitch
                 frogArticleId={frogArticle?.frogArticleId}
@@ -133,9 +137,9 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
                 <HotArticalList isShowHeaderIcon />
               </div>
             </div>
-            <div className="mt-[20px] sticky top-[166px]" >
+            {isCkbEditor && <div className="mt-[20px] sticky top-[166px]" >
                 <LexicalTableOfContentsRightSide title={frogArticle?.frogArticleTitle!} />
-              </div>
+            </div>}
             <FixedBanner/>
           </div>
         </div>

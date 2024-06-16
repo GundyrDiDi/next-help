@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 03:40:58
+ * @LastEditTime: 2024-06-17 04:42:02
  * @Description: 
  */
 /*
@@ -16,7 +16,9 @@ import { Tooltip, message } from "antd";
 import { productToolBarEmitter } from "../ProductToolBar";
 import ProductUI, { ProductUIProps } from "../ProductUI"
 import { crossFetch } from "../../../utils/fetch";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import { $getNodeByKey } from "lexical";
 
 const thirdPlateIconConf: Record<string, any> = {
 	TB: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/淘宝.png',
@@ -121,7 +123,7 @@ export interface ListDataItem {
     cny: string;
     jpy: string;
 }[];
-export const useProductListData = (urlList: ProductUIProps['urlList'] | undefined) => {
+export const useProductListData = (urlList: ProductUIProps['urlList'] | undefined, onErrorRef: React.MutableRefObject<() => void>) => {
     const [listDta, setListData] = useState<ListDataItem[]>();
     useEffect(() => {
         if (!urlList?.length) return;
@@ -147,6 +149,7 @@ export const useProductListData = (urlList: ProductUIProps['urlList'] | undefine
         }).catch(errList => {
             if(Array.isArray(errList)){
                 message.warning(errList.join('\n'))
+                onErrorRef.current();
             }
         });
 
@@ -240,7 +243,15 @@ const onClick = (nodeKey: string) => {
     productToolBarEmitter.emit('editProduct', nodeKey)
 }
 const ProductDecorate = (props: ProductDecorateProps) => {
-    const listData = useProductListData(props.options.urlList)
+    const [editor] = useLexicalComposerContext();
+    const onErrorRef = useRef<() => void>(() => {})
+    onErrorRef.current = () => {
+        editor.update(() => {
+            const node = $getNodeByKey(props.nodeKey);
+            node?.remove();
+        })
+    }
+    const listData = useProductListData(props.options.urlList, onErrorRef)
     return <Tooltip
         arrow={false}
         title={

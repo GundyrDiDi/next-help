@@ -3,7 +3,7 @@
  * @Author: shiguang
  * @Date: 2024-05-23 16:23:31
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-14 00:57:57
+ * @LastEditTime: 2024-06-17 04:46:20
  * @Description: 
  */
 import { Button } from "antd";
@@ -121,8 +121,8 @@ const ToolbarPlugin = () => {
         <div className="border-r border-[#F0F0F0] mx-[8px] h-[24px]" />
         <Heading activeEditor={activeEditor} />
         <div className="border-r border-[#F0F0F0] mx-[8px] h-[24px]" />
-        <FontSize activeEditor={activeEditor} />
-        <div className="border-r border-[#F0F0F0] mx-[8px] h-[24px]" />
+        {/* <FontSize activeEditor={activeEditor} />
+        <div className="border-r border-[#F0F0F0] mx-[8px] h-[24px]" /> */}
         <BoldUnderlineIttalic activeEditor={activeEditor} />
         <div className="border-r border-[#F0F0F0] mx-[8px] h-[24px]" />
         <Color activeEditor={activeEditor} />
