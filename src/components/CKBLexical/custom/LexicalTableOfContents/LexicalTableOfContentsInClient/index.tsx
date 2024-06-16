@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-13 20:42:43
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 01:05:09
+ * @LastEditTime: 2024-06-17 01:49:05
  * @Description: 
  */
 
@@ -13,6 +13,18 @@ import { useEffect, useState } from "react";
 import TableOfcontent from "../../../Icon/components/TableOfcontent";
 import { useSettings } from "../../../context/SettingsContext";
 import { setContentData, setEditor } from "../LexicalTableOfContentsRightSide/tools";
+function scrollToTargetAdjusted(element: HTMLElement){
+    // var element = document.getElementById('targetElement');
+    const headerOffset = 150;
+    const elementPosition = element.getBoundingClientRect().top;
+    // var offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+    const offsetPosition = elementPosition  + window.pageYOffset - headerOffset;
+  
+    window.scrollTo({
+         top: offsetPosition,
+         behavior: "smooth"
+    });
+}
 
 interface LexicalTableOfContentsInClient {
     title: string;
@@ -25,7 +37,6 @@ const LexicalTableOfContentsInClient = (props: LexicalTableOfContentsInClient) =
     const { settings } = useSettings()
     useEffect(() => {
         if(editor){
-            debugger
             setEditor?.(editor)
         }
     }, [editor])
@@ -52,7 +63,9 @@ const LexicalTableOfContentsInClient = (props: LexicalTableOfContentsInClient) =
                         editor.getEditorState().read(() => {
                             const domElement = editor.getElementByKey(key);
                             if (domElement !== null) {
-                                domElement.scrollIntoView();
+                                // domElement.style.scrollMarginTop = '200px';
+                                scrollToTargetAdjusted(domElement)
+                                // domElement.scrollIntoView();
                             }
                         });
                     }

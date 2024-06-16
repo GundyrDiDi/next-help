@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-13 20:42:43
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 01:06:07
+ * @LastEditTime: 2024-06-17 01:46:38
  * @Description: 
  */
 
@@ -17,6 +17,18 @@ import { _writeSetContentDataFunction, _writeSetEditorFunction } from "./tools";
 interface LexicalTableOfContentsRightSide {
     title: string;
     isInArtical?: boolean;
+}
+function scrollToTargetAdjusted(element: HTMLElement){
+    // var element = document.getElementById('targetElement');
+    const headerOffset = 150;
+    const elementPosition = element.getBoundingClientRect().top;
+    // var offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+    const offsetPosition = elementPosition  + window.pageYOffset - headerOffset;
+  
+    window.scrollTo({
+         top: offsetPosition,
+         behavior: "smooth"
+    });
 }
 const LexicalTableOfContentsRightSide = (props: LexicalTableOfContentsRightSide) => {
     const { title, isInArtical = false } = props;
@@ -57,7 +69,8 @@ const LexicalTableOfContentsRightSide = (props: LexicalTableOfContentsRightSide)
                         editor?.getEditorState().read(() => {
                             const domElement = editor.getElementByKey(key);
                             if (domElement !== null) {
-                                domElement.scrollIntoView();
+                                scrollToTargetAdjusted(domElement)
+                                // domElement.scrollIntoView();
                             }
                         });
                     }
