@@ -3,7 +3,7 @@
  * @Author: shiguang
  * @Date: 2024-05-23 16:23:31
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 04:46:20
+ * @LastEditTime: 2024-06-17 05:42:22
  * @Description: 
  */
 import { Button } from "antd";
@@ -32,7 +32,7 @@ import GoodsToolBar from "../Goods/GoodsToolBar";
 import Trigger from "@rc-component/trigger";
 import ColorCard from "../../components/ColorCard";
 import ColorChooseButton from "../../components/ColorChooseButton";
-import Link from "./components/Link";
+import Link from "./components/Link/indext";
 import LinkEditPanel from "./components/Link/components/LinkEditPanel";
 import ButtonToolBar from "../Button/ButtonToolBar";
 import ImageAndYoutubeToolBar from "../ImageAndYoutube/ImageAndYoutubeToolBar";

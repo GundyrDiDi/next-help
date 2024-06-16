@@ -28,7 +28,7 @@ const choosedDom = (color: 'white' | 'black') => {
     </svg>
 }
 
-const ColorOptions = (props: ColorOptionsProps) => {
+export const ColorOptions = (props: ColorOptionsProps) => {
     const { onChange, value } = props
     return <div className="flex" >
         {colorOptionsList.map(item => {
