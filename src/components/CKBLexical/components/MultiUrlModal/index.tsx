@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 17:50:15
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-16 18:38:32
+ * @LastEditTime: 2024-06-16 23:05:44
  * @Description: 
  */
 'use client'
@@ -100,7 +100,7 @@ const MultiUrlModal = (props: MultiUrlModalProps) => {
                                             name={[field.name, 'code']}
                                         >
                                             <Input
-                                                className="hidden"   
+                                                className="!hidden"
                                             />
                                         </Form.Item>
                                         <div className="shrink-0 w-[24px] h-[24px] ml-[8px]" >

@@ -22,6 +22,7 @@ import FixedBanner from "./FixedBanner";
 import HotArticalList from "@/app/[lang]/(media)/newxx/components/HotArticalList";
 import { useRouter } from "next/navigation";
 import EditorView from "@/app/[lang]/(media)/testEditor/EditorView";
+import LexicalTableOfContentsRightSide from "@/components/CKBLexical/custom/LexicalTableOfContents/LexicalTableOfContentsRightSide";
 
 
 
@@ -132,6 +133,9 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
                 <HotArticalList isShowHeaderIcon />
               </div>
             </div>
+            <div className="mt-[20px] sticky top-[166px]" >
+                <LexicalTableOfContentsRightSide title={frogArticle?.frogArticleTitle!} />
+              </div>
             <FixedBanner/>
           </div>
         </div>

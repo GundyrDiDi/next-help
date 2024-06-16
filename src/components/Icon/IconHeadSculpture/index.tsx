@@ -29,7 +29,7 @@ const svgHtml = `
     <defs>
         <rect id="path-1" x="0" y="0" width="28" height="28" rx="14"></rect>
     </defs>
-    <g id="2B2C" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g id="2B2C" stroke="none" strokeWidth="1" fill="none" fill-rule="evenodd">
         <g id="会员升级_铂金仓会员按钮悬停点击" transform="translate(-871.000000, -51.000000)">
             <g id="编组-63" transform="translate(871.000000, 51.000000)">
                 <g id="截屏2022-08-10-下午6.49.08">

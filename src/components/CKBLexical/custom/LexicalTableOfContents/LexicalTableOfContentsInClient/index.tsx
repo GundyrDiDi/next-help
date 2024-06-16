@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-13 20:42:43
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-16 22:41:29
+ * @LastEditTime: 2024-06-17 01:05:09
  * @Description: 
  */
 
@@ -12,6 +12,7 @@ import { NodeKey } from "lexical";
 import { useEffect, useState } from "react";
 import TableOfcontent from "../../../Icon/components/TableOfcontent";
 import { useSettings } from "../../../context/SettingsContext";
+import { setContentData, setEditor } from "../LexicalTableOfContentsRightSide/tools";
 
 interface LexicalTableOfContentsInClient {
     title: string;
@@ -22,6 +23,12 @@ const LexicalTableOfContentsInClient = (props: LexicalTableOfContentsInClient) =
     const [editor] = useLexicalComposerContext();
     const [isShow, setIsShow] = useState(true)
     const { settings } = useSettings()
+    useEffect(() => {
+        if(editor){
+            debugger
+            setEditor?.(editor)
+        }
+    }, [editor])
     return <div className={`${isInArtical ? '' : 'pc:h-[370px] pad:h-[370px] overflow-y-auto' } bg-[#FAFAFA] p-[20px]`} >
         <div className="flex items-center">
             <TableOfcontent className="h-[28px]" height={28} width={22} viewBox={undefined} />
@@ -39,6 +46,7 @@ const LexicalTableOfContentsInClient = (props: LexicalTableOfContentsInClient) =
             {!!settings.articleTitle && <div className="mt-[16px] mb-[8px] text-[#000]/[.88] text-[16px] font-bold leading-[24px]" >{settings.articleTitle}</div>}
             <LexicalTableOfContentsPlugin>
                 {(_data) => {
+                    setContentData?.(_data);
                     let hList = [0, 0, 0, 0, 0, 0]
                     function scrollToNode(key: NodeKey, currIndex?: number) {
                         editor.getEditorState().read(() => {
