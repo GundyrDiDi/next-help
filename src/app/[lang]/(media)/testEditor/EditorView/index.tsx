@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-23 14:47:05
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-16 22:37:45
+ * @LastEditTime: 2024-06-16 22:42:21
  * @Description: 
  */
 'use client'
@@ -54,18 +54,7 @@ export default function EditorView(props: EditorViewProps) {
     const editorRef = useRef<CKBEditorRef>(null);
     return (
         <div>
-            {/* <div className="p-[16px] bg-[#ccc]" >
-                <div className="pc:w-[810px] bg-white" >
-                    <button
-                        onClick={async () => {
-                            const html = await editorRef.current?.getHtml?.();
-                            console.log(66666, html)
-                        }}
-                    >
-                        点我
-                    </button>
-                </div>
-            </div> */}
+       
             <CKBEditor
                 articleTitle={articleTitle}
                 // isEditable={}

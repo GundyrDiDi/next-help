@@ -3,7 +3,7 @@
  * @Author: shiguang
  * @Date: 2024-05-23 14:49:20
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-16 22:28:55
+ * @LastEditTime: 2024-06-16 22:42:27
  * @Description: 
  */
 'use client'
@@ -185,12 +185,12 @@ const Editor = forwardRef<CKBEditorRef, EditorProps>((props, ref) => {
             <LinkPlugin />
           </>
           <div className="editor-container flex" >
-            <div className="p-[20px] border-r border-[#F0F0F0]" >
+            <div className={`${isEditable ? 'p-[20px] border-r' : ''} border-[#F0F0F0]`} >
               {/* <AutoFocusPlugin/> */}
               {/* <TabFocusPlugin/> */}
               <div className="editor-inner">
                 <RichTextPlugin
-                  contentEditable={<ContentEditable className="editor-input w-[810px]" />}
+                  contentEditable={<ContentEditable className="editor-input pc:w-[810px]" />}
                   placeholder={placeholder}
                   ErrorBoundary={LexicalErrorBoundary}
                 />
