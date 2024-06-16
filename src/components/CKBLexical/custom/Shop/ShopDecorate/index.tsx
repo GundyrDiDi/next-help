@@ -2,10 +2,10 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-14 17:29:10
+ * @LastEditTime: 2024-06-17 04:14:36
  * @Description: 
  */
-import { Tooltip } from "antd";
+import { Tooltip, message } from "antd";
 import { shopToolBarEmitter } from "../ShopToolBar";
 import ShopUI, { ShopUIProps } from "../ShopUI"
 import { crossFetch } from "../../../utils/fetch";
@@ -58,13 +58,25 @@ const requestShopInfoByUrl = async (url: string) => {
             // headers['x-authtoken'] = 'eyJhbGciOiJIUzI1NiJ9.eyJuaWNrIjoiYWRtaW4iLCJleHAiOjE3MTg4NjYzMjIsInVzZXJJZCI6Ijg4ODg4ODg4ODg4ODg4ODg4OCIsInVzZXJuYW1lIjoiYWRtaW4ifQ.RiGAJEyF3lkRfrQ-WpXRCTTQ868JyB4b7BsN6xAdJ_4'
             return config;
         },
+        showError: false,
+        interceptErrorCode: false,
     })
     return data;
 }
 
 
-const requestShopInfoListByUrlList = async (codeList: string[]) => {
-    const dataList = await Promise.all(codeList.map(code => requestShopInfoByUrl(code)));
+const requestShopInfoListByUrlList = async (urlList: string[]) => {
+    const dataList = await Promise.all(urlList.map(code => requestShopInfoByUrl(code)));
+    const errList = dataList.reduce((pre, cur, index) => {
+        if(cur.code !== '0'){
+            pre.push(`第${index + 1}个链接请求失败：${urlList[index]}，【${cur.msg}】`)
+        }
+        return pre;
+    }, [] as string[])
+
+    if(errList.length){
+        return Promise.reject(errList)
+    }
     return dataList.map(data => {
         return data.data
     })
@@ -170,7 +182,11 @@ const useShopListData = (urlList: ShopUIProps['urlList']) => {
                 }
             });
             setListData(data);
-        });
+        }).catch(errList => {
+            if(Array.isArray(errList)){
+                message.warning(errList.join('\n'))
+            }
+        });;
     }, [urlList])
     return listDta;
 }
