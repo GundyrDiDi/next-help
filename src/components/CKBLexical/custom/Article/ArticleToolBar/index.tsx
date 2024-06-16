@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-07 17:23:47
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-14 10:44:14
+ * @LastEditTime: 2024-06-17 06:19:25
  * @Description: 
  */
 /*
@@ -12,7 +12,7 @@
  * @LastEditTime: 2024-06-11 10:16:41
  * @Description: 
  */
-import {  $getNodeByKey, $getSelection, LexicalEditor } from 'lexical';
+import { $getNodeByKey, $getSelection, LexicalEditor } from 'lexical';
 import { useCallback, useEffect, useState } from 'react';
 import TooltipWithMenu from '../../../components/TooltipWithMenu';
 // import  { ArticleEditValue } from '../ArticleEditPanel';
@@ -22,12 +22,15 @@ import ArticleEditPanel from '../ArticleEditPanel';
 import Article from '../../../Icon/components/Article';
 
 import mitt from 'mitt';
+import Modal from 'antd/es/modal/Modal';
+import { Button, Form, Input } from 'antd';
+import { REGEXP_URL } from '../../../utils/regexp';
 
 interface HeadingMenuProps {
     activeEditor: LexicalEditor;
 }
 
-export const articleToolBarEmitter = mitt<{editArticle: string}>()
+export const articleToolBarEmitter = mitt<{ editArticle: string }>()
 
 const ArticleToolBar = (props: HeadingMenuProps) => {
     const { activeEditor } = props;
@@ -37,63 +40,64 @@ const ArticleToolBar = (props: HeadingMenuProps) => {
      */
     const [editArticleKey, setEditArticleKey] = useState<string>();
     const setSelectionEditPanelContentDom = useSelectionEditPanelContentSetDom()
-    const [articleValue, setArticleValue] = useState<string>();
+    // const [articleValue, setArticleValue] = useState<string>();
+    const [form] = Form.useForm();
 
-    const ArticleEditPanelDom = useCallback((_isArticle: boolean) => {
-        return _isArticle ? <ArticleEditPanel
-            key={editArticleKey}
-            // onChange={(val) => {
-            //     console.log(val, 'onChange');
-            //     setArticleValue(val)
-            // }}
-            value={articleValue}
-            onOk={(_value) => {
-                const hideModal = () => {
-                    setArticleValue(undefined)
-                    setIsArticle(false)
-                    setEditArticleKey(undefined)
-                }
-                activeEditor.update(() => {
-                    const newOptions = {
-                        url: _value
-                    }
-                    if(editArticleKey){
-                        const node = $getNodeByKey(editArticleKey) as ArticleNode
-                        node.setOptions(newOptions)
-                        hideModal();
-                        return true;
-                    }
-                    const selection = $getSelection()!
-                    if(!selection) return;
-                    const articleNode = $createArticleNode(newOptions);
-                    selection.insertNodes([
-                        articleNode
-                    ]);
-                    hideModal();
-                    return true
-                })
-            }}
-        /> : null
-    }, [activeEditor, articleValue, editArticleKey]);
+    // const ArticleEditPanelDom = useCallback((_isArticle: boolean) => {
+    //     return _isArticle ? <ArticleEditPanel
+    //         key={editArticleKey}
+    //         // onChange={(val) => {
+    //         //     console.log(val, 'onChange');
+    //         //     setArticleValue(val)
+    //         // }}
+    //         value={articleValue}
+    //         onOk={(_value) => {
+    //             const hideModal = () => {
+    //                 setArticleValue(undefined)
+    //                 setIsArticle(false)
+    //                 setEditArticleKey(undefined)
+    //             }
+    //             activeEditor.update(() => {
+    //                 const newOptions = {
+    //                     url: _value
+    //                 }
+    //                 if(editArticleKey){
+    //                     const node = $getNodeByKey(editArticleKey) as ArticleNode
+    //                     node.setOptions(newOptions)
+    //                     hideModal();
+    //                     return true;
+    //                 }
+    //                 const selection = $getSelection()!
+    //                 if(!selection) return;
+    //                 const articleNode = $createArticleNode(newOptions);
+    //                 selection.insertNodes([
+    //                     articleNode
+    //                 ]);
+    //                 hideModal();
+    //                 return true
+    //             })
+    //         }}
+    //     /> : null
+    // }, [activeEditor, articleValue, editArticleKey]);
 
 
-    useEffect(() => {
-        setSelectionEditPanelContentDom(
-            ArticleEditPanelDom(isArticle)
-        )
-    }, [ArticleEditPanelDom, setSelectionEditPanelContentDom, isArticle])
-    useHideModalOnSelectionBlur(() => {
-        setArticleValue(undefined);
-        setIsArticle(false);
-    })
+    // useEffect(() => {
+    //     setSelectionEditPanelContentDom(
+    //         ArticleEditPanelDom(isArticle)
+    //     )
+    // }, [ArticleEditPanelDom, setSelectionEditPanelContentDom, isArticle])
+    // useHideModalOnSelectionBlur(() => {
+    //     setArticleValue(undefined);
+    //     setIsArticle(false);
+    // })
     useEffect(() => {
         articleToolBarEmitter.on('editArticle', (key) => {
             activeEditor.update(() => {
                 setEditArticleKey(key)
                 const node = $getNodeByKey(key) as ArticleNode;
                 const { url } = node.getOptions()
-                debugger
-                setArticleValue(url)
+                form.setFieldsValue({ url })
+                // setArticleValue(url)
                 setTimeout(() => {
                     setIsArticle(true)
                 }, 300)
@@ -102,19 +106,78 @@ const ArticleToolBar = (props: HeadingMenuProps) => {
         return () => {
             articleToolBarEmitter.all.clear();
         }
-    }, [activeEditor])
+    }, [activeEditor, form])
 
     return (
         <div>
+            <Modal
+                open={isArticle}
+                footer={false}
+                destroyOnClose
+                onCancel={() => {
+                    setIsArticle(false)
+                    form.resetFields()
+                }}
+            >
+                <Form form={form} >
+                    <div>
+                        <div className="leading-[22px] mb-[4px]">链接</div>
+                        <Form.Item name="url" rules={[{ pattern: REGEXP_URL, message: '请输入正确的链接' }]} >
+                            <Input placeholder="请输入" />
+                        </Form.Item>
+                    </div>
+                    {
+                        <Form.Item noStyle shouldUpdate >
+                            {(form) => {
+                                const url = form.getFieldValue('url');
+                                return <Button
+                                    disabled={!REGEXP_URL.test(url)}
+                                    onClick={() => {
+                                        const values = form.getFieldsValue();
+                                        const hideModal = () => {
+                                            // setArticleValue(undefined)
+                                            setIsArticle(false)
+                                            setEditArticleKey(undefined)
+                                        }
+                                        activeEditor.update(() => {
+                                            const newOptions = {
+                                                url
+                                            }
+                                            if (editArticleKey) {
+                                                const node = $getNodeByKey(editArticleKey) as ArticleNode
+                                                node.setOptions(newOptions)
+                                                hideModal();
+                                                return true;
+                                            }
+                                            const selection = $getSelection()!
+                                            if (!selection) return;
+                                            const articleNode = $createArticleNode(newOptions);
+                                            selection.insertNodes([
+                                                articleNode
+                                            ]);
+                                            hideModal();
+                                            return true
+                                        })
+                                        // onOk?.(values.url)
+                                    }}
+                                >
+                                    确定
+                                </Button>
+                            }}
+
+                        </Form.Item>
+                    }
+                </Form>
+            </Modal>
             <TooltipWithMenu isShowToolTip title="插入文章">
-                <article 
-                    className={`h-[32px] w-[32px] cursor-pointer hover:bg-[#f0f0f0] flex items-center justify-center rounded-[8px] ${isArticle ? 'hover:bg-[#f0f0f0]' : ''}`} 
+                <article
+                    className={`h-[32px] w-[32px] cursor-pointer hover:bg-[#f0f0f0] flex items-center justify-center rounded-[8px] ${isArticle ? 'hover:bg-[#f0f0f0]' : ''}`}
                     onClick={() => {
-                        setSelectionEditPanelContentDom(ArticleEditPanelDom(true))
+                        // setSelectionEditPanelContentDom(ArticleEditPanelDom(true))
                         setIsArticle(true)
                     }}
                 >
-                    <Article/>
+                    <Article />
                 </article>
             </TooltipWithMenu>
         </div>
