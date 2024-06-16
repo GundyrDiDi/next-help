@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 04:14:36
+ * @LastEditTime: 2024-06-17 04:16:22
  * @Description: 
  */
 import { Tooltip, message } from "antd";
@@ -55,7 +55,6 @@ const requestShopInfoByUrl = async (url: string) => {
         requestInterceptor(config) {
             const headers = config.headers as any;
             delete headers['x-authtoken'];
-            // headers['x-authtoken'] = 'eyJhbGciOiJIUzI1NiJ9.eyJuaWNrIjoiYWRtaW4iLCJleHAiOjE3MTg4NjYzMjIsInVzZXJJZCI6Ijg4ODg4ODg4ODg4ODg4ODg4OCIsInVzZXJuYW1lIjoiYWRtaW4ifQ.RiGAJEyF3lkRfrQ-WpXRCTTQ868JyB4b7BsN6xAdJ_4'
             return config;
         },
         showError: false,
