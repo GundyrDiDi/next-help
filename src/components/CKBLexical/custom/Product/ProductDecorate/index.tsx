@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-13 23:09:18
+ * @LastEditTime: 2024-06-17 03:40:58
  * @Description: 
  */
 /*
@@ -12,7 +12,7 @@
  * @LastEditTime: 2024-06-12 19:38:26
  * @Description: 
  */
-import { Tooltip } from "antd";
+import { Tooltip, message } from "antd";
 import { productToolBarEmitter } from "../ProductToolBar";
 import ProductUI, { ProductUIProps } from "../ProductUI"
 import { crossFetch } from "../../../utils/fetch";
@@ -60,6 +60,16 @@ const requestProductInfoByUrl = async (url: string) => {
         body: {
             detailUrl: url
         }
+    }, {
+        showError: false,
+        interceptErrorCode: false,
+        requestInterceptor(config) {
+            config.headers = {
+                ...config.headers,
+                ['x-authtoken']: ''
+            }
+            return config
+        },
     })
     return data;
 }
@@ -89,6 +99,17 @@ const requestProductInfoListByCodeList = async (codeList: string[]) => {
 
 const requestProductInfoListByUrlList = async (urlList: string[]) => {
     const dataList = await Promise.all(urlList.map(url => requestProductInfoByUrl(url)));
+    const errList = dataList.reduce((pre, cur, index) => {
+        if(cur.code !== '0'){
+            pre.push(`第${index + 1}个链接请求失败：${urlList[index]}，【${cur.msg}】`)
+        }
+        return pre;
+    }, [] as string[]) 
+    // filter(item => item.code !== '0')
+    if(errList.length){
+        return Promise.reject(errList)
+    }
+    // if()
     return dataList.map(data => {
         return data.data
     })
@@ -111,7 +132,7 @@ export const useProductListData = (urlList: ProductUIProps['urlList'] | undefine
         //         console.log(res, 'res')
         //     });
         // }
-        requestProductInfoListByCodeList(productCodeList).then((res) => {
+        requestProductInfoListByUrlList(urls).then((res) => {
             const data = res.map(item => {
                 return {
                         iconUrl: thirdPlateIconConf[item.platformType!],
@@ -123,7 +144,25 @@ export const useProductListData = (urlList: ProductUIProps['urlList'] | undefine
                 }
             });
             setListData(data);
+        }).catch(errList => {
+            if(Array.isArray(errList)){
+                message.warning(errList.join('\n'))
+            }
         });
+
+        // requestProductInfoListByCodeList(productCodeList).then((res) => {
+        //     const data = res.map(item => {
+        //         return {
+        //                 iconUrl: thirdPlateIconConf[item.platformType!],
+        //                 mainImgUrl: item.productMainImg,
+        //                 title: item.productTitle,
+        //                 cny: item.productSellPriceRange,
+        //                 // TODO 需要做处理
+        //                 jpy: item.productSellPriceRange,
+        //         }
+        //     });
+        //     setListData(data);
+        // });
     }, [urlList])
 
 
@@ -170,6 +209,26 @@ export const useProductListData = (urlList: ProductUIProps['urlList'] | undefine
     ]
 }
 
+// curl 'https://master-gateway.theckb.com/goods/search/url' \
+//   -H 'Accept-Language: en,zh-CN;q=0.9,zh;q=0.8' \
+//   -H 'Connection: keep-alive' \
+//   -H 'DNT: 1' \
+//   -H 'Origin: http://n.media.theckb.com:4000' \
+//   -H 'Referer: http://n.media.theckb.com:4000/' \
+//   -H 'Sec-Fetch-Dest: empty' \
+//   -H 'Sec-Fetch-Mode: cors' \
+//   -H 'Sec-Fetch-Site: cross-site' \
+//   -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36' \
+//   -H 'accept: application/json, text/plain, */*' \
+//   -H 'content-type: application/json' \
+//   -H 'sec-ch-ua: "Not/A)Brand";v="8", "Chromium";v="126", "Google Chrome";v="126"' \
+//   -H 'sec-ch-ua-mobile: ?0' \
+//   -H 'sec-ch-ua-platform: "macOS"' \
+//   -H 'x-authtoken;' \
+//   -H 'x-gray-tag: 20240606-fogseo2' \
+//   -H 'x-stationcode: JapanStation' \
+//   --data-raw '{"detailUrl":"https://detail.1688.com/offer/533129418516.html?spm=a2615.12330364.wp_pc_auto_offer_big.0"}'
+
 
 interface ProductDecorateProps {
     nodeKey: string;
@@ -185,7 +244,7 @@ const ProductDecorate = (props: ProductDecorateProps) => {
     return <Tooltip
         arrow={false}
         title={
-            <span onClick={() => onClick(props.nodeKey)} className=" cursor-pointer" >
+            <span onClick={() => onClick(props.nodeKey)} className="cursor-pointer" >
                 编辑
             </span>
         } >

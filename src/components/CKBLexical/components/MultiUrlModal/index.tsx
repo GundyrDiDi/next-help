@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 17:50:15
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-16 23:05:44
+ * @LastEditTime: 2024-06-17 03:54:26
  * @Description: 
  */
 'use client'
@@ -11,6 +11,7 @@ import { Button, Form, Modal, Input } from "antd";
 import { title } from "process";
 import { useEffect, useState } from "react";
 import { ProductUIProps } from "../../custom/Product/ProductUI";
+import { REGEXP_URL } from "../../utils/regexp";
 
 interface MultiUrlModalProps {
     onOk?: (urls?: ProductUIProps['urlList']) => void;
@@ -33,7 +34,7 @@ const MultiUrlModal = (props: MultiUrlModalProps) => {
     const { type, onOk, maxCount = 99, onClose, initialValue } = props;
     const [form] = Form.useForm()
     useEffect(() => {
-        if(!initialValue) return;
+        if (!initialValue) return;
         form.setFieldsValue({
             urls: initialValue
         })
@@ -80,7 +81,6 @@ const MultiUrlModal = (props: MultiUrlModalProps) => {
                                             rules={[
                                                 {
                                                     required: true,
-                                                    whitespace: true,
                                                     message: "请输入正确的链接",
                                                 },
                                             ]}
@@ -116,7 +116,6 @@ const MultiUrlModal = (props: MultiUrlModalProps) => {
                                 </Form.Item>
                             ))}
                             <div>
-
                                 <Form.Item noStyle >
                                     <div className="text-[#0586FE] text-[14px] cursor-pointer inline-block mb-[16px]" onClick={isMaxCount ? undefined : () => add()} >
                                         增加{config[type].title}（{fields.length}/{maxCount}）
@@ -125,17 +124,25 @@ const MultiUrlModal = (props: MultiUrlModalProps) => {
                                     {/* <Form.ErrorList errors={errors} /> */}
                                 </Form.Item>
                             </div>
-
-                            <Button
-                                disabled={errors.length > 0}
-                                htmlType="submit"
-                                onClick={() => {
+                            <Form.Item noStyle shouldUpdate >
+                                {() => {
                                     const _urls = form.getFieldsValue().urls;
-                                    onOk?.(_urls);
+                                    console.log(_urls, 'xxx')
+                                    const isPass = _urls?.every(Boolean) && _urls?.every(item => {
+                                        return REGEXP_URL.test(item.url)
+                                    })
+                                    console.log(isPass, 'isPass')
+                                    return <Button
+                                        disabled={!isPass}
+                                        htmlType="submit"
+                                        onClick={() => {
+                                            onOk?.(_urls);
+                                        }}
+                                    >
+                                        确定
+                                    </Button>
                                 }}
-                            >
-                                确定
-                            </Button>
+                            </Form.Item>
                         </>
                     )
                 }}

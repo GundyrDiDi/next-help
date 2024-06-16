@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-13 14:24:45
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 03:07:56
+ * @LastEditTime: 2024-06-17 03:31:00
  * @Description: 
  */
 /*
@@ -71,6 +71,7 @@ interface CrossFetchOptions<Body = any>{
 interface CrossFetchConfigOptions{
     requestInterceptor?: (config: RequestInit) => RequestInit;
     showError?: boolean;
+    interceptErrorCode?: boolean;
 }
 /**
  * 跨平台的fetch
@@ -78,8 +79,9 @@ interface CrossFetchConfigOptions{
  * @param options 
  * @returns 
  */
-export const crossFetch = async <Res>(url: string, options: CrossFetchOptions, config?: CrossFetchConfigOptions) => {
-    const { body = {}, method, query, showError = true }  = options
+export const crossFetch = async <Res>(url: string, options: CrossFetchOptions, config: CrossFetchConfigOptions = {}) => {
+    const { body = {}, method, query,}  = options
+    const  { showError = true, interceptErrorCode = true } = config;
     const requestInterceptor = config?.requestInterceptor;
     const newUrl = (() => {
         if(url.includes("?")){
@@ -95,7 +97,7 @@ export const crossFetch = async <Res>(url: string, options: CrossFetchOptions, c
         headers: {
             accept: 'application/json, text/plain, */*',
             'content-type': 'application/json',
-            'x-authtoken': 'eyJhbGciOiJIUzI1NiJ9.eyJuaWNrIjoiYWRtaW4iLCJleHAiOjE3MTg2MTQ4NDcsInVzZXJJZCI6IjE1NDIzMzk4Njc2ODY4OTE1MjIiLCJ1c2VybmFtZSI6ImFkbWluIn0.nmgc62KV0IVXDbClTYiy2R1J-sl18D2snbXcBc0XuDg',
+            // 'x-authtoken': 'eyJhbGciOiJIUzI1NiJ9.eyJuaWNrIjoiYWRtaW4iLCJleHAiOjE3MTg2MTQ4NDcsInVzZXJJZCI6IjE1NDIzMzk4Njc2ODY4OTE1MjIiLCJ1c2VybmFtZSI6ImFkbWluIn0.nmgc62KV0IVXDbClTYiy2R1J-sl18D2snbXcBc0XuDg',
             'x-stationcode': 'JapanStation'
         },
         ...['GET', 'HEAD'].includes(method) ? {} : { body: JSON.stringify(body) },
@@ -105,7 +107,7 @@ export const crossFetch = async <Res>(url: string, options: CrossFetchOptions, c
     const response = await fetch(`${getApiHost()}${newUrl}`, requestInterceptor ? requestInterceptor(fetchOptions) : fetchOptions);
     
     const data = await response.json();
-    if(data.code !== '0'){
+    if(interceptErrorCode && data.code !== '0'){
         if(showError) message.error(data.message)
         throw new Error(data.message);
     }

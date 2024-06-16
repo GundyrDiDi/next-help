@@ -3,7 +3,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 15:06:29
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-14 10:35:05
+ * @LastEditTime: 2024-06-17 04:07:37
  * @Description: 
  */
 
@@ -85,24 +85,25 @@ const testCase = [
 ]
 
 const ProductUI = (props: ProductUIProps) => {
-    const { urlList } = props;
-    const productListData = useProductListData(testCase)
+    const { urlList, listData } = props;
+    const productListData = listData
+    // const productListData = useProductListData(testCase)
     if(!productListData) return;
     return <>
-        <div className={`flex flex-wrap w-[810px] mo:hidden pad:hidden ${productListData.length <= 2 ? 'hidden' : ''}`}>
+        <div className={`flex flex-wrap w-[810px] mo:!hidden pad:!hidden ${productListData.length > 2 ? '' : '!hidden'} zzz`}>
             {/* pc 端 商品 > 2 的情况 */}
             {productListData.map((item, index) => {
                 return <ProductVerticalUI {...item} key={index} className={`${index % 4 === 3 ? '' : 'mr-[8px]'} w-[196px]`} />
             })}
         </div>
-        <div className={`flex ${productListData.length <=2 ? '' : 'hidden'} mo:hidden pad:hidden`} >
+        <div className={`flex ${productListData.length <=2 ? '' : 'hidden'} mo:!hidden pad:!hidden xxx`} >
             {/* pc 端 商品 <= 2 的情况 */}
             {productListData.slice(0, 2).map((item, index) => {
                 return <ProductHorizontalUI {...item} key={index} className={`${index === 0 ? 'mr-[4px]' : 'ml-[4px]'} w-[50%]`} />
             })}
         </div>
         {/* h5 pad 商品 */}
-        <div className="flex flex-wrap pc:hidden" >
+        <div className="flex flex-wrap pc:!hidden www" >
             {productListData.map((item, index) => {
                 return <ProductVerticalUI {...item} key={index} className={`${index % 2 === 0 ? 'mr-[4px]' : 'ml-[4px]'} w-[calc(50%-4px)]`} />
             })}
