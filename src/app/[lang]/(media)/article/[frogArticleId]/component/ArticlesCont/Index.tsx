@@ -21,6 +21,7 @@ import ArticalCategory from "./ArticalCategory";
 import FixedBanner from "./FixedBanner";
 import HotArticalList from "@/app/[lang]/(media)/newxx/components/HotArticalList";
 import { useRouter } from "next/navigation";
+import EditorView from "@/app/[lang]/(media)/testEditor/EditorView";
 
 
 
@@ -103,13 +104,19 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
                     {setStationTime(frogArticle?.createTime)}
                   </div>
                 )}
-                <div
+                {!!frogArticle?.frogArticleContent &&
+                  <EditorView 
+                    articleTitle={frogArticle?.frogArticleTitle} 
+                    initHtml={frogArticle?.frogArticleContent}
+                  />
+                }
+                {/* <div
                   id="content-html"
                   className={`media-help-artical-content ${markingShow ? `h-[100vh] overflow-hidden` : ''}`}
                   dangerouslySetInnerHTML={{
                     __html: frogArticle?.frogArticleContent!,
                   }}
-                ></div>
+                ></div> */}
               </div>
               <ArticleSwitch
                 frogArticleId={frogArticle?.frogArticleId}

@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-13 20:42:43
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-14 01:16:20
+ * @LastEditTime: 2024-06-16 22:41:29
  * @Description: 
  */
 
@@ -11,6 +11,7 @@ import LexicalTableOfContentsPlugin from "@lexical/react/LexicalTableOfContents"
 import { NodeKey } from "lexical";
 import { useEffect, useState } from "react";
 import TableOfcontent from "../../../Icon/components/TableOfcontent";
+import { useSettings } from "../../../context/SettingsContext";
 
 interface LexicalTableOfContentsInClient {
     title: string;
@@ -20,6 +21,7 @@ const LexicalTableOfContentsInClient = (props: LexicalTableOfContentsInClient) =
     const { title, isInArtical = false } = props;
     const [editor] = useLexicalComposerContext();
     const [isShow, setIsShow] = useState(true)
+    const { settings } = useSettings()
     return <div className={`${isInArtical ? '' : 'pc:h-[370px] pad:h-[370px] overflow-y-auto' } bg-[#FAFAFA] p-[20px]`} >
         <div className="flex items-center">
             <TableOfcontent className="h-[28px]" height={28} width={22} viewBox={undefined} />
@@ -34,7 +36,7 @@ const LexicalTableOfContentsInClient = (props: LexicalTableOfContentsInClient) =
             </span>
         </div>
         {isShow && <>
-            <div className="mt-[16px] mb-[8px] text-[#000]/[.88] text-[16px] font-bold leading-[24px]" >{title} ブランド品を偽物と疑われた場合</div>
+            {!!settings.articleTitle && <div className="mt-[16px] mb-[8px] text-[#000]/[.88] text-[16px] font-bold leading-[24px]" >{settings.articleTitle}</div>}
             <LexicalTableOfContentsPlugin>
                 {(_data) => {
                     let hList = [0, 0, 0, 0, 0, 0]
@@ -60,6 +62,7 @@ const LexicalTableOfContentsInClient = (props: LexicalTableOfContentsInClient) =
                                 return 0
                             })
                             const str = hList.slice(2, hNum + 1).join('.')
+                            if(hNum === 1) return null;
                             return <div
                                 onClick={() => scrollToNode(nodeKey)}
                                 key={nodeKey}

@@ -3,7 +3,7 @@
  * @Author: shiguang
  * @Date: 2024-05-23 14:49:20
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-16 19:19:55
+ * @LastEditTime: 2024-06-16 22:28:55
  * @Description: 
  */
 'use client'
@@ -13,7 +13,7 @@ import { PlaygroundNodes } from "./utils/PlaygroundNodes";
 import { theme } from "./theme";
 import { SharedHistoryContext, useSharedHistoryContext } from "./context/SharedHistoryContext";
 import { TableContext } from "./custom/Table/TablePlugin";
-import { useSettings } from "./context/SettingsContext";
+import { SettingsContext, useSettings } from "./context/SettingsContext";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
@@ -54,6 +54,7 @@ interface CKBEditorProps {
   isEditable?: boolean;
   isDev?: boolean;
   initHtml?: string;
+  articleTitle?: string;
 }
 
 export interface CKBEditorRef {
@@ -65,7 +66,7 @@ export interface CKBEditorRef {
 
 const CKBEditor = forwardRef<CKBEditorRef, CKBEditorProps>((props, ref) => {
   CKBEditor.displayName = 'CKBEditor';
-  const { isEditable = false, isDev = false, initHtml } = props;
+  const { isEditable = false, isDev = false, initHtml, articleTitle } = props;
   const editorRef = useRef<CKBEditorRef>(null)
   useImperativeHandle(ref, () => ({
     getEditor: () => editorRef.current?.getEditor?.(),
@@ -81,6 +82,7 @@ const CKBEditor = forwardRef<CKBEditorRef, CKBEditorProps>((props, ref) => {
       throw error;
     },
     theme,
+    editable: isEditable
   };
 
   return (
@@ -105,6 +107,7 @@ const CKBEditor = forwardRef<CKBEditorRef, CKBEditorProps>((props, ref) => {
     >
       <LexicalComposer  initialConfig={initialConfig} >
         <SelectionEditPanelContext>
+          <SettingsContext value={{ articleTitle: articleTitle }} >
           <SharedHistoryContext>
             <TableContext>
               <TableOfContentDataContext>
@@ -112,6 +115,7 @@ const CKBEditor = forwardRef<CKBEditorRef, CKBEditorProps>((props, ref) => {
               </TableOfContentDataContext>
             </TableContext>
           </SharedHistoryContext>
+          </SettingsContext>
         </SelectionEditPanelContext>
       </LexicalComposer>
     </ConfigProvider>

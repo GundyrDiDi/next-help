@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-23 15:25:44
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-23 15:25:56
+ * @LastEditTime: 2024-06-16 22:31:41
  * @Description: 
  */
 // const hostName = window.location.hostname;
@@ -29,11 +29,15 @@ export const DEFAULT_SETTINGS = {
   tableCellMerge: true,
 } as const;
 
+interface OtherSetting{
+  articleTitle?: string;
+}
+
 // These are mutated in setupEnv
-export const INITIAL_SETTINGS: Record<SettingName, boolean> = {
+export const INITIAL_SETTINGS: Record<keyof typeof DEFAULT_SETTINGS, boolean> & OtherSetting = {
   ...DEFAULT_SETTINGS,
 };
 
-export type SettingName = keyof typeof DEFAULT_SETTINGS;
+export type SettingName = keyof typeof DEFAULT_SETTINGS & keyof OtherSetting;
 
 export type Settings = typeof INITIAL_SETTINGS;

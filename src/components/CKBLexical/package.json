@@ -1,7 +1,6 @@
 {
 	"name": "@sniff/ckb-editor",
 	"version": "0.1.0-alpha.9",
-	"main": "./lib/index.tsx",
 	"scripts": {
 		"dev": "next dev",
 		"build": "next build",

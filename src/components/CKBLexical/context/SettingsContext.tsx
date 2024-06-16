@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-23 15:24:39
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-23 15:29:40
+ * @LastEditTime: 2024-06-16 22:35:10
  * @Description: 
  */
 
@@ -17,18 +17,22 @@ import {
 } from 'react';
 
 // import {DEFAULT_SETTINGS, INITIAL_SETTINGS} from '../appSettings';
-import { DEFAULT_SETTINGS, INITIAL_SETTINGS, SettingName } from '../utils/settings';
+import { DEFAULT_SETTINGS, INITIAL_SETTINGS, SettingName, Settings } from '../utils/settings';
+
+// type SettingName
+
+// SettingsContext
 
 type SettingsContextShape = {
-  setOption: (name: SettingName, value: boolean) => void;
-  settings: Record<SettingName, boolean>;
+  setOption: <K extends keyof Settings>(name: K, value: Settings[K]) => void;
+  settings: Settings;
 };
 
 /**
  * context 初始化
  */
 const Context: React.Context<SettingsContextShape> = createContext({
-  setOption: (name: SettingName, value: boolean) => {
+  setOption: <K extends keyof Settings>(name: K, value: Settings[K]) => {
     return;
   },
   settings: INITIAL_SETTINGS,
@@ -41,17 +45,20 @@ const Context: React.Context<SettingsContextShape> = createContext({
  */
 export const SettingsContext = ({
   children,
+  value
 }: {
   children: ReactNode;
+  value?: Partial<Settings>;
 }): JSX.Element => {
-  const [settings, setSettings] = useState(INITIAL_SETTINGS);
+  const [settings, setSettings] = useState({...INITIAL_SETTINGS, ...value});
 
-  const setOption = useCallback((setting: SettingName, value: boolean) => {
+  const setOption = useCallback(<K extends keyof Settings>(name: K, value: Settings[K]) => {
     setSettings((options) => ({
       ...options,
-      [setting]: value,
+      [name]: value,
     }));
-    setURLParam(setting, value);
+    // TODO ??
+    // setURLParam(name, value);
   }, []);
 
   const contextValue = useMemo(() => {
