@@ -2,13 +2,12 @@
  * @Author: shiguang
  * @Date: 2024-05-23 17:56:28
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-16 16:28:54
+ * @LastEditTime: 2024-06-17 05:14:52
  * @Description: 
  */
 import { Tooltip } from 'antd';
 import { TooltipPropsWithTitle } from 'antd/es/tooltip';
 interface TooltipWithMenuProps extends TooltipPropsWithTitle {
-  children: React.ReactNode;
   isShowToolTip: boolean;
 }
 const TooltipWithMenu = (props: TooltipWithMenuProps) => {

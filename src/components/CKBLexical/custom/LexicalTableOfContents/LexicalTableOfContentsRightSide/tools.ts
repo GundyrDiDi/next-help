@@ -8,7 +8,7 @@ export const {setContentData, _writeSetContentDataFunction} = (() => {
             if(_setContentData) return;
             _setContentData = param;
         },
-        setContentData: (data) => {
+        setContentData: (data: any) => {
             _setContentData?.(data)
         },
     }
@@ -26,7 +26,7 @@ export const {setEditor, _writeSetEditorFunction} = (() => {
                 editor = undefined;
             }
         },
-        setEditor: (_editor) => {
+        setEditor: (_editor: any) => {
             _setEditor?.(_editor)
         },
     }

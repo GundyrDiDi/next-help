@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 17:50:15
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 03:54:26
+ * @LastEditTime: 2024-06-17 05:12:20
  * @Description: 
  */
 'use client'
@@ -128,7 +128,7 @@ const MultiUrlModal = (props: MultiUrlModalProps) => {
                                 {() => {
                                     const _urls = form.getFieldsValue().urls;
                                     console.log(_urls, 'xxx')
-                                    const isPass = _urls?.every(Boolean) && _urls?.every(item => {
+                                    const isPass = _urls?.every(Boolean) && _urls?.every((item: any) => {
                                         return REGEXP_URL.test(item.url)
                                     })
                                     console.log(isPass, 'isPass')

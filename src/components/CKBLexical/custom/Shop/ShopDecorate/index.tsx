@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 04:40:33
+ * @LastEditTime: 2024-06-17 05:16:16
  * @Description: 
  */
 import { Tooltip, message } from "antd";
@@ -171,7 +171,7 @@ const useShopListData = (urlList: ShopUIProps['urlList'], onErrorRef: React.Muta
                         shopName: item.originalShopName,
                         originShopUrl: item.shopUrl,
                         
-                        productList: item.productList?.slice(0, 3)?.map(it => {
+                        productList: item.productList?.slice(0, 3)?.map((it: any) => {
                             return {
                                 mainImgUrl: it.productMainImg,
                                 originProductUrl: it.productDetailUrl,

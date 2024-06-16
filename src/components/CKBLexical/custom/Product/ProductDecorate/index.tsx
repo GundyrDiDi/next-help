@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 04:42:02
+ * @LastEditTime: 2024-06-17 05:13:12
  * @Description: 
  */
 /*
@@ -166,7 +166,7 @@ export const useProductListData = (urlList: ProductUIProps['urlList'] | undefine
         //     });
         //     setListData(data);
         // });
-    }, [urlList])
+    }, [urlList, onErrorRef])
 
 
 
