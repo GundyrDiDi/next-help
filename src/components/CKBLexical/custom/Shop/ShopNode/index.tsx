@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-28 16:12:17
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-16 20:02:21
+ * @LastEditTime: 2024-06-17 02:40:21
  * @Description: 
  */
 
@@ -43,7 +43,6 @@ export const $getShopNodeConfigByDom = (domNode: HTMLButtonElement) => {
 function convertShopElement(domNode: HTMLElement): DOMConversionOutput | null {
     const options = domNode.getAttribute(CUSTOM_NODE_ATTRIBUTE);
     if(!options) return null;
-    debugger
     const configData = JSON.parse(options);
     if(configData.__elementType !== ELEMENT_TYPE){
       return null;

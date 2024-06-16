@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-28 16:12:17
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-16 20:01:15
+ * @LastEditTime: 2024-06-17 02:57:45
  * @Description: 
  */
 
@@ -135,6 +135,5 @@ export class ProductNode extends DecoratorNode<JSX.Element> {
 }
 
 export const $createProductNode = (options: Partial<ProductNodeOptions>, key?: NodeKey) => {
-    debugger
     return new ProductNode(options, key);
 }

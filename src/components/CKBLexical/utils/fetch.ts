@@ -2,16 +2,24 @@
  * @Author: shiguang
  * @Date: 2024-06-13 14:24:45
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-14 16:46:21
+ * @LastEditTime: 2024-06-17 03:07:56
+ * @Description: 
+ */
+/*
+ * @Author: shiguang
+ * @Date: 2024-06-13 14:24:45
+ * @LastEditors: shiguang
+ * @LastEditTime: 2024-06-17 02:50:21
  * @Description: 
  * 
  */
 
+import { message } from 'antd';
 import { CAN_USE_DOM } from './environment'
 
 
 const getHostEnv = () => {
-    return 'test';
+    // return 'test';
     if (!CAN_USE_DOM) return 'prod';
     if (
         window.location.host.startsWith('pre-system.theckb.com') ||
@@ -62,6 +70,7 @@ interface CrossFetchOptions<Body = any>{
 
 interface CrossFetchConfigOptions{
     requestInterceptor?: (config: RequestInit) => RequestInit;
+    showError?: boolean;
 }
 /**
  * 跨平台的fetch
@@ -70,7 +79,7 @@ interface CrossFetchConfigOptions{
  * @returns 
  */
 export const crossFetch = async <Res>(url: string, options: CrossFetchOptions, config?: CrossFetchConfigOptions) => {
-    const { body = {}, method, query }  = options
+    const { body = {}, method, query, showError = true }  = options
     const requestInterceptor = config?.requestInterceptor;
     const newUrl = (() => {
         if(url.includes("?")){
@@ -96,8 +105,19 @@ export const crossFetch = async <Res>(url: string, options: CrossFetchOptions, c
     const response = await fetch(`${getApiHost()}${newUrl}`, requestInterceptor ? requestInterceptor(fetchOptions) : fetchOptions);
     
     const data = await response.json();
+    if(data.code !== '0'){
+        if(showError) message.error(data.message)
+        throw new Error(data.message);
+    }
     return data as Res;
 };
+
+export const getInputUrlIsJenkinsTestEnv = (host: string) => {
+    if(host.includes('test-client-help.theckb.com')){
+        return true;
+    }
+    return false
+}
 
 // export const getOssSign = async ({ path, overwrite, overseaType }: { path: string; overwrite: '0' | '1'; overseaType: OverSea }) => {
 //     const re = await fetch(`${getHost()}/customer/oss/sign/another?bucketName=${getBucketName()[overseaType]}&path=${path}&type=${overwrite}`, {

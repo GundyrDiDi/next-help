@@ -2,12 +2,12 @@
  * @Author: shiguang
  * @Date: 2024-06-12 11:26:06
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-13 23:01:29
+ * @LastEditTime: 2024-06-17 03:00:37
  * @Description: 
  */
 import queryString from "query-string";
-import { crossFetch } from "../../../utils/fetch";
-import { useEffect, useState } from "react";
+import { crossFetch, getInputUrlIsJenkinsTestEnv } from "../../../utils/fetch";
+import { useEffect, useRef, useState } from "react";
 
 /* eslint-disable @next/next/no-img-element */
 
@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 export interface ArticleUIProps {
     url?: string;
     onClick?: () => void;
+    onError?: () => void;
 }
 
 const requestHelpCenterCateInfo = async(catePath: string) => {
@@ -23,7 +24,7 @@ const requestHelpCenterCateInfo = async(catePath: string) => {
         query: {
             path: catePath
         }
-    })
+    }, { showError: false })
     return data?.data
 } 
 
@@ -33,7 +34,7 @@ const requestFrogCenterArticleInfo = async(frogArticleId: string) => {
         query: {
             frogArticleId
         }
-    })
+    }, { showError: false })
     const _data = data?.data
 
     return {
@@ -49,9 +50,6 @@ const getHelpArticleData = async (catePath: string, hash?: string) => {
     if(hash){
         const _hash = Number(hash) - 1;
         const resList =  data?.contentList ?? [];
-        // resList[_hash].description
-        // resList[_hash].seoDescription
-        // resList[_hash].title
         return {
             title: resList[_hash].title,
             description: resList[_hash].seoDescription,
@@ -71,26 +69,36 @@ const getHelpArticleData = async (catePath: string, hash?: string) => {
  * https://media.theckb.com/ja/article/300
  * 
  */
-const useParseUrl = (url: string) => {
-
+const useParseUrl = (url: string, options: Pick<ArticleUIProps, 'onError'> = {}) => {
     const [state, setState] = useState<{title: string, imageUrl: string; description?: string}>();
-
+    const optionsRef = useRef(options)
     useEffect(() => {
         const urlObj = queryString.parseUrl(url, { parseFragmentIdentifier: true })
-        const isHelp = urlObj.url.includes('help');
+        const isHelp = (() => {
+            if(getInputUrlIsJenkinsTestEnv(url)){
+                if(urlObj.url.includes('article')){
+                    return false
+                }else{
+                    return true
+                }
+            }
+            return urlObj.url.includes('help')
+        })();
+        const onError = () => {
+            optionsRef.current?.onError?.();
+        }
         // const isMedia = urlObj.url.includes('media');
         const hash = urlObj.fragmentIdentifier;
-    
         const param = urlObj.url.split('/').pop()!
         if(isHelp){
             getHelpArticleData(param, hash).then((val) => {
                 setState(val)
-            })
+            }).catch(onError)
             return;
         }
         requestFrogCenterArticleInfo(param).then((val) => {
             setState(val)
-        })
+        }).catch(onError)
 
     }, [url])
 
@@ -98,8 +106,8 @@ const useParseUrl = (url: string) => {
 }
 
 const ArticleUI = (props: ArticleUIProps) => {
-    const { url, onClick } = props;
-    const articleData = useParseUrl(url!)
+    const { url, onClick, onError } = props;
+    const articleData = useParseUrl(url!, { onError })
     if(!articleData) return null;
 
     const { title, description, imageUrl } = articleData;
