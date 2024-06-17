@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 05:16:16
+ * @LastEditTime: 2024-06-17 10:39:55
  * @Description: 
  */
 import { Tooltip, message } from "antd";
@@ -12,6 +12,7 @@ import { crossFetch } from "../../../utils/fetch";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $getNodeByKey } from "lexical";
+import useLexicalEditable from "@lexical/react/useLexicalEditable";
 
 interface ShopDecorateProps {
     nodeKey: string;
@@ -23,24 +24,24 @@ const onClick = (nodeKey: string) => {
     shopToolBarEmitter.emit('editShop', nodeKey)
 }
 
-export interface ListDataItem{
-        shopName: string;
-        iconUrl: string;
-        originShopUrl?: string;
-        productList: {
-            mainImgUrl: string;
-            originProductUrl?: string;
-            cny: string;
-            jpy: string;
+export interface ListDataItem {
+    shopName: string;
+    iconUrl: string;
+    originShopUrl?: string;
+    productList: {
+        mainImgUrl: string;
+        originProductUrl?: string;
+        cny: string;
+        jpy: string;
     }[];
 }
 
 const mockShopList = [
-    { 
+    {
         url: 'https://wbaibu.1688.com',
         code: '',
     },
-    { 
+    {
         url: 'https://wbaibu.1688.com',
         code: '',
     },
@@ -69,13 +70,13 @@ const requestShopInfoByUrl = async (url: string) => {
 const requestShopInfoListByUrlList = async (urlList: string[]) => {
     const dataList = await Promise.all(urlList.map(code => requestShopInfoByUrl(code)));
     const errList = dataList.reduce((pre, cur, index) => {
-        if(cur.code !== '0'){
+        if (cur.code !== '0') {
             pre.push(`第${index + 1}个链接请求失败：${urlList[index]}，【${cur.msg}】`)
         }
         return pre;
     }, [] as string[])
 
-    if(errList.length){
+    if (errList.length) {
         return Promise.reject(errList)
     }
     return dataList.map(data => {
@@ -103,7 +104,7 @@ const requestShopInfoListByUrlList = async (urlList: string[]) => {
 //   -H 'x-gray-tag: 20240606-fogseo2' \
 //   -H 'x-stationcode: JapanStation' \
 //   --data-raw '{"shopUrl":"https://wbaibu.1688.com","shopCode":""}'
-  
+
 
 // curl 'https://master-gateway.theckb.com/goods/supplierShop/qryShopAndProductsByShopUrl' \
 //   -H 'Accept: */*' \
@@ -149,43 +150,43 @@ const requestShopInfoListByUrlList = async (urlList: string[]) => {
 
 
 const thirdPlateIconConf: Record<string, any> = {
-	TB: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/淘宝.png',
-	AM: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/1688.png',
-	TM: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/天猫.png',
-	VC: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/市场购.png',
-	WS: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/市场购.png'
-	// VC: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/搜款网.png',
-	// WS: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/网商园.png'
+    TB: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/淘宝.png',
+    AM: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/1688.png',
+    TM: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/天猫.png',
+    VC: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/市场购.png',
+    WS: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/市场购.png'
+    // VC: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/搜款网.png',
+    // WS: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/网商园.png'
 };
 
 const useShopListData = (urlList: ShopUIProps['urlList'], onErrorRef: React.MutableRefObject<() => void>) => {
     const [listDta, setListData] = useState<ListDataItem[]>();
-    
+
     useEffect(() => {
         if (!urlList?.length) return;
         const urls = urlList.map(item => item.url);
         requestShopInfoListByUrlList(urls).then((res) => {
             const data = res.map(item => {
                 return {
-                        iconUrl: thirdPlateIconConf[item.platformType!],
-                        shopName: item.originalShopName,
-                        originShopUrl: item.shopUrl,
-                        
-                        productList: item.productList?.slice(0, 3)?.map((it: any) => {
-                            return {
-                                mainImgUrl: it.productMainImg,
-                                originProductUrl: it.productDetailUrl,
-                                cny: it.productSellPrice,
-                                //  TODO
-                                jpy: it.productSellPrice,
+                    iconUrl: thirdPlateIconConf[item.platformType!],
+                    shopName: item.originalShopName,
+                    originShopUrl: item.shopUrl,
 
-                            }
-                        }) ?? []
+                    productList: item.productList?.slice(0, 3)?.map((it: any) => {
+                        return {
+                            mainImgUrl: it.productMainImg,
+                            originProductUrl: it.productDetailUrl,
+                            cny: it.productSellPrice,
+                            //  TODO
+                            jpy: it.productSellPrice,
+
+                        }
+                    }) ?? []
                 }
             });
             setListData(data);
         }).catch(errList => {
-            if(Array.isArray(errList)){
+            if (Array.isArray(errList)) {
                 message.warning(errList.join('\n'))
                 onErrorRef.current();
             }
@@ -196,14 +197,22 @@ const useShopListData = (urlList: ShopUIProps['urlList'], onErrorRef: React.Muta
 
 const ShopDecorate = (props: ShopDecorateProps) => {
     const [editor] = useLexicalComposerContext();
-    const onErrorRef = useRef<() => void>(() => {})
+    const isEditable = useLexicalEditable()
+
+    const onErrorRef = useRef<() => void>(() => { })
     onErrorRef.current = () => {
-       editor.update(() => {
-           const node = $getNodeByKey(props.nodeKey);
-           node?.remove();
-       })
-   }
-    const  listData = useShopListData(props.options.urlList, onErrorRef)
+        editor.update(() => {
+            const node = $getNodeByKey(props.nodeKey);
+            node?.remove();
+        })
+    }
+    const listData = useShopListData(props.options.urlList, onErrorRef)
+    const dom = <div>
+        <ShopUI listData={listData} />
+    </div>
+    if (!isEditable) {
+        return dom
+    }
     return <Tooltip
         arrow={false}
         title={
@@ -211,9 +220,7 @@ const ShopDecorate = (props: ShopDecorateProps) => {
                 编辑
             </span>
         } >
-        <div>
-            <ShopUI listData={listData} />
-        </div>
+        {dom}
     </Tooltip>
 
 

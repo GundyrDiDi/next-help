@@ -91,7 +91,7 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
     
   });
   const isCkbEditor = frogArticle?.articalVersionFlag === 1;
-  console.log(frogArticle?.articalVersionFlag, 'wwwwww')
+
  
   return (
     <>

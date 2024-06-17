@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 05:13:12
+ * @LastEditTime: 2024-06-17 10:37:51
  * @Description: 
  */
 /*
@@ -19,6 +19,7 @@ import { crossFetch } from "../../../utils/fetch";
 import { useEffect, useRef, useState } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $getNodeByKey } from "lexical";
+import useLexicalEditable from "@lexical/react/useLexicalEditable";
 
 const thirdPlateIconConf: Record<string, any> = {
 	TB: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/淘宝.png',
@@ -244,6 +245,7 @@ const onClick = (nodeKey: string) => {
 }
 const ProductDecorate = (props: ProductDecorateProps) => {
     const [editor] = useLexicalComposerContext();
+    const isEditable = useLexicalEditable()
     const onErrorRef = useRef<() => void>(() => {})
     onErrorRef.current = () => {
         editor.update(() => {
@@ -252,6 +254,12 @@ const ProductDecorate = (props: ProductDecorateProps) => {
         })
     }
     const listData = useProductListData(props.options.urlList, onErrorRef)
+    const dom = <div>
+        <ProductUI urlList={props.options.urlList} listData={listData} />
+    </div>
+    if(!isEditable){
+        return dom;
+    }
     return <Tooltip
         arrow={false}
         title={
@@ -259,9 +267,7 @@ const ProductDecorate = (props: ProductDecorateProps) => {
                 编辑
             </span>
         } >
-        <div>
-            <ProductUI urlList={props.options.urlList} listData={listData} />
-        </div>
+        {dom}
     </Tooltip>
 }
 
