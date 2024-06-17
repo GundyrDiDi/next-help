@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 11:26:06
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 03:00:37
+ * @LastEditTime: 2024-06-17 19:39:21
  * @Description: 
  */
 import queryString from "query-string";
@@ -13,22 +13,28 @@ import { useEffect, useRef, useState } from "react";
 
 
 export interface ArticleUIProps {
+    className?: string;
     url?: string;
     onClick?: () => void;
     onError?: () => void;
 }
 
-const requestHelpCenterCateInfo = async(catePath: string) => {
+const requestHelpCenterCateInfo = async (catePath: string) => {
     const data = await crossFetch<any>('/customer/base/supportCenter/query/byPath', {
         method: 'GET',
         query: {
             path: catePath
         }
     }, { showError: false })
-    return data?.data
-} 
+    if (data) {
+        if (!data?.data?.createTime) {
+            return Promise.reject({ msg: '链接解析失败' })
+        }
+        return data?.data
+    }
+}
 
-const requestFrogCenterArticleInfo = async(frogArticleId: string) => {
+const requestFrogCenterArticleInfo = async (frogArticleId: string) => {
     const data = await crossFetch<any>('/customer/frog/article/detail', {
         method: 'GET',
         query: {
@@ -42,14 +48,14 @@ const requestFrogCenterArticleInfo = async(frogArticleId: string) => {
         description: _data?.frogArticleSubTitle,
         imageUrl: _data?.frogArticleImgUrl,
     }
-} 
+}
 
 
 const getHelpArticleData = async (catePath: string, hash?: string) => {
     const data = await requestHelpCenterCateInfo(catePath);
-    if(hash){
+    if (hash) {
         const _hash = Number(hash) - 1;
-        const resList =  data?.contentList ?? [];
+        const resList = data?.contentList ?? [];
         return {
             title: resList[_hash].title,
             description: resList[_hash].seoDescription,
@@ -70,15 +76,15 @@ const getHelpArticleData = async (catePath: string, hash?: string) => {
  * 
  */
 const useParseUrl = (url: string, options: Pick<ArticleUIProps, 'onError'> = {}) => {
-    const [state, setState] = useState<{title: string, imageUrl: string; description?: string}>();
+    const [state, setState] = useState<{ title: string, imageUrl: string; description?: string }>();
     const optionsRef = useRef(options)
     useEffect(() => {
         const urlObj = queryString.parseUrl(url, { parseFragmentIdentifier: true })
         const isHelp = (() => {
-            if(getInputUrlIsJenkinsTestEnv(url)){
-                if(urlObj.url.includes('article')){
+            if (getInputUrlIsJenkinsTestEnv(url)) {
+                if (urlObj.url.includes('article')) {
                     return false
-                }else{
+                } else {
                     return true
                 }
             }
@@ -90,7 +96,7 @@ const useParseUrl = (url: string, options: Pick<ArticleUIProps, 'onError'> = {})
         // const isMedia = urlObj.url.includes('media');
         const hash = urlObj.fragmentIdentifier;
         const param = urlObj.url.split('/').pop()!
-        if(isHelp){
+        if (isHelp) {
             getHelpArticleData(param, hash).then((val) => {
                 setState(val)
             }).catch(onError)
@@ -106,12 +112,12 @@ const useParseUrl = (url: string, options: Pick<ArticleUIProps, 'onError'> = {})
 }
 
 const ArticleUI = (props: ArticleUIProps) => {
-    const { url, onClick, onError } = props;
+    const { url, onClick, onError, className } = props;
     const articleData = useParseUrl(url!, { onError })
-    if(!articleData) return null;
+    if (!articleData) return null;
 
     const { title, description, imageUrl } = articleData;
-    const dom = <div className="flex border border-[#F0F0F0] p-[8px] bg-[white] rounded-[4px]" onClick={onClick} >
+    const dom = <div className={`flex border border-[#F0F0F0] p-[8px] bg-[white] rounded-[4px] ${className ?? ''}`} onClick={onClick} >
         <img className="w-[56px] h-[56px] rounded-[4px] shrink-0" src={imageUrl} alt="" />
         <div className="ml-[8px] grow " >
             <div className="mb-[8px] leading-[24px] font-[700] text-black/[.88] text-[16px] hover:text-[#008060]" >{title}</div>

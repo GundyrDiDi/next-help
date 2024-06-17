@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-07 17:24:01
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 06:11:57
+ * @LastEditTime: 2024-06-17 19:43:36
  * @Description: 
  */
 import useLexicalEditable from "@lexical/react/useLexicalEditable";
@@ -21,6 +21,7 @@ const ButtonDecorate = (props: ButtonDecorateProps) => {
     const { type, href, color, children } = options;
     const dom = <ButtonUI
         {...{ type, href, color }}
+        className="inline-block"
 
     >
         {children}

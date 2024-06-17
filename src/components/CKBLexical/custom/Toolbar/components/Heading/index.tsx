@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-23 18:03:08
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 18:33:15
+ * @LastEditTime: 2024-06-17 19:17:34
  * @Description: 不断的点击修改 leading 会有问题
  */
 import {
@@ -19,6 +19,7 @@ import { Dropdown, MenuProps } from 'antd';
 import { $createParagraphNode, $getSelection, $isRangeSelection, $isRootOrShadowRoot, LexicalEditor } from 'lexical';
 import { useEffect, useState } from 'react';
 import { useSelectionChange } from '../../hooks/useSelectionChange';
+import TooltipWithMenu from '../../../../components/TooltipWithMenu';
 // MenuProps['items']
 const items = [
     {
@@ -96,27 +97,30 @@ const Heading = (props: HeadingMenuProps) => {
     })
     return (
         <div>
-            <Dropdown
-                menu={{
-                    selectedKeys: [currentLeading],
-                    items,
-                    onClick: ({ key }) => {
-                        console.log(key, 666)
-                        formatHeading(key as HeadingTagType)
-                        setCurrentLeading(key as any)
-                    },
-                }}
-                onOpenChange={(val) => {
-                    console.log(val)
-                }}
-            >
-                <div className="flex items-center justify-center cursor-pointer rounded-[8px] hover:bg-[#f0f0f0] h-[32px] px-[6px]" >
-                    <span className="mr-[4px]" >
-                        {curItem?.labelText?.split(' ')?.[0]}
-                    </span>
-                    <CaretDownOutlined className="text-[12px]" />
-                </div>
-            </Dropdown>
+            <TooltipWithMenu isShowToolTip title="正文与标题">
+
+                <Dropdown
+                    menu={{
+                        selectedKeys: [currentLeading],
+                        items,
+                        onClick: ({ key }) => {
+                            console.log(key, 666)
+                            formatHeading(key as HeadingTagType)
+                            setCurrentLeading(key as any)
+                        },
+                    }}
+                    onOpenChange={(val) => {
+                        console.log(val)
+                    }}
+                >
+                    <div className="flex items-center justify-center cursor-pointer rounded-[8px] hover:bg-[#f0f0f0] h-[32px] px-[6px]" >
+                        <span className="mr-[4px] text-[14px]" >
+                            {curItem?.labelText?.split(' ')?.[0]}
+                        </span>
+                        <CaretDownOutlined className="text-[12px]" />
+                    </div>
+                </Dropdown>
+            </TooltipWithMenu>
         </div>
     );
 }

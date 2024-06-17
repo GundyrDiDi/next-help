@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-23 18:03:08
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 05:52:06
+ * @LastEditTime: 2024-06-17 18:40:11
  * @Description: 
  */
 import { $createTextNode, $getSelection, $isRangeSelection, LexicalEditor, RangeSelection } from 'lexical';
@@ -30,11 +30,11 @@ const Link = (props: HeadingMenuProps) => {
     const [linkValue, setLinkValue] = useState<LinkValue>();
     const [form] = Form.useForm();
 
-    
+
     useSelectionChange(activeEditor, () => {
         const selection = $getSelection();
         if (!selection) return;
-        if(selection.isCollapsed()) return;
+        if (selection.isCollapsed()) return;
         if ($isRangeSelection(selection) || $isTableSelection(selection)) {
             const node = getSelectedNode(selection as RangeSelection);
             const parent = node.getParent();
@@ -59,13 +59,13 @@ const Link = (props: HeadingMenuProps) => {
     })
 
     useEffect(() => {
-        if(isLink){
+        if (isLink) {
             setLinkValue((val) => {
                 form.setFieldsValue(val)
                 return val;
             })
         }
-    },[form, isLink])
+    }, [form, isLink])
 
     // const linkEditPanelDom = useCallback((_isLink: boolean) => {
     //     return _isLink ? <LinkEditPanel
@@ -103,22 +103,10 @@ const Link = (props: HeadingMenuProps) => {
             <Modal
                 footer={false}
                 open={isLink}
-                //  onOk={() => {
-                //         activeEditor.update(() => {
-                //             const selection = $getSelection()!
-                //             if(!selection) return;
-                //             const linkNode = $createLinkNode(value!.url!, {}).append($createTextNode(linkValue?.title));
-                //             selection.insertNodes([
-                //                 linkNode
-                //             ]);
-                //             setLinkValue(undefined)
-                //             setIsLink(false)
-                //             return true
-                //         })
-                // }} 
                 onCancel={() => {
                     setIsLink(false);
                     setLinkValue(undefined)
+                    form.resetFields()
                 }}
             >
                 <div >
@@ -139,31 +127,32 @@ const Link = (props: HeadingMenuProps) => {
                             />
                         </Form.Item>
                         <Form.Item noStyle shouldUpdate>
-                        {() => {
-                            const value = form.getFieldsValue();
-                            const isOk = REGEXP_URL.test(value.url) && !!value.title
-                            console.log(REGEXP_URL.test(value.url), value.title, 246)
-                            return <Button
-                                disabled={!isOk}
-                                className='mt-[8px]'
-                                onClick={() => {
-                                    activeEditor.update(() => {
-                                        const selection = $getSelection()!
-                                        if (!selection) return;
-                                        const linkNode = $createLinkNode(value!.url!, {}).append($createTextNode(linkValue?.title));
-                                        selection.insertNodes([
-                                            linkNode
-                                        ]);
-                                        setLinkValue(undefined)
-                                        setIsLink(false)
-                                        return true
-                                    })
-                                }}
-                            >
-                                确定
-                            </Button>
-                        }}
-                    </Form.Item>
+                            {() => {
+                                const value = form.getFieldsValue();
+                                const isOk = REGEXP_URL.test(value.url) && !!value.title
+                                console.log(REGEXP_URL.test(value.url), value.title, 246)
+                                return <Button
+                                    disabled={!isOk}
+                                    className='mt-[8px]'
+                                    onClick={() => {
+                                        activeEditor.update(() => {
+                                            const selection = $getSelection()!
+                                            if (!selection) return;
+                                            const linkNode = $createLinkNode(value!.url!, {}).append($createTextNode(linkValue?.title));
+                                            selection.insertNodes([
+                                                linkNode
+                                            ]);
+                                            setLinkValue(undefined)
+                                            setIsLink(false)
+                                            form.resetFields()
+                                            return true
+                                        })
+                                    }}
+                                >
+                                    确定
+                                </Button>
+                            }}
+                        </Form.Item>
                     </Form>
 
                     {/* <Input
@@ -176,7 +165,7 @@ const Link = (props: HeadingMenuProps) => {
                         }}
                     />
                     <div>{value?.url}</div> */}
-                   
+
                 </div>
             </Modal>
             <TooltipWithMenu isShowToolTip title="链接">

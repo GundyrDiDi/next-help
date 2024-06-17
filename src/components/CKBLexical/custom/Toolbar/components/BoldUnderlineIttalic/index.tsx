@@ -68,12 +68,12 @@ const BoldUnderlineIttalic = (props: BoldUnderlineIttalicProps) => {
             setIsUnderline(selection.hasFormat('underline'));
             setIsStrikethrough(selection.hasFormat('strikethrough'));
 
-            
+
 
             const background = $getSelectionStyleValueForProperty(selection, 'background');
-            if(background.includes('linear-gradient')){
+            if (background.includes('linear-gradient')) {
                 setIsHightlight(true);
-            }else{
+            } else {
                 setIsHightlight(false);
             }
 
@@ -156,7 +156,7 @@ const BoldUnderlineIttalic = (props: BoldUnderlineIttalicProps) => {
                     />
                 </div>
             </TooltipWithMenu>
-            <TooltipWithMenu isShowToolTip title="链接">
+            {/* <TooltipWithMenu isShowToolTip title="链接">
                 <div className={`h-[30px] w-[30px] cursor-pointer  hover:bg-[#f0f0f0] flex items-center justify-center rounded-[4px] mr-[4px] ${isLink ? 'bg-[#eee]' : ''}`} >
                     <LinkOutlined
                         className="text-[#050505] "
@@ -165,7 +165,7 @@ const BoldUnderlineIttalic = (props: BoldUnderlineIttalicProps) => {
                         }}
                     />
                 </div>
-            </TooltipWithMenu>
+            </TooltipWithMenu> */}
             <TooltipWithMenu isShowToolTip title="高亮">
                 <div className={`h-[30px] w-[30px] cursor-pointer hover:bg-[#f0f0f0] flex items-center justify-center rounded-[4px] mr-[4px] ${isHightlight ? 'bg-[#eee]' : ''}`} >
                     <Highlight
@@ -177,7 +177,7 @@ const BoldUnderlineIttalic = (props: BoldUnderlineIttalicProps) => {
                                     if (!selection) {
                                         return
                                     }
-                                    if(isHightlight){
+                                    if (isHightlight) {
                                         $patchStyleText(selection, { 'background': 'white' });
                                         return;
                                     }

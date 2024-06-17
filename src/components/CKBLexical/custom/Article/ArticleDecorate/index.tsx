@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 02:59:43
+ * @LastEditTime: 2024-06-17 19:40:42
  * @Description: 
  */
 /*
@@ -31,18 +31,18 @@ const onClick = (nodeKey: string) => {
 const ArticleDecorate = (props: ArticleDecorateProps) => {
     const isEditable = useLexicalEditable()
     const [editor] = useLexicalComposerContext()
-    console.log(1,2,3)
-    const dom = <ArticleUI 
-        url={props.options.url} 
+    console.log(1, 2, 3)
+    const dom = <ArticleUI
+        url={props.options.url}
         onError={() => {
             editor.update(() => {
                 message.warning('没找到对应链接文章');
                 const node = $getNodeByKey(props.nodeKey);
                 node?.remove();
             })
-        }} 
+        }}
     />;
-    if(!isEditable) return dom;
+    if (!isEditable) return dom;
     return <Tooltip
         arrow={false}
         title={
@@ -51,7 +51,7 @@ const ArticleDecorate = (props: ArticleDecorateProps) => {
             </span>
         } >
 
-        <div>{dom}</div>
+        <div >{dom}</div>
     </Tooltip>
 }
 

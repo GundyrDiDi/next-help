@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-07 17:29:24
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-11 15:44:42
+ * @LastEditTime: 2024-06-17 19:46:27
  * @Description: 
  */
 
@@ -55,7 +55,7 @@ const colorMap = new Map([
         color: '#0586FE',
         hoverBg: '#2EA1FF',
         outBorderBg: '#0586FE',
-        className: 'text-[#0586FE] border border-[#0586FE] active:outline-[#0586FE]',
+        className: 'text-[#0586FE] border border-[#0586FE] active:outline-[#0586FE] hover:outline-[#0586FE]',
     }],
 ])
 

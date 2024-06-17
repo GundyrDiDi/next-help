@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-07 17:23:47
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 06:19:25
+ * @LastEditTime: 2024-06-17 19:24:34
  * @Description: 
  */
 /*
@@ -130,6 +130,7 @@ const ArticleToolBar = (props: HeadingMenuProps) => {
                         <Form.Item noStyle shouldUpdate >
                             {(form) => {
                                 const url = form.getFieldValue('url');
+                                console.log(url, REGEXP_URL.test(url))
                                 return <Button
                                     disabled={!REGEXP_URL.test(url)}
                                     onClick={() => {
