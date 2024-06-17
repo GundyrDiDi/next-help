@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 11:30:20
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 10:35:30
+ * @LastEditTime: 2024-06-17 16:04:18
  * @Description: 
  */
 import { BizResponseCustomerDetailRespDTO, FrogArticleDetailRespDTO } from "@/service/customer";
@@ -23,7 +23,7 @@ type Props = {
 
 /** 获取数据 */
 const getData = async (frogArticleId: number) => {
-  const article =await request.customer.frog.articleDetail({frogArticleId})
+  const article = await request.customer.frog.articleDetail({frogArticleId})
   // const article = await fetch(
   //   `${process.env.NEXT_PUBLIC_THE_CKB_API_URL}/customer/frog/article/detail?frogArticleId=${frogArticleId}`,
   //   { cache: "no-cache" }
@@ -73,19 +73,19 @@ export async function generateMetadata(
         ja: "/ja",
       },
     },
-    title: `${article.frogArticleTitle}${
+    title: `${article?.frogArticleTitle}${
       {
         [Local.JA]: "| 中国輸入代行THE CKB",
         [Local.KO]: "| 중국수입대행 THE CKB",
         [Local.EN]: "THE CKB-The Biggest Sourcing Agency in China",
       }[params.lang] || ""
     }`,
-    description: article.seoDescription || article.frogArticleTitle,
+    description: article?.seoDescription || article?.frogArticleTitle,
     openGraph: {
       siteName: "THE CKB",
       images: "https://static-s.theckb.com/BusinessMarket/Client/favicon.ico",
       title,
-      description: article.seoDescription || article.frogArticleTitle,
+      description: article?.seoDescription || article?.frogArticleTitle,
     },
   };
 }

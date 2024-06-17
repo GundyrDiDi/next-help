@@ -84,6 +84,7 @@ async function requestInterceptorOnServer(config: InternalAxiosRequestConfig) {
         config.headers['X-Stationcode'] = siteStation;
     }
     const token = encodeURIComponent(TokenSignCookie)
+    debugger
 
     if(token){
         config.headers['X-Authtoken'] = token;
