@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-23 14:47:05
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 06:40:40
+ * @LastEditTime: 2024-06-17 17:02:27
  * @Description: 
  */
 'use client'
@@ -64,6 +64,7 @@ export default function EditorDemo() {
             <CKBEditor
                 isEditable
                 ref={editorRef}
+                toolbarClassName="xxxzz"
                 isDev
                 // initHtml={htmlmock}
                 initHtml={

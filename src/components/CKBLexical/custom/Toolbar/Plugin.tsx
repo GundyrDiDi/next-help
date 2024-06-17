@@ -3,7 +3,7 @@
  * @Author: shiguang
  * @Date: 2024-05-23 16:23:31
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 05:42:22
+ * @LastEditTime: 2024-06-17 16:52:20
  * @Description: 
  */
 import { Button } from "antd";
@@ -39,6 +39,7 @@ import ImageAndYoutubeToolBar from "../ImageAndYoutube/ImageAndYoutubeToolBar";
 import ArticleToolBar from "../Article/ArticleToolBar";
 import ShopToolBar from "../Shop/ShopToolBar";
 import ProductToolBar from "../Product/ProductToolBar";
+import { useSettings } from "../../context/SettingsContext";
 // import Product from "../../Icon/components/Product";
 
 
@@ -58,6 +59,7 @@ const ToolbarPlugin = () => {
   const [editor] = useLexicalComposerContext();
   const [isEditable, setIsEditable] = useState(() => editor.isEditable());
   const [activeEditor, setActiveEditor] = useState(editor);
+  const { settings } = useSettings()
 
   useSelectionChange(activeEditor, (newEditor) => {
     setActiveEditor(newEditor)
@@ -72,7 +74,7 @@ const ToolbarPlugin = () => {
   //     const button = target.closest('button')
   //     const selectionEditPanelContainer = target.closest('#J_SelectionEditPanelContainer')
   //     const popover = target.closest('.ant-popover')
-    
+
   //     if(button || selectionEditPanelContainer || popover){
   //       editor.update(() => {
   //         // const selection = $getSelection();
@@ -88,12 +90,12 @@ const ToolbarPlugin = () => {
   //     window.document.removeEventListener('mousedown',click );
   //   }
   // }, [editor])
-  
+
   if (!isEditable) return null;
   return (
     < >
       <div
-        className="border-b border-[#F0F0F0] h-[44px] flex items-center px-[8px] py-[4px] z-[9] bg-white flex-wrap"
+        className={`border-b border-[#F0F0F0] h-[44px] flex items-center px-[8px] py-[4px] z-[9] bg-white flex-wrap ${settings.toolbarClassName ?? ''}`}
         onClick={(e) => {
           // const target = e.target as HTMLElement
           // console.log(e.target)

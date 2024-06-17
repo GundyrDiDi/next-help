@@ -3,7 +3,7 @@
  * @Author: shiguang
  * @Date: 2024-05-23 14:49:20
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 04:48:24
+ * @LastEditTime: 2024-06-17 16:50:37
  * @Description: 
  */
 'use client'
@@ -55,6 +55,7 @@ interface CKBEditorProps {
   isDev?: boolean;
   initHtml?: string;
   articleTitle?: string;
+  toolbarClassName?: string;
 }
 
 export interface CKBEditorRef {
@@ -66,7 +67,7 @@ export interface CKBEditorRef {
 
 const CKBEditor = forwardRef<CKBEditorRef, CKBEditorProps>((props, ref) => {
   CKBEditor.displayName = 'CKBEditor';
-  const { isEditable = false, isDev = false, initHtml, articleTitle } = props;
+  const { isEditable = false, isDev = false, initHtml, articleTitle, toolbarClassName } = props;
   const editorRef = useRef<CKBEditorRef>(null)
   useImperativeHandle(ref, () => ({
     getEditor: () => editorRef.current?.getEditor?.(),
@@ -103,18 +104,18 @@ const CKBEditor = forwardRef<CKBEditorRef, CKBEditorProps>((props, ref) => {
           },
         }
       }}
-      
+
     >
-      <LexicalComposer  initialConfig={initialConfig} >
+      <LexicalComposer initialConfig={initialConfig} >
         <SelectionEditPanelContext>
-          <SettingsContext value={{ articleTitle: articleTitle }} >
-          <SharedHistoryContext>
-            <TableContext>
-              <TableOfContentDataContext>
-                <Editor isEditable={isEditable} isDev={isDev} ref={editorRef} />
-              </TableOfContentDataContext>
-            </TableContext>
-          </SharedHistoryContext>
+          <SettingsContext value={{ articleTitle: articleTitle, toolbarClassName }} >
+            <SharedHistoryContext>
+              <TableContext>
+                <TableOfContentDataContext>
+                  <Editor isEditable={isEditable} isDev={isDev} ref={editorRef} />
+                </TableOfContentDataContext>
+              </TableContext>
+            </SharedHistoryContext>
           </SettingsContext>
         </SelectionEditPanelContext>
       </LexicalComposer>
