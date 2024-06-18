@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-11 16:30:58
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 03:13:21
+ * @LastEditTime: 2024-06-18 20:34:40
  * @Description: 
  */
 import { Button, Form, Input, Tabs } from 'antd';
@@ -48,8 +48,8 @@ const ArticleEditPanel = (props: ArticleEditPanelProps) => {
                             确定
                         </Button>
                     }}
-                
-            </Form.Item>
+
+                </Form.Item>
             }
         </Form>
     </div>
