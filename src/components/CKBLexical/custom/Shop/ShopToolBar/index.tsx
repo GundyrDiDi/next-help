@@ -87,15 +87,19 @@ const ShopToolBar = (props: HeadingMenuProps) => {
             shopToolBarEmitter.all.clear();
         }
     }, [activeEditor])
-
+    const hideModal = () => {
+        setIsShop(false);
+        setEditShopKey(undefined)
+        setShopValue(undefined);
+    }
     return (
         <div>
             {isShop && <MultiUrlModal
                 initialValue={shopValue}
-                onClose={() => setIsShop(false)}
+                onClose={hideModal}
                 onOk={(urlList) => {
                     if (!urlList?.length) return;
-                    setIsShop(false)
+                    hideModal()
                     activeEditor.update(() => {
                         if (editShopKey) {
                             const node = $getNodeByKey(editShopKey) as ShopNode
@@ -104,7 +108,6 @@ const ShopToolBar = (props: HeadingMenuProps) => {
                             })
                             return;
                         }
-                        debugger
                         const createdNode = $createShopNode({
                             urlList
                         })
