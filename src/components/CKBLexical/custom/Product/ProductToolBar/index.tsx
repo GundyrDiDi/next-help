@@ -2,17 +2,18 @@
  * @Author: shiguang
  * @Date: 2024-06-13 10:42:45
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-13 22:57:15
+ * @LastEditTime: 2024-06-18 16:31:59
  * @Description: 
  */
 import { $getNodeByKey, $getSelection, LexicalEditor } from 'lexical';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import TooltipWithMenu from '../../../components/TooltipWithMenu';
 import mitt from 'mitt';
 import MultiUrlModal from '../../../components/MultiUrlModal';
 import Product from '../../../Icon/components/Product';
 import { $createProductNode, ProductNode } from '../ProductNode';
 import { ProductUIProps } from '../ProductUI';
+import { FormInstance } from 'antd';
 interface HeadingMenuProps {
     activeEditor: LexicalEditor;
 }
@@ -22,6 +23,7 @@ export const productToolBarEmitter = mitt<{ editProduct: string }>()
 const ProductToolBar = (props: HeadingMenuProps) => {
     const { activeEditor } = props;
     const [isProduct, setIsProduct] = useState(false);
+
     /**
      * 编辑的时候
     */
@@ -53,7 +55,7 @@ const ProductToolBar = (props: HeadingMenuProps) => {
                     if (!urlList?.length) return;
                     setIsProduct(false)
                     activeEditor.update(() => {
-                        if(editProductKey){
+                        if (editProductKey) {
                             const node = $getNodeByKey(editProductKey) as ProductNode
                             node.setOptions({
                                 urlList
@@ -62,9 +64,9 @@ const ProductToolBar = (props: HeadingMenuProps) => {
                         }
                         const createdNode = $createProductNode({
                             urlList
-                        })   
+                        })
                         const selection = $getSelection();
-                        if(!selection) return;
+                        if (!selection) return;
                         selection.insertNodes([
                             createdNode
                         ]);
@@ -78,6 +80,7 @@ const ProductToolBar = (props: HeadingMenuProps) => {
                     className={`h-[32px] w-[32px] cursor-pointer hover:bg-[#f0f0f0] flex items-center justify-center rounded-[8px] ${isProduct ? 'hover:bg-[#f0f0f0]' : ''}`}
                     onClick={() => {
                         setIsProduct(true)
+
                     }}
                 >
                     <Product />

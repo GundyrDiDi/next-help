@@ -2,14 +2,14 @@
  * @Author: shiguang
  * @Date: 2024-06-12 17:50:15
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 05:12:20
+ * @LastEditTime: 2024-06-18 16:51:14
  * @Description: 
  */
 'use client'
 import { MinusCircleOutlined } from "@ant-design/icons";
 import { Button, Form, Modal, Input } from "antd";
 import { title } from "process";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ProductUIProps } from "../../custom/Product/ProductUI";
 import { REGEXP_URL } from "../../utils/regexp";
 
@@ -41,7 +41,12 @@ const MultiUrlModal = (props: MultiUrlModalProps) => {
     }, [initialValue, form])
 
 
-    return <Modal open={true} title={`${config[type].title}链接`} footer={null} onCancel={onClose} wrapClassName="editor-modal" >
+    return <Modal
+        open={true}
+        title={`${config[type].title}链接`} footer={null} onCancel={onClose}
+        destroyOnClose
+        wrapClassName="editor-modal"
+    >
         <Form form={form}  >
             <Form.List
                 name="urls"
@@ -62,7 +67,6 @@ const MultiUrlModal = (props: MultiUrlModalProps) => {
             >
                 {(fields, { add, remove }, { errors }) => {
                     const isMaxCount = fields.length >= maxCount;
-                    console.log(errors, 9999)
                     return (
                         <>
                             {fields.map((field, index) => (
@@ -70,11 +74,9 @@ const MultiUrlModal = (props: MultiUrlModalProps) => {
                                     required={false}
                                     key={field.key}
                                 >
-
                                     <div
                                         className="flex items-center"
                                     >
-
                                         <Form.Item
                                             {...field}
                                             name={[field.name, 'url']}
