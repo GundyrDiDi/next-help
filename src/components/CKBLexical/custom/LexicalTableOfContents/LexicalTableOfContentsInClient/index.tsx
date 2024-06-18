@@ -1,8 +1,8 @@
 /*
  * @Author: shiguang
  * @Date: 2024-06-13 20:42:43
- * @LastEditors: yusha
- * @LastEditTime: 2024-06-18 20:53:23
+ * @LastEditors: tianzhitong laotianwy@163.com
+ * @LastEditTime: 2024-06-18 21:12:49
  * @Description: 
  */
 
@@ -15,6 +15,7 @@ import { useSettings } from "../../../context/SettingsContext";
 import { setContentData, setEditor } from "../LexicalTableOfContentsRightSide/tools";
 import { useTranslation } from 'react-i18next';
 import { CAN_USE_DOM } from "@lexical/utils";
+import { TFunction } from "i18next";
 function scrollToTargetAdjusted(element: HTMLElement) {
     // var element = document.getElementById('targetElement');
     const headerOffset = 150;
@@ -33,7 +34,7 @@ interface LexicalTableOfContentsInClient {
     isInArtical?: boolean;
 }
 /** 获取翻译 */
-export const getTranslationText = (text, t) => {
+export const getTranslationText = (text: string, t: TFunction<"translation", undefined>) => {
     // 如果是客户端,且就需要翻译
     if (CAN_USE_DOM && !window?.location.hostname.includes('system')) {
         return t(text)

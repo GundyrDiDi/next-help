@@ -137,7 +137,7 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
                 <HotArticalList isShowHeaderIcon />
               </div>
             </div>
-            {isCkbEditor && <div className="mt-[20px] sticky top-[166px] mo:hidden" >
+            {isCkbEditor && <div className="mt-[20px] sticky top-[166px] mo:hidden pad:!top-[50px]" >
               <LexicalTableOfContentsRightSide title={frogArticle?.frogArticleTitle!} />
               <FixedBanner />
             </div>}
