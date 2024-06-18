@@ -3,7 +3,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 15:06:29
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-18 17:16:45
+ * @LastEditTime: 2024-06-18 21:37:51
  * @Description: 
  */
 import React from "react";
@@ -109,9 +109,8 @@ const ProductUI = (props: ProductUIProps) => {
         {/* h5 pad 商品 */}
         <div className="flex flex-wrap pc:!hidden www" >
             {productListData.map((item, index) => {
-                return <WithATag href={item.originProductUrl} key={index} >
-                    <ProductVerticalUI {...item} key={index} className={`${index % 2 === 0 ? 'mr-[4px]' : 'ml-[4px]'} w-[calc(50%-4px)]`} />
-                </WithATag>
+                return <ProductVerticalUI {...item} key={index} href={item.originProductUrl} className={`${index % 2 === 0 ? 'mr-[4px]' : 'ml-[4px]'} w-[calc(50%-4px)]`} />
+
             })}
         </div>
     </>
