@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-18 14:16:09
+ * @LastEditTime: 2024-06-18 21:24:36
  * @Description: 
  */
 import { Tooltip, message } from "antd";
@@ -13,6 +13,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $getNodeByKey } from "lexical";
 import useLexicalEditable from "@lexical/react/useLexicalEditable";
+import { CAN_USE_DOM } from "../../../utils/environment";
 
 interface ShopDecorateProps {
     nodeKey: string;
@@ -179,7 +180,15 @@ const useShopListData = (urlList: ShopUIProps['urlList'], onErrorRef: React.Muta
                             originProductUrl: it.productDetailUrl,
                             cny: it.productSellPrice,
                             //  TODO
-                            jpy: it.productSellPrice,
+                            jpy: (() => {
+                                const [startPrice, endPrice] = (item.productSellPriceRange ?? '').split('-')
+                                const www: any = window;
+                                if (!CAN_USE_DOM || !www.calcByCnyPrice) return '**';
+                                if (startPrice === endPrice) {
+                                    return www.calcByCnyPrice(startPrice);
+                                }
+                                return `${www.calcByCnyPrice(startPrice)}-${www.calcByCnyPrice(endPrice)}`;
+                            })()
 
                         }
                     }) ?? []

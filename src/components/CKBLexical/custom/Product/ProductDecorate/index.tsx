@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-18 16:03:34
+ * @LastEditTime: 2024-06-18 21:25:11
  * @Description: 
  */
 /*
@@ -20,6 +20,7 @@ import { useEffect, useRef, useState } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $getNodeByKey } from "lexical";
 import useLexicalEditable from "@lexical/react/useLexicalEditable";
+import { CAN_USE_DOM } from "../../../utils/environment";
 
 const thirdPlateIconConf: Record<string, any> = {
     TB: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/淘宝.png',
@@ -138,13 +139,22 @@ export const useProductListData = (urlList: ProductUIProps['urlList'] | undefine
         // }
         requestProductInfoListByUrlList(urls).then((res) => {
             const data = res.map((item, index) => {
+
                 return {
                     iconUrl: thirdPlateIconConf[item.platformType!],
                     mainImgUrl: item.productMainImg,
                     title: item.productTitle,
                     cny: item.productSellPriceRange,
                     // TODO 需要做处理
-                    jpy: item.productSellPriceRange,
+                    jpy: (() => {
+                        const [startPrice, endPrice] = (item.productSellPriceRange ?? '').split('-')
+                        const www: any = window;
+                        if (!CAN_USE_DOM || !www.calcByCnyPrice) return '**';
+                        if (startPrice === endPrice) {
+                            return www.calcByCnyPrice(startPrice);
+                        }
+                        return `${www.calcByCnyPrice(startPrice)}-${www.calcByCnyPrice(endPrice)}`;
+                    })(),
                     originProductUrl: urls[index]!
 
                 } as ListDataItem

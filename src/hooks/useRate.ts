@@ -109,6 +109,9 @@ export const useRate = () => {
         );
     };
 
+    const tempWindow:any = typeof window !== 'undefined' ? window : {};
+    if(tempWindow) tempWindow.calcByCnyPrice = calc
+
     const bothFormat = (rmb: any): any => {
         return `${rmb}${window._$m.t('元')} (${calc(rmb)}円)`;
     };
