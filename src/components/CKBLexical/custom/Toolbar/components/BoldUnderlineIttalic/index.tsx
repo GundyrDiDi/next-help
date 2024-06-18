@@ -117,7 +117,7 @@ const BoldUnderlineIttalic = (props: BoldUnderlineIttalicProps) => {
             <TooltipWithMenu isShowToolTip title="粗体">
                 <div className={`h-[30px] w-[30px] cursor-pointer hover:bg-[#f0f0f0] flex items-center justify-center rounded-[4px] mr-[4px] ${isBold ? 'bg-[#eee]' : ''}`} >
                     <Bold
-                        isActive={isBold}
+                        isActive={true}
                         onClick={() => {
                             activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold');
                         }}
@@ -127,7 +127,7 @@ const BoldUnderlineIttalic = (props: BoldUnderlineIttalicProps) => {
             <TooltipWithMenu isShowToolTip title="斜体">
                 <div className={`h-[30px] w-[30px] cursor-pointer hover:bg-[#f0f0f0] flex items-center justify-center rounded-[4px] mr-[4px] ${isItalic ? 'bg-[#eee]' : ''}`} >
                     <Italic
-                        isActive={isItalic}
+                        isActive={true}
                         onClick={() => {
                             activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic');
                         }}
@@ -136,9 +136,9 @@ const BoldUnderlineIttalic = (props: BoldUnderlineIttalicProps) => {
             </TooltipWithMenu>
 
             <TooltipWithMenu isShowToolTip title="下划线">
-                <div className={`h-[30px] w-[30px] cursor-pointer  hover:bg-[#f0f0f0] flex items-center justify-center rounded-[4px] mr-[4px] ${isUnderline ? 'bg-[#eee]' : ''}`} >
+                <div className={`h-[30px] w-[30px] cursor-pointer  hover:bg-[#f0f0f0] flex items-center justify-center rounded-[4px] mr-[4px] `} >
                     <Underline
-                        isActive={isUnderline}
+                        isActive={true}
                         onClick={() => {
                             activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline');
                         }}
@@ -146,7 +146,9 @@ const BoldUnderlineIttalic = (props: BoldUnderlineIttalicProps) => {
                 </div>
             </TooltipWithMenu>
             <TooltipWithMenu isShowToolTip title="中划线">
-                <div className={`h-[32px] w-[32px] cursor-pointer  hover:bg-[#f0f0f0] flex items-center justify-center rounded-[4px] mr-[4px] ${isStrikethrough ? 'bg-[#eee]' : ''}`} >
+                {/* ${isStrikethrough ? 'bg-[#eee]' : ''} */}
+                {/* hover:bg-[#f0f0f0] */}
+                <div className={`h-[32px] w-[32px] cursor-pointer  hover:bg-[#f0f0f0] flex items-center justify-center rounded-[4px] mr-[4px] `} >
                     <Strikethrough
                         isActive={isStrikethrough}
                         className="stroke-[#262626]"
@@ -167,7 +169,8 @@ const BoldUnderlineIttalic = (props: BoldUnderlineIttalicProps) => {
                 </div>
             </TooltipWithMenu> */}
             <TooltipWithMenu isShowToolTip title="高亮">
-                <div className={`h-[30px] w-[30px] cursor-pointer hover:bg-[#f0f0f0] flex items-center justify-center rounded-[4px] mr-[4px] ${isHightlight ? 'bg-[#eee]' : ''}`} >
+                {/* ${isHightlight ? 'bg-[#eee]' : '' */}
+                <div className={`h-[30px] w-[30px] cursor-pointer hover:bg-[#f0f0f0] flex items-center justify-center rounded-[4px] mr-[4px] }`} >
                     <Highlight
                         className="stroke-[#262626]"
                         onClick={() => {

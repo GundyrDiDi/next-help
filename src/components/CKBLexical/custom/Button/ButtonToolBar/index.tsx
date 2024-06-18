@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-07 17:23:47
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 19:34:56
+ * @LastEditTime: 2024-06-18 18:05:48
  * @Description: 
  */
 /*
@@ -114,17 +114,18 @@ const ButtonToolBar = (props: HeadingMenuProps) => {
             buttonToolBarEmitter.all.clear();
         }
     }, [activeEditor, form])
-
+    const hideModal = () => {
+        form.resetFields()
+        setIsButton(false)
+        setEditButtonKey(undefined)
+    }
     return (
         <div>
             <Modal
                 open={isButton}
                 footer={false}
                 destroyOnClose
-                onCancel={() => {
-                    setIsButton(false)
-                    form.resetFields()
-                }}
+                onCancel={hideModal}
             >
                 <Form form={form} >
                     <div>
@@ -163,10 +164,6 @@ const ButtonToolBar = (props: HeadingMenuProps) => {
                                 disabled={!isOk}
                                 onClick={() => {
                                     const values = form.getFieldsValue();
-                                    const hideModal = () => {
-                                        setIsButton(false)
-                                        form.resetFields()
-                                    }
                                     activeEditor.update(() => {
                                         const newOptions = {
                                             __elementType: 'button' as const,

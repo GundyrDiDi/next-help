@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-28 16:12:17
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-18 11:41:58
+ * @LastEditTime: 2024-06-18 19:31:43
  * @Description: 
  */
 
@@ -32,6 +32,7 @@ export const $getArticleNodeConfigByDom = (domNode: HTMLButtonElement) => {
   if (!$isArticleNodeByDom(domNode)) {
     return null;
   }
+
   const options = domNode.getAttribute(CUSTOM_NODE_ATTRIBUTE)!;
   const configData = JSON.parse(options);
   return configData;
@@ -69,8 +70,12 @@ export class ArticleNode extends DecoratorNode<JSX.Element> {
       ...options
     };
   }
+
   getOptions = () => {
     return this.__options;
+  }
+  isInline(): boolean {
+    return false;
   }
   static getType() {
     return ELEMENT_TYPE

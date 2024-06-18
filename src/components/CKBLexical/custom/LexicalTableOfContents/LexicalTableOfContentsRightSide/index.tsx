@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-13 20:42:43
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-18 15:41:27
+ * @LastEditTime: 2024-06-18 18:37:40
  * @Description: 
  */
 
@@ -50,7 +50,7 @@ const LexicalTableOfContentsRightSide = (props: LexicalTableOfContentsRightSide)
     return <div className={`${isInArtical ? '' : 'pc:h-[370px] pad:h-[370px] overflow-y-auto'} bg-[#FAFAFA] p-[20px]`} >
         <div className="flex items-center">
             <TableOfcontent className="h-[28px]" height={28} width={22} viewBox={undefined} />
-            <span className="font-bold text-[#008060] text-[24px] leading-[32px] pl-[8px] pr-[4px]" >目录</span>
+            <span className="font-bold text-[var(--pcolor,#008060)] text-[24px] leading-[32px] pl-[8px] pr-[4px]" >目录</span>
             <span
                 className="h-[22px] font-normal text-neutral-700 text-[14px] leading-[22px] cursor-pointer"
                 onClick={() => {

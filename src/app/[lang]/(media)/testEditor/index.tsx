@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-23 14:47:05
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-18 16:24:56
+ * @LastEditTime: 2024-06-18 19:44:06
  * @Description: 
  */
 'use client'
@@ -74,7 +74,9 @@ export default function EditorDemo() {
                     // artical
                     // zonghe
                     // zonghe1
-                    undefined
+                    `
+                    <p class="CKBEditorTheme__paragraph"><br></p><div class="ckb-editor-element-container-artical" data-ckb-editor-custom-config-article="{&quot;__elementType&quot;:&quot;article&quot;,&quot;url&quot;:&quot;https://test-client-help.theckb.com/ja/article/95&quot;}"></div><p class="CKBEditorTheme__paragraph"><br></p><p class="CKBEditorTheme__paragraph" dir="ltr"><span style="white-space: pre-wrap;">evvcfsv</span></p><p class="CKBEditorTheme__paragraph"><br></p><div class="ckb-editor-element-container-artical" data-ckb-editor-custom-config-article="{&quot;__elementType&quot;:&quot;article&quot;,&quot;url&quot;:&quot;https://test-client-help.theckb.com/ja/article/95&quot;}"></div><p class="CKBEditorTheme__paragraph"><br></p><p class="CKBEditorTheme__paragraph"><br></p><p class="CKBEditorTheme__paragraph"><br></p>
+                    `
                 }
             />
         </div>
