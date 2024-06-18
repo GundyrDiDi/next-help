@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-07 17:23:47
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-18 20:24:34
+ * @LastEditTime: 2024-06-18 20:31:13
  * @Description: 
  */
 /*
@@ -66,11 +66,18 @@ const ArticleToolBar = (props: HeadingMenuProps) => {
                     const selection = $getSelection()!
                     if (!selection) return;
                     // const pNode = $createParagraphNode()
+                    // const articleNode = $createArticleNode(newOptions);
+                    // pNode.append(articleNode)
+                    // selection.insertNodes([
+                    //     articleNode
+                    // ]);
+                    const pNode = $createParagraphNode()
                     const articleNode = $createArticleNode(newOptions);
                     // pNode
                     // pNode.append(articleNode)
                     selection.insertNodes([
-                        articleNode
+                        articleNode,
+                        pNode
                     ]);
                     hideModal();
                     return true

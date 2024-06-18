@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-07 17:23:47
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-18 11:41:43
+ * @LastEditTime: 2024-06-18 20:35:31
  * @Description: 
  */
 /*
@@ -108,16 +108,19 @@ const ArticleToolBar = (props: HeadingMenuProps) => {
         }
     }, [activeEditor, form])
 
+    const hideModal = () => {
+        setIsArticle(false)
+        setEditArticleKey(undefined)
+        form.resetFields()
+    }
+
     return (
         <div>
             <Modal
                 open={isArticle}
                 footer={false}
                 destroyOnClose
-                onCancel={() => {
-                    setIsArticle(false)
-                    form.resetFields()
-                }}
+                onCancel={hideModal}
             >
                 <Form form={form} >
                     <div>
@@ -135,11 +138,7 @@ const ArticleToolBar = (props: HeadingMenuProps) => {
                                     disabled={!REGEXP_URL.test(url)}
                                     onClick={() => {
                                         const values = form.getFieldsValue();
-                                        const hideModal = () => {
-                                            // setArticleValue(undefined)
-                                            setIsArticle(false)
-                                            setEditArticleKey(undefined)
-                                        }
+
                                         activeEditor.update(() => {
                                             const newOptions = {
                                                 url
