@@ -3,7 +3,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 17:13:19
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-18 15:07:06
+ * @LastEditTime: 2024-06-18 16:22:56
  * @Description: 
  */
 import RightArrow from "../../../Icon/components/RightArrow";
@@ -25,7 +25,7 @@ export interface ShopItemUI extends ListDataItem {
 
 const ShopItemUI = (props: ShopItemUI) => {
     const { iconUrl, shopName, productList, className = '', } = props
-    return <a href={props.originShopUrl} >
+    return <a href={props.originShopUrl} target="_blank" >
         <div className={`p-[16px] rounded-[8px] border border-[#F0F0F0] box-border group cursor-pointer ${className}`} >
             <div className="mt-[8px] flex mb-[16px] items-center" >
                 <img alt="" src={iconUrl} className="w-[24px] h-[24px]" />

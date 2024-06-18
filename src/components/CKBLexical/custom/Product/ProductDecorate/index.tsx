@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-18 10:32:10
+ * @LastEditTime: 2024-06-18 16:03:34
  * @Description: 
  */
 /*
@@ -58,7 +58,7 @@ const testCase = [
 
 
 const requestProductInfoByUrl = async (url: string) => {
-    const data = await crossFetch<any>('/goods/search/url', {
+    const data = await crossFetch<any>('/goods/search/urlForNoLogin', {
         method: 'POST',
         body: {
             detailUrl: url

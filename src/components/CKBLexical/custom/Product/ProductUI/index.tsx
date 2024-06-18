@@ -3,7 +3,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 15:06:29
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-18 15:06:16
+ * @LastEditTime: 2024-06-18 16:21:21
  * @Description: 
  */
 import React from "react";
@@ -22,12 +22,17 @@ export interface ProductUIProps {
 }
 
 interface ProductColItemUI extends ListDataItem {
-    className?: string
+    href?: string;
+    className?: string;
 }
 
 const ProductVerticalUI = (props: ProductColItemUI) => {
-    const { mainImgUrl, iconUrl, title, cny, jpy, className = '', } = props
-    return <div className={`p-[8px] rounded-[8px] hover:border border-[#F0F0F0] box-border group cursor-pointer ${className}`} >
+    const { mainImgUrl, iconUrl, title, cny, jpy, className = '', href } = props
+    return <a
+        href={href}
+        target="_blank"
+        className={`ProductVerticalUI p-[8px] rounded-[8px] hover:border border-[#F0F0F0] box-border group cursor-pointer ${className}`}
+    >
         <img alt="" src={mainImgUrl} className="w-[100%] h-auto rounded-[4px] object-cover" />
         <div className="mt-[8px] flex  " >
             <img alt="" src={iconUrl} className="w-[24px] h-[24px]" />
@@ -37,12 +42,14 @@ const ProductVerticalUI = (props: ProductColItemUI) => {
             <span className="text-[16px] font-[700]" >{cny} 元</span>
             <span className="text-[12px] ml-[4px]">{jpy} 円</span>
         </div>
-    </div>
+    </a>
 }
 
 const ProductHorizontalUI = (props: ProductColItemUI) => {
-    const { mainImgUrl, iconUrl, title, cny, jpy, className = '' } = props
-    return <div className={`flex hover:border border-[#F0F0F0] rounded-[8px] p-[8px] cursor-pointer group box-border ${className}`} >
+    const { mainImgUrl, iconUrl, title, cny, jpy, className = '', href } = props
+    return <a
+        href={href} target="_blank"
+        className={`ProductHorizontalUI flex !items-stretch hover:border border-[#F0F0F0] rounded-[8px] p-[8px] cursor-pointer group box-border ${className}`} >
         <img src={mainImgUrl} alt="" className="w-[120px] h-[120px] rounded-[4px] shrink-0" />
         <div className="grow flex flex-col ml-[8px] justify-between" >
             <div className="group-hover:text-[var(--fcolor,#008060)] line-clamp-2" >{title}</div>
@@ -51,7 +58,7 @@ const ProductHorizontalUI = (props: ProductColItemUI) => {
                 <span className="text-[12px] ml-[4px]">{jpy} 円</span>
             </div>
         </div>
-    </div>
+    </a>
 }
 const testCase = [
     {
@@ -78,7 +85,7 @@ const testCase = [
 
 const WithATag = ({ children, href }: { children: React.ReactNode, href?: string }) => {
     if (!href) return children
-    return <a href={href} >{children}</a>
+    return <a href={href} className="block" >{children}</a>
 }
 
 const ProductUI = (props: ProductUIProps) => {
@@ -90,17 +97,14 @@ const ProductUI = (props: ProductUIProps) => {
         <div className={`flex flex-wrap w-[810px] mo:!hidden pad:!hidden ${productListData.length > 2 ? '' : '!hidden'} zzz`}>
             {/* pc 端 商品 > 2 的情况 */}
             {productListData.map((item, index) => {
-                return <WithATag href={item.originProductUrl} key={index} >
-                    <ProductVerticalUI {...item} key={index} className={`${index % 4 === 3 ? '' : 'mr-[8px]'} w-[196px]`} />
-                </WithATag>
+                return <ProductVerticalUI href={item.originProductUrl} {...item} key={index} className={`${index % 4 === 3 ? '' : 'mr-[8px]'} w-[196px]`} />
+
             })}
         </div>
-        <div className={`flex ${productListData.length <= 2 ? '' : 'hidden'} mo:!hidden pad:!hidden xxx`} >
+        <div className={`flex ${productListData.length <= 2 ? '' : 'hidden'} mo:!hidden pad:!hidden xxx jus`} >
             {/* pc 端 商品 <= 2 的情况 */}
             {productListData.slice(0, 2).map((item, index) => {
-                return <WithATag href={item.originProductUrl} key={index} >
-                    <ProductHorizontalUI {...item} key={index} className={`${index === 0 ? 'mr-[4px]' : 'ml-[4px]'} w-[50%]`} />
-                </WithATag>
+                return <ProductHorizontalUI {...item} href={item.originProductUrl} key={index} className={`${index === 0 ? 'mr-[4px]' : 'ml-[4px]'} w-[50%]`} />
             })}
         </div>
         {/* h5 pad 商品 */}
