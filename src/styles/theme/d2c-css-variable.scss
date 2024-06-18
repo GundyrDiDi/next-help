@@ -1,4 +1,5 @@
 :root[data-theme="D2C"] {
+  --editor-frog-article-heading: rgba(28, 153, 118, 0.1);
   --color-primary: #008060;
   --color-primary-light: #31c8a2;
   --color-primary-light-bg: #e5f2ef;
@@ -19,7 +20,6 @@
   --input-bg:#F8FBFA; // input-bg-color
   --home-btn-active:#E5F2EF;  // home： guide-btn-active/hover
   --df-ipt-color:#BABABA;    // login/signup: default-input-color
-  //
   --shadow-color: #D7EAE5;   // login/signup: default-shadow-color
   --shadow-btn-color:#D1ECE5; // login/signup： default-btn-shadow-color
   --light-bg-fcolor:#F1FAF7;

@@ -7,7 +7,7 @@
  */
 
 
-import { DecoratorNode, DOMConversionMap, DOMConversionOutput, DOMExportOutput, EditorConfig, LexicalEditor, NodeKey, SerializedLexicalNode } from 'lexical';
+import { DecoratorNode, DOMConversionMap, DOMConversionOutput, DOMExportOutput, EditorConfig, LexicalEditor, LineBreakNode, NodeKey, SerializedLexicalNode } from 'lexical';
 import ArticleDecorate from '../ArticleDecorate';
 import { ArticleUIProps } from '../ArticleUI';
 const CUSTOM_NODE_ATTRIBUTE = "data-ckb-editor-custom-config-article"

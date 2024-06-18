@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 10:39:55
+ * @LastEditTime: 2024-06-18 14:16:09
  * @Description: 
  */
 import { Tooltip, message } from "antd";
@@ -169,7 +169,8 @@ const useShopListData = (urlList: ShopUIProps['urlList'], onErrorRef: React.Muta
             const data = res.map(item => {
                 return {
                     iconUrl: thirdPlateIconConf[item.platformType!],
-                    shopName: item.originalShopName,
+                    // shopName: item.originalShopName,
+                    shopName: item.supplierShopName,
                     originShopUrl: item.shopUrl,
 
                     productList: item.productList?.slice(0, 3)?.map((it: any) => {

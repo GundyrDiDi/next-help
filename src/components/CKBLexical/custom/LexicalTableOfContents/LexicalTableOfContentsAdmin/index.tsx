@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-13 20:42:43
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-13 21:26:30
+ * @LastEditTime: 2024-06-18 15:38:56
  * @Description: 
  */
 
@@ -12,7 +12,7 @@ import { NodeKey } from "lexical";
 
 const LexicalTableOfContentsAdmin = () => {
   const [editor] = useLexicalComposerContext();
-  
+
   return <div className="bg-white" >
     <div className="font-bold text-black text-[14px] leading-[22px] mb-[20px]">
       大纲

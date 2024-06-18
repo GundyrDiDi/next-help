@@ -1,4 +1,5 @@
 :root[data-theme="B2B"] {
+  --editor-frog-article-heading: rgba(73, 102, 134, 0.10);
   --color-primary: #2e4968;
   --color-primary-light: #1890ff;
   --color-primary-light-bg: #e5f2ef;
@@ -27,6 +28,9 @@
   --light-bg-color4:#E9F6FD;
   --light-bg-color5: #F5F7FA;
   --light-bg-color6: rgba(116, 175, 242, 0.1);
+  
+  
+
   //
   --signup-cancel-btn:#F9FBFF;  // signup-cancel-btn-hover-background
   --signup-cancel-border:#EBF0FA;// signup-cancel-btn-hover-border

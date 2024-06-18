@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 11:26:06
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-18 11:00:51
+ * @LastEditTime: 2024-06-18 15:44:50
  * @Description: 
  */
 import queryString from "query-string";
@@ -117,10 +117,10 @@ const ArticleUI = (props: ArticleUIProps) => {
     if (!articleData) return null;
 
     const { title, description, imageUrl } = articleData;
-    const dom = <div className={`flex border border-[#F0F0F0] p-[8px] bg-[white] rounded-[4px] ${className ?? ''}`} onClick={onClick} >
+    const dom = <div className={`flex border border-[#F0F0F0] p-[8px] bg-[white] rounded-[4px] ${className ?? ''} group`} onClick={onClick} >
         <img className="w-[56px] h-[56px] rounded-[4px] shrink-0" src={imageUrl} alt="" />
         <div className="ml-[8px] grow " >
-            <div className="mb-[8px] leading-[24px] font-[700] text-black/[.88] text-[16px] hover:text-[#008060]" >{title}</div>
+            <div className="mb-[8px] leading-[24px] font-[700] text-black/[.88] text-[16px] group-hover:text-[var(--fcolor,#008060)]" >{title}</div>
             <div className="flex justify-between" >
                 {!!description && <div className="text-black/[.45] line-clamp-1 mr-[8px]">{description}</div>}
                 <div className="shrink-0 text-[#0586FE] text-[14px] underline" >

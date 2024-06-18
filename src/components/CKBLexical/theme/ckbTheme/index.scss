@@ -35,7 +35,7 @@
     font-weight: 700;
     margin: 0;
     text-transform: uppercase; */
-    background-color: #008060;
+    background-color: var(--fcolor, #008060) ;
     color: #fff;
     font-size: 20px;
     font-weight: 700;
@@ -50,9 +50,9 @@
     margin: 0;
     text-transform: uppercase; */
     /* background-color: #FFF7ED; */
-    background-color: rgba(28, 153, 118, 0.10);
-    border-left: 8px solid #008060;
-    color: #008060;
+    background-color: var(--editor-frog-article-heading, rgba(28, 153, 118, 0.1));
+    border-left: 8px solid var(--fcolor, #008060);
+    color: var(--fcolor, #008060);
     /* font-size: 1.6rem; */
     font-size: 16px;
     font-weight: 600;
@@ -60,12 +60,12 @@
     margin: 24px 0;
   }
   .CKBEditorTheme__h4 {
-    color: #008060;
+    color: var(--fcolor, #008060);
     margin-bottom: 8px;
     font-size: 16px;
     font-weight: 700;
     line-height: 24px;
-    border-bottom: 1px solid #008060;
+    border-bottom: 1px solid var(--fcolor, #008060);
   }
   .CKBEditorTheme__h5 {
     color: rgb(0, 0, 0, .88);

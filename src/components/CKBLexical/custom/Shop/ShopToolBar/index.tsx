@@ -97,18 +97,19 @@ const ShopToolBar = (props: HeadingMenuProps) => {
                     if (!urlList?.length) return;
                     setIsShop(false)
                     activeEditor.update(() => {
-                        if(editShopKey){
+                        if (editShopKey) {
                             const node = $getNodeByKey(editShopKey) as ShopNode
                             node.setOptions({
                                 urlList
                             })
                             return;
                         }
+                        debugger
                         const createdNode = $createShopNode({
                             urlList
-                        })   
+                        })
                         const selection = $getSelection();
-                        if(!selection) return;
+                        if (!selection) return;
                         selection.insertNodes([
                             createdNode
                         ]);

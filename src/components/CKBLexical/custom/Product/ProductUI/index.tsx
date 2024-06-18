@@ -3,7 +3,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 15:06:29
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-18 11:53:43
+ * @LastEditTime: 2024-06-18 15:06:16
  * @Description: 
  */
 import React from "react";
@@ -45,7 +45,7 @@ const ProductHorizontalUI = (props: ProductColItemUI) => {
     return <div className={`flex hover:border border-[#F0F0F0] rounded-[8px] p-[8px] cursor-pointer group box-border ${className}`} >
         <img src={mainImgUrl} alt="" className="w-[120px] h-[120px] rounded-[4px] shrink-0" />
         <div className="grow flex flex-col ml-[8px] justify-between" >
-            <div className="group-hover:text-[#008060] line-clamp-2" >{title}</div>
+            <div className="group-hover:text-[var(--fcolor,#008060)] line-clamp-2" >{title}</div>
             <div className="flex items-center text-[#FF5010]" >
                 <span className="text-[16px] font-[700] " >{cny} 元</span>
                 <span className="text-[12px] ml-[4px]">{jpy} 円</span>
