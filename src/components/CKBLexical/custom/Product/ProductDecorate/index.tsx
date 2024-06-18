@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 10:37:51
+ * @LastEditTime: 2024-06-18 10:32:10
  * @Description: 
  */
 /*
@@ -22,13 +22,13 @@ import { $getNodeByKey } from "lexical";
 import useLexicalEditable from "@lexical/react/useLexicalEditable";
 
 const thirdPlateIconConf: Record<string, any> = {
-	TB: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/淘宝.png',
-	AM: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/1688.png',
-	TM: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/天猫.png',
-	VC: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/市场购.png',
-	WS: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/市场购.png'
-	// VC: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/搜款网.png',
-	// WS: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/网商园.png'
+    TB: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/淘宝.png',
+    AM: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/1688.png',
+    TM: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/天猫.png',
+    VC: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/市场购.png',
+    WS: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/市场购.png'
+    // VC: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/搜款网.png',
+    // WS: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/网商园.png'
 };
 
 const testCase = [
@@ -103,13 +103,13 @@ const requestProductInfoListByCodeList = async (codeList: string[]) => {
 const requestProductInfoListByUrlList = async (urlList: string[]) => {
     const dataList = await Promise.all(urlList.map(url => requestProductInfoByUrl(url)));
     const errList = dataList.reduce((pre, cur, index) => {
-        if(cur.code !== '0'){
+        if (cur.code !== '0') {
             pre.push(`第${index + 1}个链接请求失败：${urlList[index]}，【${cur.msg}】`)
         }
         return pre;
-    }, [] as string[]) 
+    }, [] as string[])
     // filter(item => item.code !== '0')
-    if(errList.length){
+    if (errList.length) {
         return Promise.reject(errList)
     }
     // if()
@@ -118,6 +118,7 @@ const requestProductInfoListByUrlList = async (urlList: string[]) => {
     })
 }
 export interface ListDataItem {
+    originProductUrl: string;
     iconUrl: string;
     mainImgUrl: string;
     title: string;
@@ -136,19 +137,21 @@ export const useProductListData = (urlList: ProductUIProps['urlList'] | undefine
         //     });
         // }
         requestProductInfoListByUrlList(urls).then((res) => {
-            const data = res.map(item => {
+            const data = res.map((item, index) => {
                 return {
-                        iconUrl: thirdPlateIconConf[item.platformType!],
-                        mainImgUrl: item.productMainImg,
-                        title: item.productTitle,
-                        cny: item.productSellPriceRange,
-                        // TODO 需要做处理
-                        jpy: item.productSellPriceRange,
-                }
+                    iconUrl: thirdPlateIconConf[item.platformType!],
+                    mainImgUrl: item.productMainImg,
+                    title: item.productTitle,
+                    cny: item.productSellPriceRange,
+                    // TODO 需要做处理
+                    jpy: item.productSellPriceRange,
+                    originProductUrl: urls[index]!
+
+                } as ListDataItem
             });
             setListData(data);
         }).catch(errList => {
-            if(Array.isArray(errList)){
+            if (Array.isArray(errList)) {
                 message.warning(errList.join('\n'))
                 onErrorRef.current();
             }
@@ -171,7 +174,7 @@ export const useProductListData = (urlList: ProductUIProps['urlList'] | undefine
 
 
 
-    return listDta;
+    return listDta as any;
 
     return [
         {
@@ -246,7 +249,7 @@ const onClick = (nodeKey: string) => {
 const ProductDecorate = (props: ProductDecorateProps) => {
     const [editor] = useLexicalComposerContext();
     const isEditable = useLexicalEditable()
-    const onErrorRef = useRef<() => void>(() => {})
+    const onErrorRef = useRef<() => void>(() => { })
     onErrorRef.current = () => {
         editor.update(() => {
             const node = $getNodeByKey(props.nodeKey);
@@ -257,7 +260,7 @@ const ProductDecorate = (props: ProductDecorateProps) => {
     const dom = <div>
         <ProductUI urlList={props.options.urlList} listData={listData} />
     </div>
-    if(!isEditable){
+    if (!isEditable) {
         return dom;
     }
     return <Tooltip

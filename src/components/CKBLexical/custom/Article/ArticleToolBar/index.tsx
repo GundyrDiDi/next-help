@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-07 17:23:47
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 19:24:34
+ * @LastEditTime: 2024-06-18 11:41:43
  * @Description: 
  */
 /*
@@ -12,7 +12,7 @@
  * @LastEditTime: 2024-06-11 10:16:41
  * @Description: 
  */
-import { $getNodeByKey, $getSelection, LexicalEditor } from 'lexical';
+import { $createParagraphNode, $getNodeByKey, $getSelection, LexicalEditor } from 'lexical';
 import { useCallback, useEffect, useState } from 'react';
 import TooltipWithMenu from '../../../components/TooltipWithMenu';
 // import  { ArticleEditValue } from '../ArticleEditPanel';
@@ -152,9 +152,12 @@ const ArticleToolBar = (props: HeadingMenuProps) => {
                                             }
                                             const selection = $getSelection()!
                                             if (!selection) return;
+                                            const pNode = $createParagraphNode()
                                             const articleNode = $createArticleNode(newOptions);
+                                            // pNode
+                                            pNode.append(articleNode)
                                             selection.insertNodes([
-                                                articleNode
+                                                pNode
                                             ]);
                                             hideModal();
                                             return true

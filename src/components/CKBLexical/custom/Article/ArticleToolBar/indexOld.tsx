@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-07 17:23:47
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-14 10:44:14
+ * @LastEditTime: 2024-06-18 11:20:51
  * @Description: 
  */
 /*
@@ -12,7 +12,7 @@
  * @LastEditTime: 2024-06-11 10:16:41
  * @Description: 
  */
-import {  $getNodeByKey, $getSelection, LexicalEditor } from 'lexical';
+import { $createParagraphNode, $getNodeByKey, $getSelection, LexicalEditor } from 'lexical';
 import { useCallback, useEffect, useState } from 'react';
 import TooltipWithMenu from '../../../components/TooltipWithMenu';
 // import  { ArticleEditValue } from '../ArticleEditPanel';
@@ -27,7 +27,7 @@ interface HeadingMenuProps {
     activeEditor: LexicalEditor;
 }
 
-export const articleToolBarEmitter = mitt<{editArticle: string}>()
+export const articleToolBarEmitter = mitt<{ editArticle: string }>()
 
 const ArticleToolBar = (props: HeadingMenuProps) => {
     const { activeEditor } = props;
@@ -57,17 +57,20 @@ const ArticleToolBar = (props: HeadingMenuProps) => {
                     const newOptions = {
                         url: _value
                     }
-                    if(editArticleKey){
+                    if (editArticleKey) {
                         const node = $getNodeByKey(editArticleKey) as ArticleNode
                         node.setOptions(newOptions)
                         hideModal();
                         return true;
                     }
                     const selection = $getSelection()!
-                    if(!selection) return;
+                    if (!selection) return;
+                    const pNode = $createParagraphNode()
                     const articleNode = $createArticleNode(newOptions);
+                    // pNode
+                    pNode.append(articleNode)
                     selection.insertNodes([
-                        articleNode
+                        pNode
                     ]);
                     hideModal();
                     return true
@@ -107,14 +110,14 @@ const ArticleToolBar = (props: HeadingMenuProps) => {
     return (
         <div>
             <TooltipWithMenu isShowToolTip title="插入文章">
-                <article 
-                    className={`h-[32px] w-[32px] cursor-pointer hover:bg-[#f0f0f0] flex items-center justify-center rounded-[8px] ${isArticle ? 'hover:bg-[#f0f0f0]' : ''}`} 
+                <article
+                    className={`h-[32px] w-[32px] cursor-pointer hover:bg-[#f0f0f0] flex items-center justify-center rounded-[8px] ${isArticle ? 'hover:bg-[#f0f0f0]' : ''}`}
                     onClick={() => {
                         setSelectionEditPanelContentDom(ArticleEditPanelDom(true))
                         setIsArticle(true)
                     }}
                 >
-                    <Article/>
+                    <Article />
                 </article>
             </TooltipWithMenu>
         </div>

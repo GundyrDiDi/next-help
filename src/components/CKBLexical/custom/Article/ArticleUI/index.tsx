@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 11:26:06
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 19:39:21
+ * @LastEditTime: 2024-06-18 11:00:51
  * @Description: 
  */
 import queryString from "query-string";
@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from "react";
 
 /* eslint-disable @next/next/no-img-element */
 
-
+const DEFAULT_ARTICLE_IMG_URL = 'https://static-s.theckb.com/BusinessMarket/helpCenter/lexicalImages/icons/theckbicon.png'
 export interface ArticleUIProps {
     className?: string;
     url?: string;
@@ -59,13 +59,13 @@ const getHelpArticleData = async (catePath: string, hash?: string) => {
         return {
             title: resList[_hash].title,
             description: resList[_hash].seoDescription,
-            imageUrl: 'https://img.alicdn.com/bao/uploaded/i3/665921469/O1CN01YeSwQp1MiqbRJB4kN_!!665921469.jpg',
+            imageUrl: DEFAULT_ARTICLE_IMG_URL,
         }
     }
     return {
         title: data.subject,
         description: data?.description,
-        imageUrl: 'https://img.alicdn.com/bao/uploaded/i3/665921469/O1CN01YeSwQp1MiqbRJB4kN_!!665921469.jpg',
+        imageUrl: DEFAULT_ARTICLE_IMG_URL
     }
 }
 
@@ -122,7 +122,7 @@ const ArticleUI = (props: ArticleUIProps) => {
         <div className="ml-[8px] grow " >
             <div className="mb-[8px] leading-[24px] font-[700] text-black/[.88] text-[16px] hover:text-[#008060]" >{title}</div>
             <div className="flex justify-between" >
-                <div className="text-black/[.45] line-clamp-1 mr-[8px]">{description}</div>
+                {!!description && <div className="text-black/[.45] line-clamp-1 mr-[8px]">{description}</div>}
                 <div className="shrink-0 text-[#0586FE] text-[14px] underline" >
                     查看更多
                 </div>
