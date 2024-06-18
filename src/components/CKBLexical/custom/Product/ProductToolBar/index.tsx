@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-13 10:42:45
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-18 16:31:59
+ * @LastEditTime: 2024-06-18 17:17:50
  * @Description: 
  */
 import { $getNodeByKey, $getSelection, LexicalEditor } from 'lexical';
@@ -45,15 +45,19 @@ const ProductToolBar = (props: HeadingMenuProps) => {
             productToolBarEmitter.all.clear();
         }
     }, [activeEditor])
-
+    const hideModal = () => {
+        setIsProduct(false)
+        setProductValue(undefined)
+        setEditProductKey(undefined)
+    }
     return (
         <div>
             {isProduct && <MultiUrlModal
                 initialValue={productValue}
-                onClose={() => setIsProduct(false)}
+                onClose={hideModal}
                 onOk={(urlList) => {
                     if (!urlList?.length) return;
-                    setIsProduct(false)
+                    hideModal();
                     activeEditor.update(() => {
                         if (editProductKey) {
                             const node = $getNodeByKey(editProductKey) as ProductNode

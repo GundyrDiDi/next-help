@@ -3,7 +3,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 15:06:29
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-18 16:21:21
+ * @LastEditTime: 2024-06-18 17:16:45
  * @Description: 
  */
 import React from "react";
@@ -98,10 +98,9 @@ const ProductUI = (props: ProductUIProps) => {
             {/* pc 端 商品 > 2 的情况 */}
             {productListData.map((item, index) => {
                 return <ProductVerticalUI href={item.originProductUrl} {...item} key={index} className={`${index % 4 === 3 ? '' : 'mr-[8px]'} w-[196px]`} />
-
             })}
         </div>
-        <div className={`flex ${productListData.length <= 2 ? '' : 'hidden'} mo:!hidden pad:!hidden xxx jus`} >
+        <div className={`flex ${productListData.length <= 2 ? '' : '!hidden'} mo:!hidden pad:!hidden xxx jus`} >
             {/* pc 端 商品 <= 2 的情况 */}
             {productListData.slice(0, 2).map((item, index) => {
                 return <ProductHorizontalUI {...item} href={item.originProductUrl} key={index} className={`${index === 0 ? 'mr-[4px]' : 'ml-[4px]'} w-[50%]`} />
