@@ -3,7 +3,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 17:13:19
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-18 16:22:56
+ * @LastEditTime: 2024-06-18 20:54:32
  * @Description: 
  */
 import RightArrow from "../../../Icon/components/RightArrow";
@@ -34,7 +34,7 @@ const ShopItemUI = (props: ShopItemUI) => {
             </div>
             <div className="flex" >
                 {productList?.map((item, key) => {
-                    return <div key={key} className={`w-[calc((100%-16px)/3)] ${key === 0 ? '' : 'ml-[8px]'}`} >
+                    return <a key={key} className={`w-[calc((100%-16px)/3)] ${key === 0 ? '' : 'ml-[8px]'}`} href={item.originProductUrl} target="_blank" >
                         <div className="w-[100%] grid" >
                             <img
                                 alt=""
@@ -49,7 +49,7 @@ const ShopItemUI = (props: ShopItemUI) => {
                             <span className="text-[16px] font-[700]" >{item.cny} 元</span>
                             <span className="text-[12px] ml-[4px]">{item.jpy} 円</span>
                         </div>
-                    </div>
+                    </a>
                 })}
             </div>
 

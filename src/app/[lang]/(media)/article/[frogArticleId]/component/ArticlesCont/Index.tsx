@@ -117,11 +117,11 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
                 }
                 <div
                   id="content-html"
-                  className={`media-help-artical-content ${markingShow ? `h-[100vh] overflow-hidden` : ''}`}
+                  className={`media-help-artical-content ${markingShow ? `h-[100vh] overflow-hidden` : ''} ${isCkbEditor ? 'hidden' : ''} `}
                   dangerouslySetInnerHTML={{
                     __html: frogArticle?.frogArticleContent!,
                   }}
-                ></div>
+                />
               </div>
               <ArticleSwitch
                 frogArticleId={frogArticle?.frogArticleId}
