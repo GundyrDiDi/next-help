@@ -3,7 +3,7 @@
  * @Author: shiguang
  * @Date: 2024-05-23 14:49:20
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 16:50:37
+ * @LastEditTime: 2024-06-19 02:49:05
  * @Description: 
  */
 'use client'
@@ -35,7 +35,8 @@ import { forwardRef, useImperativeHandle, useRef } from 'react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { defaultPrefixCls } from 'antd/es/config-provider';
 
-
+const www: any = CAN_USE_DOM ? window : undefined;
+if (www) www.vvv = 1;
 
 const getInitNode = (editor: LexicalEditor, initHtml?: string) => {
   if (!CAN_USE_DOM || !initHtml) {

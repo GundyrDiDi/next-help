@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-23 14:47:05
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-19 01:45:21
+ * @LastEditTime: 2024-06-19 02:36:56
  * @Description: 
  */
 'use client'
@@ -76,8 +76,8 @@ export default function EditorDemo() {
                     // zonghe1
                     // '<p class="CKBEditorTheme__paragraph" dir="ltr"><span style="background: linear-gradient(transparent 60%, rgba(252, 185, 0, 0.7) 0px); white-space: pre-wrap;">fewqfcewqfwq</span></p>'
                     // undefined
-                    // `<p class="CKBEditorTheme__paragraph" dir="ltr"><span style="color: rgb(235, 47, 150); white-space: pre-wrap;">FWEF</span></p><p class="CKBEditorTheme__paragraph" dir="ltr"><span style="color: rgb(235, 47, 150); white-space: pre-wrap;">RWEREW</span></p><p class="CKBEditorTheme__paragraph"><br></p><p class="CKBEditorTheme__paragraph" dir="ltr"><i><em class="CKBEditorTheme__textItalic" style="background-color: rgb(235, 47, 150); white-space: pre-wrap;">RWER</em></i></p><p class="CKBEditorTheme__paragraph" dir="ltr"><br></p>`
-                    `<p class="CKBEditorTheme__paragraph" dir="ltr"><span style="color: rgb(235, 47, 150); white-space: pre-wrap;">FWEF</span></p><p class="CKBEditorTheme__paragraph" dir="ltr"><span style="color: rgb(235, 47, 150); white-space: pre-wrap;">RWEREW</span></p><p class="CKBEditorTheme__paragraph"><br></p><p class="CKBEditorTheme__paragraph" dir="ltr"><i><em class="CKBEditorTheme__textItalic" style="background-color: rgb(235, 47, 150); white-space: pre-wrap;">RWER</em></i></p><p class="CKBEditorTheme__paragraph"><br></p><p class="CKBEditorTheme__paragraph" dir="ltr"><b><strong class="CKBEditorTheme__textBold" style="color: rgb(114, 46, 209); white-space: pre-wrap;">rwrfw</strong></b></p><p class="CKBEditorTheme__paragraph"><br></p><p class="CKBEditorTheme__paragraph"><br></p>`
+                    "<p class=\"CKBEditorTheme__paragraph\" dir=\"ltr\"><span style=\"background: linear-gradient(transparent 60%, rgba(252, 185, 0, 0.7) 0px); white-space: pre-wrap;\">rwrwrqw</span></p><p class=\"CKBEditorTheme__paragraph\"><br></p><p class=\"CKBEditorTheme__paragraph\"><br></p>"
+
                     // `
                     // <p class="CKBEditorTheme__paragraph"><br></p><div class="ckb-editor-element-container-artical" data-ckb-editor-custom-config-article="{&quot;__elementType&quot;:&quot;article&quot;,&quot;url&quot;:&quot;https://test-client-help.theckb.com/ja/article/95&quot;}"></div><p class="CKBEditorTheme__paragraph"><br></p><p class="CKBEditorTheme__paragraph" dir="ltr"><span style="white-space: pre-wrap;">evvcfsv</span></p><p class="CKBEditorTheme__paragraph"><br></p><div class="ckb-editor-element-container-artical" data-ckb-editor-custom-config-article="{&quot;__elementType&quot;:&quot;article&quot;,&quot;url&quot;:&quot;https://test-client-help.theckb.com/ja/article/95&quot;}"></div><p class="CKBEditorTheme__paragraph"><br></p><p class="CKBEditorTheme__paragraph"><br></p><p class="CKBEditorTheme__paragraph"><br></p>
                     // `
