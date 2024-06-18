@@ -3,7 +3,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 17:13:19
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-18 20:54:32
+ * @LastEditTime: 2024-06-18 21:42:40
  * @Description: 
  */
 import RightArrow from "../../../Icon/components/RightArrow";
@@ -25,36 +25,39 @@ export interface ShopItemUI extends ListDataItem {
 
 const ShopItemUI = (props: ShopItemUI) => {
     const { iconUrl, shopName, productList, className = '', } = props
-    return <a href={props.originShopUrl} target="_blank" >
-        <div className={`p-[16px] rounded-[8px] border border-[#F0F0F0] box-border group cursor-pointer ${className}`} >
-            <div className="mt-[8px] flex mb-[16px] items-center" >
-                <img alt="" src={iconUrl} className="w-[24px] h-[24px]" />
-                <div className="ml-[4px] line-clamp-1 text-[#1C2026] group-hover:text-[var(--fcolor,#008060)] font-[700]" >{shopName}</div>
-                <RightArrow className="ml-[4px] relative top-[-2px]" />
-            </div>
-            <div className="flex" >
-                {productList?.map((item, key) => {
-                    return <a key={key} className={`w-[calc((100%-16px)/3)] ${key === 0 ? '' : 'ml-[8px]'}`} href={item.originProductUrl} target="_blank" >
-                        <div className="w-[100%] grid" >
-                            <img
-                                alt=""
-                                src={item.mainImgUrl}
-                                className="rounded-[4px] object-cover"
-                                style={{
-                                    gridArea: '1 / 1 / span 1 / span 1',
-                                    aspectRatio: '1 / 1'
-                                }} />
-                        </div>
-                        <div className="flex items-center text-[#FF5010]  text-[16px] mt-[4px]" >
-                            <span className="text-[16px] font-[700]" >{item.cny} 元</span>
-                            <span className="text-[12px] ml-[4px]">{item.jpy} 円</span>
-                        </div>
-                    </a>
-                })}
-            </div>
-
+    return <a
+        href={props.originShopUrl}
+        target="_blank"
+        className={`p-[16px] rounded-[8px] border border-[#F0F0F0] box-border group cursor-pointer ${className}`}
+    >
+        <div className="mt-[8px] flex mb-[16px] items-center" >
+            <img alt="" src={iconUrl} className="w-[24px] h-[24px]" />
+            <div className="ml-[4px] line-clamp-1 text-[#1C2026] group-hover:text-[var(--fcolor,#008060)] font-[700]" >{shopName}</div>
+            <RightArrow className="ml-[4px] relative top-[-2px]" />
         </div>
+        <div className="flex" >
+            {productList?.map((item, key) => {
+                return <a key={key} className={`w-[calc((100%-16px)/3)] ${key === 0 ? '' : 'ml-[8px]'}`} href={item.originProductUrl} target="_blank" >
+                    <div className="w-[100%] grid" >
+                        <img
+                            alt=""
+                            src={item.mainImgUrl}
+                            className="rounded-[4px] object-cover"
+                            style={{
+                                gridArea: '1 / 1 / span 1 / span 1',
+                                aspectRatio: '1 / 1'
+                            }} />
+                    </div>
+                    <div className="flex items-center text-[#FF5010]  text-[16px] mt-[4px]" >
+                        <span className="text-[16px] font-[700]" >{item.cny} 元</span>
+                        <span className="text-[12px] ml-[4px]">{item.jpy} 円</span>
+                    </div>
+                </a>
+            })}
+        </div>
+
     </a>
+
 
 }
 
