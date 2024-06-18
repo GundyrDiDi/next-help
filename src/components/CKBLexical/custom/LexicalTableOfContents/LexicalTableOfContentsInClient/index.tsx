@@ -1,8 +1,8 @@
 /*
  * @Author: shiguang
  * @Date: 2024-06-13 20:42:43
- * @LastEditors: shiguang
- * @LastEditTime: 2024-06-18 15:40:55
+ * @LastEditors: yusha
+ * @LastEditTime: 2024-06-18 20:53:23
  * @Description: 
  */
 
@@ -13,6 +13,8 @@ import { useEffect, useState } from "react";
 import TableOfcontent from "../../../Icon/components/TableOfcontent";
 import { useSettings } from "../../../context/SettingsContext";
 import { setContentData, setEditor } from "../LexicalTableOfContentsRightSide/tools";
+import { useTranslation } from 'react-i18next';
+import { CAN_USE_DOM } from "@lexical/utils";
 function scrollToTargetAdjusted(element: HTMLElement) {
     // var element = document.getElementById('targetElement');
     const headerOffset = 150;
@@ -30,7 +32,16 @@ interface LexicalTableOfContentsInClient {
     title: string;
     isInArtical?: boolean;
 }
+/** 获取翻译 */
+export const getTranslationText = (text, t) => {
+    // 如果是客户端,且就需要翻译
+    if (CAN_USE_DOM && !window?.location.hostname.includes('system')) {
+        return t(text)
+    }
+    return text
+}
 const LexicalTableOfContentsInClient = (props: LexicalTableOfContentsInClient) => {
+    const { t } = useTranslation();
     const { title, isInArtical = false } = props;
     const [editor] = useLexicalComposerContext();
     const [isShow, setIsShow] = useState(true)
@@ -43,14 +54,16 @@ const LexicalTableOfContentsInClient = (props: LexicalTableOfContentsInClient) =
     return <div className={`${isInArtical ? '' : 'pc:h-[370px] pad:h-[370px] overflow-y-auto'} bg-[#FAFAFA] p-[20px]`} >
         <div className="flex items-center">
             <TableOfcontent className="h-[28px]" height={28} width={22} viewBox={undefined} />
-            <span className="font-bold text-[var(-fcolor,#008060)] text-[24px] leading-[32px] pl-[8px] pr-[4px]" >目录</span>
+            <span className="font-bold text-[var(-fcolor,#008060)] text-[24px] leading-[32px] pl-[8px] pr-[4px]" >
+                {getTranslationText('目录', t)}
+            </span>
             <span
                 className="h-[22px] font-normal text-neutral-700 text-[14px] leading-[22px] cursor-pointer"
                 onClick={() => {
                     setIsShow(data => !data)
                 }}
             >
-                {isShow ? '[关闭]' : '[打开]'}
+                {isShow ? `[${getTranslationText('关闭', t)}]` : `[${getTranslationText('打开', t)}]`}
             </span>
         </div>
         {isShow && <>
