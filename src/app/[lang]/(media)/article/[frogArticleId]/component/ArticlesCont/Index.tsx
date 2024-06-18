@@ -88,11 +88,11 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
         }
       }
     }
-    
+
   });
   const isCkbEditor = frogArticle?.articalVersionFlag === 1;
 
- 
+
   return (
     <>
       <div
@@ -110,8 +110,8 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
                 )}
                 {/* 新版编辑器 */}
                 {isCkbEditor && !!frogArticle?.frogArticleContent &&
-                  <EditorView 
-                    articleTitle={frogArticle?.frogArticleTitle} 
+                  <EditorView
+                    articleTitle={frogArticle?.frogArticleTitle}
                     initHtml={frogArticle?.frogArticleContent}
                   />
                 }
@@ -132,15 +132,15 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
           </div>
           <div className="pc:w-[370px] shrink-0 mo:w-[100%] pad:w-[280px] " >
             <div className="__cate-list bg-[#FAFAFA] p-[20px] mb-[20px]" >
-              <ArticalCategory/>
+              <ArticalCategory />
               <div className="mt-[40px]" >
                 <HotArticalList isShowHeaderIcon />
               </div>
             </div>
-            {isCkbEditor && <div className="mt-[20px] sticky top-[166px]" >
-                <LexicalTableOfContentsRightSide title={frogArticle?.frogArticleTitle!} />
+            {isCkbEditor && <div className="mt-[20px] sticky top-[166px] mo:hidden" >
+              <LexicalTableOfContentsRightSide title={frogArticle?.frogArticleTitle!} />
             </div>}
-            <FixedBanner/>
+            <FixedBanner />
           </div>
         </div>
       </div>
