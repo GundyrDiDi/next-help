@@ -1,8 +1,8 @@
 /*
  * @Author: shiguang
  * @Date: 2024-05-16 18:23:25
- * @LastEditors: shiguang
- * @LastEditTime: 2024-05-22 10:33:27
+ * @LastEditors: tianzhitong laotianwy@163.com
+ * @LastEditTime: 2024-06-18 21:32:57
  * @Description: 
  */
 'use client'
@@ -35,7 +35,7 @@ const FixedBanner = () => {
     const bannerJumpLink = data?.data?.[0]?.bannerJumpLink
     if (!imageUrl || !bannerImgMobileUrl || isCloseBanner) return null;
     return (<div
-        className="pc:w-[370px] pc:h-[208px] bg-[#ccc] mo:fixed mo:left-0 mo:right-0 bottom-[8px] mo:h-[120px] relative "
+        className="pc:w-[370px] pc:h-[208px] bg-[#ccc] mo:fixed mo:left-0 mo:right-0 bottom-[8px] mo:h-[120px] relative mt-[20px]"
         onClick={() => {
             bannerJumpLink && window.open(bannerJumpLink)
         }}
