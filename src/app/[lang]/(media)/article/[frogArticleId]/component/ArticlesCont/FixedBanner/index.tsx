@@ -49,7 +49,7 @@ const FixedBanner = () => {
                 e.stopPropagation();
             }}
         >
-            <IconClose width={12} height={12}  />
+            <IconClose width={12} height={12} />
         </div>
         <img alt="" src={imageUrl} className="block h-[100%] w-[100%] mo:hidden" />
         <img alt="" src={bannerImgMobileUrl} className="block h-[100%] w-[100%] pc:hidden pad:hidden" />

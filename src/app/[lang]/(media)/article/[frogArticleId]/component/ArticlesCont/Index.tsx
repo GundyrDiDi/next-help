@@ -139,8 +139,8 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
             </div>
             {isCkbEditor && <div className="mt-[20px] sticky top-[166px] mo:hidden" >
               <LexicalTableOfContentsRightSide title={frogArticle?.frogArticleTitle!} />
+              <FixedBanner />
             </div>}
-            <FixedBanner />
           </div>
         </div>
       </div>
