@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-18 21:25:11
+ * @LastEditTime: 2024-06-19 16:29:50
  * @Description: 
  */
 /*
@@ -147,13 +147,14 @@ export const useProductListData = (urlList: ProductUIProps['urlList'] | undefine
                     cny: item.productSellPriceRange,
                     // TODO 需要做处理
                     jpy: (() => {
-                        const [startPrice, endPrice] = (item.productSellPriceRange ?? '').split('-')
+                        const [startPrice] = (item.productSellPriceRange ?? '').split('-')
                         const www: any = window;
                         if (!CAN_USE_DOM || !www.calcByCnyPrice) return '**';
-                        if (startPrice === endPrice) {
-                            return www.calcByCnyPrice(startPrice);
-                        }
-                        return `${www.calcByCnyPrice(startPrice)}-${www.calcByCnyPrice(endPrice)}`;
+                        return www.calcByCnyPrice(startPrice);
+                        // if (startPrice === endPrice) {
+                        //     return www.calcByCnyPrice(startPrice);
+                        // }
+                        // return `${www.calcByCnyPrice(startPrice)}-${www.calcByCnyPrice(endPrice)}`;
                     })(),
                     originProductUrl: urls[index]!
 

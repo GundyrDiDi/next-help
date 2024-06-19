@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-13 14:24:45
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 03:31:00
+ * @LastEditTime: 2024-06-19 16:12:10
  * @Description: 
  */
 /*
@@ -54,9 +54,10 @@ export const getSubHostName = () => {
 
 const getApiHost = () => {
     const env = getHostEnv()
-    if (env === 'pre') {
+    const queryEnv = window.location.search.split('env=')[1]
+    if (env === 'pre' || queryEnv === 'pre') {
         return `https://pre-gateway.theckb.com`
-    } else if (env === 'prod') {
+    } else if (env === 'prod' || queryEnv === 'prod') {
         return `https://gateway-prod.theckb.com`
     } else {
         return `https://master-gateway.theckb.com`;

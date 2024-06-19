@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-19 00:09:09
+ * @LastEditTime: 2024-06-19 16:32:38
  * @Description: 
  */
 import { Tooltip, message } from "antd";
@@ -181,13 +181,18 @@ const useShopListData = (urlList: ShopUIProps['urlList'], onErrorRef: React.Muta
                             cny: it.productSellPrice,
                             //  TODO
                             jpy: (() => {
-                                const [startPrice, endPrice] = (item.productSellPriceRange ?? '').split('-')
+                                if (!it.productSellPrice) return '**';
                                 const www: any = window;
-                                if (!CAN_USE_DOM || !www.calcByCnyPrice) return '**';
-                                if (startPrice === endPrice) {
-                                    return www.calcByCnyPrice(startPrice);
-                                }
-                                return `${www.calcByCnyPrice(startPrice)}-${www.calcByCnyPrice(endPrice)}`;
+                                return www.calcByCnyPrice(it.productSellPrice);
+
+                                // const [startPrice] = (item.productSellPriceRange ?? '').split('-')
+                                // const www: any = window;
+                                // if (!CAN_USE_DOM || !www.calcByCnyPrice) return '**';
+                                // return www.calcByCnyPrice(startPrice);
+                                // if (startPrice === endPrice) {
+                                //     return www.calcByCnyPrice(startPrice);
+                                // }
+                                // return `${www.calcByCnyPrice(startPrice)}-${www.calcByCnyPrice(endPrice)}`;
                             })()
 
                         }
