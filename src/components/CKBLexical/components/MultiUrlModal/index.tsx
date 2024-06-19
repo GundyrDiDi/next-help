@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 17:50:15
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-18 16:51:14
+ * @LastEditTime: 2024-06-19 19:32:02
  * @Description: 
  */
 'use client'
@@ -12,6 +12,8 @@ import { title } from "process";
 import { useEffect, useRef, useState } from "react";
 import { ProductUIProps } from "../../custom/Product/ProductUI";
 import { REGEXP_URL } from "../../utils/regexp";
+import { requestShopInfoByUrl } from "../../custom/Shop/ShopDecorate";
+import { requestProductInfoByUrl } from "../../custom/Product/ProductDecorate";
 
 interface MultiUrlModalProps {
     onOk?: (urls?: ProductUIProps['urlList']) => void;
@@ -79,11 +81,39 @@ const MultiUrlModal = (props: MultiUrlModalProps) => {
                                     >
                                         <Form.Item
                                             {...field}
+                                            validateTrigger="onBlur"
                                             name={[field.name, 'url']}
+                                            validateFirst
                                             rules={[
                                                 {
                                                     required: true,
                                                     message: "请输入正确的链接",
+                                                    validator(rule, value, callback) {
+                                                        if (REGEXP_URL.test(value)) {
+                                                            return callback();
+                                                        }
+                                                        return callback('请输入正确的链接');
+                                                    },
+                                                },
+                                                {
+                                                    required: true,
+                                                    validator: async function (rule, value, callback) {
+                                                        let res: any = undefined;
+                                                        try {
+                                                            if (type === 'product') {
+                                                                res = await requestProductInfoByUrl(value)
+                                                            } else {
+                                                                res = await requestShopInfoByUrl(value)
+                                                            }
+                                                        } catch (err: any) {
+                                                            return Promise.reject(err?.msg);
+                                                        }
+                                                        if (res?.code !== '0') {
+                                                            console.log(res?.msg, 666)
+                                                            return Promise.reject(res?.msg);
+                                                        }
+                                                        return Promise.resolve();
+                                                    },
                                                 },
                                             ]}
                                             noStyle

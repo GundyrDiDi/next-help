@@ -3,10 +3,12 @@
  * @Author: shiguang
  * @Date: 2024-06-12 17:13:19
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-18 21:42:40
+ * @LastEditTime: 2024-06-19 18:46:50
  * @Description: 
  */
+import { useTranslation } from "react-i18next";
 import RightArrow from "../../../Icon/components/RightArrow";
+import { getTranslationText } from "../../LexicalTableOfContents/LexicalTableOfContentsInClient";
 import { ListDataItem } from "../ShopDecorate";
 
 export interface ShopUIProps {
@@ -25,6 +27,7 @@ export interface ShopItemUI extends ListDataItem {
 
 const ShopItemUI = (props: ShopItemUI) => {
     const { iconUrl, shopName, productList, className = '', } = props
+    const { t } = useTranslation();
     return <a
         href={props.originShopUrl}
         target="_blank"
@@ -50,7 +53,7 @@ const ShopItemUI = (props: ShopItemUI) => {
                     </div>
                     <div className="flex items-center text-[#FF5010]  text-[16px] mt-[4px]" >
                         <span className="text-[16px] font-[700]" >{item.cny} 元</span>
-                        <span className="text-[12px] ml-[4px]">{item.jpy} 円</span>
+                        <span className="text-[12px] ml-[4px]">{item.jpy} {getTranslationText('円', t)}</span>
                     </div>
                 </a>
             })}

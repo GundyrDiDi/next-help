@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-13 14:24:45
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-19 16:12:10
+ * @LastEditTime: 2024-06-19 18:29:23
  * @Description: 
  */
 /*
@@ -74,6 +74,44 @@ interface CrossFetchConfigOptions{
     showError?: boolean;
     interceptErrorCode?: boolean;
 }
+enum Site {
+    /**
+     * 日本站
+     */
+    JA = 'JapanStation',
+    /**
+     * 韩国站
+     */
+    KO = 'KoreaStation',
+    /**
+     * 英国站
+     */
+    EN = 'UkStation'
+}
+
+/**
+ * 通过 path 获取站点
+ * @returns 
+ */
+export const getSiteStationFromPath = () => {
+    if(window.location.pathname.startsWith('/ja')){
+        return {
+            siteHeader: Site.JA
+        }
+    }
+    if(window.location.pathname.startsWith('/en')){
+        return {
+            siteHeader: Site.EN
+        }
+    }
+    if(window.location.pathname.startsWith('/ko')){
+        return {
+            siteHeader: Site.KO
+        }
+    }
+    return undefined;
+}
+
 /**
  * 跨平台的fetch
  * @param url 

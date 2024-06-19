@@ -3,11 +3,13 @@
  * @Author: shiguang
  * @Date: 2024-06-12 15:06:29
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-19 17:52:21
+ * @LastEditTime: 2024-06-19 18:46:18
  * @Description: 
  */
 import React from "react";
 import { ListDataItem } from "../ProductDecorate";
+import { getTranslationText } from "../../LexicalTableOfContents/LexicalTableOfContentsInClient";
+import { useTranslation } from "react-i18next";
 
 // post 请求 入参 productCode
 // https://gateway-prod.theckb.com/goods/product/detail
@@ -27,6 +29,7 @@ interface ProductColItemUI extends ListDataItem {
 }
 
 const ProductVerticalUI = (props: ProductColItemUI) => {
+    const { t } = useTranslation();
     const { mainImgUrl, iconUrl, title, cny, jpy, className = '', href } = props
     return <a
         href={href}
@@ -56,13 +59,14 @@ const ProductVerticalUI = (props: ProductColItemUI) => {
         </div>
         <div className="flex items-center text-[#FF5010]  text-[16px] mt-[4px]" >
             <span className="text-[16px] font-[700]" >{cny} 元</span>
-            <span className="text-[12px] ml-[4px]">{jpy} 円</span>
+            <span className="text-[12px] ml-[4px]">{jpy} {getTranslationText('円', t)}</span>
         </div>
     </a>
 }
 
 const ProductHorizontalUI = (props: ProductColItemUI) => {
     const { mainImgUrl, iconUrl, title, cny, jpy, className = '', href } = props
+    const { t } = useTranslation();
     return <a
         href={href} target="_blank"
         className={`ProductHorizontalUI flex !items-stretch hover:border border-[#F0F0F0] rounded-[8px] p-[8px] cursor-pointer group box-border ${className}`} >
@@ -71,7 +75,7 @@ const ProductHorizontalUI = (props: ProductColItemUI) => {
             <div className="group-hover:text-[var(--fcolor,#008060)] line-clamp-2 !break-all" >{title}</div>
             <div className="flex items-center text-[#FF5010]" >
                 <span className="text-[16px] font-[700] " >{cny} 元</span>
-                <span className="text-[12px] ml-[4px]">{jpy} 円</span>
+                <span className="text-[12px] ml-[4px]">{jpy} {getTranslationText('円', t)}</span>
             </div>
         </div>
     </a>

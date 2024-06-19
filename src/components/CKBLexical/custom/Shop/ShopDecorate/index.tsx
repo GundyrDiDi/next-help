@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-19 16:32:38
+ * @LastEditTime: 2024-06-19 19:22:08
  * @Description: 
  */
 import { Tooltip, message } from "antd";
@@ -48,7 +48,7 @@ const mockShopList = [
     },
 ];
 
-const requestShopInfoByUrl = async (url: string) => {
+export const requestShopInfoByUrl = async (url: string) => {
     const data = await crossFetch<any>('/goods/supplierShop/qryShopAndProductsByShopUrl', {
         method: 'POST',
         body: {

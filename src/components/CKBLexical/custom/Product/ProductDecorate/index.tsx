@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-19 16:29:50
+ * @LastEditTime: 2024-06-19 19:21:39
  * @Description: 
  */
 /*
@@ -15,7 +15,7 @@
 import { Tooltip, message } from "antd";
 import { productToolBarEmitter } from "../ProductToolBar";
 import ProductUI, { ProductUIProps } from "../ProductUI"
-import { crossFetch } from "../../../utils/fetch";
+import { crossFetch, getSiteStationFromPath } from "../../../utils/fetch";
 import { useEffect, useRef, useState } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $getNodeByKey } from "lexical";
@@ -58,7 +58,7 @@ const testCase = [
 
 
 
-const requestProductInfoByUrl = async (url: string) => {
+export const requestProductInfoByUrl = async (url: string) => {
     const data = await crossFetch<any>('/goods/search/urlForNoLogin', {
         method: 'POST',
         body: {
@@ -68,9 +68,14 @@ const requestProductInfoByUrl = async (url: string) => {
         showError: false,
         interceptErrorCode: false,
         requestInterceptor(config) {
+            if (config.headers && 'x-stationcode' in config.headers) {
+                delete config.headers['x-stationcode'];
+            }
+            // debugger
             config.headers = {
                 ...config.headers,
-                ['x-authtoken']: ''
+                ['x-authtoken']: '',
+                ['x-stationcode']: getSiteStationFromPath()?.siteHeader ?? ''
             }
             return config
         },
