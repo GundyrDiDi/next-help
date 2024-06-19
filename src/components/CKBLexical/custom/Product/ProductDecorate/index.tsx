@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-19 19:21:39
+ * @LastEditTime: 2024-06-19 21:06:32
  * @Description: 
  */
 /*
@@ -15,7 +15,7 @@
 import { Tooltip, message } from "antd";
 import { productToolBarEmitter } from "../ProductToolBar";
 import ProductUI, { ProductUIProps } from "../ProductUI"
-import { crossFetch, getSiteStationFromPath } from "../../../utils/fetch";
+import { Site, crossFetch, getSiteStationFromPath } from "../../../utils/fetch";
 import { useEffect, useRef, useState } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $getNodeByKey } from "lexical";
@@ -68,6 +68,7 @@ export const requestProductInfoByUrl = async (url: string) => {
         showError: false,
         interceptErrorCode: false,
         requestInterceptor(config) {
+            // 这里需要删除 x-stationcode 否则多次赋值可能变成数组
             if (config.headers && 'x-stationcode' in config.headers) {
                 delete config.headers['x-stationcode'];
             }
@@ -75,7 +76,7 @@ export const requestProductInfoByUrl = async (url: string) => {
             config.headers = {
                 ...config.headers,
                 ['x-authtoken']: '',
-                ['x-stationcode']: getSiteStationFromPath()?.siteHeader ?? ''
+                ['x-stationcode']: getSiteStationFromPath()?.siteHeader ?? Site.KO
             }
             return config
         },

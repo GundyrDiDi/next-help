@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-13 14:24:45
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-19 18:29:23
+ * @LastEditTime: 2024-06-19 21:06:11
  * @Description: 
  */
 /*
@@ -74,7 +74,7 @@ interface CrossFetchConfigOptions{
     showError?: boolean;
     interceptErrorCode?: boolean;
 }
-enum Site {
+export enum Site {
     /**
      * 日本站
      */
