@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 11:26:06
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-19 17:25:27
+ * @LastEditTime: 2024-06-19 17:49:36
  * @Description: 
  */
 import queryString from "query-string";
@@ -122,7 +122,7 @@ const ArticleUI = (props: ArticleUIProps) => {
         <div className="ml-[8px] grow " >
             <div className="mb-[8px] leading-[24px] font-[700] text-black/[.88] text-[16px] group-hover:text-[var(--fcolor,#008060)]" >{title}</div>
             <div className="flex justify-between" >
-                {!!description && <div className="text-black/[.45] line-clamp-1 mr-[8px]">{description}</div>}
+                {!!description && <div className="text-black/[.45] line-clamp-1 mr-[8px]" style={{ wordBreak: 'break-word' }} >{description}</div>}
                 <div className="shrink-0 text-[#0586FE] text-[14px] underline" >
                     查看更多
                 </div>

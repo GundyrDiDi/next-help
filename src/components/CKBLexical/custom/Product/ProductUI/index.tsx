@@ -3,7 +3,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 15:06:29
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-19 17:15:09
+ * @LastEditTime: 2024-06-19 17:52:21
  * @Description: 
  */
 import React from "react";
@@ -47,7 +47,12 @@ const ProductVerticalUI = (props: ProductColItemUI) => {
         {/* <img alt="" src={mainImgUrl} className="w-[100%] h-auto rounded-[4px] object-cover" /> */}
         <div className="mt-[8px] flex  " >
             <img alt="" src={iconUrl} className="w-[24px] h-[24px]" />
-            <div className="ml-[4px] line-clamp-1 text-[#1C2026] group-hover:text-[#008060]" >{title}</div>
+            <div
+                className="ml-[4px] line-clamp-1 text-[#1C2026] group-hover:text-[#008060] leading-[24px]"
+                style={{ wordBreak: 'break-all' }}
+            >
+                {title}
+            </div>
         </div>
         <div className="flex items-center text-[#FF5010]  text-[16px] mt-[4px]" >
             <span className="text-[16px] font-[700]" >{cny} 元</span>
