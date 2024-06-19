@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-07 17:24:01
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 19:43:36
+ * @LastEditTime: 2024-06-19 13:59:23
  * @Description: 
  */
 import useLexicalEditable from "@lexical/react/useLexicalEditable";
@@ -19,6 +19,7 @@ interface ButtonDecorateProps {
 const ButtonDecorate = (props: ButtonDecorateProps) => {
     const { options, nodeKey } = props
     const { type, href, color, children } = options;
+    const isEditable = useLexicalEditable()
     const dom = <ButtonUI
         {...{ type, href, color }}
         className="inline-block"
@@ -26,6 +27,7 @@ const ButtonDecorate = (props: ButtonDecorateProps) => {
     >
         {children}
     </ButtonUI>
+    if (!isEditable) return dom;
     return <Tooltip
         arrow={false}
         title={
