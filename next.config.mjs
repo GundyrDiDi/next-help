@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 21:06:55
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-19 14:27:52
+ * @LastEditTime: 2024-06-19 18:12:41
  * @Description: 
  */
 /** @type {import('next').NextConfig} */
@@ -81,6 +81,10 @@ const env = getEnv();
 console.log(`启动时间：${new Date().toLocaleString()},启动环境:${SERVER_ENV}`);
 const nextConfig = {
   compress: true,
+  generateBuildId: async () => {
+    // This could be anything, using the latest git hash
+    return process.env.GIT_HASH
+  },
   env: {
     ...env,
   },
