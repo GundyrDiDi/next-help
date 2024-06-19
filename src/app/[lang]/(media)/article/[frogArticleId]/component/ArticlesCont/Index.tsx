@@ -91,8 +91,8 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
 
   });
   const isCkbEditor = frogArticle?.articalVersionFlag === 1;
-
-
+  // markingShow 似乎有bug 这里包装一下
+  const _markingShow = userInfo?.customerId && userInfo?.membership?.templateLevel ? false : markingShow;
   return (
     <>
       <div
@@ -115,9 +115,11 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
                     initHtml={frogArticle?.frogArticleContent}
                   />
                 }
+                {/* ${markingShow ? `h-[100vh] overflow-hidden` : ''} */}
                 <div
                   id="content-html"
-                  className={`media-help-artical-content ${markingShow ? `h-[100vh] overflow-hidden` : ''} ${isCkbEditor ? 'hidden' : ''} `}
+                  // className={`media-help-artical-content  ${isCkbEditor ? 'hidden' : ''} `}
+                  className={`media-help-artical-content ${_markingShow ? `h-[100vh] overflow-hidden` : ''} ${isCkbEditor ? 'hidden' : ''} `}
                   dangerouslySetInnerHTML={{
                     __html: frogArticle?.frogArticleContent!,
                   }}

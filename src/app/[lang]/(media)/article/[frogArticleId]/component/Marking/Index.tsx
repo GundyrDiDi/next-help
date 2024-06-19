@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-10 14:43:54
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-21 18:07:19
+ * @LastEditTime: 2024-06-19 19:51:09
  * @Description: 
  */
 import { useTranslation } from "@/i18n/client";
@@ -17,10 +17,12 @@ import { ENUM_PAGE } from "@/const/enum";
 
 const Marking = () => {
   const { t } = useTranslation();
-  const useInfo =useAtomValue(CustomerDetail)
+  const useInfo = useAtomValue(CustomerDetail)
   const vipLoginClick = () => {
     toTheCkb(ENUM_PAGE.VIP_LEVEL);
   };
+  // 用户存在又 有会员 return
+  if (useInfo?.customerId && useInfo?.membership?.templateLevel) return null;
 
   return (
     <div className="marking">
@@ -33,7 +35,7 @@ const Marking = () => {
         style={{ bottom: isKO() ? "172px" : "280px" }}
       >
         <div className="marking-content">
-          { useInfo?.customerId ? (
+          {useInfo?.customerId ? (
             !useInfo?.membership?.templateLevel &&
             <>
               {/* 已经登录需要会员查看 */}
@@ -44,7 +46,7 @@ const Marking = () => {
             </>
           ) : (
             <>
-            {/* 未登录会员查看 */}
+              {/* 未登录会员查看 */}
               <p>{t("注册或登录以查看更多信息")}</p>
               <div style={{ display: "flex" }}>
                 <Button
