@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 17:50:15
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-20 18:25:35
+ * @LastEditTime: 2024-06-20 21:23:05
  * @Description: 
  */
 'use client'
@@ -49,7 +49,7 @@ const MultiUrlModal = (props: MultiUrlModalProps) => {
         destroyOnClose
         wrapClassName="editor-modal"
     >
-        <Form form={form}  >
+        <Form form={form} className="!pt-[8px]"  >
             <Form.List
                 name="urls"
                 rules={[
@@ -76,9 +76,10 @@ const MultiUrlModal = (props: MultiUrlModalProps) => {
                                 <Form.Item
                                     required={false}
                                     key={field.key}
+                                    noStyle
                                 >
                                     <div
-                                        className="flex items-center"
+                                        className="flex items-center mb-[16px]"
                                     >
                                         <Form.Item
                                             {...field}
@@ -154,7 +155,7 @@ const MultiUrlModal = (props: MultiUrlModalProps) => {
                             ))}
                             <div>
                                 <Form.Item noStyle >
-                                    <div className="text-[#0586FE] text-[14px] cursor-pointer inline-block mb-[16px]" onClick={isMaxCount ? undefined : () => add()} >
+                                    <div className={`text-[#0586FE] text-[14px] cursor-pointer inline-block mb-[16px] ${isMaxCount ? 'text-[#bfbfbf]' : ''}`} onClick={isMaxCount ? undefined : () => add()} >
                                         增加{config[type].title}（{fields.length}/{maxCount}）
                                         {isMaxCount ? null : '+'}
                                     </div>

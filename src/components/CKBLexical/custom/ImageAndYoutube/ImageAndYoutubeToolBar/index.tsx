@@ -3,7 +3,7 @@
  * @Author: shiguang
  * @Date: 2024-05-23 18:03:08
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-20 18:36:25
+ * @LastEditTime: 2024-06-20 21:19:03
  * @Description: 
  */
 import { $getNodeByKey, $getSelection, LexicalEditor } from 'lexical';
@@ -140,12 +140,13 @@ const ImageAndYoutubeToolBar = (props: HeadingMenuProps) => {
     return (
         <div>
             <Modal
+                title="插入图片或视频"
                 open={isButton}
                 onCancel={hideModal}
                 destroyOnClose
                 footer={false}
             >
-                <Form form={form} initialValues={{ imageOrYoutube: 'image' }} >
+                <Form form={form} initialValues={{ imageOrYoutube: 'image' }} className="!mt-[-4px]" >
                     <div>
                         <Form.Item name="imageOrYoutube" valuePropName="activeKey" noStyle  >
                             <Tabs
@@ -209,7 +210,7 @@ const ImageAndYoutubeToolBar = (props: HeadingMenuProps) => {
                                 || (!isYoutube && REGEXP_URL.test(form.getFieldValue('imageUrl')))
                             )
                             return <Button
-                                className="mt-[8px]"
+                                className="mt-[16px]"
                                 disabled={!isOk}
                                 onClick={async () => {
                                     const values = form.getFieldsValue();

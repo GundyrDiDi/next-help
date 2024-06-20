@@ -6,7 +6,7 @@ import { DragEvent, useEffect, useRef, useState } from "react";
  * @Author: shiguang
  * @Date: 2024-06-11 16:37:01
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-13 12:36:32
+ * @LastEditTime: 2024-06-20 21:20:17
  * @Description: 
  */
 
@@ -37,7 +37,7 @@ export const BucketNames = {
 } as const;
 
 const getUploadEnv = () => {
-    if(!CAN_USE_DOM) return 'prod'
+    if (!CAN_USE_DOM) return 'prod'
     if (window.location.host.startsWith('pre-system.theckb.com')) {
         return 'pre'
     } else if (window.location.host === 'system.theckb.com') {
@@ -206,7 +206,7 @@ const ImageUpload = (props: ImageUploadProps) => {
     };
 
     return <div
-        className="bg-slate-400 relative flex items-start h-fit"
+        className="bg-[#f5f5f5] relative flex items-start h-fit"
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}

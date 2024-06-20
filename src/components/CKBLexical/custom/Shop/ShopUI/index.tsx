@@ -3,7 +3,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 17:13:19
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-20 19:17:58
+ * @LastEditTime: 2024-06-20 20:35:19
  * @Description: 
  */
 import { useTranslation } from "react-i18next";
@@ -30,6 +30,7 @@ const ShopItemUI = (props: ShopItemUI) => {
     const { iconUrl, shopName, productList, className = '', } = props
     const { t } = useTranslation();
     const isKO = getSiteStationFromPath()?.siteHeader === Site.KO;
+    const isJA = getSiteStationFromPath()?.siteHeader === Site.JA;
     return <a
         href={props.originShopUrl}
         target="_blank"
@@ -54,10 +55,14 @@ const ShopItemUI = (props: ShopItemUI) => {
                                 aspectRatio: '1 / 1'
                             }} />
                     </div>
-                    <div className={`flex items-center ${isKO ? 'text-[#000]/[.88]' : 'text-[#FF5010]'} text-[16px] mt-[4px] `} >
-                        <span className="text-[16px] font-[700]" >{item.cny} {getTranslationText('元', t)}</span>
-                        {!isKO && <span className="text-[12px] ml-[4px]">{item.jpy} {getTranslationText('円', t)}</span>}
-                        {isKO && <span className="text-[12px] ml-[4px]">({getTranslationText('円', t)}{item.jpy})</span>}
+                    <div className={`flex items-center ${isKO ? 'text-[#000]/[.88]' : 'text-[#FF5010]'} text-[16px] mt-[4px]`} >
+                        <span className="text-[16px] shrink-0" >{item.cny} {getTranslationText('元', t)}</span>
+                        {!isKO && <span className="text-[12px] ml-[4px] line-clamp-1">
+                            {isJA && <span>{item.jpy}</span>}
+                            {getTranslationText('円', t)}
+                            {!isJA && <span>{item.jpy}</span>}
+                        </span>}
+                        {isKO && <span className="text-[12px] ml-[4px] line-clamp-1">({getTranslationText('円', t)}{item.jpy})</span>}
                     </div>
                 </a>
             })}

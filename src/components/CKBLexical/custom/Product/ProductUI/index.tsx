@@ -3,7 +3,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 15:06:29
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-20 12:19:47
+ * @LastEditTime: 2024-06-20 20:49:56
  * @Description: 
  */
 import { ListDataItem } from "../ProductDecorate";
@@ -32,11 +32,12 @@ const ProductVerticalUI = (props: ProductColItemUI) => {
     const { t } = useTranslation();
     const { mainImgUrl, iconUrl, title, cny, jpy, className = '', href } = props
     const isKO = getSiteStationFromPath()?.siteHeader === Site.KO;
+    const isJA = getSiteStationFromPath()?.siteHeader === Site.JA;
 
     return <a
         href={href}
         target="_blank"
-        className={`ProductVerticalUI p-[8px] rounded-[8px] hover:border border-[#F0F0F0] box-border group cursor-pointer ${className}`}
+        className={`ProductVerticalUI p-[8px] rounded-[8px] border border-[#ffffff] hover:border-[#F0F0F0] box-border group cursor-pointer ${className}`}
     >
         <div className="w-[100%] grid" >
             <img
@@ -61,9 +62,14 @@ const ProductVerticalUI = (props: ProductColItemUI) => {
             </div>
         </div>
         <div className={`flex items-center ${isKO ? 'text-[#000]/[.88]' : 'text-[#FF5010]'} text-[16px] mt-[4px]`} >
-            <span className="text-[16px] font-[700]" >{cny} 元</span>
-            {!isKO && <span className="text-[12px] ml-[4px]">{jpy} {getTranslationText('円', t)}</span>}
-            {isKO && <span className="text-[12px] ml-[4px]">({getTranslationText('円', t)}{jpy})</span>}
+            <span className="text-[16px] font-[700] shrink-0" >{cny} 元</span>
+            {!isKO && <span className="text-[12px] ml-[4px] line-clamp-1">
+                {/* {jpy} {getTranslationText('円', t)} */}
+                {isJA && <span>{jpy}</span>}
+                {getTranslationText('円', t)}
+                {!isJA && <span>{jpy}</span>}
+            </span>}
+            {isKO && <span className="text-[12px] ml-[4px] line-clamp-1">({getTranslationText('円', t)}{jpy})</span>}
 
         </div>
     </a>
@@ -73,17 +79,25 @@ const ProductHorizontalUI = (props: ProductColItemUI) => {
     const { mainImgUrl, title, cny, jpy, className = '', href } = props
     const { t } = useTranslation();
     const isKO = getSiteStationFromPath()?.siteHeader === Site.KO;
+    const isJA = getSiteStationFromPath()?.siteHeader === Site.JA;
+
+
     // const getSiteStationFromPath
     return <a
         href={href} target="_blank"
-        className={`ProductHorizontalUI flex !items-stretch hover:border border-[#F0F0F0] rounded-[8px] p-[8px] cursor-pointer group box-border ${className}`} >
+        className={`ProductHorizontalUI flex !items-stretch border border-[#ffffff] hover:border-[#F0F0F0] rounded-[8px] p-[8px] cursor-pointer group box-border ${className}`} >
         <img src={mainImgUrl} alt="" className="w-[120px] h-[120px] rounded-[4px] shrink-0" />
         <div className="grow flex flex-col ml-[8px] justify-between" >
             <div className="group-hover:text-[var(--fcolor,#008060)] line-clamp-2 !break-all" >{title}</div>
             <div className={`flex items-center ${isKO ? 'text-[#000]/[.88]' : 'text-[#FF5010]'}`} >
-                <span className="text-[16px] font-[700] " >{cny} 元</span>
-                {!isKO && <span className="text-[12px] ml-[4px]">{jpy} {getTranslationText('円', t)}</span>}
-                {isKO && <span className="text-[12px] ml-[4px]">({getTranslationText('円', t)}{jpy})</span>}
+                <span className="text-[16px] font-[700] shrink-0" >{cny} 元</span>
+                {!isKO && <span className="text-[12px] ml-[4px] line-clamp-1">
+                    {isJA && <span>{jpy}</span>}
+                    {getTranslationText('円', t)}
+                    {!isJA && <span>{jpy}</span>}
+                    {/* {jpy} {getTranslationText('円', t)} */}
+                </span>}
+                {isKO && <span className="text-[12px] ml-[4px] line-clamp-1">({getTranslationText('円', t)}{jpy})</span>}
             </div>
         </div>
     </a>

@@ -2,7 +2,7 @@
 * @Author: shiguang
 * @Date: 2024-05-23 18:03:08
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-20 17:53:53
+ * @LastEditTime: 2024-06-20 21:08:47
 * @Description: 
 */
 import { $createTextNode, $getNodeByKey, $getSelection, $isRangeSelection, $isTextNode, LexicalEditor, RangeSelection, TextNode } from 'lexical';
@@ -73,12 +73,13 @@ const Link = (props: HeadingMenuProps) => {
     return (
         <div>
             <Modal
+                title="插入链接"
                 footer={false}
                 open={isLink}
                 onCancel={hideModal}
             >
-                <div >
-                    <Form form={form} >
+                <div className="pt-[8px]" >
+                    <Form form={form}  >
                         <div className="text-[14px] leading-[22px] mb-[4px]" >文本</div>
                         <Form.Item noStyle name="title" >
                             <Input
@@ -100,7 +101,7 @@ const Link = (props: HeadingMenuProps) => {
                                 console.log(REGEXP_URL.test(value.url), value.title, 246)
                                 return <Button
                                     disabled={!isOk}
-                                    className='mt-[8px]'
+                                    className='mt-[16px]'
                                     onClick={() => {
                                         activeEditor.update(() => {
                                             const selection = $getSelection()!
@@ -137,7 +138,6 @@ const Link = (props: HeadingMenuProps) => {
                     onClick={() => {
                         activeEditor.update(() => {
                             const selection = $getSelection()
-                            debugger
                             if (!selection || selection.isCollapsed()) return;
                             const isEdit = getSelectionForModal();
                             if (isEdit) {

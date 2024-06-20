@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-07 17:23:47
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-18 20:48:38
+ * @LastEditTime: 2024-06-20 21:07:57
  * @Description: 
  */
 /*
@@ -119,10 +119,11 @@ const ArticleToolBar = (props: HeadingMenuProps) => {
             <Modal
                 open={isArticle}
                 footer={false}
+                title="插入文章"
                 destroyOnClose
                 onCancel={hideModal}
             >
-                <Form form={form} >
+                <Form form={form} className="pt-[8px]" >
                     <div>
                         <div className="leading-[22px] mb-[4px]">链接</div>
                         <Form.Item name="url" rules={[{ pattern: REGEXP_URL, message: '请输入正确的链接' }]} >

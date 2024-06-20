@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-07 17:23:47
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-18 18:05:48
+ * @LastEditTime: 2024-06-20 21:14:48
  * @Description: 
  */
 /*
@@ -122,6 +122,7 @@ const ButtonToolBar = (props: HeadingMenuProps) => {
     return (
         <div>
             <Modal
+                title="插入按钮"
                 open={isButton}
                 footer={false}
                 destroyOnClose
@@ -129,8 +130,9 @@ const ButtonToolBar = (props: HeadingMenuProps) => {
             >
                 <Form form={form} >
                     <div>
-                        <Form.Item name="type" valuePropName="activeKey"  >
+                        <Form.Item name="type" valuePropName="activeKey" noStyle  >
                             <Tabs
+                                className="!mt-[-4px]"
                                 items={[
                                     { label: '线性按钮', key: 'default' },
                                     { label: '面性按钮', key: 'primary' },
@@ -152,7 +154,7 @@ const ButtonToolBar = (props: HeadingMenuProps) => {
                     </div>
                     <div>
                         <div className="leading-[22px]" >颜色</div>
-                        <Form.Item name="color" >
+                        <Form.Item name="color" noStyle >
                             <ColorOptions />
                         </Form.Item>
                     </div>
@@ -162,6 +164,7 @@ const ButtonToolBar = (props: HeadingMenuProps) => {
                             const isOk = (!!_values.href && REGEXP_URL.test(_values.href)) && !!_values.children && !!_values.color;
                             return <AntButton
                                 disabled={!isOk}
+                                className="mt-[16px]"
                                 onClick={() => {
                                     const values = form.getFieldsValue();
                                     activeEditor.update(() => {
