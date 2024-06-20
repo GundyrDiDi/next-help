@@ -3,7 +3,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 17:13:19
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-20 14:20:23
+ * @LastEditTime: 2024-06-20 19:17:58
  * @Description: 
  */
 import { useTranslation } from "react-i18next";
@@ -55,7 +55,7 @@ const ShopItemUI = (props: ShopItemUI) => {
                             }} />
                     </div>
                     <div className={`flex items-center ${isKO ? 'text-[#000]/[.88]' : 'text-[#FF5010]'} text-[16px] mt-[4px] `} >
-                        <span className="text-[16px] font-[700]" >{item.cny} 元</span>
+                        <span className="text-[16px] font-[700]" >{item.cny} {getTranslationText('元', t)}</span>
                         {!isKO && <span className="text-[12px] ml-[4px]">{item.jpy} {getTranslationText('円', t)}</span>}
                         {isKO && <span className="text-[12px] ml-[4px]">({getTranslationText('円', t)}{item.jpy})</span>}
                     </div>

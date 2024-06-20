@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-20 14:14:09
+ * @LastEditTime: 2024-06-20 19:24:47
  * @Description: 
  */
 import { Tooltip, message } from "antd";
@@ -175,7 +175,13 @@ const useShopListData = (urlList: ShopUIProps['urlList'], onErrorRef: React.Muta
                 return {
                     iconUrl: thirdPlateIconConf[item.platformType!],
                     // shopName: item.originalShopName,
-                    shopName: item.supplierShopName,
+                    shopName: (() => {
+                        // item.supplierShopName
+                        const hostName = getSubHostName()
+                        const isSystem = hostName === 'system';
+                        if (isSystem) return item.supplierShopName;
+                        return [item.supplierShopName[0], item.supplierShopName[1], '****'].join('');
+                    })(),
                     originShopUrl: wrapperProductAndShopUrlByLogin(isLogin, item.shopUrl),
                     productList: item.productList?.slice(0, 3)?.map((it: any) => {
                         return {

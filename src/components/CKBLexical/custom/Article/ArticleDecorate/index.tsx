@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-20 11:07:11
+ * @LastEditTime: 2024-06-20 19:16:02
  * @Description: 
  */
 /*
@@ -18,6 +18,7 @@ import ArticleUI, { ArticleUIProps } from "../ArticleUI"
 import useLexicalEditable from "@lexical/react/useLexicalEditable";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $getNodeByKey } from "lexical";
+import { getSubHostName } from "../../../utils/fetch";
 
 interface ArticleDecorateProps {
     nodeKey: string;
@@ -42,7 +43,9 @@ const ArticleDecorate = (props: ArticleDecorateProps) => {
         url={props.options.url}
         onError={() => {
             removeNode();
-            message.warning('没找到对应链接文章');
+            if (getSubHostName() === 'system') {
+                message.warning('没找到对应链接文章');
+            }
 
         }}
     />;
