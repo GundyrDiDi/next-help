@@ -6,7 +6,7 @@ import { DragEvent, useEffect, useRef, useState } from "react";
  * @Author: shiguang
  * @Date: 2024-06-11 16:37:01
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-20 22:18:02
+ * @LastEditTime: 2024-06-20 22:30:36
  * @Description: 
  */
 
@@ -55,7 +55,7 @@ const getHost = () => {
     if (window.location.host.startsWith('pre-system.theckb.com')) {
         return `https://pre-gateway.theckb.com`
     } else if (window.location.host === 'system.theckb.com') {
-        return `https://gateway.theckb.com`
+        return `https://gateway-prod.theckb.com`
     } else {
         return `https://master-gateway.theckb.com`;
     }
@@ -96,7 +96,6 @@ export const getOssSign = async ({ path, overwrite, overseaType }: { path: strin
                 }
                 // "eyJhbGciOiJIUzI1NiJ9.eyJuaWNrIjoiYWRtaW4iLCJleHAiOjE3MTg2MTQ4NDcsInVzZXJJZCI6IjE1NDIzMzk4Njc2ODY4OTE1MjIiLCJ1c2VybmFtZSI6ImFkbWluIn0.nmgc62KV0IVXDbClTYiy2R1J-sl18D2snbXcBc0XuDg"
             })(),
-            "x-gray-tag": "20240509-frog"
         },
         "referrer": "https://pre-system.theckb.com/",
         "referrerPolicy": "strict-origin-when-cross-origin",

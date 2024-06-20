@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 21:06:55
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-20 21:50:24
+ * @LastEditTime: 2024-06-20 22:23:15
  * @Description: 
  */
 /** @type {import('next').NextConfig} */
