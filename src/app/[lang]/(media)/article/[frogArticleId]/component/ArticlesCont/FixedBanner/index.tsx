@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 18:23:25
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-20 15:34:20
+ * @LastEditTime: 2024-06-20 18:00:14
  * @Description: 
  */
 'use client'
@@ -43,7 +43,7 @@ const FixedBanner = () => {
             bannerJumpLink && window.open(bannerJumpLink)
         }}
     >
-        <div className="h-[300px] w-[300px] bg-[red]" >fewf</div>
+        {/* <div className="h-[300px] w-[300px] bg-[red]" >fewf</div> */}
         <div
             className="absolute right-0 top-0 cursor-pointer bg-[#000]/[.25] flex items-center justify-center w-[24px] h-[24px]"
             onClick={(e) => {

@@ -2,7 +2,7 @@
 * @Author: shiguang
 * @Date: 2024-05-23 18:03:08
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-20 09:47:57
+ * @LastEditTime: 2024-06-20 17:53:53
 * @Description: 
 */
 import { $createTextNode, $getNodeByKey, $getSelection, $isRangeSelection, $isTextNode, LexicalEditor, RangeSelection, TextNode } from 'lexical';
@@ -103,6 +103,8 @@ const Link = (props: HeadingMenuProps) => {
                                     className='mt-[8px]'
                                     onClick={() => {
                                         activeEditor.update(() => {
+                                            const selection = $getSelection()!
+                                            if (!selection) return;
                                             const linkNode = $createLinkNode(value!.url!, {}).append($createTextNode(linkValue?.title));
                                             if (linkKey) {
                                                 const editNode = $getNodeByKey(linkKey) as LinkNode;
@@ -113,8 +115,6 @@ const Link = (props: HeadingMenuProps) => {
                                                     textNode.setTextContent(value.title)
                                                 }
                                             } else {
-                                                const selection = $getSelection()!
-                                                if (!selection) return;
                                                 selection.insertNodes([
                                                     linkNode
                                                 ]);
@@ -136,20 +136,21 @@ const Link = (props: HeadingMenuProps) => {
                     className={`h-[32px] w-[32px] cursor-pointer hover:bg-[#f0f0f0] flex items-center justify-center rounded-[8px] ${isLink ? 'hover:bg-[#f0f0f0]' : ''}`}
                     onClick={() => {
                         activeEditor.update(() => {
+                            const selection = $getSelection()
+                            debugger
+                            if (!selection || selection.isCollapsed()) return;
                             const isEdit = getSelectionForModal();
                             if (isEdit) {
                                 return;
                             }
-                            const selection = $getSelection()
-                            if (!selection) return;
                             if (selection.isCollapsed()) {
                                 setLinkValue(undefined);
                                 return
                             }
                             const text = selection.getTextContent()
                             setLinkValue({ title: text });
+                            setIsLink(true)
                         })
-                        setIsLink(true)
                     }}
                 >
                     <LinkIcon />
