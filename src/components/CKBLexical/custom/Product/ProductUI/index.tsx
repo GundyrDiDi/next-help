@@ -3,7 +3,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 15:06:29
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-20 23:45:29
+ * @LastEditTime: 2024-06-21 00:29:44
  * @Description: 
  */
 import { ListDataItem } from "../ProductDecorate";
@@ -62,7 +62,7 @@ const ProductVerticalUI = (props: ProductColItemUI) => {
             </div>
         </div>
         <div className={`flex items-center ${isKO ? 'text-[#000]/[.88]' : 'text-[#FF5010]'} text-[16px] mt-[4px]`} >
-            <span className="text-[16px] font-[700] shrink-0" >{cny} 元</span>
+            <span className="text-[16px] font-[700] shrink-0" >{cny} {getTranslationText('元', t)}</span>
             {!isKO && <span className="text-[12px] ml-[4px] line-clamp-1">
                 {/* {jpy} {getTranslationText('円', t)} */}
                 {isJA && <span>{jpy}</span>}
@@ -90,7 +90,7 @@ const ProductHorizontalUI = (props: ProductColItemUI) => {
         <div className="grow flex flex-col ml-[8px] justify-between" >
             <div className="group-hover:text-[var(--fcolor,#008060)] line-clamp-2 !break-all" >{title}</div>
             <div className={`flex items-center ${isKO ? 'text-[#000]/[.88]' : 'text-[#FF5010]'}`} >
-                <span className="text-[16px] font-[700] shrink-0" >{cny} 元</span>
+                <span className="text-[16px] font-[700] shrink-0" >{cny} {getTranslationText('元', t)}</span>
                 {!isKO && <span className="text-[12px] ml-[4px] line-clamp-1">
                     {isJA && <span>{jpy}</span>}
                     {getTranslationText('円', t)}
