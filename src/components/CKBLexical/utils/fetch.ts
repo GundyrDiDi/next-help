@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-13 14:24:45
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-19 21:06:11
+ * @LastEditTime: 2024-06-20 09:40:31
  * @Description: 
  */
 /*
@@ -15,22 +15,26 @@
  */
 
 import { message } from 'antd';
+import queryString from 'query-string';
 import { CAN_USE_DOM } from './environment'
 
 
 const getHostEnv = () => {
+    const { query } = queryString.parseUrl(window.location.href)
     // return 'test';
     if (!CAN_USE_DOM) return 'prod';
     if (
         window.location.host.startsWith('pre-system.theckb.com') ||
         window.location.host.startsWith('pre-help.theckb.com') ||
-        window.location.host.startsWith('pre-media.theckb.com')
+        window.location.host.startsWith('pre-media.theckb.com') || 
+        query.env === 'pre'
     ) {
         return 'pre'
     } else if (
         window.location.host === 'system.theckb.com' ||
         window.location.host === 'help.theckb.com' ||
-        window.location.host === 'media.theckb.com'
+        window.location.host === 'media.theckb.com' || 
+        query.env === 'prod'
     ) {
         return 'prod'
     } else {
