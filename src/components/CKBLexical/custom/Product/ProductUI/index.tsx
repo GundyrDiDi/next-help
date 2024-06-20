@@ -3,13 +3,13 @@
  * @Author: shiguang
  * @Date: 2024-06-12 15:06:29
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-20 20:49:56
+ * @LastEditTime: 2024-06-20 23:45:29
  * @Description: 
  */
 import { ListDataItem } from "../ProductDecorate";
 import { getTranslationText } from "../../LexicalTableOfContents/LexicalTableOfContentsInClient";
 import { useTranslation } from "react-i18next";
-import { Site, getSiteStationFromPath } from "../../../utils/fetch";
+import { Site, getSiteStationFromPath, getSubHostName } from "../../../utils/fetch";
 
 // post 请求 入参 productCode
 // https://gateway-prod.theckb.com/goods/product/detail
@@ -32,7 +32,7 @@ const ProductVerticalUI = (props: ProductColItemUI) => {
     const { t } = useTranslation();
     const { mainImgUrl, iconUrl, title, cny, jpy, className = '', href } = props
     const isKO = getSiteStationFromPath()?.siteHeader === Site.KO;
-    const isJA = getSiteStationFromPath()?.siteHeader === Site.JA;
+    const isJA = getSiteStationFromPath()?.siteHeader === Site.JA || getSubHostName() === 'system';
 
     return <a
         href={href}
@@ -79,7 +79,7 @@ const ProductHorizontalUI = (props: ProductColItemUI) => {
     const { mainImgUrl, title, cny, jpy, className = '', href } = props
     const { t } = useTranslation();
     const isKO = getSiteStationFromPath()?.siteHeader === Site.KO;
-    const isJA = getSiteStationFromPath()?.siteHeader === Site.JA;
+    const isJA = getSiteStationFromPath()?.siteHeader === Site.JA || getSubHostName() === 'system';
 
 
     // const getSiteStationFromPath

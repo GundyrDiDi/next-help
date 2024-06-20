@@ -1,6 +1,6 @@
 {
 	"name": "@sniff/ckb-editor",
-	"version": "0.1.0-alpha.32",
+	"version": "0.1.2",
 	"scripts": {
 		"dev": "next dev",
 		"build": "next build",

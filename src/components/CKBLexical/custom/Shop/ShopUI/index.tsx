@@ -3,14 +3,14 @@
  * @Author: shiguang
  * @Date: 2024-06-12 17:13:19
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-20 20:35:19
+ * @LastEditTime: 2024-06-20 23:02:11
  * @Description: 
  */
 import { useTranslation } from "react-i18next";
 import RightArrow from "../../../Icon/components/RightArrow";
 import { getTranslationText } from "../../LexicalTableOfContents/LexicalTableOfContentsInClient";
 import { ListDataItem } from "../ShopDecorate";
-import { Site, getSiteStationFromPath } from "../../../utils/fetch";
+import { Site, getSiteStationFromPath, getSubHostName } from "../../../utils/fetch";
 
 export interface ShopUIProps {
     urlList?: { code: string; url: string; }[];
@@ -30,7 +30,7 @@ const ShopItemUI = (props: ShopItemUI) => {
     const { iconUrl, shopName, productList, className = '', } = props
     const { t } = useTranslation();
     const isKO = getSiteStationFromPath()?.siteHeader === Site.KO;
-    const isJA = getSiteStationFromPath()?.siteHeader === Site.JA;
+    const isJA = getSiteStationFromPath()?.siteHeader === Site.JA || getSubHostName() === 'system';
     return <a
         href={props.originShopUrl}
         target="_blank"
