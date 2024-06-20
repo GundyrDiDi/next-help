@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-19 21:06:32
+ * @LastEditTime: 2024-06-20 11:04:29
  * @Description: 
  */
 /*
@@ -267,12 +267,14 @@ const ProductDecorate = (props: ProductDecorateProps) => {
     const [editor] = useLexicalComposerContext();
     const isEditable = useLexicalEditable()
     const onErrorRef = useRef<() => void>(() => { })
-    onErrorRef.current = () => {
+    const removeNode = () => {
+        debugger
         editor.update(() => {
             const node = $getNodeByKey(props.nodeKey);
             node?.remove();
         })
     }
+    onErrorRef.current = removeNode
     const listData = useProductListData(props.options.urlList, onErrorRef)
     const dom = <div>
         <ProductUI urlList={props.options.urlList} listData={listData} />
@@ -283,9 +285,14 @@ const ProductDecorate = (props: ProductDecorateProps) => {
     return <Tooltip
         arrow={false}
         title={
-            <span onClick={() => onClick(props.nodeKey)} className="cursor-pointer" >
-                编辑
-            </span>
+            <div>
+                <span onClick={() => onClick(props.nodeKey)} className="cursor-pointer" >
+                    编辑
+                </span>
+                <span onClick={removeNode} className="cursor-pointer ml-[16px]" >
+                    删除
+                </span>
+            </div>
         } >
         {dom}
     </Tooltip>

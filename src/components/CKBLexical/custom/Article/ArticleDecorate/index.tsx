@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 19:40:42
+ * @LastEditTime: 2024-06-20 11:07:11
  * @Description: 
  */
 /*
@@ -32,23 +32,34 @@ const ArticleDecorate = (props: ArticleDecorateProps) => {
     const isEditable = useLexicalEditable()
     const [editor] = useLexicalComposerContext()
     console.log(1, 2, 3)
+    const removeNode = () => {
+        editor.update(() => {
+            const node = $getNodeByKey(props.nodeKey);
+            node?.remove();
+        })
+    }
     const dom = <ArticleUI
         url={props.options.url}
         onError={() => {
-            editor.update(() => {
-                message.warning('没找到对应链接文章');
-                const node = $getNodeByKey(props.nodeKey);
-                node?.remove();
-            })
+            removeNode();
+            message.warning('没找到对应链接文章');
+
         }}
     />;
     if (!isEditable) return dom;
     return <Tooltip
         arrow={false}
         title={
-            <span onClick={() => onClick(props.nodeKey)} className="cursor-pointer" >
-                编辑
-            </span>
+            <div>
+
+                <span onClick={() => onClick(props.nodeKey)} className="cursor-pointer" >
+                    编辑
+                </span>
+                <span onClick={removeNode} className="cursor-pointer ml-[16px]" >
+                    删除
+                </span>
+            </div>
+
         } >
 
         <div >{dom}</div>

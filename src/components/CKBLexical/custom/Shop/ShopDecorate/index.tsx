@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-19 19:22:08
+ * @LastEditTime: 2024-06-20 11:16:57
  * @Description: 
  */
 import { Tooltip, message } from "antd";
@@ -181,19 +181,11 @@ const useShopListData = (urlList: ShopUIProps['urlList'], onErrorRef: React.Muta
                             cny: it.productSellPrice,
                             //  TODO
                             jpy: (() => {
-                                if (!it.productSellPrice) return '**';
                                 const www: any = window;
-                                return www.calcByCnyPrice(it.productSellPrice);
-
-                                // const [startPrice] = (item.productSellPriceRange ?? '').split('-')
-                                // const www: any = window;
-                                // if (!CAN_USE_DOM || !www.calcByCnyPrice) return '**';
-                                // return www.calcByCnyPrice(startPrice);
-                                // if (startPrice === endPrice) {
-                                //     return www.calcByCnyPrice(startPrice);
-                                // }
-                                // return `${www.calcByCnyPrice(startPrice)}-${www.calcByCnyPrice(endPrice)}`;
+                                if (!CAN_USE_DOM || !it.productSellPrice || !www?.calcByCnyPrice) return '**';
+                                return www.calcByCnyPrice?.(it.productSellPrice);
                             })()
+
 
                         }
                     }) ?? []
@@ -215,13 +207,15 @@ const ShopDecorate = (props: ShopDecorateProps) => {
     const isEditable = useLexicalEditable()
 
     const onErrorRef = useRef<() => void>(() => { })
-    onErrorRef.current = () => {
+    const removeNode = () => {
         editor.update(() => {
             const node = $getNodeByKey(props.nodeKey);
             node?.remove();
         })
     }
+    onErrorRef.current = removeNode;
     const listData = useShopListData(props.options.urlList, onErrorRef)
+    console.log('useShopListData', listData, isEditable)
     const dom = <div>
         <ShopUI listData={listData} />
     </div>
@@ -231,10 +225,16 @@ const ShopDecorate = (props: ShopDecorateProps) => {
     return <Tooltip
         arrow={false}
         title={
-            <span onClick={() => onClick(props.nodeKey)} className=" cursor-pointer" >
-                编辑
-            </span>
-        } >
+            <div>
+                <span onClick={() => onClick(props.nodeKey)} className=" cursor-pointer" >
+                    编辑
+                </span>
+                <span onClick={removeNode} className="cursor-pointer ml-[16px]" >
+                    删除
+                </span>
+            </div>
+        }
+    >
         {dom}
     </Tooltip>
 

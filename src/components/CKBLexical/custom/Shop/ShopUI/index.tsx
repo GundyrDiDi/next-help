@@ -3,7 +3,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 17:13:19
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-19 18:46:50
+ * @LastEditTime: 2024-06-20 10:23:40
  * @Description: 
  */
 import { useTranslation } from "react-i18next";
@@ -67,7 +67,8 @@ const ShopItemUI = (props: ShopItemUI) => {
 const ShopUI = (props: ShopUIProps) => {
     const { onClick, listData } = props;
     const shopListData = listData;
-    if (!shopListData) return;
+    console.log('ShopUI', shopListData)
+    if (!shopListData) return null;
     return <div className="pc:flex pc:flex-wrap pc:w-[810px]" onClick={onClick} >
         {/* pc 端 店铺 > 2 的情况 */}
         {shopListData.map((item, index) => {
