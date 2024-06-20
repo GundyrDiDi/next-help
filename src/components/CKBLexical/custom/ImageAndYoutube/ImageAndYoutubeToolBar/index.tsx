@@ -3,7 +3,7 @@
  * @Author: shiguang
  * @Date: 2024-05-23 18:03:08
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 06:36:55
+ * @LastEditTime: 2024-06-20 18:36:25
  * @Description: 
  */
 import { $getNodeByKey, $getSelection, LexicalEditor } from 'lexical';
@@ -139,8 +139,10 @@ const ImageAndYoutubeToolBar = (props: HeadingMenuProps) => {
 
     return (
         <div>
-            <Modal open={isButton}
+            <Modal
+                open={isButton}
                 onCancel={hideModal}
+                destroyOnClose
                 footer={false}
             >
                 <Form form={form} initialValues={{ imageOrYoutube: 'image' }} >
@@ -199,7 +201,7 @@ const ImageAndYoutubeToolBar = (props: HeadingMenuProps) => {
                     </Form.Item>
                     <Form.Item noStyle shouldUpdate >
                         {() => {
-                            const  isYoutube = form.getFieldValue('imageOrYoutube') === 'youtube';
+                            const isYoutube = form.getFieldValue('imageOrYoutube') === 'youtube';
                             // if (getFieldValue('imageOrYoutube') !== 'youtube') return null
 
                             const isOk = (

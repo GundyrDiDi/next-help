@@ -126,6 +126,9 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
                     }}
                   />
                 </div>
+                <div className="pc:hidden pad:hidden mb-[8px]" >
+                  {markingShow && <Marking />}
+                </div>
               </div>
               <ArticleSwitch
                 frogArticleId={frogArticle?.frogArticleId}
@@ -150,7 +153,9 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
           </div>
         </div>
       </div>
-      {markingShow && <Marking />}
+      <div className="mo:hidden" >
+        {markingShow && <Marking />}
+      </div>
     </>
   );
 };
