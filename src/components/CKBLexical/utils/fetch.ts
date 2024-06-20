@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-13 14:24:45
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-20 09:40:31
+ * @LastEditTime: 2024-06-20 13:52:21
  * @Description: 
  */
 /*
@@ -19,7 +19,7 @@ import queryString from 'query-string';
 import { CAN_USE_DOM } from './environment'
 
 
-const getHostEnv = () => {
+export const getHostEnv = () => {
     const { query } = queryString.parseUrl(window.location.href)
     // return 'test';
     if (!CAN_USE_DOM) return 'prod';

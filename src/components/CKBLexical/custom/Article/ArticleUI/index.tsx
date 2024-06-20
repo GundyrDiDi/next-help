@@ -2,12 +2,14 @@
  * @Author: shiguang
  * @Date: 2024-06-12 11:26:06
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-19 17:49:36
+ * @LastEditTime: 2024-06-20 14:59:42
  * @Description: 
  */
 import queryString from "query-string";
 import { crossFetch, getInputUrlIsJenkinsTestEnv } from "../../../utils/fetch";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { getTranslationText } from "../../LexicalTableOfContents/LexicalTableOfContentsInClient";
 
 /* eslint-disable @next/next/no-img-element */
 
@@ -113,6 +115,7 @@ const useParseUrl = (url: string, options: Pick<ArticleUIProps, 'onError'> = {})
 
 const ArticleUI = (props: ArticleUIProps) => {
     const { url, onClick, onError, className } = props;
+    const { t } = useTranslation();
     const articleData = useParseUrl(url!, { onError })
     if (!articleData) return null;
 
@@ -124,7 +127,7 @@ const ArticleUI = (props: ArticleUIProps) => {
             <div className="flex justify-between" >
                 {!!description && <div className="text-black/[.45] line-clamp-1 mr-[8px]" style={{ wordBreak: 'break-word' }} >{description}</div>}
                 <div className="shrink-0 text-[#0586FE] text-[14px] underline" >
-                    查看更多
+                    {getTranslationText('查看更多_文章卡片', t)}
                 </div>
             </div>
         </div>

@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-13 20:42:43
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-19 17:25:34
+ * @LastEditTime: 2024-06-20 14:56:29
  * @Description: 
  */
 
@@ -56,7 +56,7 @@ const LexicalTableOfContentsInClient = (props: LexicalTableOfContentsInClient) =
         <div className="flex items-center">
             <TableOfcontent className="h-[28px]" height={28} width={22} viewBox={undefined} />
             <span className="font-bold text-[var(-fcolor,#008060)] text-[24px] leading-[32px] pl-[8px] pr-[4px]" >
-                {getTranslationText('目录', t)}
+                {getTranslationText('目录1', t)}
             </span>
             <span
                 className="h-[22px] font-normal text-neutral-700 text-[14px] leading-[22px] cursor-pointer"
@@ -64,7 +64,7 @@ const LexicalTableOfContentsInClient = (props: LexicalTableOfContentsInClient) =
                     setIsShow(data => !data)
                 }}
             >
-                {isShow ? `[${getTranslationText('关闭', t)}]` : `[${getTranslationText('打开', t)}]`}
+                {isShow ? `[${getTranslationText('关闭_文章目录', t)}]` : `[${getTranslationText('打开', t)}]`}
             </span>
         </div>
         {isShow && <>

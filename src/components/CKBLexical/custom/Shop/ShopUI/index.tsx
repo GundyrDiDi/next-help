@@ -3,7 +3,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 17:13:19
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-20 12:56:21
+ * @LastEditTime: 2024-06-20 14:20:23
  * @Description: 
  */
 import { useTranslation } from "react-i18next";
@@ -46,6 +46,7 @@ const ShopItemUI = (props: ShopItemUI) => {
                     <div className="w-[100%] grid" >
                         <img
                             alt=""
+                            referrerPolicy='no-referrer'
                             src={item.mainImgUrl}
                             className="rounded-[4px] object-cover"
                             style={{

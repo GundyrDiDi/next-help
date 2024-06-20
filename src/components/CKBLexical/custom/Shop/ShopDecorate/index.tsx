@@ -2,13 +2,13 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-20 12:30:12
+ * @LastEditTime: 2024-06-20 14:14:09
  * @Description: 
  */
 import { Tooltip, message } from "antd";
 import { shopToolBarEmitter } from "../ShopToolBar";
 import ShopUI, { ShopUIProps } from "../ShopUI"
-import { crossFetch } from "../../../utils/fetch";
+import { crossFetch, getSubHostName } from "../../../utils/fetch";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $getNodeByKey } from "lexical";
@@ -16,6 +16,7 @@ import useLexicalEditable from "@lexical/react/useLexicalEditable";
 import { CAN_USE_DOM } from "../../../utils/environment";
 import { useSettings } from "../../../context/SettingsContext";
 import { handleLoginPrice } from "../../../utils/handlePrice";
+import { wrapperProductAndShopUrlByLogin } from "../../../utils/url";
 
 interface ShopDecorateProps {
     nodeKey: string;
@@ -166,8 +167,6 @@ const useShopListData = (urlList: ShopUIProps['urlList'], onErrorRef: React.Muta
     const [listDta, setListData] = useState<ListDataItem[]>();
     const { settings } = useSettings();
     const isLogin = !!settings.bizfields?.userInfo;
-    console.log('eeeeeeee', settings);
-
     useEffect(() => {
         if (!urlList?.length) return;
         const urls = urlList.map(item => item.url);
@@ -177,12 +176,11 @@ const useShopListData = (urlList: ShopUIProps['urlList'], onErrorRef: React.Muta
                     iconUrl: thirdPlateIconConf[item.platformType!],
                     // shopName: item.originalShopName,
                     shopName: item.supplierShopName,
-                    originShopUrl: item.shopUrl,
-
+                    originShopUrl: wrapperProductAndShopUrlByLogin(isLogin, item.shopUrl),
                     productList: item.productList?.slice(0, 3)?.map((it: any) => {
                         return {
                             mainImgUrl: it.productMainImg,
-                            originProductUrl: it.productDetailUrl,
+                            originProductUrl: wrapperProductAndShopUrlByLogin(isLogin, it.productDetailUrl),
                             cny: handleLoginPrice(isLogin, it.productSellPrice),
                             //  TODO
                             jpy: (() => {
@@ -190,8 +188,6 @@ const useShopListData = (urlList: ShopUIProps['urlList'], onErrorRef: React.Muta
                                 if (!CAN_USE_DOM || !it.productSellPrice || !www?.calcByCnyPrice) return '**';
                                 return handleLoginPrice(isLogin, www.calcByCnyPrice?.(it.productSellPrice));
                             })()
-
-
                         }
                     }) ?? []
                 }
@@ -199,7 +195,9 @@ const useShopListData = (urlList: ShopUIProps['urlList'], onErrorRef: React.Muta
             setListData(data);
         }).catch(errList => {
             if (Array.isArray(errList)) {
-                message.warning(errList.join('\n'))
+                if (getSubHostName() === 'system') {
+                    message.warning(errList.join('\n'))
+                }
                 onErrorRef.current();
             }
         });;

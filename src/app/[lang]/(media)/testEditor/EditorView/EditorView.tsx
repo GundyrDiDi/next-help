@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-23 14:47:05
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-20 12:37:02
+ * @LastEditTime: 2024-06-20 13:45:54
  * @Description: 
  */
 'use client'
@@ -15,7 +15,7 @@ import ArticleUI from "../../../../../components/CKBLexical/custom/Article/Artic
 import ProductUI from "../../../../../components/CKBLexical/custom/Product/ProductUI";
 import ShopUI from "../../../../../components/CKBLexical/custom/Shop/ShopUI";
 import MultiUrlModal from "../../../../../components/CKBLexical/components/MultiUrlModal";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { $getSelection, $getEditor } from "lexical";
 import { htmlmock } from "../../../../../components/CKBLexical/mock/htmlmock";
 import { htmlmock1 } from "../../../../../components/CKBLexical/mock/htmlmock1";
@@ -56,8 +56,14 @@ interface EditorViewProps {
 export default function EditorView(props: EditorViewProps) {
     const { articleTitle, initHtml } = props
     const editorRef = useRef<CKBEditorRef>(null);
-    const [userInfo] = useAtom(atomCustomerDetail);
+    const [_userInfo] = useAtom(atomCustomerDetail);
+    const userInfo = _userInfo && Object.keys(_userInfo).length ? _userInfo : undefined
     // const [userInfo] = useAtom(CustomerDetail);
+
+    useEffect(() => {
+        // ckb-editor-element-container-shop
+        // http://n.media.theckb.com:4000/ja/article/30?env=true
+    }, [])
 
     return (
         <div className="ckb-editor-view-container" >

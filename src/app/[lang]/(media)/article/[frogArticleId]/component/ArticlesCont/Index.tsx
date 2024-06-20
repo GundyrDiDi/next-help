@@ -108,22 +108,24 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
                     {setStationTime(frogArticle?.createTime)}
                   </div>
                 )}
-                {/* 新版编辑器 */}
-                {isCkbEditor && !!frogArticle?.frogArticleContent &&
-                  <EditorView
-                    articleTitle={frogArticle?.frogArticleTitle}
-                    initHtml={frogArticle?.frogArticleContent}
+                <div className={`${_markingShow ? 'max-h-[100vh] overflow-hidden' : ''}`} >
+                  {/* 新版编辑器 */}
+                  {isCkbEditor && !!frogArticle?.frogArticleContent &&
+                    <EditorView
+                      articleTitle={frogArticle?.frogArticleTitle}
+                      initHtml={frogArticle?.frogArticleContent}
+                    />
+                  }
+                  {/* ${markingShow ? `h-[100vh] overflow-hidden` : ''} */}
+                  <div
+                    id="content-html"
+                    // className={`media-help-artical-content  ${isCkbEditor ? 'hidden' : ''} `}
+                    className={`media-help-artical-content ${_markingShow ? `h-[100vh] overflow-hidden` : ''} ${isCkbEditor ? 'hidden' : ''} `}
+                    dangerouslySetInnerHTML={{
+                      __html: frogArticle?.frogArticleContent!,
+                    }}
                   />
-                }
-                {/* ${markingShow ? `h-[100vh] overflow-hidden` : ''} */}
-                <div
-                  id="content-html"
-                  // className={`media-help-artical-content  ${isCkbEditor ? 'hidden' : ''} `}
-                  className={`media-help-artical-content ${_markingShow ? `h-[100vh] overflow-hidden` : ''} ${isCkbEditor ? 'hidden' : ''} `}
-                  dangerouslySetInnerHTML={{
-                    __html: frogArticle?.frogArticleContent!,
-                  }}
-                />
+                </div>
               </div>
               <ArticleSwitch
                 frogArticleId={frogArticle?.frogArticleId}

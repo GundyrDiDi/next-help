@@ -42,6 +42,7 @@ const ProductVerticalUI = (props: ProductColItemUI) => {
             <img
                 alt=""
                 src={mainImgUrl}
+                referrerPolicy='no-referrer'
                 className="rounded-[4px] object-cover"
                 style={{
                     gridArea: '1 / 1 / span 1 / span 1',

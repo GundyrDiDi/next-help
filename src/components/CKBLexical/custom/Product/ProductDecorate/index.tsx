@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-20 12:29:44
+ * @LastEditTime: 2024-06-20 15:16:19
  * @Description: 
  */
 /*
@@ -15,7 +15,7 @@
 import { Tooltip, message } from "antd";
 import { productToolBarEmitter } from "../ProductToolBar";
 import ProductUI, { ProductUIProps } from "../ProductUI"
-import { Site, crossFetch, getSiteStationFromPath } from "../../../utils/fetch";
+import { Site, crossFetch, getHostEnv, getSiteStationFromPath, getSubHostName } from "../../../utils/fetch";
 import { useEffect, useRef, useState } from "react";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { $getNodeByKey } from "lexical";
@@ -23,6 +23,7 @@ import useLexicalEditable from "@lexical/react/useLexicalEditable";
 import { CAN_USE_DOM } from "../../../utils/environment";
 import { useSettings } from "../../../context/SettingsContext";
 import { handleLoginPrice } from "../../../utils/handlePrice";
+import { wrapperProductAndShopUrlByLogin } from "../../../utils/url";
 
 const thirdPlateIconConf: Record<string, any> = {
     TB: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/淘宝.png',
@@ -78,7 +79,7 @@ export const requestProductInfoByUrl = async (url: string) => {
             config.headers = {
                 ...config.headers,
                 ['x-authtoken']: '',
-                ['x-stationcode']: getSiteStationFromPath()?.siteHeader ?? Site.KO
+                ['x-stationcode']: getSiteStationFromPath()?.siteHeader ?? Site.JA
             }
             return config
         },
@@ -147,6 +148,22 @@ export const useProductListData = (urlList: ProductUIProps['urlList'] | undefine
         //         console.log(res, 'res')
         //     });
         // }
+
+
+        const getLoginUrl = () => {
+            const hostName = getSubHostName()
+            const isSystem = hostName === 'system';
+            if (isSystem) return;
+            const env = getHostEnv()
+            if (env === 'test') {
+                return 'https://master-s.theckb.com/login'
+            }
+            if (env === 'pre') {
+                return 'https://pre-s.theckb.com/login'
+            }
+            return 'https://s.theckb.com/login'
+        }
+
         requestProductInfoListByUrlList(urls).then((res) => {
             const data = res.map((item, index) => {
 
@@ -162,14 +179,16 @@ export const useProductListData = (urlList: ProductUIProps['urlList'] | undefine
                         if (!CAN_USE_DOM || !www.calcByCnyPrice) return '**';
                         return handleLoginPrice(isLogin, www.calcByCnyPrice(item.productSellPrice));
                     })(),
-                    originProductUrl: urls[index]!
+                    originProductUrl: wrapperProductAndShopUrlByLogin(isLogin, urls[index]!),
 
                 } as ListDataItem
             });
             setListData(data);
         }).catch(errList => {
             if (Array.isArray(errList)) {
-                message.warning(errList.join('\n'))
+                if (getSubHostName() === 'system') {
+                    message.warning(errList.join('\n'))
+                }
                 onErrorRef.current();
             }
         });

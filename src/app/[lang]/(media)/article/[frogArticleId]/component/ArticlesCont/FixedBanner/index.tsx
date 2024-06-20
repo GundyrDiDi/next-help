@@ -1,8 +1,8 @@
 /*
  * @Author: shiguang
  * @Date: 2024-05-16 18:23:25
- * @LastEditors: tianzhitong laotianwy@163.com
- * @LastEditTime: 2024-06-18 21:32:57
+ * @LastEditors: shiguang
+ * @LastEditTime: 2024-06-20 15:34:20
  * @Description: 
  */
 'use client'
@@ -33,13 +33,17 @@ const FixedBanner = () => {
     const imageUrl = data?.data?.[0]?.bannerImgUrl;
     const bannerImgMobileUrl = data?.data?.[0]?.bannerImgMobileUrl;
     const bannerJumpLink = data?.data?.[0]?.bannerJumpLink
+    console.log('tttttttt', imageUrl, bannerImgMobileUrl, isCloseBanner)
     if (!imageUrl || !bannerImgMobileUrl || isCloseBanner) return null;
+    console.log('zzzzzzzz', imageUrl)
     return (<div
-        className="pc:w-[370px] pc:h-[208px] bg-[#ccc] mo:fixed mo:left-0 mo:right-0 bottom-[8px] mo:h-[120px] relative mt-[20px]"
+        id="dewfwf"
+        className=" pc:w-[370px] pc:h-[208px] bg-[#ccc] mo:fixed mo:left-0 mo:right-0 bottom-[8px] mo:h-[120px] relative mt-[20px]"
         onClick={() => {
             bannerJumpLink && window.open(bannerJumpLink)
         }}
     >
+        <div className="h-[300px] w-[300px] bg-[red]" >fewf</div>
         <div
             className="absolute right-0 top-0 cursor-pointer bg-[#000]/[.25] flex items-center justify-center w-[24px] h-[24px]"
             onClick={(e) => {

@@ -1,8 +1,8 @@
 /*
  * @Author: shiguang
  * @Date: 2024-06-13 20:42:43
- * @LastEditors: yusha
- * @LastEditTime: 2024-06-18 20:54:47
+ * @LastEditors: shiguang
+ * @LastEditTime: 2024-06-20 14:56:40
  * @Description: 
  */
 
@@ -56,14 +56,14 @@ const LexicalTableOfContentsRightSide = (props: LexicalTableOfContentsRightSide)
     return <div className={`${isInArtical ? '' : 'pc:h-[370px] pad:h-[370px] overflow-y-auto'} bg-[#FAFAFA] p-[20px]`} >
         <div className="flex items-center">
             <TableOfcontent className="h-[28px]" height={28} width={22} viewBox={undefined} />
-            <span className="font-bold text-[var(--pcolor,#008060)] text-[24px] leading-[32px] pl-[8px] pr-[4px]" > {getTranslationText('目录', t)}</span>
+            <span className="font-bold text-[var(--pcolor,#008060)] text-[24px] leading-[32px] pl-[8px] pr-[4px]" > {getTranslationText('目录1', t)}</span>
             <span
                 className="h-[22px] font-normal text-neutral-700 text-[14px] leading-[22px] cursor-pointer"
                 onClick={() => {
                     setIsShow(data => !data)
                 }}
             >
-                {isShow ? `[${getTranslationText('关闭', t)}]` : `[${getTranslationText('打开', t)}]`}
+                {isShow ? `[${getTranslationText('关闭_文章目录', t)}]` : `[${getTranslationText('打开', t)}]`}
             </span>
         </div>
         {isShow && <>

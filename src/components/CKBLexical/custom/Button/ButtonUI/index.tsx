@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-07 17:29:24
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 19:46:27
+ * @LastEditTime: 2024-06-20 14:00:21
  * @Description: 
  */
 
@@ -72,7 +72,7 @@ const ButtonUI = (props: ButtonUIProps) => {
     if (href) {
         buttonDom = <a
             id="zzz"
-            target={target}
+            target="_blank"
             href={href}
             onClick={onClick}
             className={`active:outline-[1px] active:outline  text-[16px] leading-[24px] font-[700] px-[16px] py-[8px] rounded-[23px] ${curStyle} ${className}`}
