@@ -3,7 +3,7 @@
  * @Author: shiguang
  * @Date: 2024-05-23 16:23:31
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 16:52:20
+ * @LastEditTime: 2024-06-20 19:12:31
  * @Description: 
  */
 import { Button } from "antd";
@@ -139,7 +139,7 @@ const ToolbarPlugin = () => {
         <ShopToolBar activeEditor={activeEditor} />
         <ProductToolBar activeEditor={activeEditor} />
         <div
-          className="cursor-pointer"
+          className="cursor-pointer hidden"
           onClick={() => {
             editor.setEditable(false)
             setIsEditable(false)
