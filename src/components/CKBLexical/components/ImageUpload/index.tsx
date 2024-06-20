@@ -6,7 +6,7 @@ import { DragEvent, useEffect, useRef, useState } from "react";
  * @Author: shiguang
  * @Date: 2024-06-11 16:37:01
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-20 21:20:17
+ * @LastEditTime: 2024-06-20 22:18:02
  * @Description: 
  */
 
@@ -80,7 +80,22 @@ export const getOssSign = async ({ path, overwrite, overseaType }: { path: strin
         "headers": {
             "accept": "application/json, text/plain, */*",
             "content-type": "application/json",
-            "x-authtoken": "eyJhbGciOiJIUzI1NiJ9.eyJuaWNrIjoiYWRtaW4iLCJleHAiOjE3MTg2MTQ4NDcsInVzZXJJZCI6IjE1NDIzMzk4Njc2ODY4OTE1MjIiLCJ1c2VybmFtZSI6ImFkbWluIn0.nmgc62KV0IVXDbClTYiy2R1J-sl18D2snbXcBc0XuDg",
+            "x-authtoken": (() => {
+                const www: any = window;
+                const rawWindow = www.rawWindow ?? www;
+                if (!www.rawWindow) {
+                    console.log('rawWindow 不存在');
+                }
+                try {
+                    const data = JSON.parse(rawWindow.localStorage.getItem("user")!);
+                    const token = data.user.token;
+                    return token;
+                } catch (error) {
+                    console.log('error', error);
+                    return "noGetToken";
+                }
+                // "eyJhbGciOiJIUzI1NiJ9.eyJuaWNrIjoiYWRtaW4iLCJleHAiOjE3MTg2MTQ4NDcsInVzZXJJZCI6IjE1NDIzMzk4Njc2ODY4OTE1MjIiLCJ1c2VybmFtZSI6ImFkbWluIn0.nmgc62KV0IVXDbClTYiy2R1J-sl18D2snbXcBc0XuDg"
+            })(),
             "x-gray-tag": "20240509-frog"
         },
         "referrer": "https://pre-system.theckb.com/",
