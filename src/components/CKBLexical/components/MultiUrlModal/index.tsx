@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 17:50:15
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-19 19:53:13
+ * @LastEditTime: 2024-06-20 18:25:35
  * @Description: 
  */
 'use client'
@@ -69,6 +69,7 @@ const MultiUrlModal = (props: MultiUrlModalProps) => {
             >
                 {(fields, { add, remove }, { errors }) => {
                     const isMaxCount = fields.length >= maxCount;
+                    let validateFlag = true;
                     return (
                         <>
                             {fields.map((field, index) => (
@@ -81,7 +82,7 @@ const MultiUrlModal = (props: MultiUrlModalProps) => {
                                     >
                                         <Form.Item
                                             {...field}
-                                            validateTrigger="onBlur"
+                                            validateTrigger="onChange"
                                             name={[field.name, 'url']}
                                             validateFirst
                                             rules={[
@@ -90,13 +91,14 @@ const MultiUrlModal = (props: MultiUrlModalProps) => {
                                                     message: "请输入正确的链接",
                                                     validator(rule, value, callback) {
                                                         if (REGEXP_URL.test(value)) {
+                                                            validateFlag = true;
                                                             return callback();
                                                         }
+                                                        validateFlag = false;
                                                         return callback('请输入正确的链接');
                                                     },
                                                 },
                                                 {
-                                                    required: true,
                                                     validator: async function (rule, value, callback) {
                                                         let res: any = undefined;
                                                         try {
@@ -106,12 +108,15 @@ const MultiUrlModal = (props: MultiUrlModalProps) => {
                                                                 res = await requestShopInfoByUrl(value)
                                                             }
                                                         } catch (err: any) {
+                                                            validateFlag = false;
                                                             return Promise.reject(err?.msg);
                                                         }
                                                         if (res?.code !== '0') {
+                                                            validateFlag = false;
                                                             console.log(res?.msg, 666)
                                                             return Promise.reject(res?.msg);
                                                         }
+                                                        validateFlag = true;
                                                         return Promise.resolve();
                                                     },
                                                 },
@@ -121,9 +126,9 @@ const MultiUrlModal = (props: MultiUrlModalProps) => {
                                             <Input
                                                 placeholder={`请输入${config[type].title}链接`}
                                                 className="grow"
-                                                onChange={() => {
-                                                    form.validateFields(['urls'])
-                                                }}
+                                            // onChange={() => {
+                                            //     form.validateFields(['urls'])
+                                            // }}
                                             />
                                         </Form.Item>
                                         <Form.Item
@@ -159,13 +164,14 @@ const MultiUrlModal = (props: MultiUrlModalProps) => {
                             <Form.Item noStyle shouldUpdate >
                                 {() => {
                                     const _urls = form.getFieldsValue().urls;
-                                    console.log(_urls, 'xxx')
-                                    const isPass = _urls?.every(Boolean) && _urls?.every((item: any) => {
-                                        return REGEXP_URL.test(item.url)
-                                    })
-                                    console.log(isPass, 'isPass')
+                                    // console.log(_urls, 'xxx', errors)
+                                    // const isPass = _urls?.every(Boolean) && _urls?.every((item: any) => {
+                                    //     return REGEXP_URL.test(item.url)
+                                    // })
+
+                                    console.log(validateFlag, 'isPass')
                                     return <Button
-                                        disabled={!isPass}
+                                        disabled={!validateFlag}
                                         htmlType="submit"
                                         onClick={() => {
                                             onOk?.(_urls);
