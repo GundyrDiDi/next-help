@@ -2,7 +2,7 @@
 * @Author: shiguang
 * @Date: 2024-05-23 18:03:08
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-20 21:08:47
+ * @LastEditTime: 2024-06-20 21:34:07
 * @Description: 
 */
 import { $createTextNode, $getNodeByKey, $getSelection, $isRangeSelection, $isTextNode, LexicalEditor, RangeSelection, TextNode } from 'lexical';
@@ -106,7 +106,7 @@ const Link = (props: HeadingMenuProps) => {
                                         activeEditor.update(() => {
                                             const selection = $getSelection()!
                                             if (!selection) return;
-                                            const linkNode = $createLinkNode(value!.url!, {}).append($createTextNode(linkValue?.title));
+                                            const linkNode = $createLinkNode(value!.url!, { target: '_blank' }).append($createTextNode(linkValue?.title));
                                             if (linkKey) {
                                                 const editNode = $getNodeByKey(linkKey) as LinkNode;
                                                 const textNode = editNode.getFirstChild() as TextNode
@@ -132,6 +132,7 @@ const Link = (props: HeadingMenuProps) => {
                     </Form>
                 </div>
             </Modal>
+            {/* <a target="_blank" ></a> */}
             <TooltipWithMenu isShowToolTip title="链接">
                 <button
                     className={`h-[32px] w-[32px] cursor-pointer hover:bg-[#f0f0f0] flex items-center justify-center rounded-[8px] ${isLink ? 'hover:bg-[#f0f0f0]' : ''}`}

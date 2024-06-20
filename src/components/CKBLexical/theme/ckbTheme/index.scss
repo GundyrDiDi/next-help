@@ -126,6 +126,8 @@
   }
   .CKBEditorTheme__link {
     color: rgb(33, 111, 219);
+    text-decoration: underline !important;
+    font-weight: 700;
     text-decoration: none;
   }
   .CKBEditorTheme__link:hover {
