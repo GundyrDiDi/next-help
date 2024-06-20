@@ -3,13 +3,13 @@
  * @Author: shiguang
  * @Date: 2024-06-12 15:06:29
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-19 18:46:18
+ * @LastEditTime: 2024-06-20 12:19:47
  * @Description: 
  */
-import React from "react";
 import { ListDataItem } from "../ProductDecorate";
 import { getTranslationText } from "../../LexicalTableOfContents/LexicalTableOfContentsInClient";
 import { useTranslation } from "react-i18next";
+import { Site, getSiteStationFromPath } from "../../../utils/fetch";
 
 // post 请求 入参 productCode
 // https://gateway-prod.theckb.com/goods/product/detail
@@ -31,6 +31,8 @@ interface ProductColItemUI extends ListDataItem {
 const ProductVerticalUI = (props: ProductColItemUI) => {
     const { t } = useTranslation();
     const { mainImgUrl, iconUrl, title, cny, jpy, className = '', href } = props
+    const isKO = getSiteStationFromPath()?.siteHeader === Site.KO;
+
     return <a
         href={href}
         target="_blank"
@@ -57,25 +59,30 @@ const ProductVerticalUI = (props: ProductColItemUI) => {
                 {title}
             </div>
         </div>
-        <div className="flex items-center text-[#FF5010]  text-[16px] mt-[4px]" >
+        <div className={`flex items-center ${isKO ? 'text-[#000]/[.88]' : 'text-[#FF5010]'} text-[16px] mt-[4px]`} >
             <span className="text-[16px] font-[700]" >{cny} 元</span>
-            <span className="text-[12px] ml-[4px]">{jpy} {getTranslationText('円', t)}</span>
+            {!isKO && <span className="text-[12px] ml-[4px]">{jpy} {getTranslationText('円', t)}</span>}
+            {isKO && <span className="text-[12px] ml-[4px]">({getTranslationText('円', t)}{jpy})</span>}
+
         </div>
     </a>
 }
 
 const ProductHorizontalUI = (props: ProductColItemUI) => {
-    const { mainImgUrl, iconUrl, title, cny, jpy, className = '', href } = props
+    const { mainImgUrl, title, cny, jpy, className = '', href } = props
     const { t } = useTranslation();
+    const isKO = getSiteStationFromPath()?.siteHeader === Site.KO;
+    // const getSiteStationFromPath
     return <a
         href={href} target="_blank"
         className={`ProductHorizontalUI flex !items-stretch hover:border border-[#F0F0F0] rounded-[8px] p-[8px] cursor-pointer group box-border ${className}`} >
         <img src={mainImgUrl} alt="" className="w-[120px] h-[120px] rounded-[4px] shrink-0" />
         <div className="grow flex flex-col ml-[8px] justify-between" >
             <div className="group-hover:text-[var(--fcolor,#008060)] line-clamp-2 !break-all" >{title}</div>
-            <div className="flex items-center text-[#FF5010]" >
+            <div className={`flex items-center ${isKO ? 'text-[#000]/[.88]' : 'text-[#FF5010]'}`} >
                 <span className="text-[16px] font-[700] " >{cny} 元</span>
-                <span className="text-[12px] ml-[4px]">{jpy} {getTranslationText('円', t)}</span>
+                {!isKO && <span className="text-[12px] ml-[4px]">{jpy} {getTranslationText('円', t)}</span>}
+                {isKO && <span className="text-[12px] ml-[4px]">({getTranslationText('円', t)}{jpy})</span>}
             </div>
         </div>
     </a>
@@ -103,13 +110,8 @@ const testCase = [
     // },
 ]
 
-const WithATag = ({ children, href }: { children: React.ReactNode, href?: string }) => {
-    if (!href) return children
-    return <a href={href} className="block" >{children}</a>
-}
-
 const ProductUI = (props: ProductUIProps) => {
-    const { urlList, listData } = props;
+    const { listData } = props;
     const productListData = listData
     // const productListData = useProductListData(testCase)
     if (!productListData) return;
@@ -117,20 +119,33 @@ const ProductUI = (props: ProductUIProps) => {
         <div className={`flex flex-wrap w-[810px] mo:!hidden pad:!hidden ${productListData.length > 2 ? '' : '!hidden'} zzz`}>
             {/* pc 端 商品 > 2 的情况 */}
             {productListData.map((item, index) => {
-                return <ProductVerticalUI href={item.originProductUrl} {...item} key={index} className={`${index % 4 === 3 ? '' : 'mr-[8px]'} w-[196px] leading-[24px]`} />
+                return <ProductVerticalUI
+                    href={item.originProductUrl}
+                    {...item}
+                    key={index}
+                    className={`${index % 4 === 3 ? '' : 'mr-[8px]'} w-[196px] leading-[24px]`}
+                />
             })}
         </div>
         <div className={`flex ${productListData.length <= 2 ? '' : '!hidden'} mo:!hidden pad:!hidden xxx jus`} >
             {/* pc 端 商品 <= 2 的情况 */}
             {productListData.slice(0, 2).map((item, index) => {
-                return <ProductHorizontalUI {...item} href={item.originProductUrl} key={index} className={`${index === 0 ? 'mr-[4px]' : 'ml-[4px]'} w-[50%]`} />
+                return <ProductHorizontalUI
+                    {...item} href={item.originProductUrl}
+                    key={index}
+                    className={`${index === 0 ? 'mr-[4px]' : 'ml-[4px]'} w-[50%]`}
+                />
             })}
         </div>
         {/* h5 pad 商品 */}
         <div className="flex flex-wrap pc:!hidden www" >
             {productListData.map((item, index) => {
-                return <ProductVerticalUI {...item} key={index} href={item.originProductUrl} className={`${index % 2 === 0 ? 'mr-[4px]' : 'ml-[4px]'} w-[calc(50%-4px)]`} />
-
+                return <ProductVerticalUI
+                    {...item}
+                    key={index}
+                    href={item.originProductUrl}
+                    className={`${index % 2 === 0 ? 'mr-[4px]' : 'ml-[4px]'} w-[calc(50%-4px)]`}
+                />
             })}
         </div>
     </>

@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-23 15:25:44
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-17 16:50:54
+ * @LastEditTime: 2024-06-20 11:57:33
  * @Description: 
  */
 // const hostName = window.location.hostname;
@@ -32,6 +32,7 @@ export const DEFAULT_SETTINGS = {
 interface OtherSetting{
   articleTitle?: string;
   toolbarClassName?: string;
+  bizfields?: Record<string, any>;
 }
 
 // These are mutated in setupEnv

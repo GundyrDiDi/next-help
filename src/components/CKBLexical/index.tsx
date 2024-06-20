@@ -3,7 +3,7 @@
  * @Author: shiguang
  * @Date: 2024-05-23 14:49:20
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-19 02:49:05
+ * @LastEditTime: 2024-06-20 11:57:40
  * @Description: 
  */
 'use client'
@@ -57,6 +57,7 @@ interface CKBEditorProps {
   initHtml?: string;
   articleTitle?: string;
   toolbarClassName?: string;
+  bizfields?: Record<string, any>;
 }
 
 export interface CKBEditorRef {
@@ -68,7 +69,7 @@ export interface CKBEditorRef {
 
 const CKBEditor = forwardRef<CKBEditorRef, CKBEditorProps>((props, ref) => {
   CKBEditor.displayName = 'CKBEditor';
-  const { isEditable = false, isDev = false, initHtml, articleTitle, toolbarClassName } = props;
+  const { isEditable = false, isDev = false, initHtml, articleTitle, toolbarClassName, bizfields } = props;
   const editorRef = useRef<CKBEditorRef>(null)
   useImperativeHandle(ref, () => ({
     getEditor: () => editorRef.current?.getEditor?.(),
@@ -109,7 +110,7 @@ const CKBEditor = forwardRef<CKBEditorRef, CKBEditorProps>((props, ref) => {
     >
       <LexicalComposer initialConfig={initialConfig} >
         <SelectionEditPanelContext>
-          <SettingsContext value={{ articleTitle: articleTitle, toolbarClassName }} >
+          <SettingsContext value={{ articleTitle: articleTitle, toolbarClassName, bizfields }} >
             <SharedHistoryContext>
               <TableContext>
                 <TableOfContentDataContext>

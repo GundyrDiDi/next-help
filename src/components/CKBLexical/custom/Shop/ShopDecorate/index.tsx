@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-20 11:16:57
+ * @LastEditTime: 2024-06-20 12:30:12
  * @Description: 
  */
 import { Tooltip, message } from "antd";
@@ -14,6 +14,8 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 import { $getNodeByKey } from "lexical";
 import useLexicalEditable from "@lexical/react/useLexicalEditable";
 import { CAN_USE_DOM } from "../../../utils/environment";
+import { useSettings } from "../../../context/SettingsContext";
+import { handleLoginPrice } from "../../../utils/handlePrice";
 
 interface ShopDecorateProps {
     nodeKey: string;
@@ -162,6 +164,9 @@ const thirdPlateIconConf: Record<string, any> = {
 
 const useShopListData = (urlList: ShopUIProps['urlList'], onErrorRef: React.MutableRefObject<() => void>) => {
     const [listDta, setListData] = useState<ListDataItem[]>();
+    const { settings } = useSettings();
+    const isLogin = !!settings.bizfields?.userInfo;
+    console.log('eeeeeeee', settings);
 
     useEffect(() => {
         if (!urlList?.length) return;
@@ -178,12 +183,12 @@ const useShopListData = (urlList: ShopUIProps['urlList'], onErrorRef: React.Muta
                         return {
                             mainImgUrl: it.productMainImg,
                             originProductUrl: it.productDetailUrl,
-                            cny: it.productSellPrice,
+                            cny: handleLoginPrice(isLogin, it.productSellPrice),
                             //  TODO
                             jpy: (() => {
                                 const www: any = window;
                                 if (!CAN_USE_DOM || !it.productSellPrice || !www?.calcByCnyPrice) return '**';
-                                return www.calcByCnyPrice?.(it.productSellPrice);
+                                return handleLoginPrice(isLogin, www.calcByCnyPrice?.(it.productSellPrice));
                             })()
 
 
@@ -198,7 +203,7 @@ const useShopListData = (urlList: ShopUIProps['urlList'], onErrorRef: React.Muta
                 onErrorRef.current();
             }
         });;
-    }, [urlList, onErrorRef])
+    }, [urlList, onErrorRef, isLogin])
     return listDta;
 }
 

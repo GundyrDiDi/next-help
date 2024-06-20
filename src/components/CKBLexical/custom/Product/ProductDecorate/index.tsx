@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-06-12 19:35:48
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-20 11:04:29
+ * @LastEditTime: 2024-06-20 12:29:44
  * @Description: 
  */
 /*
@@ -21,6 +21,8 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 import { $getNodeByKey } from "lexical";
 import useLexicalEditable from "@lexical/react/useLexicalEditable";
 import { CAN_USE_DOM } from "../../../utils/environment";
+import { useSettings } from "../../../context/SettingsContext";
+import { handleLoginPrice } from "../../../utils/handlePrice";
 
 const thirdPlateIconConf: Record<string, any> = {
     TB: 'https://static-s.theckb.com/BusinessMarket/App/Icon/h5商详推广页logo/淘宝.png',
@@ -134,6 +136,8 @@ export interface ListDataItem {
 }[];
 export const useProductListData = (urlList: ProductUIProps['urlList'] | undefined, onErrorRef: React.MutableRefObject<() => void>) => {
     const [listDta, setListData] = useState<ListDataItem[]>();
+    const { settings } = useSettings();
+    const isLogin = !!settings.bizfields?.userInfo;
     useEffect(() => {
         if (!urlList?.length) return;
         const urls = urlList.map(item => item.url);
@@ -150,17 +154,13 @@ export const useProductListData = (urlList: ProductUIProps['urlList'] | undefine
                     iconUrl: thirdPlateIconConf[item.platformType!],
                     mainImgUrl: item.productMainImg,
                     title: item.productTitle,
-                    cny: item.productSellPriceRange,
+                    cny: handleLoginPrice(isLogin, item.productSellPrice),
                     // TODO 需要做处理
                     jpy: (() => {
-                        const [startPrice] = (item.productSellPriceRange ?? '').split('-')
+                        // const [startPrice] = (item.productSellPriceRange ?? '').split('-')
                         const www: any = window;
                         if (!CAN_USE_DOM || !www.calcByCnyPrice) return '**';
-                        return www.calcByCnyPrice(startPrice);
-                        // if (startPrice === endPrice) {
-                        //     return www.calcByCnyPrice(startPrice);
-                        // }
-                        // return `${www.calcByCnyPrice(startPrice)}-${www.calcByCnyPrice(endPrice)}`;
+                        return handleLoginPrice(isLogin, www.calcByCnyPrice(item.productSellPrice));
                     })(),
                     originProductUrl: urls[index]!
 
@@ -187,7 +187,7 @@ export const useProductListData = (urlList: ProductUIProps['urlList'] | undefine
         //     });
         //     setListData(data);
         // });
-    }, [urlList, onErrorRef])
+    }, [urlList, onErrorRef, isLogin])
 
 
 

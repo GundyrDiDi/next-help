@@ -3,13 +3,14 @@
  * @Author: shiguang
  * @Date: 2024-06-12 17:13:19
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-20 10:23:40
+ * @LastEditTime: 2024-06-20 12:56:21
  * @Description: 
  */
 import { useTranslation } from "react-i18next";
 import RightArrow from "../../../Icon/components/RightArrow";
 import { getTranslationText } from "../../LexicalTableOfContents/LexicalTableOfContentsInClient";
 import { ListDataItem } from "../ShopDecorate";
+import { Site, getSiteStationFromPath } from "../../../utils/fetch";
 
 export interface ShopUIProps {
     urlList?: { code: string; url: string; }[];
@@ -28,6 +29,7 @@ export interface ShopItemUI extends ListDataItem {
 const ShopItemUI = (props: ShopItemUI) => {
     const { iconUrl, shopName, productList, className = '', } = props
     const { t } = useTranslation();
+    const isKO = getSiteStationFromPath()?.siteHeader === Site.KO;
     return <a
         href={props.originShopUrl}
         target="_blank"
@@ -51,9 +53,10 @@ const ShopItemUI = (props: ShopItemUI) => {
                                 aspectRatio: '1 / 1'
                             }} />
                     </div>
-                    <div className="flex items-center text-[#FF5010]  text-[16px] mt-[4px]" >
+                    <div className={`flex items-center ${isKO ? 'text-[#000]/[.88]' : 'text-[#FF5010]'} text-[16px] mt-[4px] `} >
                         <span className="text-[16px] font-[700]" >{item.cny} 元</span>
-                        <span className="text-[12px] ml-[4px]">{item.jpy} {getTranslationText('円', t)}</span>
+                        {!isKO && <span className="text-[12px] ml-[4px]">{item.jpy} {getTranslationText('円', t)}</span>}
+                        {isKO && <span className="text-[12px] ml-[4px]">({getTranslationText('円', t)}{item.jpy})</span>}
                     </div>
                 </a>
             })}

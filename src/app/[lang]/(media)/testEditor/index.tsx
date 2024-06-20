@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-23 14:47:05
  * @LastEditors: shiguang
- * @LastEditTime: 2024-06-19 02:36:56
+ * @LastEditTime: 2024-06-20 12:32:18
  * @Description: 
  */
 'use client'
@@ -18,6 +18,8 @@ import { useRef } from "react";
 import { $getSelection, $getEditor } from "lexical";
 import { htmlmock } from "../../../../components/CKBLexical/mock/htmlmock";
 import { htmlmock1 } from "../../../../components/CKBLexical/mock/htmlmock1";
+import { atomCustomerDetail } from "@/model/CustomerDetail";
+import { useAtom } from "jotai";
 
 // getActiveEditor
 // import CKBEditor from '@sniff/ckb-editor/lib/index';
@@ -47,6 +49,8 @@ const zonghe = `
 
 export default function EditorDemo() {
     const editorRef = useRef<CKBEditorRef>(null);
+    const [userInfo] = useAtom(atomCustomerDetail);
+
     return (
         <div>
             <div className="p-[16px] bg-[#ccc]" >
@@ -66,7 +70,9 @@ export default function EditorDemo() {
                 ref={editorRef}
                 toolbarClassName="xxxzz"
                 isDev
-                // initHtml={htmlmock}
+                bizfields={{
+                    userInfo
+                }}
                 initHtml={
                     // link
                     // button
