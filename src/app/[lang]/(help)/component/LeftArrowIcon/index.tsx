@@ -9,7 +9,7 @@ const LeftArrowIcon = () => {
     return (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g id="Left (&#229;&#183;&#166;)">
-                <path id="Vector" d="M15.5 18L9.5 12L15.5 6" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path id="Vector" d="M15.5 18L9.5 12L15.5 6" stroke="black" strokeWidth="2" stroke-linecap="round" strokeLinejoin="round" />
             </g>
         </svg>
     );

@@ -21,6 +21,8 @@ import ArticalCategory from "./ArticalCategory";
 import FixedBanner from "./FixedBanner";
 import HotArticalList from "@/app/[lang]/(media)/newxx/components/HotArticalList";
 import { useRouter } from "next/navigation";
+import EditorView from "@/app/[lang]/(media)/testEditor/EditorView";
+import LexicalTableOfContentsRightSide from "@/components/CKBLexical/custom/LexicalTableOfContents/LexicalTableOfContentsRightSide";
 
 
 
@@ -86,8 +88,11 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
         }
       }
     }
-    
+
   });
+  const isCkbEditor = frogArticle?.articalVersionFlag === 1;
+  // markingShow 似乎有bug 这里包装一下
+  const _markingShow = userInfo?.customerId && userInfo?.membership?.templateLevel ? false : markingShow;
   return (
     <>
       <div
@@ -103,13 +108,27 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
                     {setStationTime(frogArticle?.createTime)}
                   </div>
                 )}
-                <div
-                  id="content-html"
-                  className={`media-help-artical-content ${markingShow ? `h-[100vh] overflow-hidden` : ''}`}
-                  dangerouslySetInnerHTML={{
-                    __html: frogArticle?.frogArticleContent!,
-                  }}
-                ></div>
+                <div className={`${_markingShow ? 'max-h-[100vh] overflow-hidden' : ''}`} >
+                  {/* 新版编辑器 */}
+                  {isCkbEditor && !!frogArticle?.frogArticleContent &&
+                    <EditorView
+                      articleTitle={frogArticle?.frogArticleTitle}
+                      initHtml={frogArticle?.frogArticleContent}
+                    />
+                  }
+                  {/* ${markingShow ? `h-[100vh] overflow-hidden` : ''} */}
+                  <div
+                    id="content-html"
+                    // className={`media-help-artical-content  ${isCkbEditor ? 'hidden' : ''} `}
+                    className={`media-help-artical-content ${_markingShow ? `h-[100vh] overflow-hidden` : ''} ${isCkbEditor ? 'hidden' : ''} `}
+                    dangerouslySetInnerHTML={{
+                      __html: frogArticle?.frogArticleContent!,
+                    }}
+                  />
+                </div>
+                <div className="pc:hidden pad:hidden mb-[8px]" >
+                  {markingShow && <Marking />}
+                </div>
               </div>
               <ArticleSwitch
                 frogArticleId={frogArticle?.frogArticleId}
@@ -120,16 +139,23 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
           </div>
           <div className="pc:w-[370px] shrink-0 mo:w-[100%] pad:w-[280px] " >
             <div className="__cate-list bg-[#FAFAFA] p-[20px] mb-[20px]" >
-              <ArticalCategory/>
+              <ArticalCategory />
               <div className="mt-[40px]" >
                 <HotArticalList isShowHeaderIcon />
               </div>
             </div>
-            <FixedBanner/>
+            {isCkbEditor && <div className="mt-[20px] sticky top-[166px] pad:!top-[50px]" >
+              <div className="mo:hidden" >
+                <LexicalTableOfContentsRightSide title={frogArticle?.frogArticleTitle!} />
+              </div>
+              <FixedBanner />
+            </div>}
           </div>
         </div>
       </div>
-      {markingShow && <Marking />}
+      <div className="mo:hidden" >
+        {markingShow && <Marking />}
+      </div>
     </>
   );
 };

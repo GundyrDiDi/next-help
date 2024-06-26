@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-15 23:10:55
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-22 11:54:39
+ * @LastEditTime: 2024-06-18 17:49:01
  * @Description: 
  */
 'use client'
@@ -29,7 +29,7 @@ const list = [
     },
 
 ]
-interface HotArticalListProps{
+interface HotArticalListProps {
     isShowHeaderIcon: boolean;
 }
 const HotArticalList = (props: HotArticalListProps) => {
@@ -41,11 +41,11 @@ const HotArticalList = (props: HotArticalListProps) => {
         {
             defaultParams: [{ pageNum: 1, pageSize: 12, stationCode }]
         }
-      );
+    );
     const { t } = useTranslation()
     return <div className="bg-[#fff] rounded-[8px] pc:rounded-[8px] overflow-hidden" >
         <div
-            className="bg-[--pcolor] !text-[16px] text-[#fff] leading-[40px] h-[40px] px-[8px] flex items-center"
+            className="bg-[--fcolor] !text-[16px] text-[#fff] leading-[40px] h-[40px] px-[8px] flex items-center"
         >
             {isShowHeaderIcon && <IconFlame className="mr-[8px]" />}
             {t('热门文章')}

@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-05-16 18:07:45
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-22 11:36:07
+ * @LastEditTime: 2024-06-18 17:48:23
  * @Description: 
  */
 'use client'
@@ -43,10 +43,10 @@ const ArticalCategory = () => {
     const { t } = useTranslation()
     return (
         <div  >
-            <div className="flex px-[15px] mb-[20px] bg-[--pcolor] text-[#fff] font-[700] text-[16px] items-center h-[40px]" style={{ borderTopLeftRadius: 8, borderTopRightRadius: 8 }} >
+            <div className="flex px-[15px] mb-[20px] bg-[--fcolor] text-[#fff] font-[700] text-[16px] items-center h-[40px]" style={{ borderTopLeftRadius: 8, borderTopRightRadius: 8 }} >
                 <div className="flex items-center " >
                     <IconFile width="20" height="15" /> <div className="pl-[12px]" >{t('分类')}</div>
-                </div> 
+                </div>
             </div>
             <div className="flex flex-wrap" >
                 {arrToGroup2(list).map((item, index) => {

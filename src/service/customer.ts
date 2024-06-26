@@ -434,6 +434,12 @@ export interface AppShopRespDTO {
   yesterdayShipmentsQuantity?: number;
 }
 
+/** AttachmentInfo */
+export interface AttachmentInfo {
+  attachmentName?: string;
+  attachmentUrl?: string;
+}
+
 /** BaseQueryPage */
 export interface BaseQueryPage {
   /** @format int32 */
@@ -497,6 +503,8 @@ export interface BindThirdReqDTO {
    * @example 1
    */
   customerStatus?: number;
+  /** 拓展参数，埋点信息等 */
+  ext?: Record<string, object>;
   /**
    * 性别：1-男；2-女；3-未知
    * @format int32
@@ -1815,6 +1823,24 @@ export interface EmailLoginReqDTO {
   verificationCode?: string;
 }
 
+/** EmailSendReqDTO */
+export interface EmailSendReqDTO {
+  attachmentInfoList?: AttachmentInfo[];
+  businessKey?: string;
+  content?: string;
+  contentMap?: object;
+  lang?: string;
+  templateType?: string;
+  title?: string;
+  toEmail?: string;
+}
+
+/** EmailSendRespDTO */
+export interface EmailSendRespDTO {
+  businessKey?: string;
+  sendSuccess?: boolean;
+}
+
 /** FeedbackInfoReqDTO */
 export interface FeedbackInfoReqDTO {
   companyName?: string;
@@ -1859,6 +1885,8 @@ export interface FrogArticleArchiveSortRespDTO {
 
 /** FrogArticleDetailRespDTO */
 export interface FrogArticleDetailRespDTO {
+  /** @format int32 */
+  articalVersionFlag?: number;
   /** @format date-time */
   createTime?: string;
   frogArticleContent?: string;
@@ -1907,6 +1935,8 @@ export interface FrogArticlePrepAndNextRespDTO {
 
 /** FrogArticleRespDTO */
 export interface FrogArticleRespDTO {
+  /** @format int32 */
+  articalVersionFlag?: number;
   /** @format date-time */
   createTime?: string;
   /** @format int32 */
@@ -2140,6 +2170,8 @@ export interface GetFrogArticleArchivePageDTO {
 
 /** GetFrogArticlePageDTO */
 export interface GetFrogArticlePageDTO {
+  /** @format int32 */
+  articalVersionFlag?: number;
   /** 文章归档月份 */
   frogArticleMonth?: string;
   /** @format int32 */
@@ -2204,6 +2236,8 @@ export interface GetManageBannerPageReqDTO {
 
 /** GetManageFrogArticlePageDTO */
 export interface GetManageFrogArticlePageDTO {
+  /** @format int32 */
+  articalVersionFlag?: number;
   /** @format int32 */
   frogArticleEnableStatus?: number;
   frogArticleTitle?: string;
@@ -2372,6 +2406,8 @@ export interface HolidayDateDTO {
 
 /** HotFrogArticleRespDTO */
 export interface HotFrogArticleRespDTO {
+  /** @format int32 */
+  articalVersionFlag?: number;
   /** @format date-time */
   createTime?: string;
   /** @format int32 */
@@ -2535,6 +2571,8 @@ export interface ManageBannerRespDTO {
 
 /** ManageFrogArticleRespDTO */
 export interface ManageFrogArticleRespDTO {
+  /** @format int32 */
+  articalVersionFlag?: number;
   /** @format date-time */
   createTime?: string;
   /** @format int32 */
@@ -2963,6 +3001,7 @@ export interface NotifyTemplateUpsertVO {
   hyperlink?: string;
   /** @format int64 */
   isMarketingNotification?: number;
+  isNeedShopName?: boolean;
   langcode?: string;
   /** @format int64 */
   notifyTemplateId?: number;
@@ -3435,7 +3474,7 @@ export interface ShopAdditionRespDTO {
   /** @format int64 */
   shopAdditionId?: number;
   /** 水洗标配置 */
-  shopAdditionWashedLabelRespDTO?: ShopAdditionWashedLabelRespDTO;
+  shopAdditionWashedLabelRespDTO?: WashedLabelRespDTOV2[];
   /** @format int32 */
   systemSource?: number;
   /** @example "yyyy-MM-dd HH:mm:ss" */
@@ -3667,21 +3706,39 @@ export interface ShopTaxDeductionAccountRespDTO {
 
 /** ShopWashedLabelAdditionReqDTO */
 export interface ShopWashedLabelAdditionReqDTO {
+  /** 会社地址 */
   companyAddress?: string;
+  /** 会社logo */
   companyLogo?: string;
+  /** 会社名 */
   companyName?: string;
-  /** @format int64 */
-  customerShopId?: number;
-  /** @format int32 */
+  /**
+   * 图片比例: 1比1-1,16比9-2
+   * @format int32
+   */
   imageRatio?: number;
-  /** @format int32 */
+  /**
+   * 是否默认: 0-否,1-是
+   * @format int32
+   */
+  isDefault?: number;
+  /**
+   * 模板: 竖向-1,横向-2
+   * @format int32
+   */
   model?: number;
-  /** @format int32 */
+  /**
+   * 商品番号: 不使用商品番号-1,商品番号-2,客户商品sku-3
+   * @format int32
+   */
   productDesignation?: number;
-  /** @format int64 */
+  /**
+   * 附加项配置表id
+   * @format int64
+   */
   shopAdditionId?: number;
-  /** @format int64 */
-  shopAddressWashedlabelId?: number;
+  /** 水洗标名称 */
+  washedlabelName?: string;
 }
 
 /** SignUpReqDTO */
@@ -3711,6 +3768,8 @@ export interface SignUpReqDTO {
    * @example 1
    */
   customerStatus?: number;
+  /** 拓展参数，埋点信息等 */
+  ext?: Record<string, object>;
   /**
    * 性别：1-男；2-女；3-未知
    * @format int32
@@ -4251,6 +4310,8 @@ export interface UpdateFrogArticleReqDTO {
 
 /** UpdateFrogArticleStatusReqDTO */
 export interface UpdateFrogArticleStatusReqDTO {
+  /** @format int32 */
+  articalVersionFlag?: number;
   /** @format int64 */
   frogArticleId?: number;
 }
@@ -4562,25 +4623,116 @@ export interface WareNameLangDTO {
 
 /** WashedLabelRespDTO */
 export interface WashedLabelRespDTO {
+  /** 会社地址 */
   companyAddress?: string;
+  /** 会社logo */
   companyLogo?: string;
+  /** 会社名 */
   companyName?: string;
-  /** @format date-time */
+  /**
+   * 创建日期
+   * @format date-time
+   */
   createTime?: string;
-  /** @format int64 */
+  /**
+   * 用户店铺id
+   * @format int64
+   */
   customerShopId?: number;
-  /** @format int32 */
+  /**
+   * 图片比例: 1比1-1,16比9-2
+   * @format int32
+   */
   imageRatio?: number;
-  /** @format int32 */
+  /**
+   * 是否默认: 0-否,1-是
+   * @format int32
+   */
+  isDefault?: number;
+  /**
+   * 模板: 竖向-1,横向-2
+   * @format int32
+   */
   model?: number;
-  /** @format int32 */
+  /**
+   * 商品番号: 不使用商品番号-1,商品番号-2,客户商品sku-3
+   * @format int32
+   */
   productDesignation?: number;
-  /** @format int64 */
+  /**
+   * 附加项配置表id
+   * @format int64
+   */
   shopAdditionId?: number;
-  /** @format int64 */
+  /**
+   * 主键
+   * @format int64
+   */
   shopAddressWashedlabelId?: number;
-  /** @format date-time */
+  /**
+   * 更新日期
+   * @format date-time
+   */
   updateTime?: string;
+  /** 水洗标名称 */
+  washedlabelName?: string;
+}
+
+/** WashedLabelRespDTOV2 */
+export interface WashedLabelRespDTOV2 {
+  /** 会社地址 */
+  companyAddress?: string;
+  /** 会社logo */
+  companyLogo?: string;
+  /** 会社名 */
+  companyName?: string;
+  /**
+   * 创建日期
+   * @format date-time
+   */
+  createTime?: string;
+  /**
+   * 用户店铺id
+   * @format int64
+   */
+  customerShopId?: number;
+  /**
+   * 图片比例: 1比1-1,16比9-2
+   * @format int32
+   */
+  imageRatio?: number;
+  /**
+   * 是否默认: 0-否,1-是
+   * @format int32
+   */
+  isDefault?: number;
+  /**
+   * 模板: 竖向-1,横向-2
+   * @format int32
+   */
+  model?: number;
+  /**
+   * 商品番号: 不使用商品番号-1,商品番号-2,客户商品sku-3
+   * @format int32
+   */
+  productDesignation?: number;
+  /**
+   * 附加项配置表id
+   * @format int64
+   */
+  shopAdditionId?: number;
+  /**
+   * 更新日期
+   * @format date-time
+   */
+  updateTime?: string;
+  /**
+   * 主键
+   * @format int64
+   */
+  washedlabelAdditionId?: number;
+  /** 水洗标名称 */
+  washedlabelName?: string;
 }
 
 /** BizResponse«CustomerConfigRespDTO» */
@@ -4692,6 +4844,14 @@ export interface BizResponseDataDictRespDTO {
 export interface BizResponseDepartmentDetailRespDTO {
   code?: string;
   data?: DepartmentDetailRespDTO;
+  msg?: string;
+  success?: boolean;
+}
+
+/** BizResponse«EmailSendRespDTO» */
+export interface BizResponseEmailSendRespDTO {
+  code?: string;
+  data?: EmailSendRespDTO;
   msg?: string;
   success?: boolean;
 }
@@ -5117,6 +5277,14 @@ export interface BizResponseListSupportCenterSubjectDTO {
 export interface BizResponseListTermConfigDTO {
   code?: string;
   data?: TermConfigDTO[];
+  msg?: string;
+  success?: boolean;
+}
+
+/** BizResponse«List«WashedLabelRespDTOV2»» */
+export interface BizResponseListWashedLabelRespDTOV2 {
+  code?: string;
+  data?: WashedLabelRespDTOV2[];
   msg?: string;
   success?: boolean;
 }
@@ -5549,6 +5717,14 @@ export interface BizResponseVideoActivityDTO {
 /** BizResponse«Void» */
 export interface BizResponseVoid {
   code?: string;
+  msg?: string;
+  success?: boolean;
+}
+
+/** BizResponse«WashedLabelRespDTOV2» */
+export interface BizResponseWashedLabelRespDTOV2 {
+  code?: string;
+  data?: WashedLabelRespDTOV2;
   msg?: string;
   success?: boolean;
 }
@@ -6560,6 +6736,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags additional-controller
+     * @name AddWashedlabel
+     * @summary 新增水洗标配置接口
+     * @request POST:/additional/addWashedlabel
+     */
+    addWashedlabel: (shopWashedLabelAdditionReqDTO: ShopWashedLabelAdditionReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseVoid, any>({
+        path: `/additional/addWashedlabel`,
+        method: "POST",
+        body: shopWashedLabelAdditionReqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags additional-controller
      * @name Delete
      * @summary 删除附加项详情
      * @request GET:/additional/delete
@@ -6800,6 +6993,46 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags additional-controller
+     * @name GetWashedlabelList
+     * @summary 获取水洗标配置列表
+     * @request GET:/additional/getWashedlabelList
+     */
+    getWashedlabelList: (params: RequestParams = {}) =>
+      this.request<BizResponseListWashedLabelRespDTOV2, any>({
+        path: `/additional/getWashedlabelList`,
+        method: "GET",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags additional-controller
+     * @name GetWashedlabelV2
+     * @summary 获取店铺水洗标模板信息，没传 id 返回默认的
+     * @request GET:/additional/getWashedlabelV2
+     */
+    getWashedlabelV2: (
+      query?: {
+        /**
+         * washedlabelAdditionId
+         * @format int64
+         */
+        washedlabelAdditionId?: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BizResponseWashedLabelRespDTOV2, any>({
+        path: `/additional/getWashedlabelV2`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags additional-controller
      * @name GetWashedlabelWarehouse
      * @summary 获取水洗标配置-仓库
      * @request GET:/additional/getWashedlabelWarehouse
@@ -6883,6 +7116,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/additional/updateWashedlabel`,
         method: "POST",
         body: reqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags additional-controller
+     * @name UpdateWashedlabelV2
+     * @summary 更新水洗标配置接口V2
+     * @request POST:/additional/updateWashedlabelV2
+     */
+    updateWashedlabelV2: (shopWashedLabelAdditionReqDTO: ShopWashedLabelAdditionReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseVoid, any>({
+        path: `/additional/updateWashedlabelV2`,
+        method: "POST",
+        body: shopWashedLabelAdditionReqDTO,
         type: ContentType.Json,
         ...params,
       }),
@@ -7178,6 +7428,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @example 1
          */
         customerStatus?: number;
+        "ext.innerMap"?: object;
         /**
          * 性别：1-男；2-女；3-未知
          * @format int32
@@ -9920,6 +10171,24 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/editLoginName`,
         method: "POST",
         query: query,
+        type: ContentType.Json,
+        ...params,
+      }),
+  };
+  email = {
+    /**
+     * No description
+     *
+     * @tags email-send-feign-api-impl
+     * @name SendSingle
+     * @summary sendEmail
+     * @request POST:/email/send/single
+     */
+    sendSingle: (req: EmailSendReqDTO, params: RequestParams = {}) =>
+      this.request<BizResponseEmailSendRespDTO, any>({
+        path: `/email/send/single`,
+        method: "POST",
+        body: req,
         type: ContentType.Json,
         ...params,
       }),

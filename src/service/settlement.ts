@@ -1355,6 +1355,11 @@ export interface AttributeVO {
    */
   length?: number;
   /**
+   * 体积(cm3)
+   * @format int64
+   */
+  volume?: number;
+  /**
    * 重量(克)
    * @format int64
    */
@@ -2336,8 +2341,10 @@ export interface CalcIntShipFeeDTO {
 
 /** CalcIntShipFeeRespDTO */
 export interface CalcIntShipFeeRespDTO {
+  code?: string;
   deliveryDays?: string;
   distribution?: string;
+  errorMsg?: string;
   /** @format int64 */
   intShipConfigId?: number;
   logisticsFeature?: string;
@@ -2373,6 +2380,43 @@ export interface CalcParamVO {
    * @format int32
    */
   systemSource?: number;
+  /** 关税参数 */
+  taxParam?: TaxParamVO;
+}
+
+/**
+ * CalcPriceSheetParamVO
+ * 成本计算器报价单生成入参
+ */
+export interface CalcPriceSheetParamVO {
+  /** 发货附加项参数 */
+  deliverAdditionParam?: DeliverAdditionParamVO;
+  /** 需要计算的费用类型 0代金/1默认附加项/2商品附加项/3发货附加项/4运费/5库存保管费/6关税 */
+  feeList?: number[];
+  /** 库存保管费参数 */
+  inventoryParam?: InventoryParamVO;
+  /**
+   * 选择的会员等级
+   * @format int64
+   */
+  membershipTemplateId?: number;
+  /** 选择的会员等级 */
+  membershipTemplateIdList?: number[];
+  /** 商品信息 */
+  productParam?: ProductParamVO[];
+  /** 国际物流参数 */
+  shipParam?: ShipParamVO;
+  /** 站点code */
+  stationCode?: string;
+  /**
+   * 业务线 1:d2c 2:b2b
+   * @format int32
+   */
+  systemSource?: number;
+  /** 关税参数 */
+  taxParam?: TaxParamVO;
+  /** 发送的邮箱地址 */
+  toEmail?: string;
 }
 
 /**
@@ -2402,8 +2446,10 @@ export interface CalcResultVO {
   exchangeRate?: number;
   /** 国内运费计算结果 */
   innerShipResult?: InnerShipAmtResultVO;
-  /** 库存保管费单价规则 */
-  inventoryPriceRules?: Record<string, InventoryConfigDTO>;
+  /** 库存保管费数据 */
+  inventoryAmtResult?: InventoryAmtResultVO;
+  /** 会员等级name */
+  membershipTemplatedName?: string;
   /** 商品附加项计算结果 */
   productAdditionResult?: AdditionAmtResultVO;
   /** 商品代金费计算结果 */
@@ -3562,6 +3608,11 @@ export interface CustomerWalletFundFlowDetailsRespDTO {
   goodsPriceDeposit?: number;
   /** 商品返金 */
   goodsRefundPrice?: number;
+  /**
+   * 直行便订单id
+   * @format int64
+   */
+  platformOrderId?: number;
   /** 直行便订单编号 */
   platformOrderNo?: string;
   /**
@@ -4762,6 +4813,7 @@ export interface IntForwarderContentRespDTO {
   logisticsDescription?: string;
   peakSeasonPrice?: number;
   sendableAddress?: string[];
+  sendableAddressDesc?: string[];
   /** @format date-time */
   startTime?: string;
   /** @format int32 */
@@ -4803,6 +4855,8 @@ export interface IntShipBillQuery {
    * @format int32
    */
   history?: number;
+  /** 订单号 */
+  orderNumber?: string;
   /** @format int32 */
   pageNum?: number;
   /** @format int32 */
@@ -5212,6 +5266,8 @@ export interface IntShipOtherQuery {
    * @format int32
    */
   makeUpStatus?: number;
+  /** 订单号 */
+  orderNumber?: string;
   /** 合计费用最大 */
   originalTotalFeeMax?: number;
   /** 合计费用最小 */
@@ -5474,6 +5530,8 @@ export interface IntShipTieredDiffQuery {
   netWeightMax?: number;
   /** 实重最小 */
   netWeightMin?: number;
+  /** 订单号 */
+  orderNumber?: string;
   /** @format int32 */
   pageNum?: number;
   /** @format int32 */
@@ -5568,6 +5626,8 @@ export interface IntShipTieredDiffRespDTO {
   makeUpTime?: string;
   /** 实重 */
   netWeight?: number;
+  /** 国际发货单号 */
+  orderNumber?: string;
   /** 系统订单计价重 */
   orderValuationWeight?: number;
   /** 站点 */
@@ -5608,6 +5668,22 @@ export interface IntShipTieredDiffRespDTO {
 /** IntShipUpdateSortReqDTO */
 export interface IntShipUpdateSortReqDTO {
   sortList?: IntShipSortDTO[];
+}
+
+/**
+ * InventoryAmtResultVO
+ * 库存保管费数据
+ */
+export interface InventoryAmtResultVO {
+  /**
+   * 保管天数
+   * @format int64
+   */
+  days?: number;
+  /** 库存保管费单价规则 */
+  inventoryPriceRules?: Record<string, InventoryConfigDTO>;
+  /** 库存保管费(rmb) */
+  totalAmtCn?: number;
 }
 
 /** InventoryConfigDTO */
@@ -6069,6 +6145,11 @@ export interface MembershipPrechargeOrderReqDTO {
    * @format date-time
    */
   endTime?: string;
+  /**
+   * 财务对账金额 0:未填写  1：已填写
+   * @format int32
+   */
+  financeRechargeJpyAmount?: number;
   /** @format int32 */
   isDelete?: number;
   /**
@@ -6227,6 +6308,22 @@ export interface MembershipPrechargeOrderRespDTO {
   updateTime?: string;
   /** 中银汇率 */
   zhongyinExchangeRate?: number;
+}
+
+/**
+ * MembershipPriceSheetParamVO
+ * 报价单信息
+ */
+export interface MembershipPriceSheetParamVO {
+  /**
+   * 会员等级id
+   * @format int64
+   */
+  membershipTemplateId?: number;
+  /** 会员等级name */
+  membershipTemplateName?: string;
+  /** 报价单oss地址 */
+  url?: string;
 }
 
 /**
@@ -6518,50 +6615,6 @@ export interface MembershipTemplatePrice {
   validPeriod?: number;
   /** 有效期的单位：1-日；2-周；3-月；4-年 */
   validPeriodUnit?: string;
-}
-
-/**
- * MembershipTemplatePriceInsertVO
- * 结算中心-配置项-会员配置-会员套餐插入
- */
-export interface MembershipTemplatePriceInsertVO {
-  /** 基础套餐标志 */
-  basicFlag?: boolean;
-  /** 实际支付价格 */
-  discountActualPrice?: number;
-  /** 划线价，日元 */
-  discountPrice?: number;
-  /**
-   * 会员模板表id
-   * @format int64
-   */
-  membershipTemplateId?: number;
-  /** 会员身份收费名称 */
-  priceName?: string;
-  /**
-   * 会员类型:0-普通,1-特殊
-   * @format int32
-   */
-  specialType?: number;
-  /** 试用折扣:0-9 */
-  trialDiscount?: number;
-  /**
-   * 试用标志:0-不是,1是
-   * @format int32
-   */
-  trialFlag?: number;
-  /**
-   * 试用期:天
-   * @format int32
-   */
-  trialPeriod?: number;
-  /** 试用价格 */
-  trialPrice?: number;
-  /**
-   * 有效期(天)
-   * @format int32
-   */
-  validPeriod?: number;
 }
 
 /**
@@ -8011,6 +8064,10 @@ export interface PlatformOrderAdditionSettleRespDTO {
 export interface PlatformOrderItemAdditionSettleRespDTO {
   actualProductSellPrice?: number;
   actualTotalProductSellPrice?: number;
+  additionName?: string;
+  additionNameJp?: string;
+  /** @format int32 */
+  additionScene?: number;
   /** @format int32 */
   checkedQuantity?: number;
   /** @format int32 */
@@ -8101,6 +8158,24 @@ export interface PriceExceptionInfoVO {
 }
 
 /**
+ * PriceSheetParamVO
+ * 报价单邮件发送参数
+ */
+export interface PriceSheetParamVO {
+  /** 报价单信息 */
+  membershipPriceSheetList?: MembershipPriceSheetParamVO[];
+  /** 站点 */
+  stationCode?: string;
+  /**
+   * 业务线
+   * @format int32
+   */
+  systemSource?: number;
+  /** 邮箱地址 */
+  toEmail?: string;
+}
+
+/**
  * ProductAttrVO
  * 商品计算总重量体积参数
  */
@@ -8146,8 +8221,14 @@ export interface ProductParamVO {
   productCode?: string;
   /** 组合商品子商品 */
   productItemParam?: ProductParamVO[];
+  /** 商品名称 */
+  productPropertiesName?: string;
   /** sku编码 */
   productSku?: string;
+  /** 商品图片 */
+  productSkuImg?: string;
+  /** 商品名称 */
+  productTitle?: string;
   /**
    * 商品类型 1:成品 2:OEM商品 3:组合商品
    * @format int32
@@ -8173,8 +8254,21 @@ export interface ProductPriceResultVO {
   num?: number;
   /** 单价 */
   price?: number;
+  /** spuCode */
+  productCode?: string;
+  /** 商品规格 */
+  productPropertiesName?: string;
   /** sku编码 */
   productSku?: string;
+  /** 商品图片 */
+  productSkuImg?: string;
+  /** 商品名称 */
+  productTitle?: string;
+  /**
+   * 商品类型
+   * @format int32
+   */
+  productType?: number;
   /** 总价 */
   totalPrice?: number;
 }
@@ -8906,6 +9000,22 @@ export interface ShipContentVO {
 }
 
 /**
+ * ShipFilterParamVO
+ * 国际料金表入参
+ */
+export interface ShipFilterParamVO {
+  /** 商品种类 */
+  attributeCodeList?: string[];
+  /** 收获国家 */
+  countryCode?: string;
+  /**
+   * 运输方式
+   * @format int32
+   */
+  transportType?: number;
+}
+
+/**
  * ShipParamVO
  * 国际物流参数
  */
@@ -8921,6 +9031,11 @@ export interface ShipParamVO {
   intShipConfigId?: number;
   /** 包裹属性 */
   packageAttribute?: AttributeVO;
+  /**
+   * 运输方式 1船运/2空运
+   * @format int32
+   */
+  transportType?: number;
   /** 发货仓库 */
   wareCode?: string;
 }
@@ -8955,6 +9070,13 @@ export interface ShipPriceResultVO {
   price?: number;
   /** 当前生效的物流明细 */
   shipContent?: ShipContentVO;
+  /** 重量结果 */
+  shipWeight?: ShipWeightVO;
+  /**
+   * 运输方式 1船运/2空运
+   * @format int32
+   */
+  transportType?: number;
   /** 可关联的运输属性 */
   transportationAttributesDTOList?: TransportationAttributesDTO[];
 }
@@ -9010,8 +9132,50 @@ export interface ShipVO {
   officialWebsiteLink?: string;
   /** 当前生效的物流明细 */
   shipContent?: ShipContentVO;
+  /**
+   * 排序
+   * @format int32
+   */
+  sort?: number;
+  /** 站点 */
+  stationCode?: string;
+  /**
+   * 运输方式 1:船运 2:空运
+   * @format int32
+   */
+  transportType?: number;
   /** 可关联的运输属性 */
   transportationAttributesDTOList?: TransportationAttributesDTO[];
+}
+
+/**
+ * ShipWeightVO
+ * 物流重量结果
+ */
+export interface ShipWeightVO {
+  /** 抛重系数 */
+  divisor?: number;
+  /** 计价重(kg) */
+  valuationWeight?: number;
+  /**
+   * 体积(cm3)
+   * @format int64
+   */
+  volume?: number;
+  /** 体积重(kg) */
+  volumeWeight?: number;
+  /**
+   * 实重(g)
+   * @format int64
+   */
+  weight?: number;
+  /** 实重(kg) */
+  weightKg?: number;
+  /**
+   * 计价方式 全抛/半抛/不抛
+   * @format int32
+   */
+  weightThrowingType?: number;
 }
 
 /**
@@ -9025,6 +9189,146 @@ export interface ShopInfo {
   supplierShopCode?: string;
   /** 店铺名称 */
   supplierShopName?: string;
+}
+
+/** SkuFundHandlingFeeRespDTO */
+export interface SkuFundHandlingFeeRespDTO {
+  /** 费用明细 */
+  chargeDetails?: string;
+  /** 客户Sku */
+  customerProductMsku?: string;
+  /** 手续费合计 */
+  handlingFees?: number;
+  /** 是否组合商品 */
+  isCombine?: boolean;
+  /** 编号 */
+  number?: string;
+  /** 商品规格 */
+  productPropertiesName?: string;
+  /** 系统Sku */
+  productSku?: string;
+  /** 商品情报 */
+  productTitle?: string;
+  /** 商品类型 */
+  productType?: string;
+  /**
+   * 数量
+   * @format int32
+   */
+  quantity?: number;
+  /** 子商品编号 */
+  subNum?: string[];
+}
+
+/** SkuFundProductAdditionalFeeRespDTO */
+export interface SkuFundProductAdditionalFeeRespDTO {
+  /** 商品附加费合计 */
+  additionFees?: number;
+  /** 费用明细 */
+  chargeDetails?: string;
+  /** 客户Sku */
+  customerProductMsku?: string;
+  /** 是否组合商品 */
+  isCombine?: boolean;
+  /** 编号 */
+  number?: string;
+  /** 商品规格 */
+  productPropertiesName?: string;
+  /** 系统Sku */
+  productSku?: string;
+  /** 商品情报 */
+  productTitle?: string;
+  /** 商品类型 */
+  productType?: string;
+  /**
+   * 数量
+   * @format int32
+   */
+  quantity?: number;
+  /** 子商品编号 */
+  subNum?: string[];
+}
+
+/** SkuFundProductFeeRespDTO */
+export interface SkuFundProductFeeRespDTO {
+  /** 客户Sku */
+  customerProductMsku?: string;
+  /** 是否组合商品 */
+  isCombine?: boolean;
+  /** 编号 */
+  number?: string;
+  /** 商品代金合计 */
+  productFees?: number;
+  /** 商品单价 */
+  productPrice?: number;
+  /** 商品规格 */
+  productPropertiesName?: string;
+  /** 系统Sku */
+  productSku?: string;
+  /** 商品情报 */
+  productTitle?: string;
+  /** 商品类型 */
+  productType?: string;
+  /**
+   * 数量
+   * @format int32
+   */
+  quantity?: number;
+  /** 子商品编号 */
+  subNum?: string[];
+}
+
+/** SkuFundRespDTO */
+export interface SkuFundRespDTO {
+  /** 手续费明细 */
+  handlingFeeRespDTOList?: SkuFundHandlingFeeRespDTO[];
+  /** 商品附加项明细 */
+  productAdditionalFeeRespDTOList?: SkuFundProductAdditionalFeeRespDTO[];
+  /** 商品代金 */
+  productFeeRespDTOList?: SkuFundProductFeeRespDTO[];
+  /** 总计 */
+  totalRespDTOS?: SkuFundTotalRespDTO[];
+}
+
+/** SkuFundTotalRespDTO */
+export interface SkuFundTotalRespDTO {
+  /** 商品附加项费(清算后RMB) */
+  additionFees?: number;
+  /** 客户Sku */
+  customerProductMsku?: string;
+  /** 国内运费(RMB) */
+  domesticShipping?: number;
+  /** 商品附加项费合计（冻结金额RMB） */
+  goodsAdditionPriceDeposit?: number;
+  /** 商品代金(冻结金额RMB) */
+  goodsPriceDeposit?: number;
+  /** 手续费(RMB) */
+  handlingFees?: number;
+  /** 是否组合商品 */
+  isCombine?: boolean;
+  /** 编号 */
+  number?: string;
+  /** 合计金额(冻结金额RMB) */
+  priceDeposit?: number;
+  /** 商品代金(清算后RMB) */
+  productFees?: number;
+  /** 商品规格 */
+  productPropertiesName?: string;
+  /** 系统Sku */
+  productSku?: string;
+  /** 商品情报 */
+  productTitle?: string;
+  /** 商品类型 */
+  productType?: string;
+  /**
+   * 数量
+   * @format int32
+   */
+  quantity?: number;
+  /** 子商品编号 */
+  subNum?: string[];
+  /** 合计金额(清算后RMB) */
+  totalAmount?: number;
 }
 
 /**
@@ -9063,6 +9367,18 @@ export interface TaxInfoVO {
 }
 
 /**
+ * TaxParamVO
+ * 关税参数
+ */
+export interface TaxParamVO {
+  /**
+   * 关税成交方式 1:FOB/2:CIF
+   * @format int32
+   */
+  taxType?: number;
+}
+
+/**
  * TaxPriceResultVO
  * 关税明细
  */
@@ -9073,6 +9389,8 @@ export interface TaxPriceResultVO {
   errorMsg?: string;
   /** hscode */
   hscode?: string;
+  /** sku分摊的国际运费 */
+  productShipAmt?: number;
   /** sku编码 */
   productSku?: string;
   /** sku关税金额 */
@@ -9092,6 +9410,11 @@ export interface TaxResultVO {
   exchangeRate?: number;
   /** 关税明细 */
   taxPriceResult?: TaxPriceResultVO[];
+  /**
+   * 关税计算方式
+   * @format int32
+   */
+  taxType?: number;
   /** 总金额(外币) */
   totalAmt?: number;
   /** 总金额(人民币) */
@@ -12431,6 +12754,13 @@ export interface BizResponseTrialMembershipTemplateRespDTO {
   success?: boolean;
 }
 
+/** BizResponse«Void» */
+export interface BizResponseVoid {
+  code?: string;
+  msg?: string;
+  success?: boolean;
+}
+
 /** BizResponse«WfNotifyInfo» */
 export interface BizResponseWfNotifyInfo {
   code?: string;
@@ -13667,6 +13997,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      */
     customerTemplateListCustomerAdditionTemplate: (
       query?: {
+        /**
+         * 业务类型 1:D2C 2:B2B
+         * @format int32
+         */
+        systemSource?: number;
         /**
          * 组类型 1-商品附加项组合 2-发货附加项组合
          * @format int32
@@ -16307,10 +16642,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary 国际料金表
      * @request POST:/intShipConfig/international
      */
-    international: (params: RequestParams = {}) =>
+    international: (param: ShipFilterParamVO, params: RequestParams = {}) =>
       this.request<BizResponseListShipVO, any>({
         path: `/intShipConfig/international`,
         method: "POST",
+        body: param,
         type: ContentType.Json,
         ...params,
       }),
@@ -17162,7 +17498,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary 会员配置-会员套餐-插入
      * @request POST:/membership/configure/template/price/insert
      */
-    configureTemplatePriceInsert: (insertVO: MembershipTemplatePriceInsertVO, params: RequestParams = {}) =>
+    configureTemplatePriceInsert: (insertVO: MembershipTemplatePriceUpdateVO, params: RequestParams = {}) =>
       this.request<BizResponseBoolean, any>({
         path: `/membership/configure/template/price/insert`,
         method: "POST",
@@ -17956,6 +18292,41 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/paypal/us/test`,
         method: "POST",
         body: jsonParam,
+        type: ContentType.Json,
+        ...params,
+      }),
+  };
+  price = {
+    /**
+     * No description
+     *
+     * @tags 报价单
+     * @name SheetSend
+     * @summary 报价单发送(前端生成pdf)
+     * @request POST:/price/sheet/send
+     */
+    sheetSend: (param: PriceSheetParamVO, params: RequestParams = {}) =>
+      this.request<BizResponseVoid, any>({
+        path: `/price/sheet/send`,
+        method: "POST",
+        body: param,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 报价单
+     * @name SheetSendAsync
+     * @summary 报价单异步发送(后端生成pdf)
+     * @request POST:/price/sheet/send/async
+     */
+    sheetSendAsync: (param: CalcPriceSheetParamVO, params: RequestParams = {}) =>
+      this.request<BizResponseListString, any>({
+        path: `/price/sheet/send/async`,
+        method: "POST",
+        body: param,
         type: ContentType.Json,
         ...params,
       }),
@@ -20132,6 +20503,31 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags 用户钱包
+     * @name DownloadSkuFundDetailByPlatformOrderNo
+     * @summary Sku费用明细execl导出
+     * @request GET:/wallet/download/skuFundDetailByPlatformOrderNo
+     */
+    downloadSkuFundDetailByPlatformOrderNo: (
+      query: {
+        /**
+         * platformOrderId
+         * @format int64
+         */
+        platformOrderId: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<void, any>({
+        path: `/wallet/download/skuFundDetailByPlatformOrderNo`,
+        method: "GET",
+        query: query,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 用户钱包
      * @name ExportMainCustomerFundFlow
      * @summary 导出主账号消费记录
      * @request POST:/wallet/exportMainCustomerFundFlow
@@ -20158,6 +20554,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/wallet/exportShopFundFlow`,
         method: "POST",
         body: reqDTO,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags 用户钱包
+     * @name ExprotSkuFundDetailByPlatformOrderNo
+     * @summary 明细execl导出
+     * @request POST:/wallet/exprotSkuFundDetailByPlatformOrderNo
+     */
+    exprotSkuFundDetailByPlatformOrderNo: (req: SkuFundRespDTO, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/wallet/exprotSkuFundDetailByPlatformOrderNo`,
+        method: "POST",
+        body: req,
         type: ContentType.Json,
         ...params,
       }),

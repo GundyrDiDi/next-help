@@ -97,7 +97,7 @@ li {
   font-family: "OpenSans", "Roboto", "pingfang Hiragino Kaku Gothic ProN",
     "Hiragino Sans", Meiryo, sans-serif;
 
-  * {
-    word-break: keep-all;
-  }
+  // *:not(.ckb-editor-view-container) {
+  //   // word-break: keep-all;
+  // }
 }

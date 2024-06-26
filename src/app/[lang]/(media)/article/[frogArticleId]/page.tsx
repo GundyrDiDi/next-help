@@ -2,7 +2,7 @@
  * @Author: shiguang
  * @Date: 2024-04-08 11:30:20
  * @LastEditors: shiguang
- * @LastEditTime: 2024-05-22 10:31:21
+ * @LastEditTime: 2024-06-17 16:04:18
  * @Description: 
  */
 import { BizResponseCustomerDetailRespDTO, FrogArticleDetailRespDTO } from "@/service/customer";
@@ -14,6 +14,7 @@ import { Lang } from "@/model";
 import { cookies } from "next/headers";
 import { TokenSignCookie } from "@/config";
 import { CustomerDetailRespDTO2 } from "@/model/CustomerDetail";
+import { request } from "@/config/request";
 
 type Props = {
   params: { frogArticleId: string; lang: Local };
@@ -22,14 +23,16 @@ type Props = {
 
 /** 获取数据 */
 const getData = async (frogArticleId: number) => {
-  const article = await fetch(
-    `${process.env.NEXT_PUBLIC_THE_CKB_API_URL}/customer/frog/article/detail?frogArticleId=${frogArticleId}`,
-    { cache: "no-cache" }
-  ).then((res) => res.json());
-  console.log(12345, `${process.env.NEXT_PUBLIC_THE_CKB_API_URL}/customer/frog/article/detail?frogArticleId=${frogArticleId}`);
-  console.log(article, 333)
-  return article.data as FrogArticleDetailRespDTO;
+  const article = await request.customer.frog.articleDetail({frogArticleId})
+  // const article = await fetch(
+  //   `${process.env.NEXT_PUBLIC_THE_CKB_API_URL}/customer/frog/article/detail?frogArticleId=${frogArticleId}`,
+  //   { cache: "no-cache" }
+  // ).then((res) => res.json());
+  // console.log(12345, `${process.env.NEXT_PUBLIC_THE_CKB_API_URL}/customer/frog/article/detail?frogArticleId=${frogArticleId}`);
+  // console.log(article, 333)
+  return article.data;
 };
+
 
 export default async function Page({ params, searchParams }: Props) {
   const frogArticleId = +params.frogArticleId;
@@ -70,19 +73,19 @@ export async function generateMetadata(
         ja: "/ja",
       },
     },
-    title: `${article.frogArticleTitle}${
+    title: `${article?.frogArticleTitle}${
       {
         [Local.JA]: "| 中国輸入代行THE CKB",
         [Local.KO]: "| 중국수입대행 THE CKB",
         [Local.EN]: "THE CKB-The Biggest Sourcing Agency in China",
       }[params.lang] || ""
     }`,
-    description: article.seoDescription || article.frogArticleTitle,
+    description: article?.seoDescription || article?.frogArticleTitle,
     openGraph: {
       siteName: "THE CKB",
       images: "https://static-s.theckb.com/BusinessMarket/Client/favicon.ico",
       title,
-      description: article.seoDescription || article.frogArticleTitle,
+      description: article?.seoDescription || article?.frogArticleTitle,
     },
   };
 }
