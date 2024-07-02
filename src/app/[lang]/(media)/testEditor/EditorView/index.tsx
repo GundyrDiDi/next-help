@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import EditorView from "./EditorView";
 import FirstRenderView from "./FirstRenderView";
 
-interface EditorViewProps{
+interface EditorViewProps {
     articleTitle?: string;
     initHtml?: string;
 }

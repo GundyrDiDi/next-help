@@ -117,14 +117,15 @@ const ArticlesCont = ({ frogArticle, querys, userInfo }: Props) => {
                     />
                   }
                   {/* ${markingShow ? `h-[100vh] overflow-hidden` : ''} */}
-                  <div
-                    id="content-html"
-                    // className={`media-help-artical-content  ${isCkbEditor ? 'hidden' : ''} `}
-                    className={`media-help-artical-content ${_markingShow ? `h-[100vh] overflow-hidden` : ''} ${isCkbEditor ? 'hidden' : ''} `}
-                    dangerouslySetInnerHTML={{
-                      __html: frogArticle?.frogArticleContent!,
-                    }}
-                  />
+                  {!isCkbEditor &&
+                    <div
+                      id="content-html"
+                      // className={`media-help-artical-content  ${isCkbEditor ? 'hidden' : ''} `}
+                      className={`media-help-artical-content ${_markingShow ? `h-[100vh] overflow-hidden` : ''} ${isCkbEditor ? 'hidden' : ''} `}
+                      dangerouslySetInnerHTML={{
+                        __html: frogArticle?.frogArticleContent!,
+                      }}
+                    />}
                 </div>
                 <div className="pc:hidden pad:hidden mb-[8px]" >
                   {markingShow && <Marking />}
