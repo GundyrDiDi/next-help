@@ -3,7 +3,7 @@
  * @Date: 2024-04-25 10:57:25
  * @LastEditors: shiguang
  * @LastEditTime: 2024-04-26 23:12:35
- * @Description: 
+ * @Description:
  */
 import LayoutContainer from "@/components/Layout/LayoutContainer";
 import { PlatCookie, TokenSignCookie } from "@/config";
@@ -15,23 +15,25 @@ type Props = Readonly<{
   params: {
     lang: Local;
   };
-}>
-
+}>;
 
 export default async function RootLayout(props: Props) {
-  const { children,  params } = props;
+  const { children, params } = props;
   const { lang } = params;
   const cookieStore = cookies();
   const headerStore = headers();
-  const plat = (cookieStore.get(encodeURIComponent(PlatCookie))?.value || "d2c") as ENUM_PLATE;
+  const plat = (cookieStore.get(encodeURIComponent(PlatCookie))?.value ||
+    "d2c") as ENUM_PLATE;
   const token = cookieStore.get(encodeURIComponent(TokenSignCookie))?.value;
-  const serverHeaders = { 
-    host: headerStore.get('host')!
-  }
-  
+  const serverHeaders = {
+    host: headerStore.get("host")!,
+  };
+
+  console.log(plat, `server_plat:${encodeURIComponent(PlatCookie)}`);
+
   return (
-    <LayoutContainer params={{ lang, initPlat: plat, token, serverHeaders }}  >
-     {children}
+    <LayoutContainer params={{ lang, initPlat: plat, token, serverHeaders }}>
+      {children}
     </LayoutContainer>
   );
 }

@@ -10,7 +10,7 @@ import { getSiteStation, useSite2Station } from '@/utils/language';
 import { toTheCkb } from '@/utils/router';
 import { cookies } from 'next/headers';
 
-const domain = '.theckb.com'
+const domain = process.env.NEXT_PUBLIC_ENV==='test'?'localhost':'.theckb.com'
 
 // 用户信息
 export interface User {
@@ -30,8 +30,9 @@ export const getShopId = () => {
 };
 
 /** B2B/D2C 主题切换 */
-export const togglePlat = (systemSource: number) => {
+export const togglePlat = (systemSource: number,isReload=true) => {
     const plat = systemSource === 1 ? 'D2C' : 'B2B';
+    console.log(PlatCookie,`PlatCookie:${domain}`,process.env.NEXT_PUBLIC_ENV);
     Cookies.set(PlatCookie, plat.toLocaleLowerCase(), { path: '/', domain, expires: 3 })
 };
 

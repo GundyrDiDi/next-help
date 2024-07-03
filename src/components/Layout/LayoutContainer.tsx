@@ -31,25 +31,18 @@ interface Props {
     token?: string;
     serverHeaders: {
       host: string;
-    }
-
+    };
   };
 }
 
-export default function Layout({
-  children,
-  params,
-}: Props) {
+export default function Layout({ children, params }: Props) {
   const { lang, initPlat, token, serverHeaders } = params;
-  
+
   const [customerDetail, requestCustomerDetail] = useAtom(CustomerDetail);
   const setMessages = useSetAtom(MessageAtom);
-  const [plat, setPlat] = useAtom(Plat);
+  const [_, setPlat] = useAtom(Plat);
   const setCurLang = useSetAtom(Lang);
   setCurLang(lang);
-  setPlat(initPlat);
-  // const systemSource = customerDetail?.systemSource;
-
   const { runAsync: getCurrentCartList } = useRequest(
     api.order.cart.getCurrentCartList,
     { manual: true }
@@ -58,8 +51,8 @@ export default function Layout({
   useAsyncEffect(async () => {
     if (!runsOnServerSide) {
       // 初始化语言
-      document.documentElement.lang = lang
-      document.documentElement.classList.add(lang)
+      document.documentElement.lang = lang;
+      document.documentElement.classList.add(lang);
       if (getCookieToken) {
         await requestCustomerDetail();
         if (getShopId()) {
@@ -72,12 +65,13 @@ export default function Layout({
           });
         }
       }
-      setPlat(getCookiePlat);
+      setPlat(initPlat);
+      // setPlat(getCookiePlat);
       togglePlat(
-        plat === "d2c" ? ENUM_SYSTEM_SOURCE.D2C : ENUM_SYSTEM_SOURCE.B2B
+        initPlat === "d2c" ? ENUM_SYSTEM_SOURCE.D2C : ENUM_SYSTEM_SOURCE.B2B
       );
     }
-  }, [lang, requestCustomerDetail, setPlat]);
+  }, [lang, requestCustomerDetail]);
 
   useEffect(() => {
     // 语言对不上时刷新页面
@@ -87,10 +81,10 @@ export default function Layout({
       customerDetail?.langcode
     ) {
       const originHref = (() => {
-        if(window.location.href.endsWith(`/${lang}`)){
-          return window.location.href + '/';
+        if (window.location.href.endsWith(`/${lang}`)) {
+          return window.location.href + "/";
         }
-        return window.location.href
+        return window.location.href;
       })();
       const newHref = originHref.replace(
         `/${lang}/`,
@@ -197,22 +191,22 @@ export default function Layout({
     }
     return obj;
   }, [initPlat]);
-  console.log(getThemeStyle(), plat, 'plat');
-  
-  const isHelpPage = serverHeaders.host.includes('help')
-  const isVideoPage = currentPath.includes('/video/')
+  console.log(initPlat, "initPlat");
+
+  const isHelpPage = serverHeaders.host.includes("help");
+  const isVideoPage = currentPath.includes("/video/");
   return (
     <ConfigProvider locale={locale} theme={getThemeStyle()}>
-      <CKBHeader plat={plat} />
-      {isHelpPage ? null : <>
-        <CKBSearch />
-        <CKBCategory />
-      </> }
+      <CKBHeader plat={initPlat} />
+      {isHelpPage ? null : (
+        <>
+          <CKBSearch />
+          <CKBCategory />
+        </>
+      )}
       <FloatToolbar />
       {children}
-      {
-        !isVideoPage && <CKBFooter lang={lang} plat={plat} />
-      }
+      {!isVideoPage && <CKBFooter lang={lang} plat={initPlat} />}
     </ConfigProvider>
   );
 }
