@@ -4,13 +4,13 @@ import { ENUM_PAGE, ENUM_SYSTEM_SOURCE } from '@/const/enum';
 import Code from '@/i18n/locales/code.json';
 import { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie'
-import { getCookieShop, getCookieToken, setCookieShopId, setCookieToken } from '@/utils/index';
+import { domains, getCookieShop, getCookieToken, setCookieShopId, setCookieToken } from '@/utils/index';
 import { PlatCookie, TokenSignCookie } from '@/config';
 import { getSiteStation, useSite2Station } from '@/utils/language';
 import { toTheCkb } from '@/utils/router';
 import { cookies } from 'next/headers';
 
-const domain = process.env.NEXT_PUBLIC_ENV==='test'?'localhost':'.theckb.com'
+// export const domain ='.theckb.com'
 
 // 用户信息
 export interface User {
@@ -32,8 +32,8 @@ export const getShopId = () => {
 /** B2B/D2C 主题切换 */
 export const togglePlat = (systemSource: number,isReload=true) => {
     const plat = systemSource === 1 ? 'D2C' : 'B2B';
-    console.log(PlatCookie,`PlatCookie:${domain}`,process.env.NEXT_PUBLIC_ENV);
-    Cookies.set(PlatCookie, plat.toLocaleLowerCase(), { path: '/', domain, expires: 3 })
+    console.log(PlatCookie,`PlatCookie:${domains}`,process.env.NEXT_PUBLIC_ENV);
+    Cookies.set(PlatCookie, plat.toLocaleLowerCase(), { path: '/', domain:domains, expires: 3 })
 };
 
 /**

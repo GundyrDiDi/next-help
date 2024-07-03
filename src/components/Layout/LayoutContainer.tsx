@@ -43,6 +43,7 @@ export default function Layout({ children, params }: Props) {
   const [_, setPlat] = useAtom(Plat);
   const setCurLang = useSetAtom(Lang);
   setCurLang(lang);
+  setPlat(initPlat);
   const { runAsync: getCurrentCartList } = useRequest(
     api.order.cart.getCurrentCartList,
     { manual: true }
@@ -65,11 +66,6 @@ export default function Layout({ children, params }: Props) {
           });
         }
       }
-      setPlat(initPlat);
-      // setPlat(getCookiePlat);
-      togglePlat(
-        initPlat === "d2c" ? ENUM_SYSTEM_SOURCE.D2C : ENUM_SYSTEM_SOURCE.B2B
-      );
     }
   }, [lang, requestCustomerDetail]);
 
