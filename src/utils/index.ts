@@ -7,7 +7,7 @@ import { CustomerDetail } from '@/model';
 import { getUserFn } from './time';
 import { getDefaultStore } from 'jotai';
 import { ENUM_PLATE } from '@/model/Plat';
-import { domain } from '@/config/request/interceptors';
+// import { domain } from '@/config/request/interceptors';
 
 
 interface JumpPageDefaultOptions {
