@@ -29,6 +29,7 @@ import classNames from "classnames";
 import { Local } from "@/i18n/settings";
 import { useParams, usePathname } from "next/navigation";
 import { ReadRecordMenuItem } from "@/app/[lang]/(media)/newxx/components/SearchBanner/utils";
+import CurrentTime from "./components/CurrentTime/Index";
 
 const menuCommonStyle =
   "flex items-center ml-[20px] hover:text-[color:--color-primary-light] cursor-pointer flex-row";
@@ -41,18 +42,12 @@ interface Props {
 //   canUseSmc.value = !res.data
 // })
 const CKBHeader = ({}: Props) => {
-  const timerRef = useRef<{
-    timer: NodeJS.Timer;
-  }>({
-    timer: null as unknown as NodeJS.Timer,
-  });
   const [plat] = useAtom(Plat);
   const { t } = useTranslation();
   const stationCode = useSite2Station();
   const siteCode = useSite2Code();
   const lang = useAtomValue(Lang);
 
-  const [date, setDate] = useState<string>();
   const [customerDetail] = useAtom(CustomerDetail);
   const [isShowShopList, setIsShowShopList] = useState(false);
   const [messageNum, setMessageNum] = useState<number>();
@@ -88,26 +83,9 @@ const CKBHeader = ({}: Props) => {
     }
   }, [customerDetail?.customerId, customerDetail?.customerShopList?.length]);
   useEffect(() => {
-    const timer = timerRef.current.timer;
     if (customerDetail?.customerId) {
       setSite(customerDetail?.site);
     }
-    let z: number = 0;
-    if (isJK()) {
-      z = 9;
-    } else {
-      z = customerDetail?.utcTimeZone
-        ? Number(customerDetail?.utcTimeZone?.replace("UTC", ""))
-        : 0 - new Date().getTimezoneOffset() / 60;
-    }
-    clearInterval(+timer);
-    timerRef.current.timer = setInterval(() => {
-      const date = dayjs(`${formatTimeZone(dayjs(new Date()), z)}`).format(
-        "YYYY/MM/DD HH:mm:ss"
-      );
-      setDate(date);
-    }, 1000);
-    return () => clearInterval(+timer);
   }, [customerDetail]);
 
   const { rate, floatingRate, getCountryCurrency, floatExchangeRate } =
@@ -434,7 +412,8 @@ const CKBHeader = ({}: Props) => {
                       )}
                     </div>
                     <div className="px-[8px] h-[28px] leading-[28px] bg-[#f5f5f5] text-[#333] text-[12px]">
-                      {`${timeRange} ${date}`}
+                      {`${timeRange} `}
+                      <CurrentTime />
                     </div>
                   </div>
                 }

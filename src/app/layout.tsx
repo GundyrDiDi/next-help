@@ -3,19 +3,18 @@
  * @Date: 2024-03-28 15:21:28
  * @LastEditors: shiguang
  * @LastEditTime: 2024-05-09 22:47:11
- * @Description: 
+ * @Description:
  */
 import { Local } from "@/i18n/settings";
 import { cookies } from "next/headers";
 import { PlatCookie, TokenSignCookie } from "@/config";
 import "./globals.scss";
 import { Metadata, ResolvingMetadata } from "next";
-import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google'
-import { AntdRegistry } from '@ant-design/nextjs-registry';
+import { GoogleTagManager, GoogleAnalytics } from "@next/third-parties/google";
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 import ClientInitJS from "./ClientInitJS";
 
 // import { create } from "route-interceptor";
-
 
 // const interceptor = create({
 //   way: ["a", "window.open", "history", "hash", "location"],
@@ -62,25 +61,29 @@ export default function RootLayout({
 }>) {
   const cookieStore = cookies();
   const plat = cookieStore.get(encodeURIComponent(PlatCookie))?.value || "d2c";
-  const token = cookieStore.get(encodeURIComponent(TokenSignCookie))?.value;
+  // const token = cookieStore.get(encodeURIComponent(TokenSignCookie))?.value;
   return (
     <html lang={lang} data-theme={String(plat).toUpperCase()} className={lang}>
-      <ClientInitJS/>
+      <ClientInitJS />
       <script
         type="text/javascript"
         src="https://cdn.channel.io/plugin/ch-plugin-web.js"
         async
       ></script>
       {/* <meta name="google-site-verification" content="1DIor1BkSq1vf_uf4-m5WRiVIyeWGmckG9hD2VLb3eM" /> */}
-      <meta name="google-site-verification" content="oahwUkqmAScewSrtx4M7_EaH_ci5PvH-N9FAHIda1gk" />
-      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, minimal-ui, viewport-fit=cover,user-scalable=no" />
+      <meta
+        name="google-site-verification"
+        content="oahwUkqmAScewSrtx4M7_EaH_ci5PvH-N9FAHIda1gk"
+      />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, minimal-ui, viewport-fit=cover,user-scalable=no"
+      />
       <GoogleTagManager gtmId="GTM-W9HSLNKD" />
       {/* <GoogleAnalytics gaId="GTM-W9HSLNKD" /> */}
       <body>
         <div id="app" className="page_layout">
-          <AntdRegistry>
-            {children}
-          </AntdRegistry>
+          <AntdRegistry>{children}</AntdRegistry>
         </div>
       </body>
     </html>
