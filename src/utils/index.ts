@@ -7,6 +7,7 @@ import { CustomerDetail } from '@/model';
 import { getUserFn } from './time';
 import { getDefaultStore } from 'jotai';
 import { ENUM_PLATE } from '@/model/Plat';
+// import { domain } from '@/config/request/interceptors';
 
 
 interface JumpPageDefaultOptions {
@@ -152,7 +153,7 @@ export const getLocalStorageByKey = <K extends keyof LocalStorageData, T>(
     return []
 };
 
-
+export const domains='.theckb.com'
 
 /** 通过 cookie 获取登录信息 */
 export const getCookieToken=bwCookie.get(TokenSignCookie)||bwCookie.get(encodeURIComponent(TokenSignCookie));
@@ -164,11 +165,11 @@ export const getCookiePlat=(bwCookie.get(PlatCookie)||bwCookie.get(encodeURIComp
 
 /** 通过 cookie 设置信息 */
 export const setCookieToken=(token:string)=>{
-    bwCookie.set(TokenSignCookie,token,{expires:3,path:'/',domain:'.theckb.com'})
+    bwCookie.set(TokenSignCookie,token,{expires:3,path:'/',domain:domains})
 }
 
 export const setCookieShopId=(id:string)=>{
-    bwCookie.set(ShopCookie,id,{expires:3,path:'/',domain:'.theckb.com'})}
+    bwCookie.set(ShopCookie,id,{expires:3,path:'/',domain:domains})}
 
 export function formatTimeZone(time: any, offset: any) {
     // 创建一个Date对象 time时间 offset 时区  中国为  8
