@@ -14,19 +14,6 @@ import { GoogleTagManager, GoogleAnalytics } from "@next/third-parties/google";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import ClientInitJS from "./ClientInitJS";
 
-// import { create } from "route-interceptor";
-
-// const interceptor = create({
-//   way: ["a", "window.open", "history", "hash", "location"],
-//   intercept: (path) => {
-//     console.log(999);
-//     return path;
-//     // return path.replace("/bbb", "/ccc");
-//   },
-// });
-
-// interceptor.start();
-
 interface Props {
   params: {
     lang: Local;
@@ -65,12 +52,6 @@ export default function RootLayout({
   return (
     <html lang={lang} data-theme={String(plat).toUpperCase()} className={lang}>
       <ClientInitJS />
-      <script
-        type="text/javascript"
-        src="https://cdn.channel.io/plugin/ch-plugin-web.js"
-        async
-      ></script>
-      {/* <meta name="google-site-verification" content="1DIor1BkSq1vf_uf4-m5WRiVIyeWGmckG9hD2VLb3eM" /> */}
       <meta
         name="google-site-verification"
         content="oahwUkqmAScewSrtx4M7_EaH_ci5PvH-N9FAHIda1gk"
