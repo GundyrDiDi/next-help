@@ -1,32 +1,7 @@
-/*
- * @Author: shiguang
- * @Date: 2024-05-09 16:43:56
- * @LastEditors: shiguang
- * @LastEditTime: 2024-05-10 22:18:21
- * @Description: 
- */
-'use client'
-// import { create } from "route-interceptor";
-
-// (() => {
-//   console.log(11111)
-//   if(typeof window === 'undefined') return;
-//   console.log(2222)
-//   const interceptor = create({
-//     way: ["a", "window.open", "history", "hash", "location"],
-//     intercept: (path) => {
-//       console.log(999);
-//       console.log(path);
-//       return path;
-//       // return false
-//       // return path.replace("/bbb", "/ccc");
-//     },
-//   });
-//   interceptor.start();
-// })();
-;
+"use client";
 import { routeInterceptor } from "@/utils/client/routeIterceptor";
 import { setFirstViewUrl } from "@/utils/client/tinkingDataJumpQuery";
+import Script from "next/script";
 
 (() => {
   if (typeof window === "undefined") return;
@@ -36,6 +11,39 @@ import { setFirstViewUrl } from "@/utils/client/tinkingDataJumpQuery";
 })();
 
 const ClientInitJS = () => {
-    return null
-}
-export default ClientInitJS
+  if (typeof window === "undefined") return null;
+  console.log("我执行了");
+
+  return (
+    <>
+      <Script
+        src="https://static-s.theckb.com/BusinessMarket/Client/aes.js"
+        onLoad={() => {
+          window._join_name_used = "_echat";
+          window._echatServer = ["e.echatsoft.com"];
+          window._echat =
+            window._echat ||
+            function () {
+              (window._echat.q = window._echat.q || []).push(arguments);
+            };
+          window._echat.l = +new Date();
+          window._echat("initParam", { companyId: 533043 });
+          (function () {
+            var joinJs = document.createElement("script");
+            joinJs.type = "text/javascript";
+            joinJs.async = true;
+            joinJs.id = "_echatmodulejs";
+            joinJs.setAttribute("charset", "UTF-8");
+            joinJs.src =
+              ("https:" == document.location.protocol
+                ? "https://"
+                : "http://") + "www.echatsoft.com/visitor/join.js";
+            var s = document.getElementsByTagName("script")[0];
+            s!.parentNode!.insertBefore(joinJs, s);
+          })();
+        }}
+      ></Script>
+    </>
+  );
+};
+export default ClientInitJS;
