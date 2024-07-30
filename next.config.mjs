@@ -22,12 +22,12 @@ const getEnv = () => {
     NEXT_PUBLIC_HELP_CENTER_URL: 'https://pre-help.theckb.com',
     NEXT_PUBLIC_X_GRAY_TAG: '20240509-frog',
   };
-  // return {
-  //   NEXT_PUBLIC_ENV: "prod",
-  //   buildTime: new Date().toLocaleString(),
-  //   NEXT_PUBLIC_THE_CKB_LINK: "https://s.theckb.com",
-  //   NEXT_PUBLIC_THE_CKB_API_URL: "https://gateway-prod.theckb.com",
-  // };
+  return {
+    NEXT_PUBLIC_ENV: "prod",
+    buildTime: new Date().toLocaleString(),
+    NEXT_PUBLIC_THE_CKB_LINK: "https://s.theckb.com",
+    NEXT_PUBLIC_THE_CKB_API_URL: "https://gateway-prod.theckb.com",
+  };
   // return {
   //   NEXT_PUBLIC_ENV: "test",
   //   buildTime: new Date().toLocaleString(),
