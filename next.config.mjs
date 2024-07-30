@@ -14,14 +14,14 @@ const withBundleAnalyzer = Analyzer({
   enabled: false,
 });
 const getEnv = () => {
-  return {
-    NEXT_PUBLIC_ENV: "pre",
-    buildTime: new Date().toLocaleString(),
-    NEXT_PUBLIC_THE_CKB_LINK: "https://pre-s.theckb.com",
-    NEXT_PUBLIC_THE_CKB_API_URL: "https://pre-gateway.theckb.com",
-    NEXT_PUBLIC_HELP_CENTER_URL: 'https://pre-help.theckb.com',
-    NEXT_PUBLIC_X_GRAY_TAG: '20240509-frog',
-  };
+  // return {
+  //   NEXT_PUBLIC_ENV: "pre",
+  //   buildTime: new Date().toLocaleString(),
+  //   NEXT_PUBLIC_THE_CKB_LINK: "https://pre-s.theckb.com",
+  //   NEXT_PUBLIC_THE_CKB_API_URL: "https://pre-gateway.theckb.com",
+  //   NEXT_PUBLIC_HELP_CENTER_URL: 'https://pre-help.theckb.com',
+  //   NEXT_PUBLIC_X_GRAY_TAG: '20240509-frog',
+  // };
   return {
     NEXT_PUBLIC_ENV: "prod",
     buildTime: new Date().toLocaleString(),
