@@ -11,13 +11,12 @@ import { cookies } from 'next/headers'
 // }
 
 export async function middleware(req:NextRequest,...res:any[]) {
-  const a=await fetch('https://20240802-seo-s.theckb.com/_oss/').then(res=>res.text())
+  const a=await fetch('https://20240802-seo-s.theckb.com/_oss_',{headers:{'X-ssr':'true'}}).then(res=>res.text())
   if( /^[^.]+$/.test(req.url)){
     return new NextResponse(
       a,
-      { status: 410, headers: { 'content-type': 'text/html' } }
-  )
-  }
+      { status: 200, headers: { 'content-type': 'text/html' } }
+  )}
   // return NextResponse.json(a)
   // if (
   //   !languages.some(loc => req.nextUrl.pathname.startsWith(`/${loc}`)) &&
