@@ -59,6 +59,9 @@ const nextConfig = {
       },
     ];
   },
+  experimental: {
+      allowMiddlewareResponseBody: true
+  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,

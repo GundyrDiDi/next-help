@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse,NextFetchEvent } from 'next/server'
 import { cookies } from 'next/headers'
 // import {  } from "";
 // import { languages } from '@/i18n/init'
@@ -10,8 +10,15 @@ import { cookies } from 'next/headers'
 //   matcher: ['/((?!api|_next/static|_next/image|assets|favicon.ico|sw.js).*)']
 // }
 
-export function middleware(req:NextRequest) {
-  
+export async function middleware(req:NextRequest,...res:any[]) {
+  const a=await fetch('https://20240802-seo-s.theckb.com/_oss/').then(res=>res.text())
+  if( /^[^.]+$/.test(req.url)){
+    return new NextResponse(
+      a,
+      { status: 410, headers: { 'content-type': 'text/html' } }
+  )
+  }
+  // return NextResponse.json(a)
   // if (
   //   !languages.some(loc => req.nextUrl.pathname.startsWith(`/${loc}`)) &&
   // ) {
