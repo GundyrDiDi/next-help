@@ -3,7 +3,7 @@
  * @Date: 2024-05-09 16:33:02
  * @LastEditors: shiguang
  * @LastEditTime: 2024-05-09 17:48:26
- * @Description: 
+ * @Description:
  */
 import { SvgCheck } from "@/components/svgs";
 import {
@@ -40,7 +40,7 @@ const ArticleItem = ({ article }: Props) => {
     }
   }, [querys.tab]);
 
-  const href = useLink(`article/${article.frogArticleId}`);
+  const href = useLink(`media/${article.frogArticleId}`);
   // 点击跳转文章线详情
   const goArticle = () => {
     if (
@@ -55,7 +55,7 @@ const ArticleItem = ({ article }: Props) => {
         NO_MEMBERSHIP_RESTRICTION_TYPE.CHECK_DISABLE &&
       !userInfo?.membership?.templateLevel
     ) {
-    return toTheCkb(ENUM_PAGE.VIP_LEVEL);
+      return toTheCkb(ENUM_PAGE.VIP_LEVEL);
     }
 
     window.$location.href = href;
