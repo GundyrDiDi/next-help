@@ -30,7 +30,7 @@ const getMetaConf = (lang: Local) => {
   return conf[lang];
 };
 
-export async function generateMetadataAaa(
+export async function generateMetadata(
   first: { params: { lang: string } },
   parent: ResolvingMetadata
 ): Promise<Metadata> {
