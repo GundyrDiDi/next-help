@@ -33,7 +33,7 @@ const HotArticlesList = () => {
   // 跳转文章详情
   const toArticle = (article: HotFrogArticleRespDTO) => {
     if (!isLogin() && article.noLoginRestriction === 3) {
-      toTheCkb(ENUM_PAGE.LOGIN,false);
+      toTheCkb(ENUM_PAGE.LOGIN, false);
       return;
     }
     if (
@@ -43,9 +43,7 @@ const HotArticlesList = () => {
       toTheCkb(ENUM_PAGE.VIP_LEVEL);
       return;
     }
-    window.$location.href = `/${lang}/article/${
-      article?.frogArticleId
-    }`;
+    window.$location.href = `/${lang}/media/${article?.frogArticleId}`;
   };
 
   return (

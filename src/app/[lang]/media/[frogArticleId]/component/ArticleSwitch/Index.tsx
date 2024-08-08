@@ -28,7 +28,7 @@ const ArticleSwitch = ({ frogArticleId, type, source }: Props) => {
     { manual: true }
   );
   const articleSwitch = (id?: number) => {
-    window.$location.href = `/${lang}/article/${id}`;
+    window.$location.href = `/${lang}/media/${id}`;
   };
 
   useAsyncEffect(async () => {
