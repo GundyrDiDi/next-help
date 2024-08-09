@@ -10,9 +10,9 @@ resources:
     actions:
       # CICD 阶段执行构建，且声明 node18 版本
       pre-deploy:
-        - run: export PATH=/usr/local/versions/node/v20.8.1/bin:$PATH && npm i
+        - run: export PATH=/usr/local/versions/node/v20.8.1/bin:$PATH && pnpm i
           path: ./
-        - run: export PATH=/usr/local/versions/node/v20.8.1/bin:$PATH && npm build
+        - run: export PATH=/usr/local/versions/node/v20.8.1/bin:$PATH && pnpm build
           path: ./
     props:
       region: ${vars.region}
@@ -27,7 +27,7 @@ resources:
       timeout: 60
       customRuntimeConfig:
         command:
-          - npm
+          - pnpm
           - start
         port: 3000
       functionName: ${vars.functionName}
