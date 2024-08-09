@@ -7,7 +7,7 @@ import { serviceConfig } from '@/config/request/swaggerServiceConfig';
 
 export const Api = { Customer, Settlement, Order, Goods };
 
-const warpperServiceConfig = (serviceConfig: any, ctx: { name: string; basePath: string; }) => {
+const warpperServiceConfig = (serviceConfig: any, ctx: { basePath: string; }) => {
         const newConfig = { ...serviceConfig };
         if (newConfig.baseURL) {
             newConfig.baseURL = newConfig.baseURL + ctx.basePath;

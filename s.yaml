@@ -1,0 +1,44 @@
+edition: 3.0.0
+name: start-nuxt-app
+access: "default"
+vars:
+  region: "cn-hangzhou"
+  functionName: "nuxt-ckbtest"
+resources:
+  start_nuxt:
+    component: fc3
+    actions:
+      # CICD 阶段执行构建，且声明 node18 版本
+      pre-deploy:
+        - run: export PATH=/usr/local/versions/node/v20.8.1/bin:$PATH && npm i
+          path: ./
+        - run: export PATH=/usr/local/versions/node/v20.8.1/bin:$PATH && npm build
+          path: ./
+    props:
+      region: ${vars.region}
+      description: Serverless Devs Web Framework Function
+      runtime: custom.debian10
+      # 注入 运行时环境:nodejs18 layer，详细可见 https://github.com/awesome-fc/awesome-layers/blob/main/docs/Nodejs18/README.md
+      layers:
+        - acs:fc:${vars.region}:official:layers/Nodejs20/versions/1
+      environmentVariables:
+        PATH: >-
+          /opt/nodejs20/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin
+      timeout: 60
+      customRuntimeConfig:
+        command:
+          - npm
+          - start
+        port: 3000
+      functionName: ${vars.functionName}
+      code: ./
+  fc3_domain_0:
+    component: fc3-domain
+    props:
+      region: ${vars.region}
+      domainName: auto
+      protocol: HTTP
+      routeConfig:
+        routes:
+          - path: /*
+            functionName: ${vars.functionName}
