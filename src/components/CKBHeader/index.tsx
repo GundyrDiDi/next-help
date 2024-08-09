@@ -28,7 +28,7 @@ import langType from "@/model/Lang";
 import classNames from "classnames";
 import { Local } from "@/i18n/settings";
 import { useParams, usePathname } from "next/navigation";
-import { ReadRecordMenuItem } from "@/app/[lang]/(media)/newxx/components/SearchBanner/utils";
+import { ReadRecordMenuItem } from "@/app/[lang]/media/newxx/components/SearchBanner/utils";
 import CurrentTime from "./components/CurrentTime/Index";
 
 const menuCommonStyle =

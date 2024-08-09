@@ -55,7 +55,6 @@ const getIsServer = () => typeof window === 'undefined';
 async function requestInterceptorOnClient(config: InternalAxiosRequestConfig) {
     config.headers = config.headers ?? {};
     let token = getCookieToken;
-    
     const shopId = getShopId();
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const stationCode = useSite2Station()
@@ -85,7 +84,6 @@ async function requestInterceptorOnServer(config: InternalAxiosRequestConfig) {
         config.headers['X-Stationcode'] = siteStation;
     }
     const token = encodeURIComponent(TokenSignCookie)
-    debugger
 
     if(token){
         config.headers['X-Authtoken'] = token;
