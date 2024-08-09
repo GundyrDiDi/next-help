@@ -1,5 +1,5 @@
 edition: 3.0.0
-name: start-nuxt-app
+name: start-next-help-app
 access: "default"
 vars:
   region: "cn-hangzhou"
