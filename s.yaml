@@ -10,6 +10,8 @@ resources:
     actions:
       # CICD 阶段执行构建，且声明 node18 版本
       pre-deploy:
+        - run: export PATH=/usr/local/versions/node/v20.8.1/bin:$PATH && npm install -g pnpm
+          path: ./
         - run: export PATH=/usr/local/versions/node/v20.8.1/bin:$PATH && pnpm i
           path: ./
         - run: export PATH=/usr/local/versions/node/v20.8.1/bin:$PATH && pnpm build
