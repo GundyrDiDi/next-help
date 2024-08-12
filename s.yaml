@@ -1,9 +1,9 @@
 edition: 3.0.0
-name: start-next-help-app
+name: start-next-app
 access: "default"
 vars:
   region: "cn-hangzhou"
-  functionName: "nuxt-ckbtest"
+  functionName: "next-help"
 resources:
   start_nuxt:
     component: fc3
