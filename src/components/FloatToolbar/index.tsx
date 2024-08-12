@@ -47,6 +47,24 @@ const FloatToolbar = () => {
     console.log(customMiniChatData, "customMiniChat");
     window.ECHAT.customMiniChat(customMiniChatData);
   };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if (window?._echat) {
+        clearInterval(timer);
+        window?._echat("on", {
+          // 一洽配置加载完成
+          ready: function () {},
+          // 一洽新消息数量
+          newMsg: function (num: number) {
+            setMsgCount(num);
+          },
+        });
+      }
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <aside className={`m-tool-bar ${isExpand ? "tool-bar-show" : ""}`}>
       <ul>
