@@ -333,7 +333,7 @@ const CKBHeader = ({}: Props) => {
                       <span>
                         {
                           customerDetail?.customerShopList.find(
-                            (e) => e.customerShopId === getShopId()
+                            (e:any) => e.customerShopId === getShopId()
                           )?.customerShopName
                         }
                       </span>

@@ -16,7 +16,6 @@ import ProductUI from "../../../../../components/CKBLexical/custom/Product/Produ
 import ShopUI from "../../../../../components/CKBLexical/custom/Shop/ShopUI";
 import MultiUrlModal from "../../../../../components/CKBLexical/components/MultiUrlModal";
 import { useEffect, useRef } from "react";
-import { $getSelection, $getEditor } from "lexical";
 import { htmlmock } from "../../../../../components/CKBLexical/mock/htmlmock";
 import { htmlmock1 } from "../../../../../components/CKBLexical/mock/htmlmock1";
 import { useAtom } from 'jotai';

@@ -41,7 +41,13 @@ declare global {
         ) => void;
     }
 
-    declare module '*.scss';
+}
+declare module '*.scss'{
+    const s:any
+    export default s
 }
 
-export {};
+declare module 'lexical'{
+    const s:any
+    export default s
+}
