@@ -46,8 +46,3 @@ declare module '*.scss'{
     const s:any
     export default s
 }
-
-declare module 'lexical'{
-    const s:any
-    export default s
-}

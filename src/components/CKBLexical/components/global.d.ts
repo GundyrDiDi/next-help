@@ -11,13 +11,3 @@ declare module '*.scss'{
     export default s
 }
 
-declare module 'lexical'{
-    const $getNodeByKey:any
-    const $getSelection:any
-    const COMMAND_PRIORITY_CRITICAL:any
-    const SELECTION_CHANGE_COMMAND:any
-    export {
-        $getNodeByKey,
-        $getSelection, COMMAND_PRIORITY_CRITICAL, SELECTION_CHANGE_COMMAND
-    }
-}
