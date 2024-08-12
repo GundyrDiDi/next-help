@@ -29,8 +29,8 @@ resources:
       timeout: 60
       customRuntimeConfig:
         command:
-          - pnpm
-          - start
+          - npx
+          - next start
         port: 3000
       functionName: ${vars.functionName}
       code: ./
